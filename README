@@ -1,0 +1,81 @@
+================================================================================
+                                SpinDecoherence
+================================================================================
+
+(1) Introduction
+(2) Install
+(3) Run
+(4) Getting help
+(5) Acknowledgements
+(6) License
+(7) Contact
+
+================================================================================
+(1) Introduction
+================================================================================
+
+Solves for decoherence of a central spin in a spin bath.
+
+Includes:
+- Cluster correlation expansion
+- Special methods for donor qubits
+
+Notes:
+- Most code in C++
+- Based on old code "cce" -> "SpinDecoherence" developed in 2011-2013
+- This version started 19/05/2013
+- Some methods were originally written in Fortran by Tania Monteiro
+
+* Seto Balian 02/09/2013
+
+================================================================================
+(2) Install
+================================================================================
+
+System requirements:
+- Unix-like OS with c++ compiler (g++ 4.4.7 or above recommended).
+- Lapack (optional)
+
+Uses (all included):
+- Eigen: Open-source linear algebra package
+  http://eigen.tuxfamily.org
+- argvparser: Open-source command line option parser by Michael Hanke
+  http://mih.voxindeserto.de/argvparser.html
+
+================================================================================
+(3) Run
+================================================================================
+
+================================================================================
+(4) Getting help
+================================================================================
+
+- For descriptions (or definitions) of the classes see the start of
+  header files (.h extension)
+- Source files (.cpp extension) may contain more information, usually geared
+  more towards implementation
+- See $(PROJECTPATH)/main/  for the 'main' source files used to build the
+  executables in $(PROJECTPATH)/bin/
+- Resources for the executables, such as sample input files can be found in
+  $(PROJECTPATH)/bin/
+
+================================================================================
+(5) Acknowledgements
+================================================================================
+
+- Tania Monteiro
+- Wayne Witzel
+- Martin Uhrin
+
+================================================================================
+(6) License
+================================================================================
+
+================================================================================
+(7) Contact
+================================================================================
+
+Seto Balian - seto.balian@gmail.com
+
+================================================================================
+
