@@ -5,7 +5,7 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian 16/09/2013
+// Seto Balian 04/10/2013
 
 
 class MathPhysConstants
@@ -16,10 +16,10 @@ public:
   static double pi();
 
   // Reduced Plank constant, units: J s
-  static double hBar();
+  static double reduced_plank();
 
   // Plank constant, units: J s
-  static double h();
+  static double plank();
   
 };
 

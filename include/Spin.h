@@ -3,13 +3,10 @@
 
 // Spin
 //
-// Quantum spin object containing gyromagnetic ratio and spin quantum number.
-// Also calculates the dipolar interaction between two spins.
+// Quantum spin object containing gyromagnetic ratio, spin quantum number S and
+// position in real space. Also give the spin multiplicity = 2 S + 1.
 //
-// Seto Balian 02/09/2013
-
-#include "Named.h"
-#include <string>
+// Seto Balian 04/10/2013
 
 #include <Eigen/Dense>
 
@@ -17,31 +14,27 @@ class Spin
 {
 
 private:
-  double        spinQuantumNumber_; // Total spin quantum number
-  double        gyromagneticRatio_; // Gyromagnetic ratio in M rad s-1 T-1 
-                                    // = Larmor frequency / Magnetic field
-  Eigen::Vector3d        position_;          // Vector position in Angstroms
-  
+  double quantum_number_;      // Spin quantum number
+  double gyromagnetic_ratio_;  // Gyromagnetic ratio in M rad s-1 T-1 
+                               // = Larmor frequency / magnetic field
+  Eigen::Vector3d position_;   // Vector position in Angstroms
+
 public:
 
   Spin();
-  Spin(const std::string & name, const double spinQuantumNumber,
-       const double gyromagneticRatio, const Eigen::Vector3d & position);
+  Spin(const double quantum_number,
+       const double gyromagnetic_ratio,
+       const Eigen::Vector3d & position);
   
-  double getSpinQuantumNumber() const;
-  double getGyromagneticRatio() const;
-  Eigen::Vector3d getPosition() const;
+  double get_quantum_number() const;
+  double get_gyromagnetic_ratio() const;
+  Eigen::Vector3d get_position() const;
 
-  void setSpinQuantumNumber(const double spinQuantumNumber);
-  void setGyromagneticRatio(const double gyromagneticRatio);
-  void setPosition(const Eigen::Vector3d & position);
+  void set_quantum_number(const double quantum_number);
+  void set_gyromagnetic_ratio(const double gyromagnetic_ratio);
+  void set_position(const Eigen::Vector3d & position);
   
   unsigned int multiplicity() const;
-
-  double dipolar(const Spin & interactingSpin,
-                 const Eigen::Vector3d & magneticFieldDirection) const;
-
-  void print() const;
 
 };
 

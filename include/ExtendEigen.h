@@ -3,9 +3,9 @@
 
 // ExtendEigen
 //
-// Extend Eigen linear algebra package.
+// Static methods to extend Eigen (linear algebra package).
 //
-// Seto Balian 16/09/2013
+// Seto Balian 04/10/2013
 
 #include <Eigen/Dense>
 
@@ -37,7 +37,7 @@ public:
 
   // Partial trace
   static Eigen::MatrixXcd partialTrace(const Eigen::MatrixXcd & M,
-                                       const unsigned int dof);
+                                       const unsigned int degrees_of_freedom);
 
   // Tensor product
   static Eigen::MatrixXcd tensorProduct(const Eigen::MatrixXcd & M,

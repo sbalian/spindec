@@ -1,6 +1,6 @@
 // To test SpinDecoherence
 //
-// Seto Balian 16/09/2013
+// Seto Balian 04/10/2013
 
 #include <iostream>
 #include <Eigen/Dense>
@@ -11,8 +11,8 @@
 int main () {
 
 std::cout << "pi " << MathPhysConstants::pi() << std::endl;
-std::cout << "h " << MathPhysConstants::h() << std::endl;
-std::cout << "hbar " << MathPhysConstants::hBar() << std::endl;
+std::cout << "h " << MathPhysConstants::plank() << std::endl;
+std::cout << "hbar " << MathPhysConstants::reduced_plank() << std::endl;
 
 Eigen::Vector3d aVec, bVec;
 

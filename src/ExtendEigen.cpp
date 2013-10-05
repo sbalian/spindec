@@ -1,12 +1,13 @@
 // See EigenTools.h for description.
-// Seto Balian 16/09/2013
+// Seto Balian 04/10/2013
 
 #include "ExtendEigen.h"
 #include <Eigen/Dense>
 #include <complex>
 
 double ExtendEigen::cosineAngleBetween(const Eigen::Vector3d & a,
-                                       const Eigen::Vector3d & b) {
+                                       const Eigen::Vector3d & b)
+{
   return  ( a.dot(b) / (a.norm()*b.norm()) );
 }
 
@@ -17,64 +18,61 @@ double ExtendEigen::maxAbsCoeff(const Eigen::Vector3d & a)  {
 Eigen::MatrixXcd ExtendEigen::exponentiate(const Eigen::MatrixXcd & M,
                               const Eigen::MatrixXcd & eigenvectors,
                               const Eigen::VectorXd  & eigenvalues,
-                              const double alpha) {
-
+                              const double alpha)
+{
   unsigned int dimension = static_cast<unsigned int>(M.rows());
-  Eigen::MatrixXcd diagExpEvalues(dimension,dimension);
-  diagExpEvalues.setZero();
-  unsigned int i;
-  for (i=0;i<dimension;i++) {
-    diagExpEvalues(i,i) = std::polar(1.0,-(eigenvalues(i))*alpha);
+  Eigen::MatrixXcd diagonal_eigenvalue_matrix(dimension,dimension);
+  diagonal_eigenvalue_matrix.setZero();
+  for (unsigned int i=0;i<dimension;i++) {
+    diagonal_eigenvalue_matrix(i,i) = std::polar(1.0,-(eigenvalues(i))*alpha);
   }
-  return eigenvectors*(diagExpEvalues*(eigenvectors.adjoint()));
-
+  return eigenvectors*(diagonal_eigenvalue_matrix*(eigenvectors.adjoint()));
 
 }
 
 
 Eigen::MatrixXcd ExtendEigen::partialTrace(const Eigen::MatrixXcd & M,
-                                      const unsigned int dof) {
+                                     const unsigned int degrees_of_freedom)
+{
+  unsigned int dimension = static_cast<unsigned int> (M.rows());
 
-  unsigned int dim = static_cast<unsigned int> (M.rows());
-
-  Eigen::MatrixXcd matrixOut(dim/dof,dim/dof);
-  unsigned int i = 0;
-  unsigned int j = 0;
-  while (i<=dim-dof) {
+  Eigen::MatrixXcd matrix_out(dimension/degrees_of_freedom,
+                              dimension/degrees_of_freedom);
+  unsigned int i=0, j=0;
+  while (i<=dimension-degrees_of_freedom) {
     j = 0;
-    while (j<=dim-dof) {
-      matrixOut(i/dof,j/dof) = (M.block(i,j,dof,dof)).trace();
-      j = j + dof;
+    while (j<=dimension-degrees_of_freedom) {
+      matrix_out(i/degrees_of_freedom,j/degrees_of_freedom)
+                = (M.block(i,j,degrees_of_freedom,degrees_of_freedom)).trace();
+      j = j + degrees_of_freedom;
     }
-    i = i + dof;
+    i = i + degrees_of_freedom;
   }
 
 
-  return matrixOut;
+  return matrix_out;
 
 }
 
 
 Eigen::MatrixXcd ExtendEigen::tensorProduct(const Eigen::MatrixXcd & M,
-                                      const Eigen::MatrixXcd & N) {
+                                      const Eigen::MatrixXcd & N)
+{
 
-  unsigned int dimN    = static_cast<unsigned int> ( N.rows() );
-  unsigned int dimM    = static_cast<unsigned int> ( M.rows() );
+  unsigned int dimension_N    = static_cast<unsigned int> ( N.rows() );
+  unsigned int dimension_M    = static_cast<unsigned int> ( M.rows() );
 
-  Eigen::MatrixXcd matrixOut(dimM*dimN,dimM*dimN);
-  matrixOut.setZero();
+  Eigen::MatrixXcd matrix_out(dimension_M*dimension_N,dimension_M*dimension_N);
+  matrix_out.setZero();
 
-  unsigned int i,j;
-  for (i=0;i<dimM;i++) {
-    for (j=0;j<dimM;j++) {
-
-      matrixOut.block(i*dimN,j*dimN,dimN,dimN) = M(i,j)*N;
-
+  for (unsigned int i=0;i<dimension_M;i++) {
+    for (unsigned int j=0;j<dimension_M;j++) {
+      matrix_out.block(i*dimension_N,j*dimension_N,dimension_N,dimension_N)
+                                                                     = M(i,j)*N;
     }
   }
-
   
-  return matrixOut;
+  return matrix_out;
 
 }
 
