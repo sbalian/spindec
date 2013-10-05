@@ -5,7 +5,7 @@
 //
 // TODO Describe
 //
-// Seto Balian 04/10/2013
+// Seto Balian 05/10/2013
 
 #include "Spin.h"
 #include <Eigen/Dense>
