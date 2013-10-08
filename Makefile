@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian 04/10/2013
+# Seto Balian 08/10/2013
 
 CC=g++
 CFLAGS=-O3 -Wall
@@ -9,19 +9,20 @@ HEADERPATH=./include/
 EIGENPATH=$(HEADERPATH)eigen/
 
 EXECUTABLES=TEST
+TESTOBJECTS=TEST.o MathPhysConstants.o ExtendEigen.o Spin.o SpinInteractionNode.o Errors.o SpinInteraction.o ElectronSpin.o NuclearSpin.o SpinInteractionGraph.o
 
 #####################
 # mains
 #####################
 
-all: $(EXECUTABLES) tidy
+all: $(EXECUTABLES)
 
 # TEST
 
 TEST.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/TEST.cpp
 
-TEST: TEST.o MathPhysConstants.o ExtendEigen.o Spin.o SpinInteractionNode.o Errors.o SpinInteraction.o
+TEST: $(TESTOBJECTS)
 	$(CC) $(CFLAGS) TEST.o MathPhysConstants.o ExtendEigen.o -o TEST
 
 #####################
@@ -32,6 +33,9 @@ TEST: TEST.o MathPhysConstants.o ExtendEigen.o Spin.o SpinInteractionNode.o Erro
 
 MathPhysConstants.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)MathPhysConstants.cpp
+
+NuclearSpin.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)NuclearSpin.cpp
 
 ## Need Eigen
 
@@ -49,6 +53,12 @@ SpinInteraction.o:
 
 Errors.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Errors.cpp
+
+ElectronSpin.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)ElectronSpin.cpp
+
+SpinInteractionGraph.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
 
 #####################
 # clean up

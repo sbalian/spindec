@@ -5,7 +5,7 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian 04/10/2013
+// Seto Balian 08/10/2013
 
 
 class MathPhysConstants
@@ -20,6 +20,9 @@ public:
 
   // Plank constant, units: J s
   static double plank();
+
+  // Free electron gyromagnetic ratio, units: M rad s-1
+  static double electron_gyromagnetic_ratio();
   
 };
 

@@ -1,5 +1,5 @@
 // See MathPhysConstants.h for description.
-// Seto Balian 04/10/2013
+// Seto Balian 08/10/2013
 
 #include "MathPhysConstants.h"
 
@@ -24,5 +24,13 @@ double MathPhysConstants::plank()
 // UNITS: J s
 // SOURCE: CODATA
 // DATE: 06/12/2012
+}
+
+double MathPhysConstants::electron_gyromagnetic_ratio()
+{
+  return 1.760859708e5;
+// UNITS: M rad s-1
+// SOURCE: Wikipedia (TODO check in CODATA)
+// DATE: 08/10/2013
 }
 
