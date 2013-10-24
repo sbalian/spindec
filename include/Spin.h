@@ -4,9 +4,9 @@
 // Spin
 //
 // Quantum spin object containing gyromagnetic ratio, spin quantum number S and
-// position in real space. Also give the spin multiplicity = 2 S + 1.
+// position in real space. Also gives the spin multiplicity = 2 S + 1.
 //
-// Seto Balian 08/10/2013
+// Seto Balian 22/10/2013
 
 #include <Eigen/Dense>
 

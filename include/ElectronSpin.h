@@ -1,13 +1,15 @@
 #ifndef ELECTRONSPIN_H
 #define ELECTRONSPIN_H
 
-// Electron spin object
+// Electron spin
 //
-// TODO Describe
+// Spin object with set spin quantum number (S = 1/2)
+// and gyromagnetic ratio (for the free electron).
 //
-// Seto Balian 05/10/2013
+// Seto Balian 22/10/2013
 
 #include "Spin.h"
+
 #include <Eigen/Dense>
 
 class ElectronSpin : public Spin

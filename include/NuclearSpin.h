@@ -1,11 +1,11 @@
 #ifndef NUCLEARSPIN_H
 #define NUCLEARSPIN_H
 
-// Nuclear spin object
+// Nuclear spin
 //
-// TODO Describe
+// Just a Spin.
 //
-// Seto Balian 08/10/2013
+// Seto Balian 22/10/2013
 
 #include "Spin.h"
 

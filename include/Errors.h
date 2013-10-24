@@ -3,9 +3,9 @@
 
 // Errors
 //
-// TODO Describe
+// Error and warning handling.
 //
-// Seto Balian 04/10/2013
+// Seto Balian 22/10/2013
 
 #include <string>
 

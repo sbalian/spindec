@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian 08/10/2013
+# Seto Balian 24/10/2013
 
 CC=g++
 CFLAGS=-O3 -Wall
@@ -9,7 +9,7 @@ HEADERPATH=./include/
 EIGENPATH=$(HEADERPATH)eigen/
 
 EXECUTABLES=TEST
-TESTOBJECTS=TEST.o MathPhysConstants.o ExtendEigen.o Spin.o SpinInteractionNode.o Errors.o SpinInteraction.o ElectronSpin.o NuclearSpin.o SpinInteractionGraph.o
+TESTOBJECTS=TEST.o MathPhysConstants.o BoostEigen.o Spin.o SpinInteractionNode.o Errors.o SpinInteractionVertex.o ElectronSpin.o NuclearSpin.o SpinInteractionGraph.o Spins.o
 
 #####################
 # mains
@@ -23,7 +23,7 @@ TEST.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/TEST.cpp
 
 TEST: $(TESTOBJECTS)
-	$(CC) $(CFLAGS) TEST.o MathPhysConstants.o ExtendEigen.o -o TEST
+	$(CC) $(CFLAGS) TEST.o MathPhysConstants.o BoostEigen.o -o TEST
 
 #####################
 # intermediate objects
@@ -34,22 +34,28 @@ TEST: $(TESTOBJECTS)
 MathPhysConstants.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)MathPhysConstants.cpp
 
+## Need Eigen
+
 NuclearSpin.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)NuclearSpin.cpp
 
-## Need Eigen
-
-ExtendEigen.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)ExtendEigen.cpp
+BoostEigen.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)BoostEigen.cpp
 
 Spin.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Spin.cpp
 
+Spins.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Spins.cpp
+
+ZeemanBasis.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)ZeemanBasis.cpp
+
 SpinInteractionNode.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionNode.cpp
 
-SpinInteraction.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteraction.cpp
+SpinInteractionVertex.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionVertex.cpp
 
 Errors.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Errors.cpp

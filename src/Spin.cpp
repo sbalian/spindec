@@ -1,10 +1,9 @@
 // See Spin.h for description.
-// Seto Balian 08/10/2013
+// Seto Balian 22/10/2013
 
 #include "Spin.h"
 
 #include <Eigen/Dense>
-
 
 Spin::Spin()
 {

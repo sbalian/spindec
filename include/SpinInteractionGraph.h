@@ -1,14 +1,14 @@
 #ifndef SPININTERACTIONGRAPH_H
 #define SPININTERACTIONGRAPH_H
 
-// Spin interaction graph
+// SpinInteractionGraph
 //
-// TODO Describe
+// System of spin interaction nodes and vertices.
 //
-// Seto Balian 08/10/2013
+// Seto Balian 22/10/2013
 
 #include "SpinInteractionNode.h"
-#include "SpinInteraction.h"
+#include "SpinInteractionVertex.h"
 
 #include <vector>
 
@@ -18,14 +18,14 @@ class SpinInteractionGraph
 private:
 
   std::vector<SpinInteractionNode> nodes_;
-  std::vector<SpinInteraction> interactions_;
+  std::vector<SpinInteractionVertex> vertices_;
 
 public:
 
   SpinInteractionGraph();
   
   void add_node(const SpinInteractionNode & node);
-  void add_interaction(const SpinInteraction & interaction);
+  void add_vertex(const SpinInteractionVertex & vertex);
 
 };
 

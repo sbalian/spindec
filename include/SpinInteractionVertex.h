@@ -1,18 +1,19 @@
-#ifndef SPININTERACTION_H
-#define SPININTERACTION_H
+#ifndef SPININTERACTIONVERTEX_H
+#define SPININTERACTIONVERTEX_H
 
-// Spin interaction
+// SpinInteractionVertex
 //
-// TODO Describe
+// Interaction between a pair of nodes each containing one Spin.
+// Holds the strength of the interaction.
 //
-// Seto Balian 04/10/2013
+// Seto Balian 22/10/2013
 
 #include "SpinInteractionNode.h"
 
 #include <utility>
 #include <string>
 
-class SpinInteraction
+class SpinInteractionVertex
 {
 
 private:
@@ -21,11 +22,11 @@ private:
 
 public:
 
-  SpinInteraction();
+  SpinInteractionVertex();
   
-  SpinInteraction(const SpinInteractionNode & node1,
-                  const SpinInteractionNode & node2,
-                  const double strength);
+  SpinInteractionVertex(const SpinInteractionNode & node1,
+                        const SpinInteractionNode & node2,
+                        const double strength);
 
   SpinInteractionNode get_node1() const;
   SpinInteractionNode get_node2() const;
@@ -39,12 +40,8 @@ public:
 
   void set_strength(const double strength);
 
-  // TODO something like this ...
-  void set_interaction(const std::string & option);
-  void set_interaction(const double strength);
 
 };
 
-
-#endif // SPININTERACTION_H
+#endif // SPININTERACTIONVERTEX_H
 

@@ -1,12 +1,11 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian 08/10/2013
+// Seto Balian 22/10/2013
 
 #include "SpinInteractionGraph.h"
 #include "SpinInteractionNode.h"
-#include "SpinInteraction.h"
+#include "SpinInteractionVertex.h"
 
 #include <vector>
-
 
 void SpinInteractionGraph::add_node(const SpinInteractionNode & node)
 {
@@ -14,10 +13,10 @@ void SpinInteractionGraph::add_node(const SpinInteractionNode & node)
   return;
 }
 
-void SpinInteractionGraph::add_interaction(const SpinInteraction &
-                                                                interaction)
+void SpinInteractionGraph::add_vertex(const SpinInteractionVertex &
+                                                                vertex)
 {
-  interactions_.push_back(interaction);
+  vertices_.push_back(vertex);
   return;
 }
 
