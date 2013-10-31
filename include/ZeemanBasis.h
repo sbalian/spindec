@@ -6,7 +6,7 @@
 // Holds magnetic quantum numbers (Zeeman basis).
 // TODO Explain any conventions here ...
 //
-// Seto Balian 24/10/2013
+// Seto Balian 31/10/2013
 
 #include <Eigen/Dense>
 #include <vector>

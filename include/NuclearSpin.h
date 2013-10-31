@@ -5,7 +5,7 @@
 //
 // Just a Spin.
 //
-// Seto Balian 22/10/2013
+// Seto Balian 31/10/2013
 
 #include "Spin.h"
 
@@ -15,6 +15,10 @@ class NuclearSpin : public Spin
 public:
 
   NuclearSpin();
+  NuclearSpin(const double quantum_number,
+              const double gyromagnetic_ratio,
+              const Eigen::Vector3d & position);
+
 
 };
 

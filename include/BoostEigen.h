@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // to the rest of SpinDecoherence ...
 //
-// Seto Balian 24/10/2013
+// Seto Balian 31/10/2013
 
 #include <Eigen/Dense>
 

@@ -1,10 +1,14 @@
 // See Spins.h for description.
-// Seto Balian 24/10/2013
+// Seto Balian 31/10/2013
 
 #include <vector>
 
 #include "Spin.h"
 #include "Spins.h"
+
+Spins::Spins() {
+  //
+}
 
 void Spins::add_spin(const Spin & spin) {
   spins_.push_back(spin);

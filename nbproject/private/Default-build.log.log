@@ -1,0 +1,12 @@
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/main/TEST.cpp
+g++ -O3 -Wall -I./include/ -c ./src/MathPhysConstants.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/BoostEigen.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/Spin.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/SpinInteractionNode.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/Errors.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/SpinInteractionVertex.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/ElectronSpin.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/NuclearSpin.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/SpinInteractionGraph.cpp
+g++ -O3 -Wall -I./include/ -I./include/eigen/ -c ./src/Spins.cpp
+g++ -O3 -Wall TEST.o MathPhysConstants.o BoostEigen.o -o TEST

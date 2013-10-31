@@ -5,7 +5,7 @@
 //
 // System of spin interaction nodes and vertices.
 //
-// Seto Balian 22/10/2013
+// Seto Balian 31/10/2013
 
 #include "SpinInteractionNode.h"
 #include "SpinInteractionVertex.h"

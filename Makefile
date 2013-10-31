@@ -1,15 +1,31 @@
 # SpinDecoherence Makefile
-# Seto Balian 24/10/2013
+# Seto Balian 31/10/2013
 
+#####################
+# User input
+#####################
+
+# Compiler
 CC=g++
+# Set to 1 for debug mode
+DEBUG=0
+
+#####################
+# Initialise
+#####################
+
+ifeq ($(DEBUG),1)
+CFLAGS=-O0 -Wall -g
+else
 CFLAGS=-O3 -Wall
+endif
 
 SOURCEPATH=./src/
 HEADERPATH=./include/
 EIGENPATH=$(HEADERPATH)eigen/
 
 EXECUTABLES=TEST
-TESTOBJECTS=TEST.o MathPhysConstants.o BoostEigen.o Spin.o SpinInteractionNode.o Errors.o SpinInteractionVertex.o ElectronSpin.o NuclearSpin.o SpinInteractionGraph.o Spins.o
+TESTOBJECTS=TEST.o MathPhysConstants.o BoostEigen.o ZeemanBasis.o Errors.o Spin.o Spins.o ElectronSpin.o NuclearSpin.o
 
 #####################
 # mains
@@ -23,7 +39,7 @@ TEST.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/TEST.cpp
 
 TEST: $(TESTOBJECTS)
-	$(CC) $(CFLAGS) TEST.o MathPhysConstants.o BoostEigen.o -o TEST
+	$(CC) $(CFLAGS) $(TESTOBJECTS) -o TEST
 
 #####################
 # intermediate objects
@@ -70,9 +86,6 @@ SpinInteractionGraph.o:
 # clean up
 #####################
 
-#@echo "This will delete all executables!"; \
-#echo  "Press any key to continue or Ctrl-C to exit ..."; \
-#read tempvar;
 clean:
 	rm -f $(EXECUTABLES) && rm -f *.o
 

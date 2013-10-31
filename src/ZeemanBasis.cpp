@@ -1,5 +1,5 @@
 // See ZeemanBasis.h for description.
-// Seto Balian 24/10/2013
+// Seto Balian 31/10/2013
 
 // TODO Explain any conventions here ...
 
@@ -11,10 +11,14 @@
 #include "Spin.h"
 #include "Errors.h"
 
+ZeemanBasis::ZeemanBasis() {
+  //
+}
+
 ZeemanBasis::ZeemanBasis(const Spins & spins,
                                         const Eigen::ArrayXXd & basis) {
   set_spins(spins);
-  set_basis(basis);
+  set_basis(basis); 
 }
 
 Spins ZeemanBasis::get_spins()    const {
@@ -36,7 +40,7 @@ void ZeemanBasis::set_basis(const Eigen::ArrayXXd & basis) {
 
 // TODO Explain this method
 void ZeemanBasis::build() {
-
+  
   int n = static_cast<int>(spins_.num_spins());
   int M = static_cast<int>(spins_.multiplicity());
 
@@ -85,77 +89,69 @@ void ZeemanBasis::build() {
       p += 1;
     }
   }
+  
+  set_basis(basis);
 
   return;
 
 }
 
 // TODO Explain this method
-////void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
-////                    const Eigen::ArrayXXd & to_keep) {
+void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
+                    const Eigen::ArrayXXd & to_keep) {
 
-////  if (to_keep.cols() != spin_indices.size()) {
-////    quit("Number of spins != number of columns in 'to keep' array");
-////  }
+  if (static_cast<unsigned int>(to_keep.cols()) != spin_indices.size()) {
+    Errors::quit("Number of spins != number of columns in \"to keep\" array");
+  }
 
-////  if (dimension() == 0) {
-////    quit("Did you forget to build the basis before truncating?");
-////  }
-
-
-////  std::vector<Eigen::ArrayXd> new_rows;
-
-////  bool keep_row = 0;
-
-////  for (unsigned int i =0; i<spin_indices.size(); i ++ ) {
-
-////    for (unsigned int j = 0; j<dimension() ; j++) {
-
-////      keep_row = 1;
-////      if (basis_(j,spin_indices[i]) != to_keep(j,i) ) {
-////        keep_row = 0;
-////      }
-
-////    }
-
-////    
-
-////  }
-
-////  return;
-
-////}
+  if (dimension() == 0) {
+    Errors::quit("Did you forget to build the basis before truncating?");
+  }
 
 
-// TODO Explain this method
-////////void Spins::truncateZeemanBasisByTwoSpins(const unsigned int spinId1,
-////////                                          const unsigned int spinId2,
-////////                                      Eigen::ArrayXXd magneticQuantumNumbers) {
+  std::vector<Eigen::ArrayXd> new_rows;
+  
+  bool keep_row = 0;
+
+  
+  for (unsigned int i = 0; i<dimension() ; i++) {
+    
+    keep_row = 0;
+
+    for (unsigned int j =0; j<spin_indices.size(); j ++ ) {
+      
+      for (unsigned int k=0; k<static_cast<unsigned int>(to_keep.rows());k++) {
+
+        if ( basis_(i,spin_indices[j]) != to_keep(k,j) ) {
+          break;
+        }
+        
+        keep_row = 1;
+        
+      }
+
+    }
+    
+    if (keep_row == 1) {
+      new_rows.push_back(basis_.row(i));
+    }
+  
+  }
+  
+  Eigen::ArrayXXd new_basis(static_cast<int>(new_rows.size()),
+                            basis_.cols());
+  
+  for (unsigned int i=0; i<new_rows.size();i++) {
+    new_basis.row(i) = new_rows[i];
+  }
+  
+  set_basis(new_basis);
+  
+  return;
+
+}
 
 
-
-
-
-////////  std::vector<Eigen::RowVectorXd> new_rows;
-
-////////  int i,j;
-////////  for (i=0;i<zeemanBasis_.rows();i++) {
-////////    for (j=0;j<magneticQuantumNumbers.rows();j++) {
-////////      if ((zeemanBasis_(i,spinId1) == magneticQuantumNumbers(j,0)) &&
-////////         (zeemanBasis_(i,spinId2) == magneticQuantumNumbers(j,1))) {
-////////        new_rows.push_back(zeemanBasis_.row(i));
-////////      }
-////////    }
-////////  }
-
-////////  Eigen::MatrixXd new_basis(static_cast<int>(new_rows.size()),
-////////                                                        zeemanBasis_.cols());
-////////  for (i=0;i<new_basis.rows();i++) {
-////////    new_basis.row(i) = new_rows[i];
-////////  }
-////////  zeemanBasis_ = new_basis;
-////////  return;
-////////}
 
 unsigned int ZeemanBasis::dimension() const {
   return static_cast<unsigned int>(basis_.rows());

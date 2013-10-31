@@ -6,7 +6,7 @@
 // Interaction between a pair of nodes each containing one Spin.
 // Holds the strength of the interaction.
 //
-// Seto Balian 22/10/2013
+// Seto Balian 31/10/2013
 
 #include "SpinInteractionNode.h"
 

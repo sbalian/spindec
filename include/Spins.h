@@ -5,7 +5,7 @@
 //
 // For multiple Spin objects.
 //
-// Seto Balian 24/10/2013
+// Seto Balian 31/10/2013
 
 #include "Spin.h"
 #include <vector>
