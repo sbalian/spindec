@@ -828,16 +828,6 @@
                 <in>UmfPackSupport.h</in>
               </df>
             </df>
-            <in>Cholesky</in>
-            <in>Core</in>
-            <in>Dense</in>
-            <in>Eigenvalues</in>
-            <in>Geometry</in>
-            <in>Householder</in>
-            <in>Jacobi</in>
-            <in>LU</in>
-            <in>QR</in>
-            <in>SVD</in>
           </df>
           <df name="failtest">
             <in>block_nonconst_ctor_on_const_xpr_0.cpp</in>
@@ -1324,7 +1314,7 @@
     <conf name="Default" type="0">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <platform>2</platform>
+        <platform>4</platform>
       </toolsSet>
       <compile>
         <compiledirpicklist>

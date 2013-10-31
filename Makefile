@@ -8,7 +8,7 @@
 # Compiler
 CC=g++
 # Set to 1 for debug mode
-DEBUG=0
+DEBUG=1
 
 #####################
 # Initialise

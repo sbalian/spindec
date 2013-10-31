@@ -110,32 +110,40 @@ void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
 
 
   std::vector<Eigen::ArrayXd> new_rows;
-  
-  bool keep_row = 0;
-
-  
-  for (unsigned int i = 0; i<dimension() ; i++) {
     
-    keep_row = 0;
-
-    for (unsigned int j =0; j<spin_indices.size(); j ++ ) {
+  for (unsigned int i = 0; i<dimension() ; i++) { // loop over original rows to
+                                                  // decide to keep an original
+                                                  // row or not
+    
+    bool keep_row = 0; // do not keep
+    
+    // loop over rows to keep
+    for (unsigned int j=0; j<static_cast<unsigned int>(to_keep.rows());j++) {
       
-      for (unsigned int k=0; k<static_cast<unsigned int>(to_keep.rows());k++) {
-
-        if ( basis_(i,spin_indices[j]) != to_keep(k,j) ) {
+      // see if the original row matches any one of the rows to keep
+      for (unsigned int k=0; k<spin_indices.size(); k++ ) {
+        
+        // see if ALL elements in a row to keep match with the corresponding
+        // ones in the original row
+        
+        keep_row = 1; // keep the row, unless ...
+        if ( basis_(i,spin_indices[k]) != to_keep(j,k) ) { // ... any of the
+                                                           // elements don't
+                                                           // match
+          keep_row = 0;
           break;
         }
         
-        keep_row = 1;
-        
       }
-
+      
+      if (keep_row == 1) {break;} // found a row, don't bother looking
+                
     }
-    
-    if (keep_row == 1) {
+ 
+    if (keep_row == 1) { // keep the original row
       new_rows.push_back(basis_.row(i));
     }
-  
+    
   }
   
   Eigen::ArrayXXd new_basis(static_cast<int>(new_rows.size()),
@@ -150,7 +158,6 @@ void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
   return;
 
 }
-
 
 
 unsigned int ZeemanBasis::dimension() const {

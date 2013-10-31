@@ -93,8 +93,8 @@ std::cout << test_basis.get_basis() << std::endl;
 Eigen::ArrayXXd to_keep(3,2);
 
 to_keep << 0.5 , 4.5,
-           -0.5, 2.5,
-           -0.5, 0.5;
+          -0.5, 2.5,
+           0.5, -1.5;
 
 std::vector<unsigned int> indices;
 
