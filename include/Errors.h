@@ -5,7 +5,7 @@
 //
 // Error and warning handling.
 //
-// Seto Balian 31/10/2013
+// Seto Balian 01/11/2013
 
 #include <string>
 

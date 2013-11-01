@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian 31/10/2013
+// Seto Balian 01/11/2013
 
 #include "SpinInteractionGraph.h"
 #include "SpinInteractionNode.h"

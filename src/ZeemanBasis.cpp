@@ -1,7 +1,5 @@
 // See ZeemanBasis.h for description.
-// Seto Balian 31/10/2013
-
-// TODO Explain any conventions here ...
+// Seto Balian 01/11/2013
 
 #include <Eigen/Dense>
 #include <vector>
@@ -38,18 +36,26 @@ void ZeemanBasis::set_basis(const Eigen::ArrayXXd & basis) {
   basis_ = basis;
 }
 
-// TODO Explain this method
 void ZeemanBasis::build() {
   
-  int n = static_cast<int>(spins_.num_spins());
-  int M = static_cast<int>(spins_.multiplicity());
+  int n = static_cast<int>(spins_.num_spins()); // number of spins
+  int M = static_cast<int>(spins_.multiplicity()); // total multiplicity
 
   // Initialise basis to be built
   Eigen::ArrayXXd basis(M,n);
   basis.setZero();
+  
+  // For example, for 2 electrons, the algorithm below will build
+                          //           0.5  0.5
+                          //           0.5 -0.5
+                          //          -0.5  0.5
+                          //          -0.5 -0.5
+  // where the magnetic quantum numbers (+/- 0.5 here) are evaluated
+  // from the multiplicites of spins represented by column 1 and 2
+  // (both spin-1/2 in this case)
 
-  // Preloop variables
-  double spin_QN = 0.0;
+  // declare algorithm parameters
+  double spin_QN = 0.0; // basis element
   int M_j = 0;      // Number of magnetic quantum numbers for j-th spin
   int M_0_to_j = 0; 
                 // Number of magnetic quantum numbers of spin system up to and 
@@ -60,12 +66,11 @@ void ZeemanBasis::build() {
   int C_j = 0; // Number of copies of set of magnetic quantum numbers for the
            // j-th spin = M / (c_j M_j^2)
 
-  // Loop variables
+  // loop variables
   int j=0,m=0,p=0,q=0,l=0;
 
   M_0_to_j = 1;
   // Loop over spins
-  // TODO: Explain here
   for (j=0;j<n;j++) {
     M_j = spins_.get_spin(j).multiplicity();
     M_0_to_j = M_0_to_j*M_j;
@@ -96,7 +101,6 @@ void ZeemanBasis::build() {
 
 }
 
-// TODO Explain this method
 void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
                     const Eigen::ArrayXXd & to_keep) {
 
@@ -163,8 +167,3 @@ void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
 unsigned int ZeemanBasis::dimension() const {
   return static_cast<unsigned int>(basis_.rows());
 }
-
-
-
-
-

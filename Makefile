@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian 31/10/2013
+# Seto Balian 01/11/2013
 
 #####################
 # User input
@@ -22,7 +22,7 @@ endif
 
 SOURCEPATH=./src/
 HEADERPATH=./include/
-EIGENPATH=$(HEADERPATH)eigen/
+EIGENPATH=./eigen/
 
 EXECUTABLES=TEST
 TESTOBJECTS=TEST.o MathPhysConstants.o BoostEigen.o ZeemanBasis.o Errors.o Spin.o Spins.o ElectronSpin.o NuclearSpin.o

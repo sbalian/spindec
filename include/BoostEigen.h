@@ -5,9 +5,9 @@
 //
 // Static methods to extend Eigen (linear algebra package).
 // Note that the naming convention complies with that of Eigen, and is different
-// to the rest of SpinDecoherence ...
+// from the rest of SpinDecoherence ...
 //
-// Seto Balian 31/10/2013
+// Seto Balian 01/11/2013
 
 #include <Eigen/Dense>
 
@@ -45,13 +45,16 @@ public:
                                          const Eigen::VectorXcd & eigenvalues);
 
   // Tensor product
+  // This evaluates C = A X B. For example, for 2 x 2 matrices,
+  // C = A_11*B A_12*B
+  //     A_21*B A_22*B
   static Eigen::MatrixXcd tensorProduct(const Eigen::MatrixXcd & A,
                                         const Eigen::MatrixXcd & B);
 
   // Partial trace
   // Given C = A x B, where x denotes the tensor product,
   // in addition to the dimension of B, this method outputs
-  // Tr[B] A
+  // Tr[B] A (where Tr denotes the sum of the diagonal elements)
   static Eigen::MatrixXcd partialTrace(const Eigen::MatrixXcd & AB,
                                        const unsigned int dimension_B);
 

@@ -5,7 +5,7 @@
 //
 // Holds a spin object (to be part of a spin interaction graph).
 //
-// Seto Balian 31/10/2013
+// Seto Balian 01/11/2013
 
 #include "Spin.h"
 

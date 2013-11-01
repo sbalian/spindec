@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian 31/10/2013
+// Seto Balian 01/11/2013
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
@@ -38,7 +38,6 @@ Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
   Eigen::MatrixXcd AB(dimension_A*dimension_B,dimension_A*dimension_B);//output
 
   // consistently with the definition of the parital trace
-  // TODO explain this
   for (unsigned int i=0;i<dimension_A;i++) {
     for (unsigned int j=0;j<dimension_A;j++) {
       AB.block(i*dimension_B,j*dimension_B,dimension_B,dimension_B)
@@ -59,7 +58,6 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
   Eigen::MatrixXcd TrB_A(dimension_A,dimension_A); // output
 
   // consistently with the definition of the tensor product
-  // TODO explain this
   unsigned int i=0, j=0;
   while (i<=dimension_AB-dimension_B) {
     j = 0;
@@ -74,6 +72,3 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
   return TrB_A;
 
 }
-
-
-
