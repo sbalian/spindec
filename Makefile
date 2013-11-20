@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian 01/11/2013
+# Seto Balian 20/11/2013
 
 #####################
 # User input
@@ -22,10 +22,13 @@ endif
 
 SOURCEPATH=./src/
 HEADERPATH=./include/
+# Download and extract Eigen from http://eigen.tuxfamily.org
 EIGENPATH=./eigen/
 
 EXECUTABLES=TEST
-TESTOBJECTS=TEST.o MathPhysConstants.o BoostEigen.o ZeemanBasis.o Errors.o Spin.o Spins.o ElectronSpin.o NuclearSpin.o
+
+# Executable objects 
+TEST_OBJECTS=TEST.o ElectronSpin.o NuclearSpin.o SpinInteractionGraph.o SpinInteractionNode.o SpinInteractionVertex.o ZeemanBasis.o MathPhysConstants.o Spin.o Errors.o
 
 #####################
 # mains
@@ -38,8 +41,8 @@ all: $(EXECUTABLES)
 TEST.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/TEST.cpp
 
-TEST: $(TESTOBJECTS)
-	$(CC) $(CFLAGS) $(TESTOBJECTS) -o TEST
+TEST: $(TEST_OBJECTS)
+	$(CC) $(CFLAGS) $(TEST_OBJECTS) -o TEST
 
 #####################
 # intermediate objects
@@ -60,9 +63,6 @@ BoostEigen.o:
 
 Spin.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Spin.cpp
-
-Spins.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Spins.cpp
 
 ZeemanBasis.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)ZeemanBasis.cpp

@@ -1,5 +1,5 @@
 // See SpinInteractionNode.h for description.
-// Seto Balian 19/11/2013
+// Seto Balian 20/11/2013
 
 #include "SpinInteractionNode.h"
 #include "Spin.h"
@@ -24,7 +24,7 @@ SpinInteractionNode::SpinInteractionNode()
 
 SpinInteractionNode::SpinInteractionNode(const Spin & spin,
                                 const Eigen::VectorXcd & state,
-                                const int label)
+                                const unsigned int label)
 {
   set_spin(spin);
   set_state(state);
@@ -43,7 +43,7 @@ Eigen::VectorXcd SpinInteractionNode::get_state() const
   return state_;
 }
 
-int SpinInteractionNode::get_label() const
+unsigned int SpinInteractionNode::get_label() const
 {
   quit_if_empty(*this);
   return label_;
@@ -64,7 +64,7 @@ void SpinInteractionNode::set_state(const Eigen::VectorXcd & state)
   return;
 }
 
-void SpinInteractionNode::set_label(const int label)
+void SpinInteractionNode::set_label(const unsigned int label)
 {
   label_ = label;
   return;

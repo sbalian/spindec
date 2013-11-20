@@ -3,15 +3,15 @@
 
 // ZeemanBasis
 //
-// Calculates and holds magnetic quantum numbers (Zeeman basis) given a set of
-// Spin objects.
+// Calculates and holds magnetic quantum numbers (Zeeman basis) for the spins
+// in a given spin interaction graph.
 //
 // Seto Balian 20/11/2013
 
 #include <Eigen/Dense>
 #include <vector>
 
-#include "Spins.h"
+#include "SpinInteractionGraph.h"
 
 class ZeemanBasis
 {
@@ -25,21 +25,18 @@ private:
                           //           0.5 -0.5
                           //          -0.5  0.5
                           //          -0.5 -0.5
-  Spins spins_;
 
 public:
 
   ZeemanBasis();
-  ZeemanBasis(const Spins & spins, const Eigen::ArrayXXd & basis);
+  ZeemanBasis(const Eigen::ArrayXXd & basis);
 
-  Spins get_spins()    const;
   Eigen::ArrayXXd get_basis() const;
-
-  void set_spins(const Spins & spins);
   void set_basis(const Eigen::ArrayXXd & basis);
 
-  // build the basis using the multiplicites
-  void build();
+  // build the basis using the multiplicites of spins in a spin interaction
+  // graph
+  void build(const SpinInteractionGraph & graph);
 
   // Suppose basis is |m0, m1, m2> with m1=m2=m3=+/-0.5.
   // For example, given indices (0,1) and a to_keep array, 0.5 -0.5

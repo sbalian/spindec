@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="184.48965"
+   height="274.92682"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lstart"
+       style="overflow:visible">
+      <path
+         id="path3623"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3605"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-124.5"
+     inkscape:cy="95.315761"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-317,-152.75112)">
+    <g
+       id="g6114">
+      <path
+         transform="matrix(0.65234375,0,0,0.64453125,230.23828,131.9139)"
+         d="m 389,299.36218 c 0,70.69245 -57.30755,128 -128,128 -70.69245,0 -128,-57.30755 -128,-128 0,-70.69245 57.30755,-128 128,-128 70.69245,0 128,57.30755 128,128 z"
+         sodipodi:ry="128"
+         sodipodi:rx="128"
+         sodipodi:cy="299.36218"
+         sodipodi:cx="261"
+         id="path2816"
+         sodipodi:type="arc" />
+      <path
+         id="path2828"
+         d="M 495.0512,163.94471 341.54563,422.81655"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:9.7227869;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow2Lstart);marker-mid:none" />
+      <flowRoot
+         transform="translate(193,0)"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:#7baeff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         id="flowRoot6094"
+         xml:space="preserve"><flowRegion
+           id="flowRegion6096"><rect
+             style="fill:#7baeff;fill-opacity:1"
+             y="281.36218"
+             x="159"
+             height="176"
+             width="218"
+             id="rect6098" /></flowRegion><flowPara
+           style="font-size:64px;fill:#7baeff;fill-opacity:1;font-family:DejaVu LGC Serif;-inkscape-font-specification:DejaVu LGC Serif"
+           id="flowPara6100">SD</flowPara></flowRoot>    </g>
+  </g>
+</svg>
