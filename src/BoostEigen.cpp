@@ -1,9 +1,10 @@
 // See BoostEigen.h for description.
-// Seto Balian 01/11/2013
+// Seto Balian 19/11/2013
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
 #include <complex>
+
 
 double BoostEigen::cosAngleBetween(const Eigen::Vector3d & a,
                                        const Eigen::Vector3d & b)

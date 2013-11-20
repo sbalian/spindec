@@ -6,9 +6,10 @@
 // Interaction between a pair of nodes each containing one Spin.
 // Holds the strength of the interaction.
 //
-// Seto Balian 01/11/2013
+// Seto Balian 19/11/2013
 
 #include "SpinInteractionNode.h"
+#include "SpinInteractionType.h"
 
 #include <utility>
 #include <string>
@@ -19,6 +20,7 @@ class SpinInteractionVertex
 private:
   std::pair<SpinInteractionNode,SpinInteractionNode> nodes_;
   double strength_; // in M rad s-1
+  SpinInteractionType interaction_type_;
 
 public:
 

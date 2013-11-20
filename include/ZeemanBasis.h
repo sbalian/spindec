@@ -6,7 +6,7 @@
 // Calculates and holds magnetic quantum numbers (Zeeman basis) given a set of
 // Spin objects.
 //
-// Seto Balian 01/11/2013
+// Seto Balian 20/11/2013
 
 #include <Eigen/Dense>
 #include <vector>

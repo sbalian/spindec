@@ -25,8 +25,6 @@ Notes:
 - This version started 19/05/2013
 - Some methods were originally written in Fortran by Tania Monteiro
 
-* Seto Balian 02/09/2013
-
 ================================================================================
 (2) Installation
 ================================================================================
@@ -34,8 +32,6 @@ Notes:
 System requirements:
 - Unix-like OS with c++ compiler (g++ 4.4.7 or above recommended).
 - Lapack (optional)
-
-Uses (all included):
 - Eigen: Open-source linear algebra package
   http://eigen.tuxfamily.org
 - argvparser: Open-source command line option parser by Michael Hanke
@@ -74,7 +70,7 @@ Uses (all included):
 (7) Contact
 ================================================================================
 
-Seto Balian - seto.balian@gmail.com
+Seto Balian - seto.balian@gmail.com - 20/11/2013
 
 ================================================================================
 
