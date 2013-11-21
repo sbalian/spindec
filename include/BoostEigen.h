@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence ...
 //
-// Seto Balian 01/11/2013
+// Seto Balian 21/11/2013
 
 #include <Eigen/Dense>
 
@@ -35,7 +35,10 @@ public:
   static unsigned int dimension(const Eigen::MatrixXcd & A);
 
   // Exponentiate (element-wise complex exponentiation)
+  // @todo Use a base class to avoid the repetition here ...
   static Eigen::VectorXcd exp(const Eigen::VectorXcd & a);
+  static Eigen::VectorXd exp(const Eigen::VectorXd & a);
+
 
   // Spectral decomposition
   // Calculates A = V D V-1, where D is the diagonal of eigenvalues,
@@ -43,6 +46,12 @@ public:
   static Eigen::MatrixXcd spectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
                                          const Eigen::VectorXcd & eigenvalues);
+  // For Hermitian matrices (faster) V-1 = V'
+  static Eigen::MatrixXcd hermitianSpectralDecomposition(
+                                         const Eigen::MatrixXcd & eigenvectors,
+                                         const Eigen::VectorXd & eigenvalues);
+                                         // eigenvalues must be real
+
 
   // Tensor product
   // This evaluates C = A X B. For example, for 2 x 2 matrices,

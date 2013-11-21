@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian 19/11/2013
+// Seto Balian 21/11/2013
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
@@ -23,12 +23,22 @@ unsigned int BoostEigen::dimension(const Eigen::MatrixXcd & A) {
 Eigen::VectorXcd BoostEigen::exp(const Eigen::VectorXcd & a) {
   return (a.array().exp()).matrix();
 }
+Eigen::VectorXd BoostEigen::exp(const Eigen::VectorXd & a) {
+  return (a.array().exp()).matrix();
+}
+
 
 Eigen::MatrixXcd BoostEigen::spectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
                                          const Eigen::VectorXcd & eigenvalues) {
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.inverse());
 }
+Eigen::MatrixXcd BoostEigen::hermitianSpectralDecomposition(
+                                         const Eigen::MatrixXcd & eigenvectors,
+                                         const Eigen::VectorXd & eigenvalues) {
+  return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.transpose());
+}
+
 
 Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
                                       const Eigen::MatrixXcd & B)

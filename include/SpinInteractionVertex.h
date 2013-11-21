@@ -6,7 +6,7 @@
 // Interaction between a pair of nodes each containing one Spin.
 // Holds the strength of the interaction.
 //
-// Seto Balian 20/11/2013
+// Seto Balian 21/11/2013
 
 
 #include <utility>
@@ -18,7 +18,7 @@ class SpinInteractionVertex
 private:
   std::pair<unsigned int,unsigned int> labels_;
   double strength_; // in M rad s-1
-  std::string interaction_type_; // See SpinInteractions for allowed strings
+  std::string interaction_type_; // See SpinInteractions for allowed values
 
 public:
 
