@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence ...
 //
-// Seto Balian 21/11/2013
+// Seto Balian 25/11/2013
 
 #include <Eigen/Dense>
 
@@ -28,7 +28,7 @@ public:
   static double maxAbsCoeff(const Eigen::Vector3d & a);
 
 // *************************************************
-// MatrixXcd and VectorXcd
+// MatrixXcd and VectorXcd - Linear algebra
 // *************************************************
 
   // Dimension = number of rows
@@ -66,8 +66,20 @@ public:
   // Tr[B] A (where Tr denotes the sum of the diagonal elements)
   static Eigen::MatrixXcd partialTrace(const Eigen::MatrixXcd & AB,
                                        const unsigned int dimension_B);
-
-
+  
+// *************************************************
+// ArrayXXd
+// *************************************************
+  // @todo Use base classes here to apply to other objects?
+  static void addCol(Eigen::ArrayXXd & array,
+                const Eigen::ArrayXd & column);
+  static void addRow(Eigen::ArrayXXd & array,
+                const Eigen::ArrayXd & row);
+  static void addElement(Eigen::ArrayXd & array, const double element);
+  static void horizontalAppend(Eigen::ArrayXXd & array,
+                              const Eigen::ArrayXXd & to_append);
+  static void verticalAppend(Eigen::ArrayXXd & array,
+                              const Eigen::ArrayXXd & to_append);
   
 };
 

@@ -3,17 +3,15 @@
 
 // ZeemanBasis
 //
-// Calculates and holds magnetic quantum numbers (Zeeman basis) for the spins
-// in a given spin interaction graph.
+// Holds magnetic quantum numbers (Zeeman basis).
 //
-// Seto Balian 20/11/2013
+// Seto Balian 25/11/2013
 
 #include <Eigen/Dense>
-#include <vector>
 
-#include "SpinInteractionGraph.h"
+#include "Named.h"
 
-class ZeemanBasis
+class ZeemanBasis : public Named
 {
 
 private:
@@ -21,39 +19,28 @@ private:
                           // cols -> spin slots
                           // rows -> product states,
                           // e.g. for 2 electrons,
-                          // this is   0.5  0.5
-                          //           0.5 -0.5
-                          //          -0.5  0.5
-                          //          -0.5 -0.5
+                          // this can be   0.5  0.5
+                          //               0.5 -0.5
+                          //              -0.5  0.5
+                          //              -0.5 -0.5
 
 public:
 
   ZeemanBasis();
   ZeemanBasis(const Eigen::ArrayXXd & basis);
-
+  
   Eigen::ArrayXXd get_basis() const;
   void set_basis(const Eigen::ArrayXXd & basis);
-
-  // build the basis using the multiplicites of spins in a spin interaction
-  // graph
-  void build(const SpinInteractionGraph & graph);
-
-  // Suppose basis is |m0, m1, m2> with m1=m2=m3=+/-0.5.
-  // For example, given indices (0,1) and a to_keep array, 0.5 -0.5
-  //                                                      -0.5  0.5
-  // This truncates the original basis (of dimension 8) to
-  //  0.5 -0.5  0.5
-  //  0.5 -0.5 -0.5
-  // -0.5  0.5  0.5
-  // -0.5  0.5 -0.5
-  void truncate(const std::vector<unsigned int> & spin_indices,
-                      const Eigen::ArrayXXd & to_keep);
-
-  // this is the rows of basis_, not from multiplicities (because of possible
-  // truncation)
+  
+  void combine(const ZeemanBasis & to_combine);
+  void append(const ZeemanBasis & to_append);
+  
+  // this is the rows of basis_
   unsigned int dimension() const;
-
+  
+  // this is the cols of basis_
+  unsigned int num_spins() const;
+  
 };
 
 #endif // ZEEMANBASIS_H
-

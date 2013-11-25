@@ -5,21 +5,25 @@
 //
 // System of spin interaction nodes and vertices.
 //
-// Seto Balian 20/11/2013
+// Seto Balian 25/11/2013
 
 #include "SpinInteractionNode.h"
 #include "SpinInteractionVertex.h"
+#include "Named.h"
 
 #include <vector>
 #include <string>
 
-class SpinInteractionGraph
+class SpinInteractionGraph : public Named
 {
 
 private:
 
   std::vector<SpinInteractionNode> nodes_;
   std::vector<SpinInteractionVertex> vertices_;
+  
+  // to truncate Zeeman basis (for speed)
+  
 
 public:
 

@@ -5,12 +5,12 @@
 #include "Spin.h"
 
 NuclearSpin::NuclearSpin () : Spin() {
-//
+  Named::set_class_name("NuclearSpin");
 }
 
 NuclearSpin::NuclearSpin(const double quantum_number,
                          const double gyromagnetic_ratio,
                          const Eigen::Vector3d & position) :
                          Spin(quantum_number,gyromagnetic_ratio,position) {
-  //
+  Named::set_class_name("NuclearSpin");
 }

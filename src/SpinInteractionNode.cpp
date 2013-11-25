@@ -1,5 +1,5 @@
 // See SpinInteractionNode.h for description.
-// Seto Balian 20/11/2013
+// Seto Balian 25/11/2013
 
 #include "SpinInteractionNode.h"
 #include "Spin.h"
@@ -10,7 +10,7 @@
 
 void quit_if_empty(const SpinInteractionNode & node) {
   if (node.is_empty()) {
-    Errors::quit("Node is empty.");
+    Errors::quit(*this,"Node is empty.");
   }
 }
 
@@ -20,6 +20,7 @@ SpinInteractionNode::SpinInteractionNode()
   set_label(0);
   set_state(Eigen::VectorXcd::Zero(0));
   is_empty_ = true;
+  Named::set_class_name("SpinInteractionNode");
 }
 
 SpinInteractionNode::SpinInteractionNode(const Spin & spin,
@@ -29,6 +30,7 @@ SpinInteractionNode::SpinInteractionNode(const Spin & spin,
   set_spin(spin);
   set_state(state);
   set_label(label);
+  Named::set_class_name("SpinInteractionNode");
 }
 
 Spin SpinInteractionNode::get_spin() const

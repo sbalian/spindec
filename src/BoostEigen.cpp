@@ -1,7 +1,8 @@
 // See BoostEigen.h for description.
-// Seto Balian 21/11/2013
+// Seto Balian 25/11/2013
 
 #include "BoostEigen.h"
+#include "Errors.h"
 #include <Eigen/Dense>
 #include <complex>
 
@@ -82,4 +83,79 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
 
   return TrB_A;
 
+}
+
+void BoostEigen::addCol(Eigen::ArrayXXd & array,
+                const Eigen::ArrayXd & column) {
+  
+  if (column.rows() != array.rows()) {
+    Errors::quit("BoostEigen","Can't add column: dimension mismatch.");
+  }
+  
+  Eigen::ArrayXXd new_array(array.rows(),array.cols()+1);
+  
+  for (unsigned int i=0;i<array.cols();i++) {
+    
+    new_array.col(i) = array.col(i);
+    
+  }
+  
+  new_array.col(array.cols()) = column;
+  array = new_array;
+  return;
+  
+}
+
+void BoostEigen::addRow(Eigen::ArrayXXd & array,
+                const Eigen::ArrayXd & row) {
+
+  if (row.cols() != array.cols()) {
+    Errors::quit("BoostEigen","Can't add column: dimension mismatch.");
+  }
+  
+  Eigen::ArrayXXd new_array(array.rows()+1,array.cols());
+  
+  for (unsigned int i=0;i<array.rows();i++) {
+    
+    new_array.row(i) = array.row(i);
+    
+  }
+  
+  new_array.row(array.rows()) = row;
+  array = new_array;
+  return;
+  
+}
+
+
+void BoostEigen::addElement(Eigen::ArrayXd & array, const double element) {
+  Eigen::ArrayXd new_array(array.size()+1);
+  for (unsigned int i=0;i<array.size();i++) {  
+    new_array(i) = array(i);
+  }
+  new_array(array.size()) = element;
+  array = new_array;
+  return;
+}
+
+
+void BoostEigen::horizontalAppend(Eigen::ArrayXXd & array,
+                              const Eigen::ArrayXXd & to_append) {
+  if (array.rows() != to_append.rows()) {
+    Errors::quit("BoostEigen","Can't append: dimension mismatch.");
+  }
+  for (unsigned int i=0;i<to_append.cols();i++) {
+    BoostEigen::addCol(array,to_append.col(i));
+  }
+  return;
+}
+void BoostEigen::verticalAppend(Eigen::ArrayXXd & array,
+                              const Eigen::ArrayXXd & to_append) {
+  if (array.cols() != to_append.cols()) {
+    Errors::quit("BoostEigen","Can't append: dimension mismatch.");
+  }
+  for (unsigned int i=0;i<to_append.rows();i++) {
+    BoostEigen::addRow(array,to_append.row(i));
+  }
+  return;
 }

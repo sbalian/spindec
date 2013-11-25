@@ -5,7 +5,7 @@
 //
 // Just a Spin.
 //
-// Seto Balian 01/11/2013
+// Seto Balian 25/11/2013
 
 #include "Spin.h"
 

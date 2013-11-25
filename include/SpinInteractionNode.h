@@ -6,13 +6,13 @@
 // Holds a spin object (to be part of a spin interaction graph) and its
 // quantum state.
 //
-// Seto Balian 21/11/2013
+// Seto Balian 25/11/2013
 
 #include "Spin.h"
 
 #include <Eigen/Dense>
 
-class SpinInteractionNode
+class SpinInteractionNode : public Named
 {
 
 private:

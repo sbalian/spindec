@@ -6,13 +6,15 @@
 // Interaction between a pair of nodes each containing one Spin.
 // Holds the strength of the interaction.
 //
-// Seto Balian 21/11/2013
+// Seto Balian 25/11/2013
 
 
 #include <utility>
 #include <string>
 
-class SpinInteractionVertex
+#include "Named.h"
+
+class SpinInteractionVertex : public Named
 {
 
 private:

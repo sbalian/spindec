@@ -1,5 +1,5 @@
 // See SpinInteractionVertex.h for description.
-// Seto Balian 20/11/2013
+// Seto Balian 25/11/2013
 
 #include "SpinInteractionVertex.h"
 
@@ -9,6 +9,7 @@ SpinInteractionVertex::SpinInteractionVertex()
 {
   set_labels(0,0);
   set_strength(0.0);
+  Named::set_class_name("SpinInteractionVertex");
 }
 
 SpinInteractionVertex::SpinInteractionVertex(const unsigned int label1,
@@ -19,6 +20,7 @@ SpinInteractionVertex::SpinInteractionVertex(const unsigned int label1,
   set_labels(label1,label2);
   set_interaction_type(interaction_type);
   set_strength(strength);
+  Named::set_class_name("SpinInteractionVertex");
 }
 
 
