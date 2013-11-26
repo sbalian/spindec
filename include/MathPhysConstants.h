@@ -5,7 +5,7 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian 01/11/2013
+// Seto Balian, November 26, 2013
 
 
 class MathPhysConstants

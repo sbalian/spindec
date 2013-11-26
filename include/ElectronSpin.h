@@ -6,7 +6,7 @@
 // Spin object with set spin quantum number (S = 1/2)
 // and gyromagnetic ratio (for the free electron).
 //
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include "Spin.h"
 

@@ -12,10 +12,10 @@
 //
 // Also gives the spin multiplicity = 2 S + 1.
 //
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include <Eigen/Dense>
-#include "ZeemanBasis.h"
+#include "SingleSpinZeemanBasis.h"
 #include "Named.h"
 
 class Spin : public Named
@@ -27,11 +27,9 @@ private:
                                // = Larmor frequency / magnetic field
   Eigen::Vector3d position_;   // Vector position in Angstroms
   
-  ZeemanBasis zeeman_basis_;
+  SingleSpinZeemanBasis zeeman_basis_;
   Eigen::VectorXcd state_;
   
-  void initialize_zeeman_basis();
-
 public:
 
   Spin();
@@ -42,19 +40,21 @@ public:
   double get_quantum_number() const;
   double get_gyromagnetic_ratio() const;
   Eigen::Vector3d get_position() const;
-  ZeemanBasis get_zeeman_basis() const;
+  SingleSpinZeemanBasis get_zeeman_basis() const;
+  Eigen::VectorXcd get_state() const;
+
 
   void set_quantum_number(const double quantum_number);
   void set_gyromagnetic_ratio(const double gyromagnetic_ratio);
   void set_position(const Eigen::Vector3d & position);
+  void set_zeeman_basis(const SingleSpinZeemanBasis & zeeman_basis);
+  void set_state(const Eigen::VectorXcd & state);
+
+  void build_zeeman_basis();
+  void add_magnetic_quantum_number(const double magnetic_quantum_number);
   
   unsigned int multiplicity() const;
   
-  // add magnetic quantum number to basis
-  void add_magnetic_quantum_number_to_zeeman_basis(
-                                          const double magnetic_quantum_number);
-  void build_zeeman_basis(); // using multiplicity
-
 };
 
 #endif // SPIN_H

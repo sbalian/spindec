@@ -6,7 +6,7 @@
 // Spin Hamiltonian in the Zeeman basis, built using spin interaction graphs.
 // Returns eigenvectors and eigenvalues.
 //
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include <Eigen/Dense>
 

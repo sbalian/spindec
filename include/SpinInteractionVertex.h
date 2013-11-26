@@ -4,49 +4,48 @@
 // SpinInteractionVertex
 //
 // Interaction between a pair of nodes each containing one Spin.
-// Holds the strength of the interaction.
+// Holds the labels for the two interacting spins as well as a SpinInteraction
+// object.
 //
-// Seto Balian 25/11/2013
-
+// @todo Add more description ...
+//
+// Seto Balian, November 26, 2013
 
 #include <utility>
 #include <string>
 
 #include "Named.h"
+#include "SpinInteraction.h"
+
+#include <string>
 
 class SpinInteractionVertex : public Named
 {
 
 private:
   std::pair<unsigned int,unsigned int> labels_;
-  double strength_; // in M rad s-1
-  std::string interaction_type_; // See SpinInteractions for allowed values
-
+  SpinInteraction interaction_; // see SpinInteraction.h and derived classes
+  
+  void set_interaction(const SpinInteraction & interaction);
+  
 public:
 
   SpinInteractionVertex();
-  
   SpinInteractionVertex(const unsigned int label1,
-                         const unsigned int label2,
-                         const std::string & interaction_type,
-                         const double strength);
+                        const unsigned int label2,
+                        const SpinInteraction & interaction);
 
   unsigned int get_label1() const;
   unsigned int get_label2() const;
+  // uses Named::class
   std::string get_interaction_type() const;
-  double get_strength() const;
 
   void set_labels(const unsigned int label1,
-                 const unsigned int label2);
+                  const unsigned int label2);
 
   void set_label1(const unsigned int label);
   void set_label2(const unsigned int label);
   
-  void set_interaction_type(const std::string & interaction_type);
-
-  void set_strength(const double strength);
-
 };
 
 #endif // SPININTERACTIONVERTEX_H
-

@@ -1,6 +1,6 @@
 // To test SpinDecoherence
 //
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include <iostream>
 #include <Eigen/Dense>
@@ -21,14 +21,14 @@ NuclearSpin nucleus(4.5,10,Eigen::Vector3d::Zero());
 ElectronSpin electron;
 ElectronSpin electron2;
 
-electron.add_magnetic_quantum_number_to_zeeman_basis(0.5);
-electron.add_magnetic_quantum_number_to_zeeman_basis(-0.5);
-electron.add_magnetic_quantum_number_to_zeeman_basis(3.5);
+electron.add_magnetic_quantum_number(-0.5);
+electron.add_magnetic_quantum_number(0.5);
+//electron.add_magnetic_quantum_number(3.5);
 
-electron2.add_magnetic_quantum_number_to_zeeman_basis(1.5);
-electron2.add_magnetic_quantum_number_to_zeeman_basis(2.5);
-electron2.add_magnetic_quantum_number_to_zeeman_basis(-9.5);
-electron2.add_magnetic_quantum_number_to_zeeman_basis(-9.5);
+electron2.add_magnetic_quantum_number(1.5);
+electron2.add_magnetic_quantum_number(2.5);
+//electron2.add_magnetic_quantum_number(-9.5);
+//electron2.add_magnetic_quantum_number(-9.5);
 
 
 ZeemanBasis combined_basis = electron.get_zeeman_basis();
@@ -41,6 +41,21 @@ std::cout << nucleus.get_zeeman_basis().get_basis() << std::endl << std::endl;
 std::cout << electron.get_zeeman_basis().get_basis() << std::endl << std::endl;
 std::cout << combined_basis.get_basis() << std::endl << std::endl;
 
+SingleSpinZeemanBasis test_combine = nucleus.get_zeeman_basis();
+ZeemanBasis combined = electron.get_zeeman_basis();
+
+std::cout << "electron" << std::endl;
+
+std::cout << combined.get_basis() << std::endl;
+
+std::cout << "electron + nucleus" << std::endl;
+test_combine.combine(combined);
+std::cout << combined.get_basis() << std::endl;
+
+std::cout << "electron + nucleus + electron" << std::endl;
+test_combine = electron.get_zeeman_basis();
+test_combine.combine(combined);
+std::cout << combined.get_basis() << std::endl;
 
 
 //SpinInteractionGraph graph;
