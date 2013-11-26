@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include "BoostEigen.h"
 #include "Errors.h"

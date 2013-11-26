@@ -1,5 +1,5 @@
 // See NuclearSpin.h for description.
-// Seto Balian 01/11/2013
+// Seto Balian, November 26, 2013
 
 #include "NuclearSpin.h"
 #include "Spin.h"

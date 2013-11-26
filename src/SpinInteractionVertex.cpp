@@ -1,28 +1,31 @@
 // See SpinInteractionVertex.h for description.
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include "SpinInteractionVertex.h"
-
 #include <utility>
+
+void SpinInteractionVertex::set_interaction(const SpinInteraction & 
+                                                          interaction)
+{
+  //interaction.calculate();
+  interaction_ = interaction;
+  return;
+}
 
 SpinInteractionVertex::SpinInteractionVertex()
 {
   set_labels(0,0);
-  set_strength(0.0);
   Named::set_class_name("SpinInteractionVertex");
 }
 
 SpinInteractionVertex::SpinInteractionVertex(const unsigned int label1,
                                  const unsigned int label2,
-                                const std::string & interaction_type,
-                                 const double strength)
+                                const SpinInteraction & interaction)
 {
   set_labels(label1,label2);
-  set_interaction_type(interaction_type);
-  set_strength(strength);
+  set_interaction(interaction);
   Named::set_class_name("SpinInteractionVertex");
 }
-
 
 unsigned int SpinInteractionVertex::get_label1() const
 {
@@ -36,13 +39,7 @@ unsigned int SpinInteractionVertex::get_label2() const
 
 std::string SpinInteractionVertex::get_interaction_type() const
 {
- return interaction_type_; 
-}
-
-
-double SpinInteractionVertex::get_strength() const
-{
-  return strength_;
+ return interaction_.get_class_name(); 
 }
 
 void SpinInteractionVertex::set_labels(const unsigned int label1,
@@ -64,19 +61,3 @@ void SpinInteractionVertex::set_label2(const unsigned int label)
   labels_.second = label;
   return;
 }
-
-void SpinInteractionVertex::set_interaction_type(const std::string & 
-                                                          interaction_type)
-{
-  interaction_type_ = interaction_type;
-  return;
-  
-}
-
-
-void SpinInteractionVertex::set_strength(const double strength)
-{
-  strength_ = strength;
-  return;
-}
-

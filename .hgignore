@@ -1,4 +1,6 @@
 syntax: glob
 nbproject
 eigen
+*.o
+TEST
 

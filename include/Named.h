@@ -6,7 +6,7 @@
 // For everything that has a name.
 // Stores class and object (particular instance of class) names.
 //
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include <string>
 

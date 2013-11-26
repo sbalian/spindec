@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include "SpinHamiltonian.h"
 #include "Errors.h"
@@ -27,9 +27,7 @@ void build(const SpinInteractionGraph & interaction_graph) {
   // build the basis
   basis_.build();
   
-  
 }
-
 
 bool SpinHamiltonian::is_built() const {
   return is_built_;
@@ -48,7 +46,6 @@ Eigen::VectorXd SpinHamiltonian::get_eigenvalues() const  {
   quit_if_not_diagonal(*this);
   return eigenvalues_;
 }
-
 
 Eigen::VectorXcd SpinHamiltonian::get_eigenvector(
                                       const unsigned int index) const {

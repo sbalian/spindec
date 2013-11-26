@@ -6,7 +6,7 @@
 // Holds a spin object (to be part of a spin interaction graph) and its
 // quantum state.
 //
-// Seto Balian 25/11/2013
+// Seto Balian, November 26, 2013
 
 #include "Spin.h"
 
@@ -17,22 +17,21 @@ class SpinInteractionNode : public Named
 
 private:
   Spin spin_;
-  Eigen::VectorXcd state_;
   bool is_empty_;
   unsigned int label_;
+  
+  void quit_if_empty(const SpinInteractionNode & node) const;
+
 
 public:
   
   SpinInteractionNode();
-  SpinInteractionNode(const Spin & spin, const Eigen::VectorXcd & state,
-                                          const unsigned int label);
+  SpinInteractionNode(const Spin & spin, const unsigned int label);
 
   Spin get_spin() const;
-  Eigen::VectorXcd get_state() const;
   unsigned int get_label() const;
   
   void set_spin(const Spin & spin);
-  void set_state(const Eigen::VectorXcd & state);
   void set_label(const unsigned int label);
 
   bool is_empty() const;
