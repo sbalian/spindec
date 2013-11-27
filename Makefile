@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, November 26, 2013
+# Seto Balian, November 27, 2013
 
 #####################
 # User input
@@ -28,7 +28,7 @@ EIGENPATH=./eigen/
 EXECUTABLES=TEST
 
 # Executable objects 
-TEST_OBJECTS=TEST.o Named.o ElectronSpin.o NuclearSpin.o ZeemanBasis.o MathPhysConstants.o Spin.o Errors.o BoostEigen.o SingleSpinZeemanBasis.o SpinInteraction.o UniformMagneticField.o Dipolar.o SpinInteractionNode.o SpinInteractionVertex.o SpinInteractionGraph.o
+TEST_OBJECTS=TEST.o Spin.o ElectronSpin.o NuclearSpin.o MathPhysConstants.o Errors.o BoostEigen.o
 
 #####################
 # mains
@@ -52,10 +52,6 @@ TEST: $(TEST_OBJECTS)
 
 MathPhysConstants.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)MathPhysConstants.cpp
-	
-Named.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)Named.cpp
-
 
 ## Need Eigen
 

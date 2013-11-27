@@ -1,5 +1,5 @@
 // See MathPhysConstants.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "MathPhysConstants.h"
 
@@ -33,4 +33,3 @@ double MathPhysConstants::electron_gyromagnetic_ratio()
 // SOURCE: CODATA
 // DATE: 22/10/2013
 }
-

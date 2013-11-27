@@ -10,7 +10,7 @@
 
 void SpinInteractionNode::quit_if_empty(const SpinInteractionNode & node) const{
   if (node.is_empty()) {
-    Errors::quit(*this,"Node is empty.");
+    Errors::quit("Node is empty.");
   }
 }
 
@@ -19,7 +19,6 @@ SpinInteractionNode::SpinInteractionNode()
   set_spin(Spin());
   set_label(0);
   is_empty_ = true;
-  Named::set_class_name("SpinInteractionNode");
 }
 
 SpinInteractionNode::SpinInteractionNode(const Spin & spin,
@@ -27,7 +26,6 @@ SpinInteractionNode::SpinInteractionNode(const Spin & spin,
 {
   set_spin(spin);
   set_label(label);
-  Named::set_class_name("SpinInteractionNode");
 }
 
 Spin SpinInteractionNode::get_spin() const

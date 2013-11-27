@@ -9,17 +9,16 @@
 //
 // @todo Add more description ...
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include <utility>
 #include <string>
 
-#include "Named.h"
 #include "SpinInteraction.h"
 
 #include <string>
 
-class SpinInteractionVertex : public Named
+class SpinInteractionVertex
 {
 
 private:

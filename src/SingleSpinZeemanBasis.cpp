@@ -1,12 +1,11 @@
 // See SingleSpinZeemanBasis.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "SingleSpinZeemanBasis.h"
 #include "BoostEigen.h"
 
 SingleSpinZeemanBasis::SingleSpinZeemanBasis() {
   clear();
-  Named::set_class_name("SinglSpinZeemanBasis");
 }
 
 void SingleSpinZeemanBasis::add_magnetic_quantum_number(

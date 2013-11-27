@@ -1,11 +1,9 @@
 // See BoostEigen.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "BoostEigen.h"
 #include "Errors.h"
 #include <Eigen/Dense>
-#include <complex>
-
 
 double BoostEigen::cosAngleBetween(const Eigen::Vector3d & a,
                                        const Eigen::Vector3d & b)
@@ -13,33 +11,39 @@ double BoostEigen::cosAngleBetween(const Eigen::Vector3d & a,
   return  ( a.dot(b) / (a.norm()*b.norm()) );
 }
 
-double BoostEigen::maxAbsCoeff(const Eigen::Vector3d & a)  {
+double BoostEigen::maxAbsCoeff(const Eigen::Vector3d & a)
+{
   return (a.cwiseAbs()).maxCoeff();
 }
 
-unsigned int BoostEigen::dimension(const Eigen::MatrixXcd & A) {
+unsigned int BoostEigen::dimension(const Eigen::MatrixXcd & A)
+{
   return static_cast<unsigned int> (A.rows());
 }
 
-Eigen::VectorXcd BoostEigen::exp(const Eigen::VectorXcd & a) {
-  return (a.array().exp()).matrix();
-}
-Eigen::VectorXd BoostEigen::exp(const Eigen::VectorXd & a) {
+Eigen::VectorXcd BoostEigen::exp(const Eigen::VectorXcd & a)
+{
   return (a.array().exp()).matrix();
 }
 
+Eigen::VectorXd BoostEigen::exp(const Eigen::VectorXd & a)
+{
+  return (a.array().exp()).matrix();
+}
 
 Eigen::MatrixXcd BoostEigen::spectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXcd & eigenvalues) {
+                                         const Eigen::VectorXcd & eigenvalues)
+{
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.inverse());
 }
+
 Eigen::MatrixXcd BoostEigen::hermitianSpectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXd & eigenvalues) {
+                                         const Eigen::VectorXd & eigenvalues)
+{
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.transpose());
 }
-
 
 Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
                                       const Eigen::MatrixXcd & B)
@@ -86,10 +90,11 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
 }
 
 void BoostEigen::addCol(Eigen::ArrayXXd & array,
-                const Eigen::ArrayXd & column) {
+                const Eigen::ArrayXd & column)
+{
   
   if (column.rows() != array.rows()) {
-    Errors::quit("BoostEigen","Can't add column: dimension mismatch.");
+    Errors::quit("Can't add column: dimension mismatch.");
   }
   
   Eigen::ArrayXXd new_array(array.rows(),array.cols()+1);
@@ -107,10 +112,11 @@ void BoostEigen::addCol(Eigen::ArrayXXd & array,
 }
 
 void BoostEigen::addRow(Eigen::ArrayXXd & array,
-                const Eigen::ArrayXd & row) {
+                const Eigen::ArrayXd & row)
+{
 
   if (row.cols() != array.cols()) {
-    Errors::quit("BoostEigen","Can't add column: dimension mismatch.");
+    Errors::quit("Can't add column: dimension mismatch.");
   }
   
   Eigen::ArrayXXd new_array(array.rows()+1,array.cols());
@@ -127,8 +133,8 @@ void BoostEigen::addRow(Eigen::ArrayXXd & array,
   
 }
 
-
-void BoostEigen::addElement(Eigen::ArrayXd & array, const double element) {
+void BoostEigen::addElement(Eigen::ArrayXd & array, const double element)
+{
   Eigen::ArrayXd new_array(array.size()+1);
   for (unsigned int i=0;i<array.size();i++) {  
     new_array(i) = array(i);
@@ -138,11 +144,11 @@ void BoostEigen::addElement(Eigen::ArrayXd & array, const double element) {
   return;
 }
 
-
 void BoostEigen::horizontalAppend(Eigen::ArrayXXd & array,
-                              const Eigen::ArrayXXd & to_append) {
+                              const Eigen::ArrayXXd & to_append)
+{
   if (array.rows() != to_append.rows()) {
-    Errors::quit("BoostEigen","Can't append: dimension mismatch.");
+    Errors::quit("Can't append: dimension mismatch.");
   }
   for (unsigned int i=0;i<to_append.cols();i++) {
     BoostEigen::addCol(array,to_append.col(i));
@@ -150,9 +156,10 @@ void BoostEigen::horizontalAppend(Eigen::ArrayXXd & array,
   return;
 }
 void BoostEigen::verticalAppend(Eigen::ArrayXXd & array,
-                              const Eigen::ArrayXXd & to_append) {
+                              const Eigen::ArrayXXd & to_append)
+{
   if (array.cols() != to_append.cols()) {
-    Errors::quit("BoostEigen","Can't append: dimension mismatch.");
+    Errors::quit("Can't append: dimension mismatch.");
   }
   for (unsigned int i=0;i<to_append.rows();i++) {
     BoostEigen::addRow(array,to_append.row(i));

@@ -1,22 +1,28 @@
 // See ElectronSpin.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "ElectronSpin.h"
-#include "Spin.h"
 #include "MathPhysConstants.h"
 
-#include <Eigen/Dense>
+#include "Errors.h"
 
-ElectronSpin::ElectronSpin() :
-      Spin(0.5,MathPhysConstants::electron_gyromagnetic_ratio(),
-      Eigen::Vector3d::Zero())
+ElectronSpin::ElectronSpin()
 {
-  Named::set_class_name("ElectronSpin");
+  Spin::set_gyromagnetic_ratio(
+                            MathPhysConstants::electron_gyromagnetic_ratio());
 }
 
-ElectronSpin::ElectronSpin(const Eigen::Vector3d & position) :
-      Spin(0.5,MathPhysConstants::electron_gyromagnetic_ratio(),
-      position)
+ElectronSpin::ElectronSpin(const double gyromagnetic_ratio)
 {
-  Named::set_class_name("ElectronSpin");
+  Spin::set_gyromagnetic_ratio(gyromagnetic_ratio);
+}
+
+double ElectronSpin::get_quantum_number() const
+{
+  return 0.5;
+}
+
+unsigned int ElectronSpin::multiplicity() const
+{
+  return 2;
 }

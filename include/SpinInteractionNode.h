@@ -3,16 +3,18 @@
 
 // SpinInteractionNode
 //
-// Holds a spin object (to be part of a spin interaction graph) and its
+// Holds: Spin, vector position in real space [Angstroms], spin quantum state
+//
+//(to be part of a spin interaction graph) and its
 // quantum state.
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "Spin.h"
 
 #include <Eigen/Dense>
 
-class SpinInteractionNode : public Named
+class SpinInteractionNode
 {
 
 private:

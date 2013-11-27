@@ -1,12 +1,12 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "SpinHamiltonian.h"
 #include "Errors.h"
 
 void quit_if_not_diagonal(const SpinHamiltonian & hamiltonian) {
   if (!hamiltonian.is_diagonalized()) {
-    Errors::quit(*this,"Spin Hamiltonian is not diagonal.");
+    Errors::quit("Spin Hamiltonian is not diagonal.");
   }
   return;
 }
@@ -14,13 +14,12 @@ void quit_if_not_diagonal(const SpinHamiltonian & hamiltonian) {
 SpinHamiltonian::SpinHamiltonian() {
   is_built_ = 0;
   is_diagonalized_ = 0;
-  Named::set_class_name("SpinHamiltonian");
 }
 
 void build(const SpinInteractionGraph & interaction_graph) {
  
   if (is_built()) {
-    Errors::quit(*this,
+    Errors::quit(
       "Spin Hamiltonian already built. You may want to use rebuild().");
   }
   

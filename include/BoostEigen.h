@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence ...
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include <Eigen/Dense>
 
@@ -51,7 +51,6 @@ public:
                                          const Eigen::MatrixXcd & eigenvectors,
                                          const Eigen::VectorXd & eigenvalues);
                                          // eigenvalues must be real
-
 
   // Tensor product
   // This evaluates C = A X B. For example, for 2 x 2 matrices,
