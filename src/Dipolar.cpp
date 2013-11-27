@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
@@ -11,7 +11,7 @@
 
 Dipolar::Dipolar()
 {
-  Named::set_class_name("Dipolar");
+  
 }
 
 // See header for description

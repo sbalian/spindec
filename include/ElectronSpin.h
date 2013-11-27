@@ -3,13 +3,12 @@
 
 // Electron spin
 //
-// Spin object with set spin quantum number (S = 1/2)
-// and gyromagnetic ratio (for the free electron).
+// Spin with fixed quantum number 1/2.
+// Gyromagnetic ratio is for the free electron by default.
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "Spin.h"
-
 #include <Eigen/Dense>
 
 class ElectronSpin : public Spin
@@ -18,9 +17,12 @@ class ElectronSpin : public Spin
 public:
 
   ElectronSpin();
-  ElectronSpin(const Eigen::Vector3d & position);
+  ElectronSpin(const double gyromagnetic_ratio);
+
+  double get_quantum_number() const; // = 0.5
+
+  unsigned int multiplicity() const; // = 2
 
 };
 
 #endif // ELECTRONSPIN_H
-

@@ -5,17 +5,16 @@
 //
 // System of spin interaction nodes and vertices.
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "SpinInteractionNode.h"
 #include "SpinInteractionVertex.h"
 #include "SpinInteraction.h"
-#include "Named.h"
 
 #include <vector>
 #include <string>
 
-class SpinInteractionGraph : public Named
+class SpinInteractionGraph
 {
 
 private:

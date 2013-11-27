@@ -1,22 +1,11 @@
 // See ZeemanBasis.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include <Eigen/Dense>
 
 #include "ZeemanBasis.h"
 #include "BoostEigen.h"
 #include "Errors.h"
-
-ZeemanBasis::ZeemanBasis() {
-  clear();
-  Named::set_class_name("ZeemanBasis");
-}
-
-ZeemanBasis::ZeemanBasis(const Eigen::ArrayXXd & basis) {
-  clear();
-  set_basis(basis);
-  Named::set_class_name("ZeemanBasis");
-}
 
 Eigen::ArrayXXd ZeemanBasis::get_basis() const {
   return basis_;
@@ -45,9 +34,6 @@ void ZeemanBasis::clear()
   ZeemanBasis::set_basis(Eigen::ArrayXXd::Zero(0,0));
   return;
 }
-
-
-
 
 int multiplicity(const double spin_quantum_number)
 {
@@ -130,7 +116,7 @@ void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
   const unsigned int to_keep_cols = static_cast<unsigned int>(to_keep.cols());
 
   if (static_cast<unsigned int>(to_keep_cols) != spin_indices.size()) {
-    Errors::quit(*this,
+    Errors::quit(
               "Number of spins != number of columns in \"to keep\" array");
   }
   

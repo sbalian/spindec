@@ -1,12 +1,11 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "SpinInteractionGraph.h"
 
 #include <vector>
 
 SpinInteractionGraph::SpinInteractionGraph() {
-  Named::set_class_name("SpinInteractionGraph");
 }
 
 void SpinInteractionGraph::add_node(const SpinInteractionNode & node)

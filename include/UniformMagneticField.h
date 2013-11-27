@@ -5,13 +5,11 @@
 //
 // Uniform magnetic field parallel to some direction in Cartesian coordinates.
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include <Eigen/Dense>
 
-#include "Named.h"
-
-class UniformMagneticField : public Named
+class UniformMagneticField
 {
 
 private:

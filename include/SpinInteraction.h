@@ -6,12 +6,11 @@
 // Base class for interactions between two spins.
 // Holds the strength of interaction.
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include <string>
-#include "Named.h"
 
-class SpinInteraction : public Named
+class SpinInteraction
 {
 
 private:

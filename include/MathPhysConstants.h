@@ -5,8 +5,7 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian, November 26, 2013
-
+// Seto Balian, November 27, 2013
 
 class MathPhysConstants
 {
@@ -27,4 +26,3 @@ public:
 };
 
 #endif // MATHPHYSCONSTANTS_H
-

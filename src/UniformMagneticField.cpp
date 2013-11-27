@@ -1,12 +1,10 @@
 // See UniformMagneticField.h for description.
-// Seto Balian, November 26, 2013
+// Seto Balian, November 27, 2013
 
 #include "UniformMagneticField.h"
-#include "Named.h"
 
 UniformMagneticField::UniformMagneticField()
 {
-  Named::set_class_name("UniformMagneticField");
 }
 
 UniformMagneticField::UniformMagneticField(const double magnitude,
@@ -14,7 +12,6 @@ UniformMagneticField::UniformMagneticField(const double magnitude,
 {
   set_magnitude(magnitude);
   set_direction(direction);
-  Named::set_class_name("UniformMagneticField");
 }
   
 double UniformMagneticField::get_magnitude() const
