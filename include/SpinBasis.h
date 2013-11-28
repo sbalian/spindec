@@ -1,50 +1,59 @@
-#ifndef ZEEMANBASIS_H
-#define ZEEMANBASIS_H
+#ifndef SPINBASIS_H
+#define SPINBASIS_H
 
-// ZeemanBasis
+// SpinBasis
 //
-// Holds magnetic quantum numbers (Zeeman basis) for a single spin or multiple
-// spins.
+// For holding magnetic quantum numbers (Zeeman basis) for (in general)
+// multiple spins.
 //
-// Seto Balian, November 27, 2013
+// Seto Balian, November 28, 2013
 
 #include <Eigen/Dense>
+
+#include "Spin.h"
 #include <vector>
 
-class ZeemanBasis
+class SpinBasis
 {
-  Eigen::Array basis_;
+protected:
+  Eigen::ArrayXXd basis_;
   // Stores magnetic quantum numbers for multiple spins
   // Columns: spins
   // Rows: magnetic quantum numbers
   // For example, for 2 electrons, this can be
-  //                  0.5  0.5 -> |0.5,0.5>
+  //                  0.5  0.5 -> |mS1 = 0.5, mS2 = 0.5>
   //                  0.5 -0.5
   //                 -0.5  0.5
   //                 -0.5 -0.5
 
 public:
   
-  virtual ZeemanBasis join(const ZeemanBasis & operand) = 0;
-  // For example, ZeemanBasis B1 = 0.5
+  SpinBasis();
+  
+  // Number of basis states
+  unsigned int dimension() const;
+  
+  // Number of spins
+  virtual unsigned int num_spins() const;
+  
+  // Clear the basis
+  virtual void clear();
+  
+  // For example, SpinBasis   B1 = 0.5
   //                              -0.5
-  // ZeemanBasis B2 = 4.5
+  // SpinBasis   B2 = 4.5
   //                 -4.5
   // B1.join(B2) gives 0.5  4.5
   //                  -0.5 -4.5
-
+  SpinBasis join(const SpinBasis & to_join) const;
   
-  // Number of basis states
-  virtual unsigned int dimension() const;
+  // Quickly build basis using multiplicities
   
-  // Number of spins
-  virtual unsigned int num_spins() const = 0;
+  std::vector<Spin*> spins;
+  spins.push_back(&derivedSpin); // ...
   
-  // Clear the basis
-  void clear() = 0;
   
-  // quickly build the basis using the multiplicites of spins
-  void build(const std::vector<double> & spin_quantum_numbers);
+  void build(const std::vector<Spin*> & spins);
   
   // Suppose basis is |m0, m1, m2> with m1=m2=m3=+/-0.5.
   // For example, given indices (0,1) and a to_keep array, 0.5 -0.5
@@ -57,8 +66,8 @@ public:
   void truncate(const std::vector<unsigned int> & spin_indices,
                      const Eigen::ArrayXXd & to_keep);
   
-  virtual ~ZeemanBasis();
+  virtual ~SpinBasis() {/**/};
   
 };
 
-#endif // ZEEMANBASIS_H
+#endif // SPINBASIS_H

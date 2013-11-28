@@ -1,6 +1,6 @@
 // To test SpinDecoherence
 //
-// Seto Balian, November 27, 2013
+// Seto Balian, November 28, 2013
 
 #include <iostream>
 #include <Eigen/Dense>
@@ -8,9 +8,11 @@
 #include <cmath>
 #include "MathPhysConstants.h"
 #include "BoostEigen.h"
+#include "Spin.h"
+#include "ElectronSpin.h"
+#include "NuclearSpin.h"
 
-//#include "NuclearSpin.h"
-//#include "ElectronSpin.h"
+
 //#include "ZeemanBasis.h"
 //#include "SpinInteractionGraph.h"
 

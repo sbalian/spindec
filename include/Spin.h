@@ -3,29 +3,36 @@
 
 // Spin
 //
-// For holding the spin quantum number S and gyromagnetic ratio [M rad s-1 T-1].
+// Contains spin quantum number S and gyromagnetic ratio [M rad s-1 T-1].
 // Also gives the spin multiplicity = 2 S + 1.
 //
-// Seto Balian, November 27, 2013
+// gyromagnetic ratio = Larmor frequency / magnetic field
+//
+// Seto Balian, November 28, 2013
 
 class Spin
 {
 
 protected:
 
-  double gyromagnetic_ratio_;  // Gyromagnetic ratio [M rad s-1 T-1] 
-                               // = Larmor frequency / magnetic field
+  const double quantum_number_;
+  const double gyromagnetic_ratio_;
+  const unsigned int multiplicity_;
+
+  unsigned int calculate_multiplicity() const;
+
+  Spin(const double quantum_number,
+       const double gyromagnetic_ratio,
+       const unsigned int multiplicity);
 
 public:
+  
+  Spin(); // all data members set to zero
+  Spin(const double quantum_number, const double gyromagnetic_ratio);
 
   double get_gyromagnetic_ratio() const;
-  void set_gyromagnetic_ratio(const double gyromagnetic_ratio);
-  
-  virtual double get_quantum_number() const = 0;
-
-  virtual unsigned int multiplicity() const = 0; // 2 S + 1
-
-  virtual ~Spin() {};
+  double get_quantum_number() const;
+  double get_multiplicity() const;
 
 };
 
