@@ -1,33 +1,44 @@
-// See SingleSpinZeemanBasis.h for description.
-// Seto Balian, November 27, 2013
+// See SingleSpinBasis.h for description.
+// Seto Balian, November 28, 2013
 
-#include "SingleSpinZeemanBasis.h"
+#include "SingleSpinBasis.h"
 #include "BoostEigen.h"
 
-SingleSpinZeemanBasis::SingleSpinZeemanBasis() {
-  clear();
+#include <vector>
+
+
+SingleSpinBasis::SingleSpinBasis()
+{
+  SingleSpinBasis::clear();
 }
 
-void SingleSpinZeemanBasis::add_magnetic_quantum_number(
-                                    const double magnetic_quantum_number) {
-  Eigen::ArrayXd basis = get_basis();
+void SpinBasis::clear()
+{
+  // @todo what is the difference between this and
+  // Eigen::ArrayXd::Zero(1,1) ... when I return ArrayXXd what will it return?
+  SpinBasis::set_basis(Eigen::ArrayXd::Zero(1,1));
+}
+
+void SingleSpinBasis::add_magnetic_quantum_number(
+                                  const double magnetic_quantum_number)
+{
+  //@todo now get_basis() returns ArrayXXd  and this is set to ArrayXd, what
+  // is happening with Eigen?
+  Eigen::ArrayXd basis = SpinBasis::get_basis();
   BoostEigen::addElement(basis,magnetic_quantum_number);
-  set_basis(basis);
+  SpinBasis::set_basis(basis);
   return;
 }
 
-void SingleSpinZeemanBasis::build(const unsigned int multiplicity,
-                                  const double spin_quantum_number) {
-
-  double magnetic_quantum_number = static_cast<double>(spin_quantum_number);
-  for (unsigned int i=0;i<multiplicity;i++) {
-    add_magnetic_quantum_number(magnetic_quantum_number);
-    magnetic_quantum_number -= 1;
-  }
+void SingleSpinBasis::build(const Spin* spin)
+{
+  std::vector<const Spin*> spins;
+  spins.push_back(spin);
+  SpinBasis::build(spins);
   return;
 }
 
-void SingleSpinZeemanBasis::combine(ZeemanBasis & basis) const
+void SingleSpinBasis::combine_to(SpinBasis & basis) const
 {
   
   unsigned int old_dimension = basis.dimension();
@@ -75,12 +86,5 @@ void SingleSpinZeemanBasis::combine(ZeemanBasis & basis) const
   new_basis.col(basis.num_spins()) = new_column; 
   // set new basis
   basis.set_basis(new_basis);
-  return;
-}
-
-
-void SingleSpinZeemanBasis::clear()
-{
-  ZeemanBasis::set_basis(Eigen::ArrayXd::Zero(0));
   return;
 }

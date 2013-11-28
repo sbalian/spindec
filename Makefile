@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, November 27, 2013
+# Seto Balian, November 28, 2013
 
 #####################
 # User input
@@ -24,6 +24,7 @@ SOURCEPATH=./src/
 HEADERPATH=./include/
 # Download and extract Eigen from http://eigen.tuxfamily.org
 EIGENPATH=./eigen/
+# BOOSTPATH=/home/sbalian/include/boost/
 
 EXECUTABLES=TEST
 
@@ -64,8 +65,14 @@ BoostEigen.o:
 Spin.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Spin.cpp
 
-ZeemanBasis.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)ZeemanBasis.cpp
+SpinBasis.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinBasis.cpp
+	
+SingleSpinBasis.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SingleSpinBasis.cpp
+
+MultipleSpinBasis.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)MultipleSpinBasis.cpp
 	
 SpinInteractionNode.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionNode.cpp
@@ -81,9 +88,6 @@ ElectronSpin.o:
 
 SpinInteractionGraph.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
-
-SingleSpinZeemanBasis.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SingleSpinZeemanBasis.cpp
 	
 SpinInteraction.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteraction.cpp

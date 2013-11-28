@@ -1,51 +1,56 @@
-// See ZeemanBasis.h for description.
-// Seto Balian, November 27, 2013
+// See SpinBasis.h for description.
+// Seto Balian, November 28, 2013
 
-#include <Eigen/Dense>
-
-#include "ZeemanBasis.h"
-#include "BoostEigen.h"
+#include "SpinBasis.h"
 #include "Errors.h"
+#include "BoostEigen.h"
 
-Eigen::ArrayXXd ZeemanBasis::get_basis() const {
+SpinBasis::SpinBasis()
+{
+  clear();
+}
+
+Eigen::ArrayXXd SpinBasis::get_basis() const
+{
   return basis_;
 }
 
-void ZeemanBasis::set_basis(const Eigen::ArrayXXd & basis) {
+void SpinBasis::set_basis(const Eigen::ArrayXXd & basis)
+{
   basis_ = basis;
   return;
 }
 
-void ZeemanBasis::append(const ZeemanBasis & to_append) {
-  BoostEigen::horizontalAppend(basis_,to_append.get_basis());
-  return;
-}
-
-unsigned int ZeemanBasis::dimension() const {
-  return static_cast<unsigned int>(basis_.rows());
-}
-
-unsigned int ZeemanBasis::num_spins() const {
-  return static_cast<unsigned int>(basis_.cols());
-}
-
-void ZeemanBasis::clear()
+unsigned int SpinBasis::dimension() const
 {
-  ZeemanBasis::set_basis(Eigen::ArrayXXd::Zero(0,0));
-  return;
+  return static_cast<unsigned int>(get_basis().rows());
 }
 
-int multiplicity(const double spin_quantum_number)
+unsigned int SpinBasis::num_spins() const
 {
-  return static_cast<int>(2.0*spin_quantum_number + 1.0);
+  return static_cast<unsigned int>(get_basis().cols());
 }
 
-void ZeemanBasis::build(const std::vector<double> & spin_quantum_numbers) {
-    
-  int n = static_cast<int>(spin_quantum_numbers.size()); // number of spins
+void SpinBasis::clear()
+{
+  set_basis(Eigen::ArrayXXd::Zero(1,1));
+}
+
+SpinBasis SpinBasis::join(const SpinBasis & to_join) const
+{
+  SpinBasis out;
+  Eigen::ArrayXXd lhs = get_basis();
+  BoostEigen::horizontalAppend(lhs,to_join.get_basis());
+  out.set_basis(lhs);
+  return out;
+}
+
+void SpinBasis::build(const std::vector<Spin*> & spins)
+{    
+  int n = static_cast<int>(spins.size()); // number of spins
   int M = 1;  // total multiplicity
   for (unsigned int i=0;i<static_cast<unsigned int>(n);i++) {
-    M *= multiplicity(spin_quantum_numbers[i]);
+    M *= spins[i]->multiplicity();
   }
 
   // Initialise basis to be built
@@ -79,7 +84,7 @@ void ZeemanBasis::build(const std::vector<double> & spin_quantum_numbers) {
   M_0_to_j = 1;
   // Loop over spins
   for (j=0;j<n;j++) {
-    M_j = multiplicity(spin_quantum_numbers[j]);
+    M_j = spins[j]->multiplicity();
     M_0_to_j = M_0_to_j*M_j;
 
     C_j = M_0_to_j / M_j;
@@ -88,7 +93,7 @@ void ZeemanBasis::build(const std::vector<double> & spin_quantum_numbers) {
     p = 0;
     l = 0;
     while (p<C_j) {
-      spin_QN = -spin_quantum_numbers[j];
+      spin_QN = -spins[j]->get_quantum_number();
       for (m=0;m<M_j;m++) {
         q = 0;
         while (q<c_j) {
@@ -102,15 +107,15 @@ void ZeemanBasis::build(const std::vector<double> & spin_quantum_numbers) {
     }
   }
   
-  basis_ = basis;
-
+  set_basis(basis);
   return;
 
 }
 
-void ZeemanBasis::truncate(const std::vector<unsigned int> & spin_indices,
-                    const Eigen::ArrayXXd & to_keep) {
-  
+
+void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,
+                    const Eigen::ArrayXXd & to_keep)
+{  
   // checks
   
   const unsigned int to_keep_cols = static_cast<unsigned int>(to_keep.cols());
