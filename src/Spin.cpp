@@ -1,5 +1,5 @@
 // See Spin.h for description.
-// Seto Balian, November 28, 2013
+// Seto Balian, November 29, 2013
 
 #include "Spin.h"
 

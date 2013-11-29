@@ -6,10 +6,9 @@
 // Spin with fixed quantum number 1/2 and hence multiplicity (= 2).
 // Gyromagnetic ratio is for the free electron by default.
 //
-// Seto Balian, November 28, 2013
+// Seto Balian, November 29, 2013
 
 #include "Spin.h"
-#include <Eigen/Dense>
 
 class ElectronSpin : public Spin
 {
