@@ -5,13 +5,14 @@
 //
 // Nothing special for now, just Spin ...
 //
-// Seto Balian, November 28, 2013
+// Seto Balian, November 29, 2013
 
 #include "Spin.h"
 
 class NuclearSpin : public Spin
 {
 
+public:
   NuclearSpin(); // all data members set to zero
   NuclearSpin(const double quantum_number, const double gyromagnetic_ratio);
 

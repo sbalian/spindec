@@ -1,6 +1,7 @@
 syntax: glob
 nbproject
 eigen
+boost
 *.o
 TEST
 

@@ -1,16 +1,21 @@
 // To test SpinDecoherence
 //
-// Seto Balian, November 28, 2013
+// Seto Balian, November 29, 2013
 
 #include <iostream>
 #include <Eigen/Dense>
 #include <complex>
 #include <cmath>
+#include <vector>
 #include "MathPhysConstants.h"
 #include "BoostEigen.h"
 #include "Spin.h"
 #include "ElectronSpin.h"
 #include "NuclearSpin.h"
+#include "SpinBasis.h"
+#include "SpinVector.h"
+
+#include <cstdlib>
 
 
 //#include "ZeemanBasis.h"
@@ -26,6 +31,18 @@ std::complex<double> test_exp(const std::complex<double> & z) {
 int main () {
 
 
+//SpinVector spin_vector;
+//ElectronSpin electron;
+//NuclearSpin nucleus;
+//
+//spin_vector.push_back(electron);
+//spin_vector.push_back(nucleus);
+//
+//Spin some_spin = spin_vector[electron];
+//
+//std::cout << some_spin.get_gyromagnetic_ratio() << std::endl; 
+//exit(1);
+  
 std::cout << "TESTING MathPhysConstants\n" << std::endl;
 
 std::cout << "pi " << MathPhysConstants::pi() << std::endl;

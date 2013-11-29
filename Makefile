@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, November 28, 2013
+# Seto Balian, November 29, 2013
 
 #####################
 # User input
@@ -24,12 +24,12 @@ SOURCEPATH=./src/
 HEADERPATH=./include/
 # Download and extract Eigen from http://eigen.tuxfamily.org
 EIGENPATH=./eigen/
-# BOOSTPATH=/home/sbalian/include/boost/
+BOOSTPATH=./boost/
 
 EXECUTABLES=TEST
 
 # Executable objects 
-TEST_OBJECTS=TEST.o Spin.o ElectronSpin.o NuclearSpin.o MathPhysConstants.o Errors.o BoostEigen.o
+TEST_OBJECTS=TEST.o Spin.o SpinVector.o ElectronSpin.o NuclearSpin.o MathPhysConstants.o Errors.o BoostEigen.o
 
 #####################
 # mains
@@ -54,16 +54,25 @@ TEST: $(TEST_OBJECTS)
 MathPhysConstants.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)MathPhysConstants.cpp
 
-## Need Eigen
+Spin.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)Spin.cpp
+
+SpinVector.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(BOOSTPATH) -c $(SOURCEPATH)SpinVector.cpp
 
 NuclearSpin.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)NuclearSpin.cpp
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)NuclearSpin.cpp
+
+ElectronSpin.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)ElectronSpin.cpp
+
+Errors.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)Errors.cpp
+
+## Need Eigen
 
 BoostEigen.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)BoostEigen.cpp
-
-Spin.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Spin.cpp
 
 SpinBasis.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinBasis.cpp
@@ -80,12 +89,6 @@ SpinInteractionNode.o:
 SpinInteractionVertex.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionVertex.cpp
 
-Errors.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)Errors.cpp
-
-ElectronSpin.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)ElectronSpin.cpp
-
 SpinInteractionGraph.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
 	
@@ -97,7 +100,6 @@ Dipolar.o:
 
 UniformMagneticField.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)UniformMagneticField.cpp
-
 
 
 #####################
