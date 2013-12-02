@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, November 29, 2013
+// Seto Balian, December 2, 2013
 
 #include "SpinBasis.h"
 
@@ -61,7 +61,7 @@ void SpinBasis::build(const SpinVector & spin_vector)
       p += 1;
     }
   }
-  
+
   basis_ = basis;
   return;
 
@@ -69,5 +69,101 @@ void SpinBasis::build(const SpinVector & spin_vector)
 
 SpinBasis::SpinBasis()
 {
-  basis_ = Eigen::ArrayXXd::Zero(1,1);
+  basis_ =  Eigen::ArrayXXd::Zero(1,1) ;
 }
+
+SpinBasis::SpinBasis(const SpinVector & spin_vector)
+{
+  build(spin_vector);
+}
+
+SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis)
+{
+  basis_ = basis;
+}
+
+Eigen::ArrayXXd SpinBasis::get_basis() const
+{
+  return basis_;
+}
+
+unsigned int SpinBasis::dimension() const
+{
+  return static_cast<int>(basis_.rows());
+}
+
+unsigned int SpinBasis::num_spins() const
+{
+  return static_cast<int>(basis_.cols());
+}
+
+double SpinBasis::get_element(const unsigned int row,
+        const unsigned int col) const
+{
+  return basis_(row,col);
+}
+
+//void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,
+//                    const Eigen::ArrayXXd & to_keep)
+//{  
+//  // checks
+//  
+//  const unsigned int to_keep_cols = static_cast<unsigned int>(to_keep.cols());
+//
+//  if (static_cast<unsigned int>(to_keep_cols) != spin_indices.size()) {
+//    Errors::quit(
+//              "Number of spins != number of columns in \"to keep\" array");
+//  }
+//  
+//  const unsigned int original_dimension = dimension();
+//  
+//  // truncate
+//
+//  std::vector<Eigen::ArrayXd> new_rows;
+//  
+//  const unsigned int to_keep_rows = static_cast<unsigned int>(to_keep.rows());
+//    
+//  for (unsigned int i = 0; i<to_keep_rows ; i++) { // loop over rows to keep
+//    
+//    // loop over rows in original basis to decide to keep or not
+//    for (unsigned int j=0; j<original_dimension;j++) {
+//      
+//      // construct test vector from original basis with the correct spin
+//      // magnetic quantum numbers (ie for those spins specified by spin_indices)
+//      Eigen::ArrayXd test_vector(to_keep_cols);
+//      for (unsigned int k=0;k<to_keep_cols;k++) {
+//        test_vector(k) = basis_(j,spin_indices[k]);
+//      }
+//      
+//      // see if test vector matches the row to keep and add to new rows if yes
+//      // @todo see if you can do something like this:
+//      // test_vector == to_keep.row(i)
+//      // above line does not compile
+//      bool pass = 1;
+//      for (unsigned int l = 0;l<to_keep_cols;l++) {
+//        if (test_vector(l) != to_keep(i,l)) {
+//          pass = 0; // if any of the elements don't match, reject
+//          break;
+//        }
+//      }
+//      if (pass) {
+//        new_rows.push_back(basis_.row(j)); 
+//      }
+//      
+//    }
+// 
+//  }
+//  
+//  // construct the new basis
+//  
+//  Eigen::ArrayXXd new_basis(static_cast<int>(new_rows.size()),
+//                            basis_.cols());
+//  
+//  for (unsigned int i=0; i<new_rows.size();i++) {
+//    new_basis.row(i) = new_rows[i];
+//  }
+//  
+//  basis_ = new_basis;
+//  return;
+//
+//}

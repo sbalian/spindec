@@ -3,5 +3,5 @@ nbproject
 eigen
 boost
 *.o
-TEST
+test
 
