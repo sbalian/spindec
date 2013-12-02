@@ -5,7 +5,7 @@
 //
 // Multiple Spin container
 //
-// Seto Balian, November 29, 2013
+// Seto Balian, December 2, 2013
 
 #include "Spin.h"
 #include <vector>
@@ -19,6 +19,7 @@ private:
   
 public:
   SpinVector();
+  SpinVector(const Spin & spin); // single Spin
   
   void push_back(const Spin & spin); // add element
   

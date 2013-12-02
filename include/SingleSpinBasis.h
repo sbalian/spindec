@@ -5,49 +5,50 @@
 //
 // Basis for a single spin.
 //
-// Seto Balian, November 29, 2013
+// Seto Balian, December 2, 2013
 
 #include "SpinBasis.h"
-#include "Spin.h"
-
-#include <Eigen/Dense>
 
 class SingleSpinBasis : public SpinBasis
 {
 
 private:
   
-  Eigen::ArrayXd basis_; // @todo make this const, but how do I initialize it?
-  // e.g. for an electron, this can be 0.5 -> |mS =  1/2>
-  //                                  -0.5 -> |mS = -1/2>
-  
   void build(const Spin & spin); // build using multiplicity
-
+    
 public:
 
   SingleSpinBasis(); // single zero element
   SingleSpinBasis(const Spin & spin); // uses multiplicity to build basis
                                        // automatically
+  
   SingleSpinBasis(const Eigen::ArrayXd & basis); // custom build
   
-  virtual unsigned int dimension() const;
   virtual unsigned int num_spins() const;
-  //virtual SpinBasis* join(const SpinBasis & to_join) const;
   
-  Eigen::ArrayXd get_basis() const;
+  double get_element(const unsigned int row) const;
+
+  
+  // For example,         basis1 = 0.5
+  //                              -0.5
+  //                      basis2 = 4.5
+  //                              -4.5
+  // basis1.join(basis2) gives 0.5  4.5
+  //                          -0.5 -4.5
+  SpinBasis join(const SingleSpinBasis & to_join) const;
 
   // like tensor product,
-  // for example, SingleSpinBasis.combine_to(SpinBasis)
+  // for example, SingleSpinBasis.combine(SpinBasis)
   // SingleSpinBasis = 0.5
   //                  -0.5
   //              SpinBasis = 4.5
   //                         -4.5
-  // SpinBasis changes to
+  // gives
   //                      4.5  0.5
   //                     -4.5 -0.5
   //                      4.5  0.5
   //                     -4.5 -0.5
-  //SpinBasis* combine(const SpinBasis & combine_to) const;
+  SpinBasis combine(const SpinBasis & basis) const;
   
   virtual ~SingleSpinBasis() {/**/}
 

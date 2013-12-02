@@ -7,7 +7,9 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence ...
 //
-// Seto Balian, November 27, 2013
+// @todo make this a proper template extension of Eigen. See Eigen doc.
+//
+// Seto Balian, December 2, 2013
 
 #include <Eigen/Dense>
 

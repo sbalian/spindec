@@ -1,8 +1,8 @@
 # SpinDecoherence Makefile
-# Seto Balian, November 29, 2013
+# Seto Balian, December 2, 2013
 
 #####################
-# User input
+# Basic user input
 #####################
 
 # Compiler
@@ -10,46 +10,124 @@ CC=g++
 # Set to 1 for debug mode
 DEBUG=1
 
+# Download and extract Eigen from http://eigen.tuxfamily.org
+EIGENPATH=./eigen/
+# Download and extract boost from http://www.boost.org/
+# BOOSTPATH=./boost/ 
+
 #####################
 # Initialise
 #####################
 
+# Debug mode
 ifeq ($(DEBUG),1)
 CFLAGS=-O0 -Wall -g
 else
 CFLAGS=-O3 -Wall
 endif
 
+# Source and header paths
 SOURCEPATH=./src/
 HEADERPATH=./include/
-# Download and extract Eigen from http://eigen.tuxfamily.org
-EIGENPATH=./eigen/
-BOOSTPATH=./boost/
 
-EXECUTABLES=TEST
+# List of executables
+EXECUTABLES=
 
-# Executable objects 
-TEST_OBJECTS=TEST.o Spin.o SpinVector.o ElectronSpin.o NuclearSpin.o MathPhysConstants.o Errors.o BoostEigen.o
+# Required by executables
+EXECXXX1_OBJ=
+EXECXXX2_OBJ=
+
+# List of test executables
+TESTEXECUTABLES=test_misc test_spins test_basis test_graphs
+
+# Required by test executables
+TEST_MISC_OBJ=test_misc.o BoostEigen.o MathPhysConstants.o Errors.o
+TEST_SPINS_OBJ=test_spins.o Spin.o ElectronSpin.o NuclearSpin.o SpinVector.o MathPhysConstants.o
+TEST_BASIS_OBJ=test_basis.o
+TEST_GRAPHS_OBJ=test_graphs.o
 
 #####################
-# mains
+# Targets
 #####################
 
+# @todo improve exec and exec.o targets ...
+
+# all except tests
 all: $(EXECUTABLES)
 
-# TEST
+# only tests
+tests: $(TESTEXECUTABLES)
+	
+#!!!!!!!!!!!!!!!!!!!!
+# Executables
+#!!!!!!!!!!!!!!!!!!!!
 
-TEST.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/TEST.cpp
+#--------------------
+# EXECXXX1
+#--------------------
 
-TEST: $(TEST_OBJECTS)
-	$(CC) $(CFLAGS) $(TEST_OBJECTS) -o TEST
+#--------------------
+# EXECXXX2
+#--------------------
 
-#####################
-# intermediate objects
-#####################
+#!!!!!!!!!!!!!!!!!!!!
+# Test executables (convention: begin with test_)
+#!!!!!!!!!!!!!!!!!!!!
 
-## Don't need Eigen
+# @todo automate the test_ convention?
+# @todo object files in test directory as well ...
+
+#--------------------
+# test_misc
+#--------------------
+
+test_misc.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/test/test_misc.cpp
+
+test_misc: $(TEST_MISC_OBJ)
+	mkdir -p ./test/
+	$(CC) $(CFLAGS) $(TEST_MISC_OBJ) -o ./test/test_misc
+
+#--------------------
+# test_spins
+#--------------------
+
+test_spins.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/test/test_spins.cpp
+
+test_spins: $(TEST_SPINS_OBJ)
+	mkdir -p ./test/
+	$(CC) $(CFLAGS) $(TEST_SPINS_OBJ) -o ./test/test_spins
+	
+#--------------------
+# test_basis
+#--------------------
+
+test_basis.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/test/test_basis.cpp
+
+test_basis: $(TEST_BASIS_OBJ)
+	mkdir -p ./test/
+	$(CC) $(CFLAGS) $(TEST_BASIS_OBJ) -o ./test/test_basis
+	
+#--------------------
+# test_graphs
+#--------------------
+
+test_graphs.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)main/test/test_graphs.cpp
+
+test_graphs: $(TEST_GRAPHS_OBJ)
+	mkdir -p ./test/
+	$(CC) $(CFLAGS) $(TEST_GRAPHS_OBJ) -o ./test/test_graphs
+
+#!!!!!!!!!!!!!!!!!!!!
+# Intermediate objects
+#!!!!!!!!!!!!!!!!!!!!
+
+#--------------------
+# Don't need Eigen
+#--------------------
 
 MathPhysConstants.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)MathPhysConstants.cpp
@@ -58,7 +136,7 @@ Spin.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)Spin.cpp
 
 SpinVector.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(BOOSTPATH) -c $(SOURCEPATH)SpinVector.cpp
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)SpinVector.cpp
 
 NuclearSpin.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)NuclearSpin.cpp
@@ -69,7 +147,9 @@ ElectronSpin.o:
 Errors.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -c $(SOURCEPATH)Errors.cpp
 
-## Need Eigen
+#--------------------
+# Need Eigen
+#--------------------
 
 BoostEigen.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)BoostEigen.cpp
@@ -83,11 +163,11 @@ SingleSpinBasis.o:
 MultipleSpinBasis.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)MultipleSpinBasis.cpp
 	
-SpinInteractionNode.o:
-	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionNode.cpp
-
 SpinInteractionVertex.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionVertex.cpp
+
+SpinInteractionEdge.o:
+	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionEdge.cpp
 
 SpinInteractionGraph.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
@@ -101,14 +181,14 @@ Dipolar.o:
 UniformMagneticField.o:
 	$(CC) $(CFLAGS) -I$(HEADERPATH) -I$(EIGENPATH) -c $(SOURCEPATH)UniformMagneticField.cpp
 
-
 #####################
 # clean up
 #####################
 
+# @todo make sure this is all safe!!!
+
 clean:
-	rm -f $(EXECUTABLES) && rm -f *.o
+	rm -f $(EXECUTABLES) && rm -f ./test/test_* && rm -f *.o
 
 tidy:
 	rm -f *.o
-

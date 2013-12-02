@@ -1,9 +1,15 @@
 // See SpinVector.h for description.
-// Seto Balian, November 29, 2013
+// Seto Balian, December 2, 2013
 
 #include "SpinVector.h"
 
 SpinVector::SpinVector() {/**/}
+
+SpinVector::SpinVector(const Spin & spin)
+{
+  push_back(spin);
+}
+
 
 void SpinVector::push_back(const Spin & spin)
 {
@@ -31,7 +37,7 @@ unsigned int SpinVector::get_multiplicity() const
 {
   unsigned int M = 1;
   for (unsigned int i =0; i<size(); i++ ) {
-    M*= get_spin(i).Spin::get_multiplicity();
+    M*= get_spin(i).get_multiplicity();
   }
   return M;
 }

@@ -3,41 +3,36 @@
 
 // SpinInteractionGraph
 //
-// System of spin interaction nodes and vertices.
+// @todo Describe
 //
-// Seto Balian, November 27, 2013
+// Seto Balian, December 2, 2013
 
-#include "SpinInteractionNode.h"
 #include "SpinInteractionVertex.h"
-#include "SpinInteraction.h"
+#include "SpinInteractionEdge.h"
 
 #include <vector>
-#include <string>
 
 class SpinInteractionGraph
 {
 
 private:
-  std::vector<SpinInteractionNode> nodes_;
-  std::vector<SpinInteractionVertex> vertices_;
+  std::vector<SpinInteractionVertex> isolated_vertices_;
+  std::vector<SpinInteractionEdge> edges_;
 
 public:
 
-  SpinInteractionGraph();
+  SpinInteractionGraph();// no vertices, no edges
   
-  void add_node(const SpinInteractionNode & node);
-  void add_vertex(const unsigned int node_label1,
-                  const unsigned int node_label2,
-                  const SpinInteraction & interaction);
+  void add_isolated_vertex(const SpinInteractionVertex & isolated_vertex);
+  void add_edge(const SpinInteractionEdge & edge);
   
-  std::vector<SpinInteractionNode> get_nodes() const;
-  SpinInteractionNode get_node(const unsigned int index) const;
- 
-  unsigned int num_nodes() const;
-  unsigned int num_vertices() const;
+  SpinInteractionVertex get_isolated_vertex(const unsigned int index) const;
+  SpinInteractionEdge get_edge(const unsigned int index) const;
   
-  unsigned int multiplicity() const; // total multiplicity from all spins in
-                                     // all nodes
+  unsigned int num_isolated_vertices() const;
+  unsigned int num_edges() const;
+  
+  void clear();
 
 };
 
