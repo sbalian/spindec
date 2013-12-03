@@ -1,12 +1,12 @@
-#ifndef ELECTRONSPIN_H
-#define ELECTRONSPIN_H
+#ifndef ELECTRONSPIN_H_
+#define ELECTRONSPIN_H_
 
 // Electron spin
 //
 // Spin with fixed quantum number 1/2 and hence multiplicity (= 2).
 // Gyromagnetic ratio is for the free electron by default.
 //
-// Seto Balian, November 29, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "Spin.h"
 
@@ -20,4 +20,4 @@ public:
 
 };
 
-#endif // ELECTRONSPIN_H
+#endif // ELECTRONSPIN_H_

@@ -1,5 +1,5 @@
 // See Errors.h for description.
-// Seto Balian, November 27, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "Errors.h"
 #include <cstdlib>

@@ -1,11 +1,11 @@
-#ifndef SPININTERACTIONEDGE_H
-#define SPININTERACTIONEDGE_H
+#ifndef SPININTERACTIONEDGE_H_
+#define SPININTERACTIONEDGE_H_
 
 // SpinInteractionEdge
 //
-// @todo Describe
+// TODO Describe
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include <utility>
 #include "SpinInteractionVertex.h"
@@ -14,7 +14,7 @@ class SpinInteractionEdge
 {
 
 private:
-  std::pair<SpinInteractionVertex,SpinInteractionVertex> edge_;
+  std::pair<SpinInteractionVertex,SpinInteractionVertex> vertices_;
   
 public:
 
@@ -35,4 +35,4 @@ public:
   
 };
 
-#endif // SPININTERACTIONEDGE_H
+#endif // SPININTERACTIONEDGE_H_

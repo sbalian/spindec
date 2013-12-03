@@ -1,11 +1,11 @@
-#ifndef SPININTERACTIONGRAPH_H
-#define SPININTERACTIONGRAPH_H
+#ifndef SPININTERACTIONGRAPH_H_
+#define SPININTERACTIONGRAPH_H_
 
 // SpinInteractionGraph
 //
-// @todo Describe
+// TODO Describe
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "SpinInteractionVertex.h"
 #include "SpinInteractionEdge.h"
@@ -36,4 +36,4 @@ public:
 
 };
 
-#endif // SPININTERACTIONGRAPH_H
+#endif // SPININTERACTIONGRAPH_H_

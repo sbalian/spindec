@@ -1,5 +1,5 @@
 // See ElectronSpin.h for description.
-// Seto Balian, November 28, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "ElectronSpin.h"
 #include "MathPhysConstants.h"

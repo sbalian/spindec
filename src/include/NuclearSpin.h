@@ -1,11 +1,11 @@
-#ifndef NUCLEARSPIN_H
-#define NUCLEARSPIN_H
+#ifndef NUCLEARSPIN_H_
+#define NUCLEARSPIN_H_
 
 // Nuclear spin
 //
 // Nothing special for now, just Spin ...
 //
-// Seto Balian, November 29, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "Spin.h"
 
@@ -18,4 +18,4 @@ public:
 
 };
 
-#endif // NUCLEARSPIN_H
+#endif // NUCLEARSPIN_H_

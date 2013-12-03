@@ -1,11 +1,11 @@
-#ifndef UNIFORMMAGNETICFIELD_H
-#define	UNIFORMMAGNETICFIELD_H
+#ifndef UNIFORMMAGNETICFIELD_H_
+#define	UNIFORMMAGNETICFIELD_H_
 
 // UniformMagneticField
 //
 // Uniform magnetic field parallel to some direction in Cartesian coordinates.
 //
-// Seto Balian, November 27, 2013
+// Seto Balian, Dec 3, 2013
 
 #include <Eigen/Dense>
 
@@ -32,4 +32,4 @@ public:
 
 };
 
-#endif	 // UNIFORMMAGNETICFIELD_H
+#endif	 // UNIFORMMAGNETICFIELD_H_

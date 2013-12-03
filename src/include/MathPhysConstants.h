@@ -1,11 +1,11 @@
-#ifndef MATHPHYSCONSTANTS_H
-#define MATHPHYSCONSTANTS_H
+#ifndef MATHPHYSCONSTANTS_H_
+#define MATHPHYSCONSTANTS_H_
 
 // MathPhysConstants
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian, November 27, 2013
+// Seto Balian, Dec 3, 2013
 
 class MathPhysConstants
 {
@@ -25,4 +25,4 @@ public:
   
 };
 
-#endif // MATHPHYSCONSTANTS_H
+#endif // MATHPHYSCONSTANTS_H_

@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "SpinBasis.h"
 
@@ -136,7 +136,7 @@ double SpinBasis::get_element(const unsigned int row,
 //      }
 //      
 //      // see if test vector matches the row to keep and add to new rows if yes
-//      // @todo see if you can do something like this:
+//      // TODO see if you can do something like this:
 //      // test_vector == to_keep.row(i)
 //      // above line does not compile
 //      bool pass = 1;
