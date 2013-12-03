@@ -1,5 +1,5 @@
-#ifndef SPIN_H
-#define SPIN_H
+#ifndef SPIN_H_
+#define SPIN_H_
 
 // Spin
 //
@@ -8,14 +8,14 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 class Spin
 {
 
 protected:
 
-  // @todo make these consts (code for Spin and derived OK for this)
+  // TODO make these consts (code for Spin and derived OK for this)
   // but can't use with std::vector! use pointers in SpinVector? how about
   // boost::ptr_vector for improvement over the std?
   double quantum_number_; 
@@ -39,4 +39,4 @@ public:
 
 };
 
-#endif // SPIN_H
+#endif // SPIN_H_

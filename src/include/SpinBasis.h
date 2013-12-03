@@ -1,5 +1,5 @@
-#ifndef SPINBASIS_H
-#define SPINBASIS_H
+#ifndef SPINBASIS_H_
+#define SPINBASIS_H_
 
 // SpinBasis (Zeeman basis)
 //
@@ -12,7 +12,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "Spin.h"
 #include "SpinVector.h"
@@ -52,4 +52,4 @@ public:
 
 };
 
-#endif // SPINBASIS_H
+#endif // SPINBASIS_H_

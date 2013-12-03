@@ -1,17 +1,17 @@
-#ifndef SPININTERACTIONVERTEX_H
-#define SPININTERACTIONVERTEX_H
+#ifndef SPININTERACTIONVERTEX_H_
+#define SPININTERACTIONVERTEX_H_
 
 // SpinInteractionVertex
 //
-// @todo Describe
+// TODO Describe
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 class SpinInteractionVertex
 {
 
 private:
-  unsigned int label_; // @todo const data member, but problems with std vector
+  unsigned int label_; // TODO const data member, but problems with std vector
 
 public:
   
@@ -22,4 +22,4 @@ public:
   
 };
 
-#endif // SPININTERACTIONVERTEX_H
+#endif // SPININTERACTIONVERTEX_H_

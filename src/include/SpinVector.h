@@ -1,16 +1,16 @@
-#ifndef SPINVECTOR_H
-#define	SPINVECTOR_H
+#ifndef SPINVECTOR_H_
+#define	SPINVECTOR_H_
 
 // SpinVector
 //
 // Multiple Spin container
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "Spin.h"
 #include <vector>
 //#include <boost/ptr_container/ptr_vector.hpp>
-// @todo use this and make data members of Spin constant again?                                               
+// TODO use this and make data members of Spin constant again?
 
 class SpinVector {
   
@@ -23,8 +23,8 @@ public:
   
   void push_back(const Spin & spin); // add element
   
-  // @todo do [] operator to replace these ...
-  // @todo also, return Type& for speed?
+  // TODO do [] operator to replace these ...
+  // TODO also, return Type& for speed?
   Spin get_spin(const unsigned int index) const;
   void set_spin(const unsigned int index, const Spin & spin);
   
@@ -36,4 +36,4 @@ public:
   
 };
 
-#endif	 // SPINVECTOR_H
+#endif	 // SPINVECTOR_H_

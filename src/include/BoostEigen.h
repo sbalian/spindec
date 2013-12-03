@@ -1,5 +1,5 @@
-#ifndef BOOSTEIGEN_H
-#define BOOSTEIGEN_H
+#ifndef BOOSTEIGEN_H_
+#define BOOSTEIGEN_H_
 
 // BoostEigen
 //
@@ -7,9 +7,9 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence ...
 //
-// @todo make this a proper template extension of Eigen. See Eigen doc.
+// TODO make this a proper template extension of Eigen. See Eigen doc.
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include <Eigen/Dense>
 
@@ -37,7 +37,7 @@ public:
   static unsigned int dimension(const Eigen::MatrixXcd & A);
 
   // Exponentiate (element-wise complex exponentiation)
-  // @todo Use a base class to avoid the repetition here ...
+  // TODO Use a base class to avoid the repetition here ...
   static Eigen::VectorXcd exp(const Eigen::VectorXcd & a);
   static Eigen::VectorXd exp(const Eigen::VectorXd & a);
 
@@ -71,7 +71,7 @@ public:
 // *************************************************
 // ArrayXXd
 // *************************************************
-  // @todo Use base classes here to apply to other objects?
+  // TODO Use base classes here to apply to other objects?
   static void addCol(Eigen::ArrayXXd & array,
                 const Eigen::ArrayXd & column);
   static void addRow(Eigen::ArrayXXd & array,
@@ -84,5 +84,5 @@ public:
   
 };
 
-#endif // BOOSTEIGEN_H
+#endif // BOOSTEIGEN_H_
 

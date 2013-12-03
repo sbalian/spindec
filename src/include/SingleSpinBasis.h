@@ -1,11 +1,11 @@
-#ifndef SINGLESPINBASIS_H
-#define	SINGLESPINBASIS_H
+#ifndef SINGLESPINBASIS_H_
+#define	SINGLESPINBASIS_H_
 
 // SingleSpinBasis
 //
 // Basis for a single spin.
 //
-// Seto Balian, December 2, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "SpinBasis.h"
 
@@ -54,4 +54,4 @@ public:
 
 };
 
-#endif	 // SINGLESPINBASIS_H
+#endif	 // SINGLESPINBASIS_H_

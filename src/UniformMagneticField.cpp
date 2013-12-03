@@ -1,5 +1,5 @@
 // See UniformMagneticField.h for description.
-// Seto Balian, November 27, 2013
+// Seto Balian, Dec 3, 2013
 
 #include "UniformMagneticField.h"
 

@@ -1,11 +1,11 @@
-#ifndef ERRORS_H
-#define ERRORS_H
+#ifndef ERRORS_H_
+#define ERRORS_H_
 
 // Errors
 //
 // Error and warning handling.
 //
-// Seto Balian, November 27, 2013
+// Seto Balian, Dec 3, 2013
 
 #include <string>
 
@@ -21,4 +21,4 @@ public:
 
 };
 
-#endif // ERRORS_H
+#endif // ERRORS_H_

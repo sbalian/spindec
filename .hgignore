@@ -1,5 +1,8 @@
 syntax: glob
+src/include/eigen
 nbproject
+.project
+.cproject
 eigen
 boost
 *.o
