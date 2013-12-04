@@ -7,12 +7,13 @@
 // Columns: spins
 // Rows: magnetic quantum numbers
 // For example, for 2 electrons, this is
+//                 index slot
 //                  0.5  0.5 -> |mS1 = 0.5, mS2 = 0.5>
 //                  0.5 -0.5
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 4, 2013
 
 #include "Spin.h"
 #include "SpinVector.h"
@@ -27,10 +28,10 @@ protected:
   void build (const SpinVector & spin_vector); // automatically build
                                                // using spin multiplicities
   Eigen::ArrayXXd basis_;
-  
+
 public:
 
-  SpinBasis(); // a single element set to zero
+  SpinBasis(); // null
   SpinBasis(const SpinVector & spin_vector); // automatically build
                                              // using spin multiplicities
   SpinBasis(const Eigen::ArrayXXd & basis); // custom build
@@ -42,13 +43,34 @@ public:
   // Number of spins
   virtual unsigned int num_spins() const;
   
-  double get_element(const unsigned int row, const unsigned int col) const;
+  double get_element(const unsigned int index, const unsigned int slot) const;  
   
+  // For example,         basis1 = 0.5
+  //                              -0.5
+  //                      basis2 = 4.5
+  //                              -4.5
+  // basis1 + basis2     gives 0.5  4.5
+  //                          -0.5 -4.5
+  SpinBasis operator+(const SpinBasis & to_join) const;
+  
+  // like tensor product,
+  // for example, a.combine(b)
+  // SpinBasis b = 0.5
+  //              -0.5
+  //              SpinBasis a = 4.5
+  //                           -4.5
+  // gives
+  //                      4.5  0.5
+  //                     -4.5 -0.5
+  //                      4.5  0.5
+  //                     -4.5 -0.5
+  SpinBasis combine(const SpinBasis & to_combine) const;
+
+  virtual ~SpinBasis();
+  
+  // TODO don't use this ...
   //void truncate(const std::vector<unsigned int> & spin_indices,
   //                         const Eigen::ArrayXXd & to_keep);
-
-
-  virtual ~SpinBasis() {/**/}
 
 };
 
