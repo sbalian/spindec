@@ -1,8 +1,7 @@
 // See BoostEigen.h for description.
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 4, 2013
 
 #include "BoostEigen.h"
-#include "Errors.h"
 #include <Eigen/Dense>
 
 double BoostEigen::cosAngleBetween(const Eigen::Vector3d & a,
@@ -14,21 +13,6 @@ double BoostEigen::cosAngleBetween(const Eigen::Vector3d & a,
 double BoostEigen::maxAbsCoeff(const Eigen::Vector3d & a)
 {
   return (a.cwiseAbs()).maxCoeff();
-}
-
-unsigned int BoostEigen::dimension(const Eigen::MatrixXcd & A)
-{
-  return static_cast<unsigned int> (A.rows());
-}
-
-Eigen::VectorXcd BoostEigen::exp(const Eigen::VectorXcd & a)
-{
-  return (a.array().exp()).matrix();
-}
-
-Eigen::VectorXd BoostEigen::exp(const Eigen::VectorXd & a)
-{
-  return (a.array().exp()).matrix();
 }
 
 Eigen::MatrixXcd BoostEigen::spectralDecomposition(
@@ -45,124 +29,65 @@ Eigen::MatrixXcd BoostEigen::hermitianSpectralDecomposition(
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.transpose());
 }
 
+// TODO !! MAKE SURE THE METHODS BELOW ARE CONSISTENT WITH ONE ANOTHER !!
+
 Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
-                                      const Eigen::MatrixXcd & B)
+                                           const Eigen::MatrixXcd & B)
 {
-
-  unsigned int dimension_A    = dimension(A);
-  unsigned int dimension_B    = dimension(B);
-  Eigen::MatrixXcd AB(dimension_A*dimension_B,dimension_A*dimension_B);//output
-
-  // consistently with the definition of the parital trace
+  unsigned int dimension_A    = A.rows();
+  unsigned int dimension_B    = B.rows();
+  unsigned int dimension_AB    = dimension_A*dimension_B;
+  
+  //output
+  Eigen::MatrixXcd product(dimension_AB,dimension_AB);
+  
   for (unsigned int i=0;i<dimension_A;i++) {
     for (unsigned int j=0;j<dimension_A;j++) {
-      AB.block(i*dimension_B,j*dimension_B,dimension_B,dimension_B)
-                                                                     = A(i,j)*B;
+      product.block(i*dimension_B,j*dimension_B,dimension_B,dimension_B)
+                                                             = A(i,j)*B;
     }
   }
+  return product;
+}
 
-  return AB;
-
+Eigen::VectorXcd BoostEigen::tensorProduct(const Eigen::VectorXcd & a,
+                                                  const Eigen::VectorXcd & b)
+{
+  // output
+  Eigen::VectorXcd product(a.rows()*b.rows());
+  
+  unsigned int k = 0;
+  for (unsigned int i=0;i<a.rows();i++) {
+    for (unsigned int j=0;j<b.rows();j++) {
+      product(k) = a(i)*b(j);
+      k += 1;
+    }
+  }
+  return product;
+  
 }
 
 Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
                                        const unsigned int dimension_B)
 {
 
-  unsigned int dimension_AB = dimension(AB);
+  unsigned int dimension_AB = AB.rows();
   unsigned int dimension_A  = dimension_AB/dimension_B;
-  Eigen::MatrixXcd TrB_A(dimension_A,dimension_A); // output
+  
+  // output
+  Eigen::MatrixXcd partial_trace(dimension_A,dimension_A);
 
-  // consistently with the definition of the tensor product
   unsigned int i=0, j=0;
   while (i<=dimension_AB-dimension_B) {
     j = 0;
     while (j<=dimension_AB-dimension_B) {
-      TrB_A(i/dimension_B,j/dimension_B)
+      partial_trace(i/dimension_B,j/dimension_B)
                 = (AB.block(i,j,dimension_B,dimension_B)).trace();
       j += dimension_B;
     }
     i += dimension_B;
   }
-
-  return TrB_A;
-
+  return partial_trace;
 }
 
-void BoostEigen::addCol(Eigen::ArrayXXd & array,
-                const Eigen::ArrayXd & column)
-{
-  
-  if (column.rows() != array.rows()) {
-    Errors::quit("Can't add column: dimension mismatch.");
-  }
-  
-  Eigen::ArrayXXd new_array(array.rows(),array.cols()+1);
-  
-  for (unsigned int i=0;i<array.cols();i++) {
-    
-    new_array.col(i) = array.col(i);
-    
-  }
-  
-  new_array.col(array.cols()) = column;
-  array = new_array;
-  return;
-  
-}
 
-void BoostEigen::addRow(Eigen::ArrayXXd & array,
-                const Eigen::ArrayXd & row)
-{
-
-  if (row.cols() != array.cols()) {
-    Errors::quit("Can't add column: dimension mismatch.");
-  }
-  
-  Eigen::ArrayXXd new_array(array.rows()+1,array.cols());
-  
-  for (unsigned int i=0;i<array.rows();i++) {
-    
-    new_array.row(i) = array.row(i);
-    
-  }
-  
-  new_array.row(array.rows()) = row;
-  array = new_array;
-  return;
-  
-}
-
-void BoostEigen::addElement(Eigen::ArrayXd & array, const double element)
-{
-  Eigen::ArrayXd new_array(array.size()+1);
-  for (unsigned int i=0;i<array.size();i++) {  
-    new_array(i) = array(i);
-  }
-  new_array(array.size()) = element;
-  array = new_array;
-  return;
-}
-
-void BoostEigen::horizontalAppend(Eigen::ArrayXXd & array,
-                              const Eigen::ArrayXXd & to_append)
-{
-  if (array.rows() != to_append.rows()) {
-    Errors::quit("Can't append: dimension mismatch.");
-  }
-  for (unsigned int i=0;i<to_append.cols();i++) {
-    BoostEigen::addCol(array,to_append.col(i));
-  }
-  return;
-}
-void BoostEigen::verticalAppend(Eigen::ArrayXXd & array,
-                              const Eigen::ArrayXXd & to_append)
-{
-  if (array.cols() != to_append.cols()) {
-    Errors::quit("Can't append: dimension mismatch.");
-  }
-  for (unsigned int i=0;i<to_append.rows();i++) {
-    BoostEigen::addRow(array,to_append.row(i));
-  }
-  return;
-}

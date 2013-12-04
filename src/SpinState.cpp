@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Dec 3, 2013, Seto Balian
+// Seto Balian, Dec 4, 2013
 
 #include "SpinState.h"
 #include "Errors.h"

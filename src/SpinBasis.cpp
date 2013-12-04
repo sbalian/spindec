@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 4, 2013
 
 #include "SpinBasis.h"
 
@@ -67,10 +67,7 @@ void SpinBasis::build(const SpinVector & spin_vector)
 
 }
 
-SpinBasis::SpinBasis()
-{
-  basis_ =  Eigen::ArrayXXd::Zero(1,1) ;
-}
+SpinBasis::SpinBasis() {/**/}
 
 SpinBasis::SpinBasis(const SpinVector & spin_vector)
 {
@@ -103,6 +100,72 @@ double SpinBasis::get_element(const unsigned int row,
   return basis_(row,col);
 }
 
+SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
+{
+  Eigen::ArrayXXd joined(dimension(),num_spins() + to_join.num_spins());
+  joined << basis_, to_join.basis_;
+  return joined;
+}
+
+// TODO !! MAKE SURE THIS METHOD IS CONSISTENT THE TENSOR PRODUCT, ETC. IN !!
+//      !! BOOSTEIGEN/ELSEWHERE                                            !!
+
+SpinBasis SpinBasis::combine(const SpinBasis & to_combine) const
+{
+  
+  // C = A.combine(B)
+  
+  unsigned int dimension_A = dimension();
+  unsigned int dimension_B = to_combine.dimension();
+  unsigned int dimension_C = dimension_A*dimension_B;
+  unsigned int new_num_spins = num_spins() + to_combine.num_spins();
+
+  // prepare expanded basis A with zero elements
+  Eigen::ArrayXXd expanded_basis_A(dimension_C,num_spins());
+  expanded_basis_A.setZero();
+  
+  // loop over elements of expanded basis A and fill A elements
+  // repeated in rows dimension_B times
+  for (unsigned int i=0;i<num_spins();i++) { // loop over A columns
+    unsigned int l = 0; // new row index
+    for (unsigned int j=0;j<dimension_A;j++) { // loop over A rows
+      unsigned int k=0;
+      while (k<dimension_B) { // loop dimension_B times
+        expanded_basis_A(l,i) = get_basis()(j,i);
+        l += 1;
+        k += 1;
+      }
+      
+    }
+  }
+  
+  
+  // new columns from B
+  Eigen::ArrayXXd new_columns_B(dimension_C,to_combine.num_spins());
+  new_columns_B.setZero();
+  
+  
+  // fill new columns: new rows repeated dimension_B times
+  unsigned int l = 0; // new row index
+  for (unsigned int i = 0;i<dimension_A;i++) {
+    unsigned int k = 0;
+    while (k<dimension_B) {
+        new_columns_B.row(l) = to_combine.get_basis().row(k);
+        k+=1;
+        l+=1;
+      }
+  }
+    
+  // return SpinBasis with new basis
+  Eigen::ArrayXXd basis_out(dimension_C,new_num_spins);
+  basis_out << expanded_basis_A, new_columns_B; // join  
+  return SpinBasis(basis_out);
+}
+
+
+SpinBasis::~SpinBasis() {/**/}
+
+// TODO don't use this ...
 //void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,
 //                    const Eigen::ArrayXXd & to_keep)
 //{  
