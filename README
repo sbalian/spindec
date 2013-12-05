@@ -1,21 +1,21 @@
 ================================================================================
                                 SpinDecoherence
 ================================================================================
-(1) Introduction
-(2) Installation
-(3) Run
-(4) Getting help
-(5) Acknowledgements
-(6) License
-(7) Contact
+(X) Introduction
+(X) Installation
+(X) Run
+(X) Getting help
+(X) Acknowledgements
+(X) License
+(X) Contact
 
 ================================================================================
-(1) Introduction
+(X) Introduction
 ================================================================================
 
 Solves for decoherence of a central spin in a spin bath.
 
-Includes:
+Implements:
 - Cluster correlation expansion
 - Special methods for donor qubits
 
@@ -26,36 +26,39 @@ Notes:
 - Some methods were originally written in Fortran by Tania Monteiro
 
 ================================================================================
-(2) Installation
+(X) Installation
 ================================================================================
 
 System requirements:
 - Unix-like OS with c++ compiler (g++ 4.4.7 or above recommended).
-- Lapack (optional)
+
+Included:
 - Eigen: Open-source linear algebra package
   http://eigen.tuxfamily.org
+- Boost
+  http://www.boost.org
 - argvparser: Open-source command line option parser by Michael Hanke
   http://mih.voxindeserto.de/argvparser.html
 
+Optional:
+- Lapack
+
 ================================================================================
-(3) Run
+(X) Run
 ================================================================================
 
 ================================================================================
-(4) Getting help
+(X) Getting help
 ================================================================================
 
-- For descriptions (or definitions) of the classes see the start of
-  header files (.h extension)
+- Help is given in header files (.h extension)
 - Source files (.cpp extension) may contain more information, usually geared
   more towards implementation
-- See $(PROJECTPATH)/main/  for the 'main' source files used to build the
-  executables in $(PROJECTPATH)/bin/
-- Resources for the executables, such as sample input files can be found in
-  $(PROJECTPATH)/bin/
+- "Main" source files (in /src/ with lower-case names) also contain help
+- See the Makefile for available binaries
 
 ================================================================================
-(5) Acknowledgements
+(X) Acknowledgements
 ================================================================================
 
 - Tania Monteiro
@@ -64,14 +67,18 @@ System requirements:
 - Leonardo Banchi
 
 ================================================================================
-(6) License
+(X) License
 ================================================================================
 
 ================================================================================
-(7) Contact
+(X) Contact
 ================================================================================
 
-Seto Balian - seto.balian@gmail.com - Dec 4, 2013
+Seto Balian <seto.balian@gmail.com>
+
+================================================================================
+
+Last modified: Dec 5, 2013
 
 ================================================================================
 

@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
@@ -15,21 +15,21 @@ double BoostEigen::maxAbsCoeff(const Eigen::Vector3d & a)
   return (a.cwiseAbs()).maxCoeff();
 }
 
-Eigen::MatrixXcd BoostEigen::spectralDecomposition(
-                                         const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXcd & eigenvalues)
+Eigen::VectorXcd exp(const Eigen::VectorXcd & a)
 {
-  return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.inverse());
+  return (a.array().exp()).matrix();
 }
 
-Eigen::MatrixXcd BoostEigen::hermitianSpectralDecomposition(
-                                         const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXd & eigenvalues)
+Eigen::MatrixXcd BoostEigen::expHermitianSpectralDecomposition(
+                                       const Eigen::MatrixXcd & eigenvectors,
+                                       const Eigen::VectorXd & eigenvalues,
+                                       const std::complex<double> & a)
 {
-  return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.transpose());
+  return eigenvectors*
+          ( (eigenvalues.cast < std::complex <double> > () * a ).asDiagonal() )
+  // Cast real eigenvalue vector into a complex vector and multiply by a
+          *(eigenvectors.transpose());
 }
-
-// TODO !! MAKE SURE THE METHODS BELOW ARE CONSISTENT WITH ONE ANOTHER !!
 
 Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
                                            const Eigen::MatrixXcd & B)
@@ -41,6 +41,7 @@ Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
   //output
   Eigen::MatrixXcd product(dimension_AB,dimension_AB);
   
+  // consistently with other methods
   for (unsigned int i=0;i<dimension_A;i++) {
     for (unsigned int j=0;j<dimension_A;j++) {
       product.block(i*dimension_B,j*dimension_B,dimension_B,dimension_B)
@@ -56,6 +57,7 @@ Eigen::VectorXcd BoostEigen::tensorProduct(const Eigen::VectorXcd & a,
   // output
   Eigen::VectorXcd product(a.rows()*b.rows());
   
+  // consistently with other methods
   unsigned int k = 0;
   for (unsigned int i=0;i<a.rows();i++) {
     for (unsigned int j=0;j<b.rows();j++) {
@@ -64,7 +66,6 @@ Eigen::VectorXcd BoostEigen::tensorProduct(const Eigen::VectorXcd & a,
     }
   }
   return product;
-  
 }
 
 Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
@@ -77,6 +78,7 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
   // output
   Eigen::MatrixXcd partial_trace(dimension_A,dimension_A);
 
+  // consistently with other methods
   unsigned int i=0, j=0;
   while (i<=dimension_AB-dimension_B) {
     j = 0;
@@ -89,5 +91,3 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
   }
   return partial_trace;
 }
-
-

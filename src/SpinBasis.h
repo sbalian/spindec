@@ -13,7 +13,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include "Spin.h"
 #include "SpinVector.h"
@@ -25,13 +25,14 @@ class SpinBasis
 
 protected:
 
-  void build (const SpinVector & spin_vector); // automatically build
+  Eigen::ArrayXXd build (const SpinVector & spin_vector) const;
+                                               // automatically build
                                                // using spin multiplicities
   Eigen::ArrayXXd basis_;
 
 public:
 
-  SpinBasis(); // null
+  SpinBasis();
   SpinBasis(const SpinVector & spin_vector); // automatically build
                                              // using spin multiplicities
   SpinBasis(const Eigen::ArrayXXd & basis); // custom build
@@ -42,7 +43,7 @@ public:
 
   // Number of spins
   virtual unsigned int num_spins() const;
-  
+
   double get_element(const unsigned int index, const unsigned int slot) const;  
   
   // For example,         basis1 = 0.5
@@ -54,7 +55,7 @@ public:
   SpinBasis operator+(const SpinBasis & to_join) const;
   
   // like tensor product,
-  // for example, a.combine(b)
+  // for example, a^(b)
   // SpinBasis b = 0.5
   //              -0.5
   //              SpinBasis a = 4.5
@@ -64,14 +65,14 @@ public:
   //                     -4.5 -0.5
   //                      4.5  0.5
   //                     -4.5 -0.5
-  SpinBasis combine(const SpinBasis & to_combine) const;
+  SpinBasis operator^(const SpinBasis & to_combine) const;
 
   virtual ~SpinBasis();
   
-  // TODO don't use this ...
-  //void truncate(const std::vector<unsigned int> & spin_indices,
-  //                         const Eigen::ArrayXXd & to_keep);
-
 };
 
 #endif // SPINBASIS_H_
+
+// Don't use this ...
+//void truncate(const std::vector<unsigned int> & spin_indices,
+//                         const Eigen::ArrayXXd & to_keep);

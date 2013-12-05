@@ -7,11 +7,11 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence.
 //
-// TODO make this a proper template extension of Eigen. See Eigen doc.
-//
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include <Eigen/Dense>
+
+#include <complex>
 
 class BoostEigen
 {
@@ -25,21 +25,13 @@ public:
   // Maximum of ( abs(a1), abs(a2), abs(a3) ) for a real 3-vector
   static double maxAbsCoeff(const Eigen::Vector3d & a);
   
-  // Exponentiate (element-wise complex exponentiation) for vectors
-  template<typename ScalarType, int rows>
-  static Eigen::Matrix<ScalarType, rows, 1>
-    exp(const Eigen::Matrix<ScalarType, rows, 1> & a)
-  {
-    return (a.array().exp()).matrix();
-  }
+  // Exponentiate (element-wise complex exponentiation) for complex vectors
+  static Eigen::VectorXcd exp(const Eigen::VectorXcd & a);
 
   // Tensor product for complex matrices
   // This evaluates C = A X B. For example, for 2 x 2 matrices,
   // C = A_11*B A_12*B
   //     A_21*B A_22*B
-  // TODO Make this work for real matrices as well?
-  //                                     (see broken commented out code
-  //                                            at end of this file)
   static Eigen::MatrixXcd tensorProduct(const Eigen::MatrixXcd & A,
                                         const Eigen::MatrixXcd & B);
   
@@ -49,37 +41,44 @@ public:
   //     a_1*B_2
   //     a_2*B_1
   //     a_2*B_2
-  // TODO Make this work for real vectors as well?
-  // TODO Use the same method for both vectors and matrices?
   static Eigen::VectorXcd tensorProduct(const Eigen::VectorXcd & a,
                                         const Eigen::VectorXcd & b);
 
-
-  // Partial trace
+  // Partial trace for complex matrices
   // Given C = A x B, where x denotes the tensor product,
   // in addition to the dimension of B, this method outputs
   // Tr[B] A (where Tr denotes the sum of the diagonal elements)
-  // TODO Make this work for real matrices as well?
   static Eigen::MatrixXcd partialTrace(const Eigen::MatrixXcd & AB,
                                        const unsigned int dimension_B);
   
-  // Spectral decomposition (for complex square matrices)
-  // Calculates A = V D V-1, where D is the diagonal of eigenvalues,
-  // and V is the eigenvector matrix (col -> evector)
-  // TODO Make this for real matrices as well?
-  static Eigen::MatrixXcd spectralDecomposition(
+  // The spectral decomposition of a complex matrix is
+  // A = V D V-1, where D is the diagonal of eigenvalues
+  // and V is the eigenvector matrix (col -> evector).
+  // For a Hermitian matrix, V-1 = V' and the eigenvalues are real.
+  // This method gives A = V exp(a D) V-1 (where a is a complex number)
+  // for Hermitian matrices.
+  static Eigen::MatrixXcd expHermitianSpectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXcd & eigenvalues);
-  // For Hermitian matrices (faster) V-1 = V'
-  static Eigen::MatrixXcd hermitianSpectralDecomposition(
-                                         const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXd & eigenvalues);
-                                         // eigenvalues must be real
+                                         const Eigen::VectorXd & eigenvalues,
+                                         const std::complex<double> & a);
 
 };
 
 #endif // BOOSTEIGEN_H_
 
+// TEMPLATE GRAVEYARD
+// ------------------
+
+//// OK, but does not work on Eigen expressions in the arguments! ...
+//// Exponentiate (element-wise complex exponentiation) for vectors
+//template<typename ScalarType, int rows>
+//static Eigen::Matrix<ScalarType, rows, 1>
+//  exp(const Eigen::Matrix<ScalarType, rows, 1> & a)
+//{
+//  return (a.array().exp()).matrix();
+//}
+
+//// play ...
 //template<typename ScalarType, int rows, int cols>
 //static Eigen::Matrix<ScalarType,rows,cols> tensorProduct(
 //    const Eigen::Matrix<ScalarType, rows, cols> & A,

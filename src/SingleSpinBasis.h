@@ -5,7 +5,7 @@
 //
 // Basis for a single spin.
 //
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include "SpinBasis.h"
 
@@ -14,11 +14,11 @@ class SingleSpinBasis : public SpinBasis
 
 private:
 
-  void build(const Spin & spin); // build using multiplicity
+  Eigen::ArrayXXd build(const Spin & spin) const; // build using multiplicity
     
 public:
 
-  SingleSpinBasis(); // null
+  SingleSpinBasis();
   SingleSpinBasis(const Spin & spin); // uses multiplicity to build basis
                                        // automatically
   

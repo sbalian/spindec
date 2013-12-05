@@ -5,9 +5,10 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include <Eigen/Dense>
+
 #include "SpinBasis.h"
 
 class SpinState
@@ -20,13 +21,15 @@ private:
   void quit_if_dimension_mismatch() const;
   
 public:
-  SpinState(); // empty basis and empty state
+  SpinState();
   SpinState(const Eigen::VectorXcd & state, const SpinBasis & basis);
   
   Eigen::VectorXcd get_state() const;
   SpinBasis get_basis() const;
   
-  // States: tensor product, Bases: combine
+  void set_state(const Eigen::VectorXcd & state);
+  
+  // States: tensor product ^, Bases: combine ^ (like tensor product)
   SpinState operator^(const SpinState & rhs);
   
   unsigned int dimension() const;

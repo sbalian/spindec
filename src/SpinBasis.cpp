@@ -1,9 +1,9 @@
 // See SpinBasis.h for description.
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include "SpinBasis.h"
 
-void SpinBasis::build(const SpinVector & spin_vector)
+Eigen::ArrayXXd SpinBasis::build(const SpinVector & spin_vector) const
 {
   int n = static_cast<int>(spin_vector.size()); // number of spins
   int M = static_cast<int>(spin_vector.get_multiplicity());// total multiplicity
@@ -62,8 +62,7 @@ void SpinBasis::build(const SpinVector & spin_vector)
     }
   }
 
-  basis_ = basis;
-  return;
+  return basis;
 
 }
 
@@ -71,7 +70,7 @@ SpinBasis::SpinBasis() {/**/}
 
 SpinBasis::SpinBasis(const SpinVector & spin_vector)
 {
-  build(spin_vector);
+  basis_ = build(spin_vector);
 }
 
 SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis)
@@ -94,10 +93,10 @@ unsigned int SpinBasis::num_spins() const
   return static_cast<int>(basis_.cols());
 }
 
-double SpinBasis::get_element(const unsigned int row,
-        const unsigned int col) const
+double SpinBasis::get_element(const unsigned int index,
+        const unsigned int slot) const
 {
-  return basis_(row,col);
+  return basis_(index,slot);
 }
 
 SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
@@ -107,11 +106,10 @@ SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
   return joined;
 }
 
-// TODO !! MAKE SURE THIS METHOD IS CONSISTENT THE TENSOR PRODUCT, ETC. IN !!
-//      !! BOOSTEIGEN/ELSEWHERE                                            !!
-
-SpinBasis SpinBasis::combine(const SpinBasis & to_combine) const
+SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
 {
+  
+  // consistently with BoostEigen methods for linear algebra
   
   // C = A.combine(B)
   
@@ -162,10 +160,9 @@ SpinBasis SpinBasis::combine(const SpinBasis & to_combine) const
   return SpinBasis(basis_out);
 }
 
-
 SpinBasis::~SpinBasis() {/**/}
 
-// TODO don't use this ...
+// Don't use this ...
 //void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,
 //                    const Eigen::ArrayXXd & to_keep)
 //{  
