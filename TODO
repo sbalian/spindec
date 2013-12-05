@@ -1,0 +1,9 @@
+Seto Balian, 5 Dec, 2013
+
+- Const data members and use of vectors, e.g. for Spin?
+  Use boost::ptr_vector to overcome problems with vector, e.g. in SpinVector?
+- BoostEigen -> proper extension of Eigen? See Eigen documentation
+- Make BoostEigen methods to work on Eigen base types
+- return Type& for speed?
+- In diagonalize zheev w[n] - use "new"?
+

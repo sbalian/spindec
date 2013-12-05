@@ -1,23 +1,23 @@
 // See SingleSpinBasis.h for description.
-// Seto Balian, Dec 4, 2013
+// Seto Balian, Dec 5, 2013
 
 #include "SingleSpinBasis.h"
 
-void SingleSpinBasis::build(const Spin & spin)
+Eigen::ArrayXXd SingleSpinBasis::build(const Spin & spin) const
 {
-  SpinBasis::build(SpinVector(spin));
+  return SpinBasis::build(SpinVector(spin));
 }
 
 SingleSpinBasis::SingleSpinBasis() : SpinBasis() {/**/}
 
 SingleSpinBasis::SingleSpinBasis(const Spin & spin)
 {
-  build(spin);
+  basis_ = build(spin);
 }
 
 SingleSpinBasis::SingleSpinBasis(const Eigen::ArrayXd & basis) :
   SpinBasis(basis)
-{/**/} // TODO is this OK? ArrayXd vs ArrayXXd
+{/**/} // TODO make sure this is OK: ArrayXd vs ArrayXXd
 
 unsigned int SingleSpinBasis::num_spins() const
 {

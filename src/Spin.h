@@ -8,16 +8,13 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 5, 2013
 
 class Spin
 {
 
 protected:
 
-  // TODO make these consts (code for Spin and derived OK for this)
-  // but can't use with std::vector! use pointers in SpinVector? how about
-  // boost::ptr_vector for improvement over the std?
   double quantum_number_; 
   double gyromagnetic_ratio_;
   unsigned int multiplicity_;
@@ -30,7 +27,7 @@ protected:
 
 public:
   
-  Spin(); // all data members set to zero
+  Spin();
   Spin(const double quantum_number, const double gyromagnetic_ratio);
 
   double get_gyromagnetic_ratio() const;
