@@ -3,35 +3,38 @@
 
 // SpinInteractionEdge
 //
-// TODO Describe
+// Edge for a spin interaction graph.
+// Holds the two labels for its vertices and the object for the interaction
+// between the vertices.
 //
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 6, 2013
 
 #include <utility>
 #include "SpinInteractionVertex.h"
+#include "SpinInteraction.h"
 
 class SpinInteractionEdge
 {
 
 private:
-  std::pair<SpinInteractionVertex,SpinInteractionVertex> vertices_;
+
+  std::pair<unsigned int,unsigned int> labels_;
+  SpinInteraction* interaction_;
   
 public:
 
-  SpinInteractionEdge(); // 2 vertices with labels 0
-  SpinInteractionEdge(const SpinInteractionVertex & vertex1,
-                      const SpinInteractionVertex & vertex2);
-
-  std::pair<SpinInteractionVertex,SpinInteractionVertex> get_vertices() const;
-  SpinInteractionVertex get_vertex1() const;
-  SpinInteractionVertex get_vertex2() const;
+  SpinInteractionEdge();
+  SpinInteractionEdge(const unsigned int label1,
+      const unsigned int label2,
+      SpinInteraction* interaction);
   
-  void set_vertices(
-    const std::pair<SpinInteractionVertex,SpinInteractionVertex> & vertices);
-  void set_vertices(const SpinInteractionVertex & vertex1,
-                    const SpinInteractionVertex & vertex2);
-  void set_vertex1(const SpinInteractionVertex & vertex);
-  void set_vertex2(const SpinInteractionVertex & vertex);
+  unsigned int get_label1() const;
+  unsigned int get_label2() const;
+  SpinInteraction* get_interaction() const;
+  
+  void set_label1(const unsigned int label1);
+  void set_label2(const unsigned int label2);
+  void set_interaction(SpinInteraction* interaction);
   
 };
 

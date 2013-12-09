@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
@@ -15,20 +15,9 @@ double BoostEigen::maxAbsCoeff(const Eigen::Vector3d & a)
   return (a.cwiseAbs()).maxCoeff();
 }
 
-Eigen::VectorXcd exp(const Eigen::VectorXcd & a)
+Eigen::VectorXcd BoostEigen::exp(const Eigen::VectorXcd & a)
 {
-  return (a.array().exp()).matrix();
-}
-
-Eigen::MatrixXcd BoostEigen::expHermitianSpectralDecomposition(
-                                       const Eigen::MatrixXcd & eigenvectors,
-                                       const Eigen::VectorXd & eigenvalues,
-                                       const std::complex<double> & a)
-{
-  return eigenvectors*
-          ( (eigenvalues.cast < std::complex <double> > () * a ).asDiagonal() )
-  // Cast real eigenvalue vector into a complex vector and multiply by a
-          *(eigenvectors.transpose());
+  return Eigen::ArrayXcd(a.array().exp()).matrix();
 }
 
 Eigen::MatrixXcd BoostEigen::tensorProduct(const Eigen::MatrixXcd & A,
@@ -91,3 +80,26 @@ Eigen::MatrixXcd BoostEigen::partialTrace(const Eigen::MatrixXcd & AB,
   }
   return partial_trace;
 }
+
+Eigen::MatrixXcd BoostEigen::spectralDecomposition(
+    const Eigen::MatrixXcd& eigenvectors, const Eigen::VectorXcd& eigenvalues)
+{
+  return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.inverse());
+}
+
+Eigen::MatrixXcd BoostEigen::unitarySpectralDecomposition(
+    const Eigen::MatrixXcd& eigenvectors, const Eigen::VectorXcd& eigenvalues)
+{
+  return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.adjoint());
+}
+
+//Eigen::MatrixXcd BoostEigen::expHermitianSpectralDecomposition(
+//                             const Eigen::MatrixXcd & orthonormal_eigenvectors,
+//                             const Eigen::VectorXd & eigenvalues,
+//                             const std::complex<double> & a)
+//{
+//
+//  return unitarySpectralDecomposition(orthonormal_eigenvectors,
+//      exp(eigenvalues.cast< std::complex<double> > () * a) );
+//}
+

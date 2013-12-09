@@ -1,4 +1,4 @@
-Seto Balian, 5 Dec, 2013
+Seto Balian, Dec 9, 2013
 
 - Const data members and use of vectors, e.g. for Spin?
   Use boost::ptr_vector to overcome problems with vector, e.g. in SpinVector?
@@ -6,4 +6,9 @@ Seto Balian, 5 Dec, 2013
 - Make BoostEigen methods to work on Eigen base types
 - return Type& for speed?
 - In diagonalize zheev w[n] - use "new"?
-
+- ../src/SpinInteraction.cpp:15: warning: abstract virtual 'virtual double SpinInteraction::calculate_non_spatial_dependence() const' called from constructor
+- generalise to non-uniform magnetic fields
+- more comments and provide some sort of consistent documentation
+- how to properly deal with Eigen dynamic allocation, e.g. MatrixXXd
+- make sure ArrayXd vs ArrayXXd setting one to another works as expected ...
+- Add support for eigenvalues and eigenvectors for non-Hamiltonian operators

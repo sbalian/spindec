@@ -13,7 +13,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "Spin.h"
 #include "SpinVector.h"
@@ -33,6 +33,7 @@ protected:
 public:
 
   SpinBasis();
+  SpinBasis(const unsigned int dimension);
   SpinBasis(const SpinVector & spin_vector); // automatically build
                                              // using spin multiplicities
   SpinBasis(const Eigen::ArrayXXd & basis); // custom build

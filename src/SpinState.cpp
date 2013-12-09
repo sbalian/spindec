@@ -1,37 +1,22 @@
 // See SpinState.h for description.
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "SpinState.h"
+#include "BoostEigen.h"
 #include "Errors.h"
 
-void SpinState::quit_if_dimension_mismatch() const
-{
-  if (basis_.dimension() != state_.rows()) {
-    Errors::quit("SpinState: State and basis must have the same dimension!");
-  }
-  return;
-}
+SpinState::SpinState() : MatrixRepresentation()
+{/**/}
 
-SpinState::SpinState()
+SpinState::SpinState(const Eigen::VectorXcd & state, const SpinBasis & basis) :
+    MatrixRepresentation(basis)
 {
-  basis_ = SpinBasis();
-}
-
-SpinState::SpinState(const Eigen::VectorXcd & state, const SpinBasis & basis)
-{
-  state_ = state;
-  basis_ = basis;
-  quit_if_dimension_mismatch();
+  set_state(state);
 }
 
 Eigen::VectorXcd SpinState::get_state() const
 {
   return state_;
-}
-
-SpinBasis SpinState::get_basis() const
-{
-  return basis_;
 }
 
 void SpinState::set_state(const Eigen::VectorXcd & state)
@@ -41,8 +26,22 @@ void SpinState::set_state(const Eigen::VectorXcd & state)
   return;
 }
 
-
-unsigned int SpinState::dimension() const
+SpinState SpinState::operator^(const SpinState & rhs)
 {
-  return basis_.dimension();
+  return SpinState( BoostEigen::tensorProduct(get_state(),rhs.get_state()) ,
+      get_basis()^(rhs.get_basis()) );
+}
+
+void SpinState::quit_if_dimension_mismatch() const
+{
+  if (MatrixRepresentation::get_dimension() != state_.rows()) {
+    Errors::quit("SpinState: State and basis must have the same dimension!");
+  }
+  return;
+}
+
+void SpinState::set_zero()
+{
+  state_.setZero(get_dimension());
+  return;
 }

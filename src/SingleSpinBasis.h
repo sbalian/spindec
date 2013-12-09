@@ -5,7 +5,7 @@
 //
 // Basis for a single spin.
 //
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "SpinBasis.h"
 
@@ -19,6 +19,7 @@ private:
 public:
 
   SingleSpinBasis();
+  SingleSpinBasis(const unsigned int dimension);
   SingleSpinBasis(const Spin & spin); // uses multiplicity to build basis
                                        // automatically
   

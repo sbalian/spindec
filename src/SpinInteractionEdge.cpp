@@ -1,60 +1,51 @@
 // See SpinInteractionEdge.h for description.
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 6, 2013
 
 #include "SpinInteractionEdge.h"
 
 SpinInteractionEdge::SpinInteractionEdge()
 {
-  vertices_.first = SpinInteractionVertex();
-  vertices_.second = SpinInteractionVertex();
+  set_label1(0);
+  set_label2(0);
+  interaction_ = NULL;
 }
 
-SpinInteractionEdge::SpinInteractionEdge(const SpinInteractionVertex & vertex1,
-                                         const SpinInteractionVertex & vertex2)
+SpinInteractionEdge::SpinInteractionEdge(const unsigned int label1,
+    const unsigned int label2, SpinInteraction* interaction)
 {
-  vertices_.first = vertex1;
-  vertices_.second = vertex2;
+  set_label1(label1);
+  set_label2(label2);
+  set_interaction(interaction);
 }
 
-std::pair<SpinInteractionVertex,SpinInteractionVertex>
-  SpinInteractionEdge::get_vertices() const
+unsigned int SpinInteractionEdge::get_label1() const
 {
-  return vertices_;
+  return labels_.first;
 }
 
-SpinInteractionVertex SpinInteractionEdge::get_vertex1() const
+unsigned int SpinInteractionEdge::get_label2() const
 {
-  return vertices_.first;
+  return labels_.second;
 }
 
-SpinInteractionVertex SpinInteractionEdge::get_vertex2() const
+SpinInteraction* SpinInteractionEdge::get_interaction() const
 {
-  return vertices_.second;
+  return interaction_;
 }
 
-void SpinInteractionEdge::set_vertices(
-    const std::pair<SpinInteractionVertex,SpinInteractionVertex> & vertices)
+void SpinInteractionEdge::set_label1(const unsigned int label1)
 {
-  vertices_ = vertices;
+  labels_.first = label1;
   return;
 }
 
-void SpinInteractionEdge::set_vertices(const SpinInteractionVertex & vertex1,
-                                       const SpinInteractionVertex & vertex2)
+void SpinInteractionEdge::set_label2(const unsigned int label2)
 {
-  set_vertex1(vertex1);
-  set_vertex2(vertex2);
+  labels_.second = label2;
   return;
 }
 
-void SpinInteractionEdge::set_vertex1(const SpinInteractionVertex & vertex)
+void SpinInteractionEdge::set_interaction(SpinInteraction* interaction)
 {
-  vertices_.first = vertex;
-  return;
-}
-
-void SpinInteractionEdge::set_vertex2(const SpinInteractionVertex & vertex)
-{
-  vertices_.second = vertex;
-  return;
+  interaction_ = interaction;
 }

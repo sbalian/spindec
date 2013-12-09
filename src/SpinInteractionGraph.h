@@ -3,12 +3,15 @@
 
 // SpinInteractionGraph
 //
-// TODO Describe
+// Spin interaction graph from which spin Hamiltonians are built.
+// Also contains a uniform magnetic field all vertices see.
+// TODO generalise to non-uniform magnetic fields.
 //
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Dec 6, 2013
 
 #include "SpinInteractionVertex.h"
 #include "SpinInteractionEdge.h"
+#include "UniformMagneticField.h"
 
 #include <vector>
 
@@ -16,20 +19,27 @@ class SpinInteractionGraph
 {
 
 private:
-  std::vector<SpinInteractionVertex> isolated_vertices_;
+  std::vector<SpinInteractionVertex> vertices_;
   std::vector<SpinInteractionEdge> edges_;
+  
+  UniformMagneticField field_;
+  
 
 public:
 
-  SpinInteractionGraph();// no vertices, no edges
+  SpinInteractionGraph();
+  SpinInteractionGraph(const UniformMagneticField & field);
   
-  void add_isolated_vertex(const SpinInteractionVertex & isolated_vertex);
+  void add_vertex(const SpinInteractionVertex & vertex);
   void add_edge(const SpinInteractionEdge & edge);
   
-  SpinInteractionVertex get_isolated_vertex(const unsigned int index) const;
+  SpinInteractionVertex get_vertex(const unsigned int index) const;
   SpinInteractionEdge get_edge(const unsigned int index) const;
   
-  unsigned int num_isolated_vertices() const;
+  UniformMagneticField get_field() const;
+  void set_field(const UniformMagneticField & field);
+  
+  unsigned int num_vertices() const;
   unsigned int num_edges() const;
   
   void clear();
