@@ -5,6 +5,7 @@
 //
 // Effective spin Hamiltonian built from spin interaction graphs.
 // Can diagonalize and get unitary time evolution matrix.
+// No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
 // Seto Balian, Dec 9, 2013
@@ -41,6 +42,7 @@ public:
   // E_n: eigenvalues
   // |E_n>: eigenvectors
   // t: time (real double) units: microseconds (energies in M rad s-1)
+  // (for rime independent spin Hamiltonians ...)
   Eigen::MatrixXcd evolutionMatrix(const double time) const;
 
 };
