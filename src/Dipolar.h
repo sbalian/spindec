@@ -1,12 +1,14 @@
-#ifndef DIPOLAR_H
-#define	DIPOLAR_H
+#ifndef DIPOLAR_H_
+#define	DIPOLAR_H_
 
 // Dipolar
 //
-// Dipolar interaction between a pair of spins,
-// @todo(keeping only energy conserving and spin conserving terms.)
+// Dipolar interaction strength between a pair of spins
 //
-// D = D0 * gamma_1 gamma_2 ( 1.0 - 3.0*cos^2[theta]^2 ) / (1e-10 r)^3
+// D S_1^z S_2^z - (D / 4) [ S_1^+ S_2^- + S_1^- S_2^+ ]
+//
+// Strength
+// D = D0 * gamma_1 gamma_2 ( 1.0 - 3.0*cos^2[theta] ) / (1e-10 r)^3
 // 
 // Units: M rad s-1
 //
@@ -23,23 +25,34 @@
 // hbar [J s]: reduced Plank constant
 // (mu_0 / 4pi) = 1e-7 NA^-2 (mu_0 is the vacuum permeability)
 //
-// From: arXiv:cond-mat/0211567 or Phys. Rev. B 68, 115322 (2003)
+// From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, November 26, 2013
+// Seto Balian, Dec 6, 2013
 
 #include "SpinInteraction.h"
-#include "Spin.h"
 #include "UniformMagneticField.h"
 
 class Dipolar : public SpinInteraction
 {
+private:
+  
+  UniformMagneticField field_;
+  virtual double calculate_non_spatial_dependence() const;
+
 public:
   
   Dipolar();
-  // sets SpinInteraction::strength_ 
-  void calculate(const Spin & spin_1,
-                 const Spin & spin_2,
-                 const UniformMagneticField & field);
+  Dipolar(const Spin & spin1,
+                  const Spin & spin2,
+                  const UniformMagneticField & field);
+
+  Dipolar(const Spin & spin1,
+                  const Spin & spin2, const double strength,
+                  const UniformMagneticField & field);
+  
+  virtual double calculate(const Eigen::Vector3d & position1,
+                           const Eigen::Vector3d & position2);
+
 };
 
-#endif	 // DIPOLAR_H
+#endif	 // DIPOLAR_H_

@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence.
 //
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include <Eigen/Dense>
 
@@ -53,14 +53,21 @@ public:
   
   // The spectral decomposition of a complex matrix is
   // A = V D V-1, where D is the diagonal of eigenvalues
-  // and V is the eigenvector matrix (col -> evector).
-  // For a Hermitian matrix, V-1 = V' and the eigenvalues are real.
-  // This method gives A = V exp(a D) V-1 (where a is a complex number)
-  // for Hermitian matrices.
-  static Eigen::MatrixXcd expHermitianSpectralDecomposition(
+  // and V is the eigenvector matrix (col -> evector)
+  static Eigen::MatrixXcd spectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXd & eigenvalues,
-                                         const std::complex<double> & a);
+                                         const Eigen::VectorXcd & eigenvalues);
+  // For a unitary matrix, V-1 = V^+
+  static Eigen::MatrixXcd unitarySpectralDecomposition(
+                                         const Eigen::MatrixXcd & eigenvectors,
+                                         const Eigen::VectorXcd & eigenvalues);
+
+//  // This method gives A = V exp(a D) V-1 (where a is a complex number)
+//  // for unitary matrices.
+//  static Eigen::MatrixXcd expUnitarySpectralDecomposition(
+//                                         const Eigen::MatrixXcd & eigenvectors,
+//                                         const Eigen::VectorXcd & eigenvalues,
+//                                         const std::complex<double> & a);
 
 };
 

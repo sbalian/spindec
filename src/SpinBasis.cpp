@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "SpinBasis.h"
 
@@ -67,6 +67,11 @@ Eigen::ArrayXXd SpinBasis::build(const SpinVector & spin_vector) const
 }
 
 SpinBasis::SpinBasis() {/**/}
+
+SpinBasis::SpinBasis(const unsigned int dimension)
+{
+  basis_= Eigen::ArrayXXd::Zero(dimension,1);
+}
 
 SpinBasis::SpinBasis(const SpinVector & spin_vector)
 {

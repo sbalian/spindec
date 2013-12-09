@@ -3,55 +3,39 @@
 
 // HermitianEigenspectrum
 //
-// Diagonalizes a Hermitian matrix, holding its eigenvectors and eigenvalues.
-// Eigenvectors stored column-wise.
+// Diagonalizes a Hermitian matrix.
+// Eigenvectors are orthonormal, eigenvalues are always real.
+// TODO ensure these conditions?
 //
-// Diagonalizer types (dense):
-//  Default "eigen" (SelfAdjointEigenSolver) or "zheev" (Lapack)
-//
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
-#include <Eigen/Dense>
-#include <string>
-#include <complex>
+#include "Eigenspectrum.h"
 
-class HermitianEigenspectrum
+class HermitianEigenspectrum : public Eigenspectrum
 {
 private:
   
-  Eigen::VectorXd eigenvalues_; // real
-  Eigen::VectorXcd eigenvectors_; // complex
-  
-  void diagonalize_zheev(const Eigen::MatrixXcd & matrix);
-  void diagonalize_eigen(const Eigen::MatrixXcd & matrix);
-  
+  // Diagonalizers
+  void diagonalize_lapack(const Eigen::MatrixXcd & matrix);
+  void diagonalize_eigen (const Eigen::MatrixXcd & matrix);
+
 public:
+  
   HermitianEigenspectrum();
   HermitianEigenspectrum(const Eigen::MatrixXcd & matrix);
-  
   HermitianEigenspectrum(const Eigen::MatrixXcd & matrix,
-      const std::string & diagonalizer_type);
-  //  "eigen" (SelfAdjointEigenSolver) or "zheev" (Lapack)
-
-  void diagonalize(const Eigen::MatrixXcd & matrix);
-  void diagonalize(const Eigen::MatrixXcd & matrix,
-      const std::string & diagonalizer_type);
-
-  Eigen::VectorXd get_eigenvalues() const;
-  Eigen::MatrixXcd get_eigenvectors() const;
-
-  double get_eigenvalue(const unsigned int index) const;
-  Eigen::VectorXcd get_eigenvector(const unsigned int index) const;
-
-  // The spectral decomposition of a complex matrix is
-  // A = V D V-1, where D is the diagonal of eigenvalues
-  // and V is the eigenvector matrix (col -> evector).
-  // For a Hermitian matrix, V-1 = V' and the eigenvalues are real.
-  // This method gives A = V exp(a D) V-1 (where a is a complex number)
-  // for Hermitian matrices.
-  Eigen::MatrixXcd expSpectralDecomposition(
-                                  const std::complex<double> & a) const;
-
+      const std::string & diagonalizer);
+  
+  virtual void diagonalize(const Eigen::MatrixXcd & matrix);
+  
+  // since eigenvectors orthonormal, V-1 = V^+,
+  // so use faster (unitary) decomposition
+  virtual Eigen::MatrixXcd spectralDecomposition() const;
+  
+  // TODO see base class, can you do this?
+  //Eigen::VectorXd get_eigenvalues() const;
+  //double get_eigenvalue(const unsigned int index) const;
+  
 };
 
 #endif // HERMITIANEIGENSPECTRUM_H_

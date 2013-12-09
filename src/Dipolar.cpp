@@ -1,41 +1,50 @@
 // See Dipolar.h for description.
-// Seto Balian, November 27, 2013
+// Seto Balian, Dec 6, 2013
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
-
 #include "BoostEigen.h"
-#include "SpinInteraction.h"
 
-#include <cmath>
-
-Dipolar::Dipolar()
+double Dipolar::calculate_non_spatial_dependence() const
 {
-  
+  const double prefactor = 1.0e-31*MathPhysConstants::reduced_plank();
+  const double gamma_product = spin1_.get_gyromagnetic_ratio()
+                              *spin2_.get_gyromagnetic_ratio();
+  return prefactor*gamma_product;
 }
 
-// See header for description
-void Dipolar::calculate(const Spin & spin_1,
-                        const Spin & spin_2,
-                        const UniformMagneticField & field)
+Dipolar::Dipolar() : SpinInteraction()
 {
-  
-  const double prefactor = 1.0e-31*MathPhysConstants::reduced_plank();
-  const double gamma_product = spin_1.get_gyromagnetic_ratio()
-                              *spin_2.get_gyromagnetic_ratio();
-  const double radial_dependence = 1.0/std::pow(field.get_magnitude(),3.0);
+  field_ = UniformMagneticField();
+}
 
-  
-  const Eigen::Vector3d spin_separation = spin_2.get_position()
-                                          - spin_1.get_position();
-  const Eigen::Vector3d field_direction = field.get_direction();
+Dipolar::Dipolar(const Spin& spin1, const Spin& spin2,
+    const UniformMagneticField& field) : SpinInteraction(spin1, spin2)
+{
+  field_ = field;
+  non_spatial_dependence_ = calculate_non_spatial_dependence();
+}
+
+Dipolar::Dipolar(const Spin& spin1, const Spin& spin2, const double strength,
+    const UniformMagneticField& field) : SpinInteraction(spin1,spin2,strength)
+{
+  field_ = field;
+  strength_ = strength;
+  non_spatial_dependence_ = calculate_non_spatial_dependence();
+}
+
+double Dipolar::calculate(const Eigen::Vector3d& position1,
+    const Eigen::Vector3d& position2)
+{
+  double strength = 0.0;
+  const double radial_dependence = 1.0/std::pow(field_.get_magnitude(),3.0);
+  const Eigen::Vector3d spin_separation = position2 - position1;
+  const Eigen::Vector3d field_direction = field_.get_direction();
   const double angular_dependence =
-       (1.0  - std::pow(BoostEigen::cosAngleBetween(spin_separation,
-                                                    field_direction),2.0) );
-
+     (1.0  - std::pow(BoostEigen::cosAngleBetween(spin_separation,
+                                                  field_direction),2.0) );
   
-  SpinInteraction::set_strength(prefactor*gamma_product*
-                                radial_dependence*angular_dependence);
-  return;
-  
+  strength = non_spatial_dependence_*radial_dependence*angular_dependence;
+  set_strength(strength);
+  return strength;
 }

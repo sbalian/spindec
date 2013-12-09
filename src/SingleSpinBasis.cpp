@@ -1,5 +1,5 @@
 // See SingleSpinBasis.h for description.
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "SingleSpinBasis.h"
 
@@ -18,6 +18,11 @@ SingleSpinBasis::SingleSpinBasis(const Spin & spin)
 SingleSpinBasis::SingleSpinBasis(const Eigen::ArrayXd & basis) :
   SpinBasis(basis)
 {/**/} // TODO make sure this is OK: ArrayXd vs ArrayXXd
+
+SingleSpinBasis::SingleSpinBasis(const unsigned int dimension)
+{
+  basis_ = Eigen::ArrayXd::Zero(dimension);
+}
 
 unsigned int SingleSpinBasis::num_spins() const
 {

@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Dec 5, 2013
+# Seto Balian, Dec 9, 2013
 
 #####################
 # Basic user input
@@ -53,10 +53,10 @@ all: $(EXECUTABLES)
 #--------------------
 
 test.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)test.cpp
+	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)test.cpp
 
 test: $(TEST_OBJ)
-	$(CC) $(CFLAGS) $(TEST_OBJ) -o test
+	$(CC) $(CFLAGS) $(LAPACKFLAGS) $(TEST_OBJ) -o test
 
 #!!!!!!!!!!!!!!!!!!!!
 # Intermediate objects
@@ -84,6 +84,7 @@ ElectronSpin.o:
 SpinVector.o:
 	$(CC) $(CFLAGS) -c $(SOURCEPATH)SpinVector.cpp
 
+
 #--------------------
 # Need Eigen
 #--------------------
@@ -105,19 +106,38 @@ SpinInteractionEdge.o:
 
 SpinInteractionGraph.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
+	
+Eigenspectrum.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)Eigenspectrum.cpp
+
+HermitianEigenspectrum.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)HermitianEigenspectrum.cpp
+
+SpinInteraction.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteraction.cpp
+	
+UniformMagneticField.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)UniformMagneticField.cpp
+
+Dipolar.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)Dipolar.cpp
+
+MatrixRepresentation.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)MatrixRepresentation.cpp
 
 SpinState.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinState.cpp
-	
-HermitianEigenspectrum.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)HermitianEigenspectrum.cpp
+
+SpinOperator.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinOperator.cpp
+
 
 
 #####################
 # clean up
 #####################
 
-# TODO make sure this is all safe!!!
+# Make sure this is all safe!!!
 
 clean:
 	rm -f $(EXECUTABLES) && rm -f *.o

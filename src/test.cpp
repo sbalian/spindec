@@ -15,11 +15,11 @@
 #include "SingleSpinBasis.h"
 #include "SpinVector.h"
 
-std::complex<double> test_exp(const std::complex<double> & z)
-{
-  return std::complex<double>( exp(z.real())*cos(z.imag()) ,
-                               exp(z.real())*sin(z.imag()) );
-}
+//std::complex<double> test_exp(const std::complex<double> & z)
+//{
+//  return std::complex<double>( exp(z.real())*cos(z.imag()) ,
+//                               exp(z.real())*sin(z.imag()) );
+//}
 
 int main() {
 
@@ -142,8 +142,8 @@ int main() {
 //  std::cout << "TESTING spins\n" << std::endl;
 //  
 //  SpinVector spin_vector;
-  ElectronSpin electron;
-  NuclearSpin nucleus(4.5,0.0);
+//  ElectronSpin electron;
+//  NuclearSpin nucleus(4.5,0.0);
 //
 //  spin_vector.push_back(electron);
 //  spin_vector.push_back(nucleus);
@@ -163,24 +163,24 @@ int main() {
 //  std::cout << basis1.rows() << "\t" << basis1.cols() << std::endl;
 
   
-  std::cout << "TESTING bases\n" << std::endl;
-    
-  SingleSpinBasis electron_basis(electron);
-  SingleSpinBasis nucleus_basis(nucleus);
-  
-  std::cout << "Electron basis\n" << electron_basis.get_basis() << std::endl;
-  std::cout << "Nucleus basis\n" << nucleus_basis.get_basis() << std::endl;
-  
-  SpinBasis combined;
-  combined = nucleus_basis^((electron_basis)^(electron_basis));
-  
-  std::cout << "Combined basis\n" << combined.get_basis() << std::endl;
-
-  
-  SpinBasis combined2 = electron_basis^electron_basis;
-  SpinBasis combined3 = combined2^combined2;
-  std::cout << "test\n" << combined3.get_basis() << std::endl;
-  
+//  std::cout << "TESTING bases\n" << std::endl;
+//    
+//  SingleSpinBasis electron_basis(electron);
+//  SingleSpinBasis nucleus_basis(nucleus);
+//  
+//  std::cout << "Electron basis\n" << electron_basis.get_basis() << std::endl;
+//  std::cout << "Nucleus basis\n" << nucleus_basis.get_basis() << std::endl;
+//  
+//  SpinBasis combined;
+//  combined = nucleus_basis^((electron_basis)^(electron_basis));
+//  
+//  std::cout << "Combined basis\n" << combined.get_basis() << std::endl;
+//
+//  
+//  SpinBasis combined2 = electron_basis^electron_basis;
+//  SpinBasis combined3 = combined2^combined2;
+//  std::cout << "test\n" << combined3.get_basis() << std::endl;
+//  
   
       
 //std::cout << "TESTING SingleSpinZeemanBasis + dependencies\n" << std::endl;
@@ -264,3 +264,5 @@ int main() {
   return 0;
   
 }
+
+

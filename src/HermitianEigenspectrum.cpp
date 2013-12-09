@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 9, 2013
 
 #include "HermitianEigenspectrum.h"
 #include "BoostEigen.h"
@@ -16,7 +16,7 @@ extern "C" void zheev_(const char* jobz,const char* uplo, int* n,
     double* rwork, int* info );
 // ---------------------------------------------
 
-void HermitianEigenspectrum::diagonalize_zheev(
+void HermitianEigenspectrum::diagonalize_lapack(
     const Eigen::MatrixXcd & matrix)
 {
   // Code adapted from Intel example TODO link
@@ -38,8 +38,8 @@ void HermitianEigenspectrum::diagonalize_zheev(
   // put matrix into a C array
   r = 0;
   for (p=0;p<n;p++) {
-    for (q=0;q<n;q++) {
-      a[r].real = matrix(q,p).real();
+    for (q=0;q<n;q++) { // TODO std complex set to MKL complex ... is this OK?
+      a[r].real = std::complex<double>(matrix(q,p)).real();
       a[r].imag = 0.0;
       r = r + 1;
     }
@@ -61,11 +61,11 @@ void HermitianEigenspectrum::diagonalize_zheev(
     Errors::quit("zheev: The algorithm failed to compute eigenvalues.");
   }
 
-  eigenvalues_ = Eigen::VectorXd(n);
+  eigenvalues_ = Eigen::VectorXcd(n);
   eigenvectors_ = Eigen::MatrixXcd(n,n);
 
   for (p=0;p<n;p++) {
-    eigenvalues_(p) = w[p];
+    eigenvalues_(p) = std::complex<double>(w[p],0.0);
   }
 
   r = 0;
@@ -89,76 +89,50 @@ void HermitianEigenspectrum::diagonalize_eigen(
   eigensolver.compute(matrix);
 
   eigenvectors_ = eigensolver.eigenvectors();
-  eigenvalues_  = eigensolver.eigenvalues();
+  eigenvalues_  = (eigensolver.eigenvalues()).cast< std::complex<double> > ();
   return;
+  
 }
 
-HermitianEigenspectrum::HermitianEigenspectrum()
+HermitianEigenspectrum::HermitianEigenspectrum() :
+    Eigenspectrum()
 {/**/}
 
 HermitianEigenspectrum::HermitianEigenspectrum(
-    const Eigen::MatrixXcd & matrix)
+    const Eigen::MatrixXcd & matrix) : Eigenspectrum()
 {
   diagonalize(matrix);
 }
 
 HermitianEigenspectrum::HermitianEigenspectrum(const Eigen::MatrixXcd & matrix,
-    const std::string & diagonalizer_type)
+    const std::string & diagonalizer) : Eigenspectrum(diagonalizer)
 {
-  diagonalize(matrix,diagonalizer_type);
+  diagonalize(matrix);
 }
 
 void HermitianEigenspectrum::diagonalize(const Eigen::MatrixXcd & matrix)
 {
-  diagonalize_eigen(matrix);
-}
-
-void HermitianEigenspectrum::diagonalize(const Eigen::MatrixXcd & matrix,
-    const std::string & diagonalizer_type)
-{
-  if (diagonalizer_type == "eigen") {
+  if (diagonalizer_ == "Eigen") {
     diagonalize_eigen(matrix);
     return;
   }
   
-  if (diagonalizer_type == "zheev") {
-    diagonalize_zheev(matrix);
+  if (diagonalizer_ == "Lapack") {
+    diagonalize_lapack(matrix);
     return;
   }
   
   // else
   std::string message = "Diagonalizer \"";
-  message += diagonalizer_type;
+  message += diagonalizer_;
   message += "\" not supported.";
   Errors::quit(message);
   return;
   
 }
 
-Eigen::VectorXd HermitianEigenspectrum::get_eigenvalues() const
+Eigen::MatrixXcd HermitianEigenspectrum::spectralDecomposition() const
 {
-  return eigenvalues_;
-}
-
-Eigen::MatrixXcd HermitianEigenspectrum::get_eigenvectors() const
-{
-  return eigenvectors_;
-}
-
-double HermitianEigenspectrum::get_eigenvalue(const unsigned int index) const
-{
-  return eigenvalues_(index);
-}
-
-Eigen::VectorXcd HermitianEigenspectrum::get_eigenvector(
-    const unsigned int index) const
-{
-  return eigenvectors_.col(index);
-}
-
-Eigen::MatrixXcd HermitianEigenspectrum::expSpectralDecomposition(
-                                    const std::complex<double> & a) const
-{
-  return BoostEigen::expHermitianSpectralDecomposition(eigenvectors_,
-      eigenvalues_,a);
+  // since eigenvectors orthonormal, V-1 = V^+
+  return BoostEigen::unitarySpectralDecomposition(eigenvectors_, eigenvalues_);
 }
