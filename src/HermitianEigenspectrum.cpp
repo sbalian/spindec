@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include "HermitianEigenspectrum.h"
 #include "BoostEigen.h"
@@ -105,7 +105,8 @@ HermitianEigenspectrum::HermitianEigenspectrum(
 }
 
 HermitianEigenspectrum::HermitianEigenspectrum(const Eigen::MatrixXcd & matrix,
-    const std::string & diagonalizer) : Eigenspectrum(diagonalizer)
+    const std::string & diagonalizer) : 
+        Eigenspectrum(diagonalizer)
 {
   diagonalize(matrix);
 }
@@ -123,10 +124,7 @@ void HermitianEigenspectrum::diagonalize(const Eigen::MatrixXcd & matrix)
   }
   
   // else
-  std::string message = "Diagonalizer \"";
-  message += diagonalizer_;
-  message += "\" not supported.";
-  Errors::quit(message);
+  quit_if_diagonalizer_not_supported();
   return;
   
 }

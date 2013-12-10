@@ -8,31 +8,26 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include <Eigen/Dense>
 #include <string>
 
 #include "SpinInteractionGraph.h"
 #include "SpinOperator.h"
+#include "HermitianEigenspectrum.h"
 
 class SpinHamiltonian : public SpinOperator
 {
 private:
 
-  HermitianEigenspectrum eigenspectrum_; // eigenvectors and eigenvalues
-
-  // Fill methods
-  void fill(const SpinInteractionGraph & graph);
+  SpinBasis built_basis(const SpinInteractionGraph & graph) const;
+  Eigen::MatrixXcd filled_matrix(const SpinInteractionGraph & graph) const;
 
 public:
 
   SpinHamiltonian();
   SpinHamiltonian(const SpinInteractionGraph & graph);
-  // default diagonalizer "Eigen"
-  SpinHamiltonian(const SpinInteractionGraph & graph,
-      const std::string & diagonalizer);
-  // see Eigenspectrum.h for diagonalizer types
   
   // TODO describe
   void update(const SpinInteractionGraph & graph);
@@ -42,8 +37,9 @@ public:
   // E_n: eigenvalues
   // |E_n>: eigenvectors
   // t: time (real double) units: microseconds (energies in M rad s-1)
-  // (for rime independent spin Hamiltonians ...)
-  Eigen::MatrixXcd evolutionMatrix(const double time) const;
+  // (for time independent spin Hamiltonians ...)
+  Eigen::MatrixXcd evolutionMatrix(const HermitianEigenspectrum & spectrum,
+      const double time) const;
 
 };
 

@@ -1,7 +1,5 @@
-Seto Balian, Dec 9, 2013
+Seto Balian, Dec 10, 2013
 
-- Const data members and use of vectors, e.g. for Spin?
-  Use boost::ptr_vector to overcome problems with vector, e.g. in SpinVector?
 - BoostEigen -> proper extension of Eigen? See Eigen documentation
 - Make BoostEigen methods to work on Eigen base types
 - return Type& for speed?
@@ -9,6 +7,9 @@ Seto Balian, Dec 9, 2013
 - ../src/SpinInteraction.cpp:15: warning: abstract virtual 'virtual double SpinInteraction::calculate_non_spatial_dependence() const' called from constructor
 - generalise to non-uniform magnetic fields
 - more comments and provide some sort of consistent documentation
-- how to properly deal with Eigen dynamic allocation, e.g. MatrixXXd
+- how to properly deal with Eigen dynamic allocation, e.g. MatrixXXd. e.g. initialisation of data members in constructors
 - make sure ArrayXd vs ArrayXXd setting one to another works as expected ...
 - Add support for eigenvalues and eigenvectors for non-Hamiltonian operators
+- Better const correctness (particularly with data members) and resolve issues with std::vector. Now relies on public set methods ...
+- Throw exceptions (kill Errors.h)
+- Virtual destructors also for derived classes?

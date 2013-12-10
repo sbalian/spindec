@@ -1,16 +1,28 @@
 // See Eigenspectrum.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include "Eigenspectrum.h"
 #include "BoostEigen.h"
+#include "Errors.h"
 
 Eigenspectrum::Eigenspectrum() : diagonalizer_("Eigen")
 {
 }
 
-Eigenspectrum::Eigenspectrum(const std::string& diagonalizer) :
-        diagonalizer_(diagonalizer)
+
+Eigenspectrum::Eigenspectrum(const Eigen::MatrixXcd & matrix) :
+    diagonalizer_("Eigen")
 {
+  diagonalize(matrix);
+  return;
+}
+
+Eigenspectrum::Eigenspectrum(const Eigen::MatrixXcd & matrix,
+    const std::string & diagonalizer) :
+        diagonalizer_()
+{
+  diagonalize(matrix);
+  return;
 }
 
 Eigen::VectorXcd Eigenspectrum::get_eigenvalues() const
@@ -43,7 +55,52 @@ Eigenspectrum::~Eigenspectrum()
 {/**/
 }
 
+void Eigenspectrum::diagonalize_eigen(const Eigen::MatrixXcd& matrix)
+{
+  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> eigensolver(matrix.rows());
+  eigensolver.compute(matrix);
+
+  eigenvectors_ = eigensolver.eigenvectors();
+  eigenvalues_  = eigensolver.eigenvalues();
+  return;
+
+}
+
+void Eigenspectrum::diagonalize_lapack(const Eigen::MatrixXcd& matrix)
+{
+  quit_if_diagonalizer_not_supported();
+  return;
+}
+
+void Eigenspectrum::quit_if_diagonalizer_not_supported() const
+{
+  std::string message = "Diagonalizer \"";
+  message += diagonalizer_;
+  message += "\" not supported.";
+  Errors::quit(message);
+  return;
+}
+
+Eigenspectrum::Eigenspectrum(const std::string& diagonalizer) :
+    diagonalizer_(diagonalizer)
+{
+}
+
 Eigen::MatrixXcd Eigenspectrum::spectralDecomposition() const
 {
   return BoostEigen::spectralDecomposition(eigenvectors_,eigenvalues_);
+}
+
+void Eigenspectrum::diagonalize(const Eigen::MatrixXcd& matrix)
+{
+  
+  if (diagonalizer_ == "Eigen") {
+    diagonalize_eigen(matrix);
+    return;
+  }
+  
+  // else
+  quit_if_diagonalizer_not_supported();
+  return;
+
 }

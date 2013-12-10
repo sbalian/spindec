@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Dec 9, 2013
+# Seto Balian, Dec 10, 2013
 
 #####################
 # Basic user input
@@ -98,11 +98,20 @@ SpinBasis.o:
 SingleSpinBasis.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SingleSpinBasis.cpp
 
+LabeledVertex.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)LabeledVertex.cpp
+
 SpinInteractionVertex.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionVertex.cpp
 
+Edge.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)Edge.cpp
+
 SpinInteractionEdge.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionEdge.cpp
+
+LabeledGraph.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)LabeledGraph.cpp
 
 SpinInteractionGraph.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
@@ -131,6 +140,8 @@ SpinState.o:
 SpinOperator.o:
 	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinOperator.cpp
 
+SpinHamiltonian.o:
+	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinHamiltonian.cpp
 
 
 #####################

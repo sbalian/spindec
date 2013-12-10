@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include "SpinOperator.h"
 #include "BoostEigen.h"
@@ -13,6 +13,12 @@ SpinOperator::SpinOperator(const Eigen::MatrixXcd & matrix,
     MatrixRepresentation(basis)
 {
   set_matrix(matrix);
+}
+
+SpinOperator::SpinOperator(const SpinBasis & basis) :
+    MatrixRepresentation(basis)
+{
+  set_matrix(Eigen::MatrixXcd::Zero(get_dimension(),get_dimension()));
 }
 
 Eigen::MatrixXcd SpinOperator::get_matrix() const

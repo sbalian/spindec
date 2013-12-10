@@ -7,11 +7,10 @@
 // type (see below for list of diagonalizers).
 // Note: eigenvectors stored columnwise.
 //
-// Hermitian diagonalizers:
-// DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
-//         "Lapack" - Lapack zheev
+// General complex diagonalizers:
+// DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include <Eigen/Dense>
 #include <complex>
@@ -25,19 +24,30 @@ protected:
   
   const std::string diagonalizer_; // string (see above)
 
-  Eigenspectrum();
   Eigenspectrum(const std::string & diagonalizer);
   
+  // Diagonalizers
+  virtual void diagonalize_eigen(const Eigen::MatrixXcd & matrix);
+  virtual void diagonalize_lapack(const Eigen::MatrixXcd & matrix);
+  
+  void quit_if_diagonalizer_not_supported() const;
+  
+  virtual void diagonalize(const Eigen::MatrixXcd & matrix);
+
 public:
+  
+  Eigenspectrum();
+  Eigenspectrum(const Eigen::MatrixXcd & matrix);
+  Eigenspectrum(const Eigen::MatrixXcd & matrix,
+      const std::string & diagonalizer);
+
   
   Eigen::VectorXcd get_eigenvalues() const;
   Eigen::MatrixXcd get_eigenvectors() const;
 
   std::complex<double> get_eigenvalue(const unsigned int index) const;
   Eigen::VectorXcd get_eigenvector(const unsigned int index)    const;
-  
-  virtual void diagonalize(const Eigen::MatrixXcd & matrix) = 0;
-  
+    
   std::string get_diagonalizer() const;
 
   virtual ~Eigenspectrum();

@@ -5,28 +5,25 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include <Eigen/Dense>
 
 #include "SpinBasis.h"
 #include "MatrixRepresentation.h"
-#include "Eigenspectrum.h"
 
 class SpinOperator : public MatrixRepresentation
 {
 private:
-  
+
   Eigen::MatrixXcd matrix_;
   virtual void quit_if_dimension_mismatch() const;
-  
-  // TODO add eigenspectrum ...
-  
   
 public:
   SpinOperator();
   SpinOperator(const Eigen::MatrixXcd & matrix, const SpinBasis & basis);
-  
+  SpinOperator(const SpinBasis & basis); // zero matrix
+
   Eigen::MatrixXcd get_matrix() const;
   void set_matrix(const Eigen::MatrixXcd & matrix);
 
