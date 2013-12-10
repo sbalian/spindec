@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include "SpinState.h"
 #include "BoostEigen.h"
@@ -12,6 +12,11 @@ SpinState::SpinState(const Eigen::VectorXcd & state, const SpinBasis & basis) :
     MatrixRepresentation(basis)
 {
   set_state(state);
+}
+
+SpinState::SpinState(const SpinBasis & basis) : MatrixRepresentation(basis)
+{
+  set_state(Eigen::VectorXcd::Zero(get_dimension()));
 }
 
 Eigen::VectorXcd SpinState::get_state() const

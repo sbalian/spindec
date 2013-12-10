@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
@@ -92,14 +92,4 @@ Eigen::MatrixXcd BoostEigen::unitarySpectralDecomposition(
 {
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.adjoint());
 }
-
-//Eigen::MatrixXcd BoostEigen::expHermitianSpectralDecomposition(
-//                             const Eigen::MatrixXcd & orthonormal_eigenvectors,
-//                             const Eigen::VectorXd & eigenvalues,
-//                             const std::complex<double> & a)
-//{
-//
-//  return unitarySpectralDecomposition(orthonormal_eigenvectors,
-//      exp(eigenvalues.cast< std::complex<double> > () * a) );
-//}
 

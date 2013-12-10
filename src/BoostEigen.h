@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence.
 //
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Dec 10, 2013
 
 #include <Eigen/Dense>
 
@@ -61,13 +61,6 @@ public:
   static Eigen::MatrixXcd unitarySpectralDecomposition(
                                          const Eigen::MatrixXcd & eigenvectors,
                                          const Eigen::VectorXcd & eigenvalues);
-
-//  // This method gives A = V exp(a D) V-1 (where a is a complex number)
-//  // for unitary matrices.
-//  static Eigen::MatrixXcd expUnitarySpectralDecomposition(
-//                                         const Eigen::MatrixXcd & eigenvectors,
-//                                         const Eigen::VectorXcd & eigenvalues,
-//                                         const std::complex<double> & a);
 
 };
 
