@@ -5,7 +5,7 @@
 //
 // Labeled graph.
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Dec 11, 2013
 
 #include "LabeledVertex.h"
 #include "Edge.h"
@@ -29,13 +29,13 @@ public:
   
   unsigned int num_vertices() const;
   unsigned int num_edges() const;
-  
-  void add_vertex(const LabeledVertex & vertex);
-  void add_edge(const Edge & edge);
+
+  virtual void add_vertex(const LabeledVertex & vertex);
+  virtual void add_edge(const Edge & edge);
 
   void clear();
   
-  //virtual ~LabeledGraph();
+  virtual ~LabeledGraph();
 
 };
 

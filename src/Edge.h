@@ -5,7 +5,7 @@
 //
 // Edge in a labeled graph.
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Dec 11, 2013
 
 #include "LabeledVertex.h"
 #include <utility>
@@ -13,7 +13,6 @@
 class Edge
 {
 private:
-
   std::pair<unsigned int,unsigned int> labels_;
 
 public:
