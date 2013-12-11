@@ -12,6 +12,9 @@ class VertexContents
 protected:
 
   VertexContents();
+  
+public:
+  void print()
 
 };
 
