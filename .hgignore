@@ -1,10 +1,8 @@
 syntax: glob
-src/include/eigen
-nbproject
-.project
-.cproject
 eigen
 boost
+.project
+.cproject
 *.o
 test
 
