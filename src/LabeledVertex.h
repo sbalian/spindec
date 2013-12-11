@@ -5,16 +5,17 @@
 //
 // Labeled graph vertex.
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Dec 11, 2013
 
 class LabeledVertex
 {
 private:
   unsigned int label_;
+  VertexContent content_;
 
 public:
   LabeledVertex();
-  LabeledVertex(const unsigned int label);
+  LabeledVertex(const unsigned int label, const VertexContent & content);
 
   unsigned int get_label() const;
 

@@ -35,9 +35,6 @@ endif
 # List of executables
 EXECUTABLES=test
 
-# Required by executables
-TEST_OBJ=test.o MathPhysConstants.o BoostEigen.o Spin.o ElectronSpin.o NuclearSpin.o SpinVector.o SpinBasis.o SingleSpinBasis.o
-
 #####################
 # Targets
 #####################
@@ -52,97 +49,24 @@ all: $(EXECUTABLES)
 # test
 #--------------------
 
-test.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)test.cpp
-
-test: $(TEST_OBJ)
-	$(CC) $(CFLAGS) $(LAPACKFLAGS) $(TEST_OBJ) -o test
+test:\
+test.o\
+MathPhysConstants.o\
+BoostEigen.o\
+Spin.o\
+ElectronSpin.o\
+NuclearSpin.o\
+SpinVector.o\
+SpinBasis.o\
+SingleSpinBasis.o
+	$(CC) $(CFLAGS) $(LAPACKFLAGS) $< -o test
 
 #!!!!!!!!!!!!!!!!!!!!
 # Intermediate objects
 #!!!!!!!!!!!!!!!!!!!!
 
-#--------------------
-# Don't need Eigen
-#--------------------
-
-MathPhysConstants.o:
-	$(CC) $(CFLAGS) -c $(SOURCEPATH)MathPhysConstants.cpp
-	
-Errors.o:
-	$(CC) $(CFLAGS) -c $(SOURCEPATH)Errors.cpp
-
-Spin.o:
-	$(CC) $(CFLAGS) -c $(SOURCEPATH)Spin.cpp
-
-NuclearSpin.o:
-	$(CC) $(CFLAGS) -c $(SOURCEPATH)NuclearSpin.cpp
-
-ElectronSpin.o:
-	$(CC) $(CFLAGS) -c $(SOURCEPATH)ElectronSpin.cpp
-	
-SpinVector.o:
-	$(CC) $(CFLAGS) -c $(SOURCEPATH)SpinVector.cpp
-
-
-#--------------------
-# Need Eigen
-#--------------------
-
-BoostEigen.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)BoostEigen.cpp
-
-SpinBasis.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinBasis.cpp
-
-SingleSpinBasis.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SingleSpinBasis.cpp
-
-LabeledVertex.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)LabeledVertex.cpp
-
-SpinInteractionVertex.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionVertex.cpp
-
-Edge.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)Edge.cpp
-
-SpinInteractionEdge.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionEdge.cpp
-
-LabeledGraph.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)LabeledGraph.cpp
-
-SpinInteractionGraph.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteractionGraph.cpp
-	
-Eigenspectrum.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)Eigenspectrum.cpp
-
-HermitianEigenspectrum.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) $(LAPACKFLAGS) -c $(SOURCEPATH)HermitianEigenspectrum.cpp
-
-SpinInteraction.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinInteraction.cpp
-	
-UniformMagneticField.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)UniformMagneticField.cpp
-
-Dipolar.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)Dipolar.cpp
-
-MatrixRepresentation.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)MatrixRepresentation.cpp
-
-SpinState.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinState.cpp
-
-SpinOperator.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinOperator.cpp
-
-SpinHamiltonian.o:
-	$(CC) $(CFLAGS) -I$(EIGENPATH) -c $(SOURCEPATH)SpinHamiltonian.cpp
-
+%.o: $(SOURCEPATH)%.cpp
+	$(CC) -c $(CFLAGS) -I$(EIGENPATH) $<
 
 #####################
 # clean up
