@@ -1,5 +1,5 @@
 // See LabeledVertex.h for description.
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Dec 11, 2013
 
 #include "LabeledVertex.h"
 

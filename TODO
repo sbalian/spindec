@@ -13,3 +13,4 @@ Seto Balian, Dec 10, 2013
 - Better const correctness (particularly with data members) and resolve issues with std::vector. Now relies on public set methods ...
 - Throw exceptions (kill Errors.h)
 - Virtual destructors also for derived classes?
+- Print methods

@@ -49,17 +49,15 @@ all: $(EXECUTABLES)
 # test
 #--------------------
 
-test:\
+# TODO make this better?
+TEST_OBJ=\
 test.o\
 MathPhysConstants.o\
-BoostEigen.o\
 Spin.o\
-ElectronSpin.o\
-NuclearSpin.o\
-SpinVector.o\
-SpinBasis.o\
-SingleSpinBasis.o
-	$(CC) $(CFLAGS) $(LAPACKFLAGS) $< -o test
+ElectronSpin.o
+
+test: $(TEST_OBJ)
+	$(CC) $(CFLAGS) $(LAPACKFLAGS) $(TEST_OBJ) -o test
 
 #!!!!!!!!!!!!!!!!!!!!
 # Intermediate objects

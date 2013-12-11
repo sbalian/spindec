@@ -1,5 +1,5 @@
 // See Spin.h for description.
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Dec 11, 2013
 
 #include "Spin.h"
 
@@ -43,3 +43,15 @@ unsigned int Spin::get_multiplicity() const
 {
   return multiplicity_;
 }
+
+std::ostream& operator<<(std::ostream& os, Spin const & spin)
+{
+  os << "Spin:\n";
+  os << "Quantum number = " << spin.get_quantum_number() << "\n";
+  os << "Gyromagnetic ratio = " << spin.get_gyromagnetic_ratio() << " M rad s-1 /"
+                                                                      "T-1\n";
+  os << "Multiplicity = " << spin.get_multiplicity() << "\n";
+
+  return os;
+}
+
