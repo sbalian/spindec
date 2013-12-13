@@ -5,19 +5,22 @@
 //
 // Labeled graph vertex.
 //
-// Seto Balian, Dec 11, 2013
+// Seto Balian, Dec 13, 2013
+
+#include "VertexContents.h"
 
 class LabeledVertex
 {
 private:
   unsigned int label_;
-  VertexContent content_;
+  VertexContents contents_;
 
 public:
   LabeledVertex();
-  LabeledVertex(const unsigned int label, const VertexContent & content);
+  LabeledVertex(const unsigned int label, const VertexContents & contents);
 
   unsigned int get_label() const;
+  VertexContents get_contents() const;
 
 };
 

@@ -8,7 +8,7 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Dec 11, 2013
+// Seto Balian, Dec 13, 2013
 
 #include <iostream>
 
@@ -28,7 +28,7 @@ protected:
        const unsigned int multiplicity);
 
 public:
-  
+
   Spin();
   Spin(const double quantum_number, const double gyromagnetic_ratio);
 
@@ -36,8 +36,10 @@ public:
   double get_quantum_number() const;
   unsigned int get_multiplicity() const;
 
+  // Print with cout
   friend std::ostream& operator<<(std::ostream& os, Spin const & spin);
-  
+
 };
+
 
 #endif // SPIN_H_

@@ -1,41 +1,47 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Dec 13, 2013
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
 
 #include <complex>
-#include <cmath>
 
-SpinBasis SpinHamiltonian::built_basis(const SpinInteractionGraph& graph) const
+void SpinHamiltonian::build_basis(const SpinInteractionGraph& graph) const
 {
-  // Loop over vectices, get bases from spin states and make the combined
-  // (tensor product) basis
-  for (unsigned int i=0;i<vertices_)
-  
-  return SpinBasis();
+  // TODO  
+  return;
 }
 
-Eigen::MatrixXcd SpinHamiltonian::filled_matrix(
+void SpinHamiltonian::fill_matrix(
     const SpinInteractionGraph& graph) const
 {
   // TODO
-  return Eigen::MatrixXcd::Zero(2,2);
+  return;
 }
 
-SpinHamiltonian::SpinHamiltonian() : SpinOperator()
+SpinHamiltonian::SpinHamiltonian() : SpinOperator(),
+    field_(UniformMagneticField())
 {
 }
 
-SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph) :
-    SpinOperator(filled_matrix(graph), built_basis(graph))
+SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
+    const UniformMagneticField & field) :
+    SpinOperator(),
+    field_(field)
 {
+  build_basis(graph);
+  fill_matrix(graph);
 }
 
 void SpinHamiltonian::update(const SpinInteractionGraph& graph)
 {
   // TODO
   return;
+}
+
+UniformMagneticField SpinHamiltonian::get_field() const
+{
+  return field_;
 }
 
 Eigen::MatrixXcd SpinHamiltonian::evolutionMatrix(
@@ -47,4 +53,3 @@ Eigen::MatrixXcd SpinHamiltonian::evolutionMatrix(
                                         std::complex<double>(0.0,-time) ) 
                                                  );
 }
-
