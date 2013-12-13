@@ -1,7 +1,8 @@
 // See Spin.h for description.
-// Seto Balian, Dec 11, 2013
+// Seto Balian, Dec 13, 2013
 
 #include "Spin.h"
+#include <iomanip>
 
 unsigned int Spin::calculate_multiplicity() const
 {
@@ -46,12 +47,19 @@ unsigned int Spin::get_multiplicity() const
 
 std::ostream& operator<<(std::ostream& os, Spin const & spin)
 {
+  // Save formatting
+  std::ios  state(NULL);
+  state.copyfmt(os);
+  
   os << "Spin:\n";
-  os << "Quantum number = " << spin.get_quantum_number() << "\n";
-  os << "Gyromagnetic ratio = " << spin.get_gyromagnetic_ratio() << " M rad s-1 /"
-                                                                      "T-1\n";
-  os << "Multiplicity = " << spin.get_multiplicity() << "\n";
-
+  os << "Quantum number = " << spin.get_quantum_number() << std::endl;
+  os << "Gyromagnetic ratio = ";
+  os << std::scientific << std::setprecision(4);
+  os << spin.get_gyromagnetic_ratio() << " M rad s-1 T-1\n";
+  os << "Multiplicity = " << std::fixed << spin.get_multiplicity() << std::endl;
+  
+  // Load formatting
+  os.copyfmt(state);
+  
   return os;
 }
-

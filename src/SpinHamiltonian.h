@@ -3,34 +3,44 @@
 
 // SpinHamiltonian
 //
-// Effective spin Hamiltonian built from spin interaction graphs.
+// Effective spin Hamiltonian built from a spin interaction graph.
 // Can diagonalize and get unitary time evolution matrix.
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Dec 13, 2013
 
-#include <Eigen/Dense>
 #include <string>
 
-#include "SpinInteractionGraph.h"
 #include "SpinOperator.h"
+
+#include "SpinInteractionGraph.h"
 #include "HermitianEigenspectrum.h"
+
+#include "UniformMagneticField.h"
+
+#include <Eigen/Dense>
+
 
 class SpinHamiltonian : public SpinOperator
 {
 private:
+  
+  const UniformMagneticField field_;
 
-  SpinBasis built_basis(const SpinInteractionGraph & graph) const;
-  Eigen::MatrixXcd filled_matrix(const SpinInteractionGraph & graph) const;
+  void build_basis(const SpinInteractionGraph & graph) const;
+  void fill_matrix(const SpinInteractionGraph & graph) const;
 
 public:
 
   SpinHamiltonian();
-  SpinHamiltonian(const SpinInteractionGraph & graph);
-  
+  SpinHamiltonian(const SpinInteractionGraph & graph,
+      const UniformMagneticField & field);
+
   // TODO describe
   void update(const SpinInteractionGraph & graph);
+  
+  UniformMagneticField get_field() const;
   
   // Unitary matrix
   // U = \sum{n} ( |E_n> exp(- i E_n t) <E_n| )

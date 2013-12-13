@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Dec 10, 2013
+# Seto Balian, Dec 13, 2013
 
 #####################
 # Basic user input
@@ -54,7 +54,8 @@ TEST_OBJ=\
 test.o\
 MathPhysConstants.o\
 Spin.o\
-ElectronSpin.o
+ElectronSpin.o\
+NuclearSpin.o
 
 test: $(TEST_OBJ)
 	$(CC) $(CFLAGS) $(LAPACKFLAGS) $(TEST_OBJ) -o test

@@ -5,24 +5,27 @@
 //
 // Edge in a labeled graph.
 //
-// Seto Balian, Dec 11, 2013
+// Seto Balian, Dec 13, 2013
 
-#include "LabeledVertex.h"
+#include "EdgeContents.h"
 #include <utility>
 
 class Edge
 {
 private:
   std::pair<unsigned int,unsigned int> labels_;
+  EdgeContents contents_;
 
 public:
 
   Edge();
   Edge(const unsigned int label1,
-       const unsigned int label2);
+       const unsigned int label2, const EdgeContents & contents);
   
   unsigned int get_label1() const;
   unsigned int get_label2() const;
+  
+  EdgeContents get_contents() const;
   
 };
 

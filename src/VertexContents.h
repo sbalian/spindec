@@ -5,16 +5,13 @@
 //
 // Contents of a labeled graph vertex.
 //
-// Seto Balian, Dec 11, 2013
+// Seto Balian, Dec 13, 2013
 
 class VertexContents
 {
-protected:
+public:
 
   VertexContents();
-  
-public:
-  void print()
 
 };
 

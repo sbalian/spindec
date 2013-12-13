@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Dec 11, 2013
+// Seto Balian, Dec 13, 2013
 
 #include <iostream>
 #include <complex>
@@ -25,7 +25,13 @@ int main() {
   
 ElectronSpin electron;
 
-std::cout << electron << std::endl;
+std::cout << electron;// << std::endl;
+std::cout << electron;// << std::endl;
+
+NuclearSpin nucleus;
+
+std::cout << nucleus;
+
 
 //  std::cout << "TESTING BoostEigen\n" << std::endl;
 //
