@@ -13,7 +13,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Jan 27, 2014
 
 #include "Spin.h"
 #include "SpinVector.h"
@@ -25,17 +25,21 @@ class SpinBasis
 
 protected:
 
-  Eigen::ArrayXXd build (const SpinVector & spin_vector) const;
+  void build (const SpinVector & spin_vector);
                                                // automatically build
                                                // using spin multiplicities
+  void build(const Spin & spin);               // build using multiplicity
+  
   Eigen::ArrayXXd basis_;
 
 public:
 
   SpinBasis();
-  SpinBasis(const unsigned int dimension);
   SpinBasis(const SpinVector & spin_vector); // automatically build
                                              // using spin multiplicities
+  SpinBasis(const Spin & spin); // automatically build
+                                // using spin multiplicity
+  
   SpinBasis(const Eigen::ArrayXXd & basis); // custom build
   Eigen::ArrayXXd get_basis() const;
   
@@ -43,7 +47,7 @@ public:
   unsigned int dimension() const;
 
   // Number of spins
-  virtual unsigned int num_spins() const;
+  unsigned int num_spins() const;
 
   double get_element(const unsigned int index, const unsigned int slot) const;  
   
@@ -67,8 +71,6 @@ public:
   //                      4.5  0.5
   //                     -4.5 -0.5
   SpinBasis operator^(const SpinBasis & to_combine) const;
-
-  virtual ~SpinBasis();
   
 };
 

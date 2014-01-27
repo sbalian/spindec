@@ -1,9 +1,9 @@
 // See SpinBasis.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Jan 27, 2014
 
 #include "SpinBasis.h"
 
-Eigen::ArrayXXd SpinBasis::build(const SpinVector & spin_vector) const
+void SpinBasis::build(const SpinVector & spin_vector)
 {
   int n = static_cast<int>(spin_vector.size()); // number of spins
   int M = static_cast<int>(spin_vector.get_multiplicity());// total multiplicity
@@ -39,7 +39,7 @@ Eigen::ArrayXXd SpinBasis::build(const SpinVector & spin_vector) const
   M_0_to_j = 1;
   // Loop over spins
   for (j=0;j<n;j++) {
-    M_j = spin_vector.get_spin(j).get_multiplicity();
+    M_j = spin_vector[j].get_multiplicity();
     M_0_to_j = M_0_to_j*M_j;
 
     C_j = M_0_to_j / M_j;
@@ -48,7 +48,7 @@ Eigen::ArrayXXd SpinBasis::build(const SpinVector & spin_vector) const
     p = 0;
     l = 0;
     while (p<C_j) {
-      spin_QN = -spin_vector.get_spin(j).get_quantum_number();
+      spin_QN = -spin_vector[j].get_quantum_number();
       for (m=0;m<M_j;m++) {
         q = 0;
         while (q<c_j) {
@@ -62,20 +62,26 @@ Eigen::ArrayXXd SpinBasis::build(const SpinVector & spin_vector) const
     }
   }
 
-  return basis;
+  basis_ = basis;
+  return;
+}
 
+void SpinBasis::build(const Spin& spin)
+{
+  build(SpinVector(spin));
+  return;
 }
 
 SpinBasis::SpinBasis() {/**/}
 
-SpinBasis::SpinBasis(const unsigned int dimension)
-{
-  basis_= Eigen::ArrayXXd::Zero(dimension,1);
-}
-
 SpinBasis::SpinBasis(const SpinVector & spin_vector)
 {
-  basis_ = build(spin_vector);
+  build(spin_vector);
+}
+
+SpinBasis::SpinBasis(const Spin& spin)
+{
+  build(spin);
 }
 
 SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis)
@@ -164,8 +170,6 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   basis_out << expanded_basis_A, new_columns_B; // join  
   return SpinBasis(basis_out);
 }
-
-SpinBasis::~SpinBasis() {/**/}
 
 // Don't use this ...
 //void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,

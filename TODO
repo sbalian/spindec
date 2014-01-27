@@ -1,4 +1,4 @@
-Seto Balian, Dec 10, 2013
+Seto Balian, Jan 27, 2014
 
 - BoostEigen -> proper extension of Eigen? See Eigen documentation
 - Make BoostEigen methods to work on Eigen base types
@@ -14,3 +14,7 @@ Seto Balian, Dec 10, 2013
 - Throw exceptions (kill Errors.h)
 - Virtual destructors also for derived classes?
 - Print methods
+- Avoid algebra involving different orders of magnitude
+- Return "size_t" for vector sizes? Like in STL? (machine dependence)
+- Default constructors (and destructors ...)
+- More comments + documentation

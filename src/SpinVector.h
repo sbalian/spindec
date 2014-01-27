@@ -5,7 +5,7 @@
 //
 // Multiple Spin container
 //
-// Seto Balian, Dec 5, 2013
+// Seto Balian, Jan 22, 2014
 
 #include "Spin.h"
 #include <vector>
@@ -21,11 +21,12 @@ public:
   
   void push_back(const Spin & spin); // add element
   
-  // TODO do [] operator to replace these ...
-  Spin get_spin(const unsigned int index) const;
-  void set_spin(const unsigned int index, const Spin & spin);
+  // Get and set like std::vector
+  Spin& operator[](const unsigned int index);
+  Spin& operator[](const unsigned int index) const;
   
   unsigned int size() const; // number of Spins
+  void clear();
   
   unsigned int get_multiplicity() const; // total spin multiplicity
   

@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Jan 27, 2014
 
 #include "SpinOperator.h"
 #include "BoostEigen.h"
@@ -53,5 +53,25 @@ void SpinOperator::quit_if_dimension_mismatch() const
 void SpinOperator::set_zero()
 {
   matrix_.setZero(get_dimension(),get_dimension());
+  return;
+}
+
+std::complex<double> SpinOperator::get_element(const unsigned int i,
+    const unsigned int j) const
+{
+  return matrix_(i,j);
+}
+
+void SpinOperator::set_element(const unsigned int i, const unsigned int j,
+    std::complex<double> element)
+{
+  matrix_(i,j) = element;
+  return;
+}
+
+void SpinOperator::add_to_element(const unsigned int i, const unsigned int j,
+    std::complex<double> to_add)
+{
+  matrix_(i,j) += to_add;
   return;
 }

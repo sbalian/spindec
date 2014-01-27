@@ -5,9 +5,10 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Dec 13, 2013
+// Seto Balian, Jan 27, 2014
 
 #include <Eigen/Dense>
+#include <complex>
 
 #include "SpinBasis.h"
 #include "MatrixRepresentation.h"
@@ -26,6 +27,14 @@ public:
 
   Eigen::MatrixXcd get_matrix() const;
   void set_matrix(const Eigen::MatrixXcd & matrix);
+  
+  std::complex<double> get_element(const unsigned int i,
+      const unsigned int j) const;
+  void set_element(const unsigned int i, const unsigned int j,
+      std::complex<double> element);
+  
+  void add_to_element(const unsigned int i, const unsigned int j,
+      std::complex<double> to_add);
 
   // Operators: tensor product ^, Bases: combine ^ (like tensor product)
   SpinOperator operator^(const SpinOperator & rhs);
