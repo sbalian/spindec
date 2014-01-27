@@ -1,21 +1,53 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Dec 13, 2013
+// Seto Balian, Jan 27, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
 
 #include <complex>
 
-void SpinHamiltonian::build_basis(const SpinInteractionGraph& graph) const
+// build a combined (like tensor product) SpinBasis
+SpinBasis SpinHamiltonian::build_basis(const SpinInteractionGraph& graph) const
 {
-  // TODO  
+  SpinBasis basis = graph.get_state(0).get_basis();
+  for (unsigned int i = 1; i<graph.num_vertices();i++) {
+    basis = basis^graph.get_state(i).get_basis();
+  }
+  return basis;
+}
+
+// fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
+// field_strength for all spins in the graph
+void SpinHamiltonian::fill_zeeman(const SpinInteractionGraph& graph)
+{
+  // fill diagonal elements [M rad s-1]
+  
+  // loop over diagonal elements
+  for (unsigned int i=0; i<get_dimension();i++) {
+    // loop over spins in graph
+    for (unsigned int j=0;j<graph.num_vertices();j++) {
+      add_to_element(i,i,
+          get_basis().get_element(i,j)*// magnetic quantum number
+          get_field().get_magnitude()*// field strength [T]
+          graph.get_spin(j).get_gyromagnetic_ratio()); // gyromagnetic ratio
+                                                       // [M rad s-1]
+    }
+  }
   return;
 }
 
-void SpinHamiltonian::fill_matrix(
-    const SpinInteractionGraph& graph) const
+// fill elements for all spin interaction
+void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
 {
   // TODO
+  return;
+}
+
+// fill all matrix elements using interaction graph
+void SpinHamiltonian::fill_matrix(const SpinInteractionGraph& graph)
+{
+  fill_zeeman(graph);
+  fill_interactions(graph);
   return;
 }
 
@@ -26,10 +58,9 @@ SpinHamiltonian::SpinHamiltonian() : SpinOperator(),
 
 SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
     const UniformMagneticField & field) :
-    SpinOperator(),
+    SpinOperator(build_basis(graph)),
     field_(field)
 {
-  build_basis(graph);
   fill_matrix(graph);
 }
 

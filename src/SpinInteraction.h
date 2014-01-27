@@ -5,11 +5,13 @@
 //
 // Abstract base class for interaction between a pair of spins.
 //
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Jan 27, 2014
 
 #include <Eigen/Dense>
+#include <string>
 
 #include "Spin.h"
+#include "SpinHamiltonian.h"
 
 class SpinInteraction
 {
@@ -18,7 +20,7 @@ protected:
   double strength_; // M rad s-1 (calculated or set)
   double non_spatial_dependence_; // strength_ / "spatial part"
                                   // (so that this is calculated once)
-
+  
   const Spin spin1_;
   const Spin spin2_;
 
@@ -34,6 +36,9 @@ protected:
   SpinInteraction(const Spin & spin1,
                   const Spin & spin2, const double strength);
   
+  // fill the matrix elements of a spin Hamiltonian
+  virtual void fill(SpinHamiltonian & hamiltonian) const = 0;
+
 public:
 
   // calculate (also set and return) strength given
@@ -42,7 +47,9 @@ public:
                            const Eigen::Vector3d & position2)  = 0;
 
   double get_strength() const;
-  void set_strength(const double strength); // if you don't wish to calculate
+
+  // if you don't wish to calculate
+  void set_strength(const double strength);
 
   virtual ~SpinInteraction();
 

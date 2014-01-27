@@ -8,7 +8,7 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Dec 13, 2013
+// Seto Balian, Jan 22, 2014
 
 #include <iostream>
 

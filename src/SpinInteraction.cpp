@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Dec 6, 2013
+// Seto Balian, Jan 27, 2014
 
 #include "SpinInteraction.h"
 

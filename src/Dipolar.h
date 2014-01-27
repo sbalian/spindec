@@ -27,7 +27,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Dec 6, 2013
+// Seto Balian, Jan 27, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"
@@ -52,6 +52,8 @@ public:
   
   virtual double calculate(const Eigen::Vector3d & position1,
                            const Eigen::Vector3d & position2);
+  
+  virtual void fill(SpinHamiltonian & hamiltonian) const;
 
 };
 
