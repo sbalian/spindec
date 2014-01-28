@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 28, 2014
 
 #include <Eigen/Dense>
 #include <complex>
@@ -15,7 +15,7 @@
 
 class SpinOperator : public MatrixRepresentation
 {
-private:
+protected:
 
   Eigen::MatrixXcd matrix_;  
   virtual void quit_if_dimension_mismatch() const;

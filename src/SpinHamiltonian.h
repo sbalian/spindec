@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 28, 2014
 
 #include <string>
 
@@ -41,7 +41,7 @@ private:
   
   // fill all matrix elements using interaction graph
   void fill_matrix(const SpinInteractionGraph & graph);
-
+  
 public:
 
   SpinHamiltonian();
@@ -58,7 +58,7 @@ public:
   // |E_n>: eigenvectors
   // t: time (real double) units: microseconds (energies in M rad s-1)
   // (for time independent spin Hamiltonians ...)
-  Eigen::MatrixXcd evolutionMatrix(const HermitianEigenspectrum & spectrum,
+  Eigen::MatrixXcd evolution_matrix(const HermitianEigenspectrum & spectrum,
       const double time) const;
 
 };

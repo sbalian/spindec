@@ -18,3 +18,4 @@ Seto Balian, Jan 27, 2014
 - Return "size_t" for vector sizes? Like in STL? (machine dependence)
 - Default constructors (and destructors ...)
 - More comments + documentation
+- Improve Hamiltonian fill implementation ...

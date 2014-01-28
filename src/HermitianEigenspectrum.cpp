@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Jan 28, 2014
 
 #include "HermitianEigenspectrum.h"
 #include "BoostEigen.h"
