@@ -1,22 +1,35 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Jan 22, 2014
+// Seto Balian, Jan 28, 2014
 
 #include "SpinInteractionGraph.h"
 #include "Errors.h"
+
+#include <algorithm>
 
 // Check if vertex label exists
 void SpinInteractionGraph::check_vertex_label(const unsigned int label) const
 {
   if (label >= num_vertices()) {
-    Errors::quit("Vertices for edge don't exist.");
+    Errors::quit("Vertex does not exist.");
     return;
   }
   return;
 }
 
+void SpinInteractionGraph::check_edge_index(const unsigned int index) const
+{
+  if (index >= num_edges()) {
+    Errors::quit("Edge does not exist.");
+    return;
+  }
+  return;
+}
+
+
 SpinInteractionGraph::SpinInteractionGraph()
 {
   num_vertices_ = 0;
+  num_edges_ = 0;
 }
 
 void SpinInteractionGraph::add_vertex(const Spin& spin, const SpinState& state,
@@ -29,17 +42,26 @@ void SpinInteractionGraph::add_vertex(const Spin& spin, const SpinState& state,
   return;
 }
 
-void SpinInteractionGraph::add_edge(const unsigned int label1,
-    const unsigned int label2, SpinInteraction* interaction)
+void SpinInteractionGraph::add_edge(unsigned int label1,
+    unsigned int label2, SpinInteraction* interaction)
 {
   
   // First check if labels exist
   check_vertex_label(label1);
   check_vertex_label(label2);
   
-  edges_.insert(
-      std::make_pair(std::pair<unsigned int, unsigned int>(label1,label2),
-                     interaction));
+  // Swap such that label1 < label2
+  if (label1 > label2)
+  {
+    std::swap(label1,label2);
+  }
+  
+  vertex_labels1_.push_back(label1);
+  vertex_labels2_.push_back(label2);
+  interactions_.push_back(interaction);
+  
+  num_edges_++;
+  
   return;
 }
 
@@ -74,7 +96,7 @@ unsigned int SpinInteractionGraph::num_vertices() const
 
 unsigned int SpinInteractionGraph::num_edges() const
 {
-  return edges_.size();
+  return num_edges_;
 }
 
 void SpinInteractionGraph::clear()
@@ -83,6 +105,10 @@ void SpinInteractionGraph::clear()
   states_.clear();
   positions_.clear();
   num_vertices_ = 0;
+  num_edges_ = 0;
+  vertex_labels1_.clear();
+  vertex_labels2_.clear();
+  interactions_.clear();
   return;
 }
 
@@ -104,3 +130,23 @@ Eigen::Vector3d SpinInteractionGraph::get_position(
   check_vertex_label(label);
   return positions_[label];
 }
+
+SpinInteraction* SpinInteractionGraph::get_interaction(
+    const unsigned int index) const
+{
+  check_edge_index(index);
+  return interactions_[index];
+}
+
+std::pair<unsigned int,unsigned int> SpinInteractionGraph::
+                  get_interaction_labels(const unsigned int index) const
+{
+  return std::pair< unsigned int, unsigned int > (vertex_labels1_[index],
+      vertex_labels2_[index]);
+}
+
+SpinVector SpinInteractionGraph::get_spins() const
+{
+  return spins_;
+}
+

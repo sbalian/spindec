@@ -1,8 +1,10 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 28, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
+
+#include <map>
 
 #include <complex>
 
@@ -39,7 +41,22 @@ void SpinHamiltonian::fill_zeeman(const SpinInteractionGraph& graph)
 // fill elements for all spin interaction
 void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
 {
-  // TODO
+  
+  SpinInteraction* interaction_ptr = NULL;
+  
+  // Loop over edges
+  for (unsigned int i=0;i<graph.num_edges();i++) {
+    interaction_ptr = graph.get_interaction(i);
+    interaction_ptr->calculate(
+        graph.get_position(graph.get_interaction_labels(i).first  ) ,
+        graph.get_position(graph.get_interaction_labels(i).second ) );
+    // TODO CHANGE       --------  TO get_matrix() and it doesn't compile!!!
+    interaction_ptr->fill(matrix_,graph.get_spins(),
+        get_basis().get_basis(),
+        graph.get_interaction_labels(i).first,
+        graph.get_interaction_labels(i).second);
+  }
+  
   return;
 }
 
@@ -75,7 +92,7 @@ UniformMagneticField SpinHamiltonian::get_field() const
   return field_;
 }
 
-Eigen::MatrixXcd SpinHamiltonian::evolutionMatrix(
+Eigen::MatrixXcd SpinHamiltonian::evolution_matrix(
     const HermitianEigenspectrum & spectrum, const double time) const
 {
   return BoostEigen::unitarySpectralDecomposition(

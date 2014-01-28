@@ -10,7 +10,7 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Jan 28, 2014
 
 #include <Eigen/Dense>
 #include <complex>
@@ -52,6 +52,7 @@ public:
 
   virtual ~Eigenspectrum();
   
+  // Note the Eigen naming convention here
   virtual Eigen::MatrixXcd spectralDecomposition() const;
   
 };

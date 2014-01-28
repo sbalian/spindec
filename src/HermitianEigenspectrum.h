@@ -11,7 +11,7 @@
 // DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
 //         "Lapack" - Lapack zheev
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Jan 28, 2014
 
 #include "Eigenspectrum.h"
 

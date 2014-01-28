@@ -5,22 +5,23 @@
 //
 // Abstract base class for interaction between a pair of spins.
 //
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 28, 2014
 
 #include <Eigen/Dense>
-#include <string>
 
 #include "Spin.h"
-#include "SpinHamiltonian.h"
+#include "SpinVector.h"
+
+#include <complex>
 
 class SpinInteraction
 {
 protected:
-  
+
   double strength_; // M rad s-1 (calculated or set)
   double non_spatial_dependence_; // strength_ / "spatial part"
                                   // (so that this is calculated once)
-  
+
   const Spin spin1_;
   const Spin spin2_;
 
@@ -28,16 +29,24 @@ protected:
   virtual double calculate_non_spatial_dependence() const = 0;
 
   SpinInteraction();
-
   SpinInteraction(const Spin & spin1,
                   const Spin & spin2);
 
   // if you don't wish to calculate ...
   SpinInteraction(const Spin & spin1,
-                  const Spin & spin2, const double strength);
+                  const Spin & spin2,
+                  const double strength);
   
-  // fill the matrix elements of a spin Hamiltonian
-  virtual void fill(SpinHamiltonian & hamiltonian) const = 0;
+  // ISING            + FLIPFLOP
+  // strength*S1z S2z + flipflop_form*strength*(S1+ S2- + S1- S2+)
+  // flipflop_form is a complex double
+  void fill_ising_flipflop(Eigen::MatrixXcd & hamiltonian,
+                   const SpinVector & spins,
+                   const Eigen::ArrayXXd & basis,
+                   const unsigned int spin_label1,
+                   const unsigned int spin_label2,
+                   const bool ising_only,
+                   const std::complex<double> & flipflop_form) const;
 
 public:
 
@@ -51,6 +60,12 @@ public:
   // if you don't wish to calculate
   void set_strength(const double strength);
 
+  virtual void fill(Eigen::MatrixXcd & hamiltonian,
+                   const SpinVector & spins,
+                   const Eigen::ArrayXXd & basis,
+                   const unsigned int spin_label1,
+                   const unsigned int spin_label2) const = 0;
+  
   virtual ~SpinInteraction();
 
 };

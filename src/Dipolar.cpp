@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 28, 2014
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
@@ -47,4 +47,13 @@ double Dipolar::calculate(const Eigen::Vector3d& position1,
   strength = non_spatial_dependence_*radial_dependence*angular_dependence;
   set_strength(strength);
   return strength;
+}
+
+void Dipolar::fill(Eigen::MatrixXcd& hamiltonian, const SpinVector& spins,
+    const Eigen::ArrayXXd& basis, const unsigned int spin_label1,
+    const unsigned int spin_label2) const
+{
+  SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
+      spin_label1,spin_label2,0,std::complex<double>(-0.25,0.0));
+  return;
 }
