@@ -27,16 +27,16 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Jan 31, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"
+#include "SpinBasis.h"
 
 class Dipolar : public SpinInteraction
 {
 private:
   
-  UniformMagneticField field_;
   virtual double calculate_non_spatial_dependence() const;
 
 public:
@@ -53,9 +53,9 @@ public:
   virtual double calculate(const Eigen::Vector3d & position1,
                            const Eigen::Vector3d & position2);
   
-  virtual void fill(Eigen::MatrixXcd & hamiltonian,
+  virtual void fill(Eigen::MatrixXcd * hamiltonian,
                    const SpinVector & spins,
-                   const Eigen::ArrayXXd & basis,
+                   const SpinBasis & basis,
                    const unsigned int spin_label1,
                    const unsigned int spin_label2) const;
 

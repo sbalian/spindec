@@ -4,5 +4,5 @@ boost
 .project
 .cproject
 *.o
-test
+Tests
 

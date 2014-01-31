@@ -5,7 +5,7 @@
 //
 // Multiple Spin container
 //
-// Seto Balian, Jan 22, 2014
+// Seto Balian, Jan 29, 2014
 
 #include "Spin.h"
 #include <vector>
@@ -23,7 +23,7 @@ public:
   
   // Get and set like std::vector
   Spin& operator[](const unsigned int index);
-  Spin& operator[](const unsigned int index) const;
+  const Spin& operator[](const unsigned int index) const;
   
   unsigned int size() const; // number of Spins
   void clear();

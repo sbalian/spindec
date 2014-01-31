@@ -13,7 +13,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 31, 2014
 
 #include "Spin.h"
 #include "SpinVector.h"
@@ -30,7 +30,7 @@ protected:
                                                // using spin multiplicities
   void build(const Spin & spin);               // build using multiplicity
   
-  Eigen::ArrayXXd basis_;
+  Eigen::ArrayXXd basis_as_array_;
 
 public:
 
@@ -40,8 +40,8 @@ public:
   SpinBasis(const Spin & spin); // automatically build
                                 // using spin multiplicity
   
-  SpinBasis(const Eigen::ArrayXXd & basis); // custom build
-  Eigen::ArrayXXd get_basis() const;
+  SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
+  Eigen::ArrayXXd get_basis_as_array() const;
   
   // Number of basis states
   unsigned int dimension() const;
@@ -71,6 +71,10 @@ public:
   //                      4.5  0.5
   //                     -4.5 -0.5
   SpinBasis operator^(const SpinBasis & to_combine) const;
+  
+  // Print with cout
+  friend std::ostream& operator<<(std::ostream& os, SpinBasis const & basis);
+
   
 };
 

@@ -1,81 +1,109 @@
 # SpinDecoherence Makefile
-# Seto Balian, Dec 13, 2013
+# Seto Balian, Jan 29, 2013
 
-#####################
 # Basic user input
 #####################
 
 # Compiler
-CC=g++
+COMPILER=g++
 # Set to 1 for debug mode
 DEBUG=1
 
 # Source path
-SOURCEPATH=../src/
+SOURCE_PATH=../src/
 
 # Download and extract Eigen from http://eigen.tuxfamily.org
-EIGENPATH=../src/eigen/
+EIGEN_PATH=../src/eigen/
 # Download and extract boost from http://www.boost.org/
 # BOOSTPATH=../boost/ 
 
 # Lapack flag (TODO make lapack optional ...)
-LAPACKFLAGS=-llapack
+LAPACK_FLAGS=-llapack
 
-#####################
-# Initialise
 #####################
 
 # Debug mode
 ifeq ($(DEBUG),1)
-CFLAGS=-O0 -Wall -g
+COMPILER_FLAGS=-O0 -Wall -g
 else
-CFLAGS=-O3 -Wall
+COMPILER_FLAGS=-O3 -Wall
 endif
 
-# List of executables
-EXECUTABLES=test
-
 #####################
-# Targets
+
+# List of executables
+EXECUTABLES=
+
 #####################
 
 all: $(EXECUTABLES)
 
-#!!!!!!!!!!!!!!!!!!!!
-# Executables
-#!!!!!!!!!!!!!!!!!!!!
-
-#--------------------
-# test
-#--------------------
-
-# TODO make this better?
-TEST_OBJ=\
-test.o\
-MathPhysConstants.o\
-Spin.o\
-ElectronSpin.o\
-NuclearSpin.o
-
-test: $(TEST_OBJ)
-	$(CC) $(CFLAGS) $(LAPACKFLAGS) $(TEST_OBJ) -o test
-
-#!!!!!!!!!!!!!!!!!!!!
-# Intermediate objects
-#!!!!!!!!!!!!!!!!!!!!
-
-%.o: $(SOURCEPATH)%.cpp
-	$(CC) -c $(CFLAGS) -I$(EIGENPATH) $<
+%.o: $(SOURCE_PATH)%.cpp
+	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH) $<
 
 #####################
-# clean up
+
+# Tests
+#####################
+
+TEST_EXCUTABLES=test_boosteigen test_spins test_spinbasis test_misc
+
+tests: $(TEST_EXCUTABLES)
+
+# test_boosteigen
+TEST_BOOSTEIGEN_OBJECTS=\
+test_boosteigen.o\
+BoostEigen.o
+
+test_boosteigen: $(TEST_BOOSTEIGEN_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) $(TEST_BOOSTEIGEN_OBJECTS) -o test_boosteigen
+
+# test_spins
+TEST_SPINS_OBJECTS=\
+test_spins.o\
+Spin.o\
+ElectronSpin.o\
+NuclearSpin.o\
+SpinVector.o\
+MathPhysConstants.o
+
+test_spins: $(TEST_SPINS_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINS_OBJECTS) -o test_spins
+
+# test_spinbasis
+TEST_SPINBASIS_OBJECTS=\
+test_spinbasis.o\
+SpinBasis.o\
+Spin.o\
+ElectronSpin.o\
+NuclearSpin.o\
+SpinVector.o\
+MathPhysConstants.o\
+Errors.o
+
+test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINBASIS_OBJECTS) -o test_spinbasis
+	
+# test_misc
+TEST_MISC_OBJECTS=\
+test_misc.o\
+MathPhysConstants.o
+
+test_misc: $(TEST_MISC_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) $(TEST_MISC_OBJECTS) -o test_misc
+
+
+#####################
+
+# Clean up
 #####################
 
 # Make sure this is all safe!!!
 
 clean:
-	rm -f $(EXECUTABLES) && rm -f *.o
+	rm -f $(EXECUTABLES) && rm -f $(TEST_EXCUTABLES) rm -f *.o
 
 tidy:
 	rm -f *.o
 
+#####################

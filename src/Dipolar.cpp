@@ -1,9 +1,10 @@
 // See Dipolar.h for description.
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Jan 31, 2014
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
 #include "BoostEigen.h"
+#include <cmath>
 
 double Dipolar::calculate_non_spatial_dependence() const
 {
@@ -15,21 +16,19 @@ double Dipolar::calculate_non_spatial_dependence() const
 
 Dipolar::Dipolar() : SpinInteraction()
 {
-  field_ = UniformMagneticField();
+  //
 }
 
 Dipolar::Dipolar(const Spin& spin1, const Spin& spin2,
-    const UniformMagneticField& field) : SpinInteraction(spin1, spin2)
+    const UniformMagneticField& field) : SpinInteraction(spin1, spin2, field)
 {
-  field_ = field;
   non_spatial_dependence_ = calculate_non_spatial_dependence();
 }
 
 Dipolar::Dipolar(const Spin& spin1, const Spin& spin2, const double strength,
-    const UniformMagneticField& field) : SpinInteraction(spin1,spin2,strength)
+    const UniformMagneticField& field) :
+        SpinInteraction(spin1,spin2,field,strength)
 {
-  field_ = field;
-  strength_ = strength;
   non_spatial_dependence_ = calculate_non_spatial_dependence();
 }
 
@@ -37,9 +36,10 @@ double Dipolar::calculate(const Eigen::Vector3d& position1,
     const Eigen::Vector3d& position2)
 {
   double strength = 0.0;
-  const double radial_dependence = 1.0/std::pow(field_.get_magnitude(),3.0);
+  const double radial_dependence =
+      1.0/std::pow(get_field().get_magnitude(),3.0);
   const Eigen::Vector3d spin_separation = position2 - position1;
-  const Eigen::Vector3d field_direction = field_.get_direction();
+  const Eigen::Vector3d field_direction = get_field().get_direction();
   const double angular_dependence =
      (1.0  - std::pow(BoostEigen::cosAngleBetween(spin_separation,
                                                   field_direction),2.0) );
@@ -49,11 +49,11 @@ double Dipolar::calculate(const Eigen::Vector3d& position1,
   return strength;
 }
 
-void Dipolar::fill(Eigen::MatrixXcd& hamiltonian, const SpinVector& spins,
-    const Eigen::ArrayXXd& basis, const unsigned int spin_label1,
+void Dipolar::fill(Eigen::MatrixXcd * hamiltonian, const SpinVector& spins,
+    const SpinBasis& basis, const unsigned int spin_label1,
     const unsigned int spin_label2) const
 {
   SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
-      spin_label1,spin_label2,0,std::complex<double>(-0.25,0.0));
+      spin_label1,spin_label2,false,std::complex<double>(-0.25,0.0));
   return;
 }

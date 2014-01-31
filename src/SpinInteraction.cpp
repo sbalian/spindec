@@ -1,28 +1,34 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Jan 31, 2014
 
 #include "SpinInteraction.h"
+#include <cmath>
 
 SpinInteraction::SpinInteraction() :
   spin1_(Spin()),
-  spin2_(Spin())
-{
-  strength_ = 0.0;
-  non_spatial_dependence_ = 0.0;
-}
-
-SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2) :
-    spin1_(spin1),
-    spin2_(spin2)
+  spin2_(Spin()),
+  field_(UniformMagneticField())
 {
   strength_ = 0.0;
   non_spatial_dependence_ = 0.0;
 }
 
 SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
+    const UniformMagneticField & field) :
+    spin1_(spin1),
+    spin2_(spin2),
+    field_(field)
+{
+  strength_ = 0.0;
+  non_spatial_dependence_ = 0.0;
+}
+
+SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
+    const UniformMagneticField & field,
     const double strength) :
     spin1_(spin1),
-    spin2_(spin2)
+    spin2_(spin2),
+    field_(field)
 {
   strength_ = strength;
   non_spatial_dependence_ = 0.0;
@@ -33,6 +39,10 @@ double SpinInteraction::get_strength() const
   return strength_;
 }
 
+UniformMagneticField SpinInteraction::get_field() const
+{
+  return field_;
+}
 
 void SpinInteraction::set_strength(const double strength)
 {
@@ -44,8 +54,8 @@ SpinInteraction::~SpinInteraction()
 {/**/
 }
 
-void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd& hamiltonian,
-    const SpinVector& spins, const Eigen::ArrayXXd& basis,
+void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd * hamiltonian,
+    const SpinVector& spins, const SpinBasis & basis,
     const unsigned int spin_label1, const unsigned int spin_label2,
     const bool ising_only, const std::complex<double> & flipflop_form) const
 {
@@ -55,7 +65,7 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd& hamiltonian,
   const double S2 = spins[spin_label2].get_quantum_number();
   
   // Dimension of Hilbert space
-  const unsigned int dimension = hamiltonian.rows();
+  const unsigned int dimension = hamiltonian->rows();
   
   // Number of spins
   const unsigned int nspins = spins.size();
@@ -84,10 +94,10 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd& hamiltonian,
   
     // Calculate Ising part: D S_1^z S_2^z
     // Matrix elements <i| H_dipolar |j> (i == j)
-    m1_i = basis(i,spin_label1);
-    m2_i = basis(i,spin_label2);
+    m1_i = basis.get_element(i,spin_label1);
+    m2_i = basis.get_element(i,spin_label2);
     
-    hamiltonian(i,i) += std::complex<double>(get_strength()*m1_i*m2_i,0.0);
+    (*hamiltonian)(i,i) += std::complex<double>(get_strength()*m1_i*m2_i,0.0);
     
     // Only fill diagonals for Ising only
     if (ising_only) {continue;}
@@ -110,8 +120,8 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd& hamiltonian,
       // other spins, matrix element is zero
       for (unsigned int p=0;p<nspins;p++) {
         if ((p != spin_label1) && (p != spin_label2)) {
-          m_other_i = basis(i,p);
-          m_other_j = basis(j,p);
+          m_other_i = basis.get_element(i,p);
+          m_other_j = basis.get_element(j,p);
           if (m_other_i != m_other_j) {
             reject = 1;
             break;
@@ -121,8 +131,8 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd& hamiltonian,
       if (reject == 1) {continue;}
   
       // Calculate m1_j, m2_j, delta_m1, delta_m2
-      m1_j = basis(j,spin_label1);
-      m2_j = basis(j,spin_label2);
+      m1_j = basis.get_element(j,spin_label1);
+      m2_j = basis.get_element(j,spin_label2);
       delta_m1 = m1_i - m1_j;
       delta_m2 = m2_i - m2_j;
     
@@ -157,9 +167,9 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd& hamiltonian,
           coeff_2 = S2*(S2+1.0) - m2_j*(m2_j-1.0);
         }
       
-      hamiltonian(i,j) +=
+      (*hamiltonian)(i,j) +=
       std::complex<double>(get_strength()*
-                  std::sqrt(static_cast<long double>(coeff_1*coeff_2)),0.0)*
+                  std::sqrt(coeff_1*coeff_2),0.0)*
                   flipflop_form;
         
     }

@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Jan 31, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
@@ -50,9 +50,8 @@ void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
     interaction_ptr->calculate(
         graph.get_position(graph.get_interaction_labels(i).first  ) ,
         graph.get_position(graph.get_interaction_labels(i).second ) );
-    // TODO CHANGE       --------  TO get_matrix() and it doesn't compile!!!
-    interaction_ptr->fill(matrix_,graph.get_spins(),
-        get_basis().get_basis(),
+    interaction_ptr->fill(&matrix_,graph.get_spins(),
+        get_basis(),
         graph.get_interaction_labels(i).first,
         graph.get_interaction_labels(i).second);
   }
