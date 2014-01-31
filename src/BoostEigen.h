@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence.
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Jan 31, 2013
 
 #include <Eigen/Dense>
 
@@ -49,7 +49,7 @@ public:
   // in addition to the dimension of B, this method outputs
   // Tr[B] A (where Tr denotes the sum of the diagonal elements)
   static Eigen::MatrixXcd partialTrace(const Eigen::MatrixXcd & AB,
-                                       const unsigned int dimension_B);
+                                         const unsigned int dimension_B);
   
   // The spectral decomposition of a complex matrix is
   // A = V D V-1, where D is the diagonal of eigenvalues

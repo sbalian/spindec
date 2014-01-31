@@ -1,13 +1,15 @@
 // See SpinBasis.h for description.
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Jan 31, 2014
 
 #include "SpinBasis.h"
+#include "Errors.h"
 
 void SpinBasis::build(const SpinVector & spin_vector)
 {
+  
   int n = static_cast<int>(spin_vector.size()); // number of spins
   int M = static_cast<int>(spin_vector.get_multiplicity());// total multiplicity
-
+  
   // Initialise basis to be built
   Eigen::ArrayXXd basis(M,n);
   basis.setZero();
@@ -62,7 +64,7 @@ void SpinBasis::build(const SpinVector & spin_vector)
     }
   }
 
-  basis_ = basis;
+  basis_as_array_ = basis;
   return;
 }
 
@@ -84,36 +86,39 @@ SpinBasis::SpinBasis(const Spin& spin)
   build(spin);
 }
 
-SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis)
+SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis_as_array)
 {
-  basis_ = basis;
+  basis_as_array_ = basis_as_array;
 }
 
-Eigen::ArrayXXd SpinBasis::get_basis() const
+Eigen::ArrayXXd SpinBasis::get_basis_as_array() const
 {
-  return basis_;
+  return basis_as_array_;
 }
 
 unsigned int SpinBasis::dimension() const
 {
-  return static_cast<int>(basis_.rows());
+  return static_cast<int>(basis_as_array_.rows());
 }
 
 unsigned int SpinBasis::num_spins() const
 {
-  return static_cast<int>(basis_.cols());
+  return static_cast<int>(basis_as_array_.cols());
 }
 
 double SpinBasis::get_element(const unsigned int index,
         const unsigned int slot) const
 {
-  return basis_(index,slot);
+  return basis_as_array_(index,slot);
 }
 
 SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
 {
+  if (dimension() != to_join.dimension()) {
+    Errors::quit("Dimension mismatch when joining bases.");
+  }
   Eigen::ArrayXXd joined(dimension(),num_spins() + to_join.num_spins());
-  joined << basis_, to_join.basis_;
+  joined << basis_as_array_, to_join.basis_as_array_;
   return joined;
 }
 
@@ -140,7 +145,7 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
     for (unsigned int j=0;j<dimension_A;j++) { // loop over A rows
       unsigned int k=0;
       while (k<dimension_B) { // loop dimension_B times
-        expanded_basis_A(l,i) = get_basis()(j,i);
+        expanded_basis_A(l,i) = get_basis_as_array()(j,i);
         l += 1;
         k += 1;
       }
@@ -159,7 +164,7 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   for (unsigned int i = 0;i<dimension_A;i++) {
     unsigned int k = 0;
     while (k<dimension_B) {
-        new_columns_B.row(l) = to_combine.get_basis().row(k);
+        new_columns_B.row(l) = to_combine.get_basis_as_array().row(k);
         k+=1;
         l+=1;
       }
@@ -170,6 +175,21 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   basis_out << expanded_basis_A, new_columns_B; // join  
   return SpinBasis(basis_out);
 }
+
+std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
+{
+
+  // To restore formatting later
+  std::ios::fmtflags f( std::cout.flags() );
+  
+  os << basis.get_basis_as_array() << std::endl;
+  
+  // Restore formatting
+  std::cout.flags( f );
+  
+  return os;
+}
+
 
 // Don't use this ...
 //void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,
@@ -201,7 +221,7 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
 //      // magnetic quantum numbers (ie for those spins specified by spin_indices)
 //      Eigen::ArrayXd test_vector(to_keep_cols);
 //      for (unsigned int k=0;k<to_keep_cols;k++) {
-//        test_vector(k) = basis_(j,spin_indices[k]);
+//        test_vector(k) = basis_as_array_(j,spin_indices[k]);
 //      }
 //      
 //      // see if test vector matches the row to keep and add to new rows if yes
@@ -216,7 +236,7 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
 //        }
 //      }
 //      if (pass) {
-//        new_rows.push_back(basis_.row(j)); 
+//        new_rows.push_back(basis_as_array_.row(j)); 
 //      }
 //      
 //    }
@@ -226,13 +246,36 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
 //  // construct the new basis
 //  
 //  Eigen::ArrayXXd new_basis(static_cast<int>(new_rows.size()),
-//                            basis_.cols());
+//                            basis_as_array_.cols());
 //  
 //  for (unsigned int i=0; i<new_rows.size();i++) {
 //    new_basis.row(i) = new_rows[i];
 //  }
 //  
-//  basis_ = new_basis;
+//  basis_as_array_ = new_basis;
 //  return;
 //
 //}
+// // OLD TEST CODE FOR THIS METHOD ...
+//ZeemanBasis test_basis;
+//test_basis.build(graph);
+//
+//std::cout << "basis" << std::endl;
+//std::cout << test_basis.get_basis_as_array() << std::endl;
+//
+//Eigen::ArrayXXd to_keep(3,2);
+//
+//to_keep << 0.5 , 4.5,
+//          -0.5, 2.5,
+//           0.5, -1.5;
+//
+//std::vector<unsigned int> indices;
+//
+//indices.push_back(0);
+//indices.push_back(1);
+//
+//test_basis.truncate(indices,to_keep);
+//
+//std::cout << "truncated" << std::endl;
+//std::cout << test_basis.get_basis_as_array() << std::endl;
+

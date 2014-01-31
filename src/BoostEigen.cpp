@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Jan 31, 2014
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>

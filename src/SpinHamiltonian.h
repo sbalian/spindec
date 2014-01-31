@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Jan 31, 2014
 
 #include <string>
 
