@@ -1,5 +1,5 @@
 // See MathPhysConstants.h for description.
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Feb 5, 2014
 
 #include "MathPhysConstants.h"
 
@@ -10,7 +10,7 @@ double MathPhysConstants::pi()
 // DATE: 06/12/2012
 }
 
-double MathPhysConstants::reduced_plank()
+double MathPhysConstants::reduced_planck()
 {
   return 1.054571726e-34;
 // UNITS: J s
@@ -18,7 +18,7 @@ double MathPhysConstants::reduced_plank()
 // DATE: 06/12/2012
 }
 
-double MathPhysConstants::plank()
+double MathPhysConstants::planck()
 {
   return 6.62606957e-34;
 // UNITS: J s

@@ -5,7 +5,7 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Feb 5, 2014
 
 class MathPhysConstants
 {
@@ -14,11 +14,11 @@ public:
 
   static double pi();
 
-  // Reduced Plank constant, units: J s
-  static double reduced_plank();
+  // Reduced Planck constant, units: J s
+  static double reduced_planck();
 
-  // Plank constant, units: J s
-  static double plank();
+  // Planck constant, units: J s
+  static double planck();
 
   // Free electron gyromagnetic ratio, units: M rad s-1
   static double electron_gyromagnetic_ratio();

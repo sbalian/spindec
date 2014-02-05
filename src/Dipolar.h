@@ -3,12 +3,13 @@
 
 // Dipolar
 //
-// Dipolar interaction strength between a pair of spins
+// Dipolar interaction strength between a pair of spins (operators S_1, S_2)
 //
-// D S_1^z S_2^z - (D / 4) [ S_1^+ S_2^- + S_1^- S_2^+ ]
+// H_D = D S_1^z S_2^z - (D / 4) [ S_1^+ S_2^- + S_1^- S_2^+ ]
 //
-// Strength
+// This class calculates
 // D = D0 * gamma_1 gamma_2 ( 1.0 - 3.0*cos^2[theta] ) / (1e-10 r)^3
+// and fills the Hamiltonian matrix elements for Hamiltonian H_D above.
 // 
 // Units: M rad s-1
 //
@@ -27,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 5, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"

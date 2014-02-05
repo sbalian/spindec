@@ -1,7 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Jan 31, 2014
-
-// TODO Comment calculation, units etc.
+// Seto Balian, Feb 5, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -17,7 +15,7 @@ double Hyperfine::calculate_non_spatial_dependence() const
   
   const double electron_gyromagnetic_ratio = spin1_.get_gyromagnetic_ratio();
   const double nuclear_gyromagnetic_ratio = spin2_.get_gyromagnetic_ratio();
-  const double hbar = MathPhysConstants::reduced_plank();
+  const double hbar = MathPhysConstants::reduced_planck();
   const double pi = MathPhysConstants::pi();
   
   return (16.0*pi/9.0)*1.0e-07*1.0e+06*hbar*

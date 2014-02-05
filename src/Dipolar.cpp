@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 5, 2014
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
@@ -8,7 +8,7 @@
 
 double Dipolar::calculate_non_spatial_dependence() const
 {
-  const double prefactor = 1.0e-31*MathPhysConstants::reduced_plank();
+  const double prefactor = 1.0e-31*MathPhysConstants::reduced_planck();
   const double gamma_product = spin1_.get_gyromagnetic_ratio()
                               *spin2_.get_gyromagnetic_ratio();
   return prefactor*gamma_product;
