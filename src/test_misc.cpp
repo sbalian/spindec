@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 5, 2014
 
 #include <iostream>
 #include <complex>
@@ -18,8 +18,8 @@ std::complex<double> test_exp(const std::complex<double> & z)
 int main() {
   
 std::cout << "pi " << MathPhysConstants::pi() << std::endl;
-std::cout << "h " << MathPhysConstants::plank() << std::endl;
-std::cout << "hbar " << MathPhysConstants::reduced_plank() << std::endl;
+std::cout << "h " << MathPhysConstants::planck() << std::endl;
+std::cout << "hbar " << MathPhysConstants::reduced_planck() << std::endl;
 std::cout << std::endl;
 
 

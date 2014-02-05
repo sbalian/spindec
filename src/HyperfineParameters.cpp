@@ -1,5 +1,5 @@
 // See HyperfineParameters.h for description.
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 5, 2014
 
 #include "HyperfineParameters.h"
 #include "Errors.h"
@@ -15,7 +15,7 @@ void HyperfineParameters::check_form()
   if (form_ == "Anisotropic") {
     return;
   }
-  Errors::quit("Invalid form for Hyperfine interaction.");
+  Errors::quit("Invalid form for hyperfine interaction.");
   return;
 }
 

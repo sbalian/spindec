@@ -3,9 +3,10 @@
 
 // IsingHyperfine
 //
-// TODO describe
+// Like Hyperfine but fill method ignores (1/2) A [S+I- + S-I+]
+// in H_A = A Sz Iz + (1/2) A [S+I- + S-I+].
 //
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 5, 2014
 
 #include "Hyperfine.h"
 
