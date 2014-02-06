@@ -1,8 +1,11 @@
 // See SpinBasis.h for description.
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinBasis.h"
 #include "Errors.h"
+
+namespace SpinDecoherence
+{
 
 void SpinBasis::build(const SpinVector & spin_vector)
 {
@@ -190,6 +193,7 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
   return os;
 }
 
+} // namespace SpinDecoherence
 
 // Don't use this ...
 //void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,

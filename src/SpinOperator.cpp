@@ -1,9 +1,12 @@
 // See SpinOperator.h for description.
-// Seto Balian, Jan 27, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinOperator.h"
 #include "BoostEigen.h"
 #include "Errors.h"
+
+namespace SpinDecoherence
+{
 
 SpinOperator::SpinOperator() : MatrixRepresentation()
 {/**/}
@@ -75,3 +78,5 @@ void SpinOperator::add_to_element(const unsigned int i, const unsigned int j,
   matrix_(i,j) += to_add;
   return;
 }
+
+} // namespace SpinDecoherence

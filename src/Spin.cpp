@@ -1,8 +1,11 @@
 // See Spin.h for description.
-// Seto Balian, Jan 22, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "Spin.h"
 #include <iomanip>
+
+namespace SpinDecoherence
+{
 
 unsigned int Spin::calculate_multiplicity() const
 {
@@ -63,3 +66,5 @@ std::ostream& operator<<(std::ostream& os, Spin const & spin)
   
   return os;
 }
+
+} // namespace SpinDecoherence

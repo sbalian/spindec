@@ -1,8 +1,11 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinInteraction.h"
 #include <cmath>
+
+namespace SpinDecoherence
+{
 
 SpinInteraction::SpinInteraction() :
   spin1_(Spin()),
@@ -179,3 +182,5 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd * hamiltonian,
   return;
 
 }
+
+} // namespace SpinDecoherence

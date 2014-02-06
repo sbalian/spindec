@@ -5,9 +5,12 @@
 //
 // Error and warning handling.
 //
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Feb 6, 2014
 
 #include <string>
+
+namespace SpinDecoherence
+{
 
 class Errors
 {
@@ -20,5 +23,7 @@ public:
   static void warning(const std::string & message);
 
 };
+
+} // namespace SpinDecoherence
 
 #endif // ERRORS_H_

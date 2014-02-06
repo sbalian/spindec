@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -7,6 +7,9 @@
 
 #include "Errors.h"
 #include "Dipolar.h"
+
+namespace SpinDecoherence
+{
 
 double Hyperfine::calculate_non_spatial_dependence() const
 {
@@ -173,3 +176,5 @@ void Hyperfine::fill(Eigen::MatrixXcd * hamiltonian, const SpinVector& spins,
       spin_label1,spin_label2,false,std::complex<double>(0.5,0.0));
   return;
 }
+
+} // namespace SpinDecoherence

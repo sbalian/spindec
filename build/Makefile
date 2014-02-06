@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Jan 29, 2013
+# Seto Balian, Feb 6, 2014
 
 # Basic user input
 #####################
@@ -46,7 +46,12 @@ all: $(EXECUTABLES)
 # Tests
 #####################
 
-TEST_EXCUTABLES=test_boosteigen test_spins test_spinbasis test_misc
+TEST_EXCUTABLES=\
+test_boosteigen\
+test_spins\
+test_spinbasis\
+test_misc\
+test_evolution
 
 tests: $(TEST_EXCUTABLES)
 
@@ -83,7 +88,7 @@ Errors.o
 
 test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINBASIS_OBJECTS) -o test_spinbasis
-	
+
 # test_misc
 TEST_MISC_OBJECTS=\
 test_misc.o\
@@ -92,6 +97,13 @@ MathPhysConstants.o
 test_misc: $(TEST_MISC_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $(TEST_MISC_OBJECTS) -o test_misc
 
+	# test_evolution
+TEST_EVOLUTION_OBJECTS=\
+test_evolution.o\
+UniformMagneticField.o
+
+test_evolution: $(TEST_EVOLUTION_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) $(TEST_EVOLUTION_OBJECTS) -o test_evolution
 
 #####################
 

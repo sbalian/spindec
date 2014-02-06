@@ -5,12 +5,15 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Feb 6, 2014
 
 #include <Eigen/Dense>
 
 #include "SpinBasis.h"
 #include "MatrixRepresentation.h"
+
+namespace SpinDecoherence
+{
 
 class SpinState : public MatrixRepresentation
 {
@@ -23,7 +26,7 @@ private:
 public:
   SpinState();
   SpinState(const Eigen::VectorXcd & state, const SpinBasis & basis);
-  SpinState(const SpinBasis & basis); // zero state vector
+  explicit SpinState(const SpinBasis & basis); // zero state vector
 
   Eigen::VectorXcd get_state() const;
   void set_state(const Eigen::VectorXcd & state);
@@ -34,5 +37,7 @@ public:
   virtual void set_zero(); // set all elements to zero
     
 };
+
+} // namespace SpinDecoherence
 
 #endif // SPINSTATE_H_

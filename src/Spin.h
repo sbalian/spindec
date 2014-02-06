@@ -8,9 +8,12 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Jan 22, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <iostream>
+
+namespace SpinDecoherence
+{
 
 class Spin
 {
@@ -41,5 +44,6 @@ public:
 
 };
 
+} // namespace SpinDecoherence
 
 #endif // SPIN_H_

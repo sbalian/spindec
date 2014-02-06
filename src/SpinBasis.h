@@ -13,12 +13,15 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "Spin.h"
 #include "SpinVector.h"
 
 #include <Eigen/Dense>
+
+namespace SpinDecoherence
+{
 
 class SpinBasis
 {
@@ -35,12 +38,12 @@ protected:
 public:
 
   SpinBasis();
-  SpinBasis(const SpinVector & spin_vector); // automatically build
+  explicit SpinBasis(const SpinVector & spin_vector); // automatically build
                                              // using spin multiplicities
-  SpinBasis(const Spin & spin); // automatically build
+  explicit SpinBasis(const Spin & spin); // automatically build
                                 // using spin multiplicity
   
-  SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
+  explicit SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
   Eigen::ArrayXXd get_basis_as_array() const;
   
   // Number of basis states
@@ -77,6 +80,8 @@ public:
 
   
 };
+
+} // namespace SpinDecoherence
 
 #endif // SPINBASIS_H_
 

@@ -1,7 +1,10 @@
 // See SpinVector.h for description.
-// Seto Balian, Jan 29, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinVector.h"
+
+namespace SpinDecoherence
+{
 
 SpinVector::SpinVector() {/**/}
 
@@ -46,3 +49,4 @@ void SpinVector::clear()
   spin_vector_.clear();
 }
 
+} // namespace SpinDecoherence

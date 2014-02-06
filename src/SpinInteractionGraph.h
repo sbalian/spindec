@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <vector>
 #include <utility>
@@ -15,6 +15,9 @@
 #include "SpinState.h"
 
 #include <Eigen/Dense>
+
+namespace SpinDecoherence
+{
 
 class SpinInteractionGraph
 {
@@ -71,5 +74,7 @@ public:
   void join(const SpinInteractionGraph & to_join);
   
 };
+
+} // namespace SpinDecoherence
 
 #endif // SPININTERACTIONGRAPH_H_

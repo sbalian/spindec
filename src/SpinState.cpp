@@ -1,9 +1,12 @@
 // See SpinState.h for description.
-// Seto Balian, Dec 10, 2013
+// Seto Balian, Feb 6, 2014
 
 #include "SpinState.h"
 #include "BoostEigen.h"
 #include "Errors.h"
+
+namespace SpinDecoherence
+{
 
 SpinState::SpinState() : MatrixRepresentation()
 {/**/}
@@ -50,3 +53,5 @@ void SpinState::set_zero()
   state_.setZero(get_dimension());
   return;
 }
+
+} // namespace SpinDecoherence

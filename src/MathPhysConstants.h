@@ -5,7 +5,10 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
+
+namespace SpinDecoherence
+{
 
 class MathPhysConstants
 {
@@ -24,5 +27,7 @@ public:
   static double electron_gyromagnetic_ratio();
   
 };
+
+} // namespace SpinDecoherence
 
 #endif // MATHPHYSCONSTANTS_H_

@@ -11,9 +11,12 @@
 // DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
 //         "Lapack" - Lapack zheev
 //
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "Eigenspectrum.h"
+
+namespace SpinDecoherence
+{
 
 class HermitianEigenspectrum : public Eigenspectrum
 {
@@ -28,7 +31,7 @@ private:
 public:
   
   HermitianEigenspectrum();
-  HermitianEigenspectrum(const Eigen::MatrixXcd & matrix);
+  explicit HermitianEigenspectrum(const Eigen::MatrixXcd & matrix);
   HermitianEigenspectrum(const Eigen::MatrixXcd & matrix,
       const std::string & diagonalizer);
   
@@ -41,5 +44,7 @@ public:
   //double get_eigenvalue(const unsigned int index) const;
   
 };
+
+} // namespace SpinDecoherence
 
 #endif // HERMITIANEIGENSPECTRUM_H_

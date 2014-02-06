@@ -7,11 +7,14 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence.
 //
-// Seto Balian, Jan 31, 2013
+// Seto Balian, Feb 6, 2014
 
 #include <Eigen/Dense>
 
 #include <complex>
+
+namespace SpinDecoherence
+{
 
 class BoostEigen
 {
@@ -63,6 +66,8 @@ public:
                                          const Eigen::VectorXcd & eigenvalues);
 
 };
+
+} // namespace SpinDecoherence
 
 #endif // BOOSTEIGEN_H_
 

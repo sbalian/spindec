@@ -45,7 +45,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"
@@ -57,6 +57,9 @@
 #include "HyperfineParameters.h"
 
 #include <Eigen/Dense>
+
+namespace SpinDecoherence
+{
 
 class Hyperfine : public SpinInteraction
 {
@@ -95,5 +98,7 @@ public:
                    const unsigned int spin_label2) const;
 
 };
+
+} // namespace SpinDecoherence
 
 #endif // HYPERFINE_H_

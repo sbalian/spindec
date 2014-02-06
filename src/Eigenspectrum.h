@@ -10,11 +10,14 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <Eigen/Dense>
 #include <complex>
 #include <string>
+
+namespace SpinDecoherence
+{
 
 class Eigenspectrum
 {
@@ -24,7 +27,7 @@ protected:
   
   const std::string diagonalizer_; // string (see above)
 
-  Eigenspectrum(const std::string & diagonalizer);
+  explicit Eigenspectrum(const std::string & diagonalizer);
   
   // Diagonalizers
   virtual void diagonalize_eigen(const Eigen::MatrixXcd & matrix);
@@ -56,5 +59,7 @@ public:
   virtual Eigen::MatrixXcd spectralDecomposition() const;
   
 };
+
+} // namespace SpinDecoherence
 
 #endif // EIGENSPECTRUM_H_

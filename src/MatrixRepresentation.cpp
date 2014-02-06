@@ -1,8 +1,11 @@
 // See MatrixRepresentation.h for description.
-// Seto Balian, Dec 9, 2013
+// Seto Balian, Feb 6, 2014
 
 #include "MatrixRepresentation.h"
 #include "Errors.h"
+
+namespace SpinDecoherence
+{
 
 MatrixRepresentation::MatrixRepresentation() : dimension_(0),
                                                basis_(SpinBasis())
@@ -29,5 +32,4 @@ SpinBasis MatrixRepresentation::get_basis() const
 
 MatrixRepresentation::~MatrixRepresentation() {/**/}
 
-
-
+} // namespace SpinDecoherence
