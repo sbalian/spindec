@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
@@ -7,6 +7,9 @@
 #include <map>
 
 #include <complex>
+
+namespace SpinDecoherence
+{
 
 // build a combined (like tensor product) SpinBasis
 SpinBasis SpinHamiltonian::build_basis(const SpinInteractionGraph& graph) const
@@ -100,3 +103,5 @@ Eigen::MatrixXcd SpinHamiltonian::evolution_matrix(
                                         std::complex<double>(0.0,-time) ) 
                                                  );
 }
+
+} // namespace SpinDecoherence

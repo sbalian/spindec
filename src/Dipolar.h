@@ -28,11 +28,14 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"
 #include "SpinBasis.h"
+
+namespace SpinDecoherence
+{
 
 class Dipolar : public SpinInteraction
 {
@@ -61,5 +64,7 @@ public:
                    const unsigned int spin_label2) const;
 
 };
+
+} // namespace SpinDecoherence
 
 #endif	 // DIPOLAR_H_

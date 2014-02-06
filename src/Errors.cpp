@@ -1,9 +1,12 @@
 // See Errors.h for description.
-// Seto Balian, Dec 3, 2013
+// Seto Balian, Feb 6, 2014
 
 #include "Errors.h"
 #include <cstdlib>
 #include <iostream>
+
+namespace SpinDecoherence
+{
 
 void Errors::quit()
 {
@@ -25,3 +28,5 @@ void Errors::warning(const std::string & message)
   std::cout << "    " << message << std::endl;
   return;
 }
+
+} // namespace SpinDecoherence

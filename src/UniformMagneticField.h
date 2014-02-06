@@ -5,9 +5,12 @@
 //
 // Uniform magnetic field parallel to some direction in Cartesian coordinates.
 //
-// Seto Balian, Dec 6, 2013
+// Seto Balian, Feb 6, 2014
 
 #include <Eigen/Dense>
+
+namespace SpinDecoherence
+{
 
 class UniformMagneticField
 {
@@ -29,5 +32,7 @@ public:
   void set_direction(const Eigen::Vector3d & direction);
 
 };
+
+} // namespace SpinDecoherence
 
 #endif // UNIFORMMAGNETICFIELD_H_

@@ -6,9 +6,12 @@
 // Parameters to cacluate the hyperfine interaction between and electron
 // and a nucleus in a lattice.
 //
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <string>
+
+namespace SpinDecoherence
+{
 
 class HyperfineParameters
 {
@@ -47,5 +50,7 @@ public:
   std::string get_form() const;
   
 };
+
+} // namespace SpinDecoherence
 
 #endif // HYPERFINEPARAMETERS_H_

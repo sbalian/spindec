@@ -1,7 +1,10 @@
 // See MathPhysConstants.h for description.
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "MathPhysConstants.h"
+
+namespace SpinDecoherence
+{
 
 double MathPhysConstants::pi()
 {
@@ -33,3 +36,5 @@ double MathPhysConstants::electron_gyromagnetic_ratio()
 // SOURCE: CODATA
 // DATE: 22/10/2013
 }
+
+} // namespace SpinDecoherence

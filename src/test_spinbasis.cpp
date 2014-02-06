@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <iostream>
 #include <Eigen/Dense>
@@ -8,6 +8,8 @@
 #include "ElectronSpin.h"
 #include "NuclearSpin.h"
 #include "SpinBasis.h"
+
+using namespace SpinDecoherence;
 
 int main() {
   

@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "HermitianEigenspectrum.h"
 #include "BoostEigen.h"
@@ -15,6 +15,9 @@ extern "C" void zheev_(const char* jobz,const char* uplo, int* n,
     MKL_Complex16* a, int* lda, double* w, MKL_Complex16* work, int* lwork,
     double* rwork, int* info );
 // ---------------------------------------------
+
+namespace SpinDecoherence
+{
 
 void HermitianEigenspectrum::diagonalize_lapack(
     const Eigen::MatrixXcd & matrix)
@@ -134,3 +137,5 @@ Eigen::MatrixXcd HermitianEigenspectrum::spectralDecomposition() const
   // since eigenvectors orthonormal, V-1 = V^+
   return BoostEigen::unitarySpectralDecomposition(eigenvectors_, eigenvalues_);
 }
+
+} // namespace SpinDecoherence

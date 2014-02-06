@@ -1,10 +1,13 @@
 // See Dipolar.h for description.
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
 #include "BoostEigen.h"
 #include <cmath>
+
+namespace SpinDecoherence
+{
 
 double Dipolar::calculate_non_spatial_dependence() const
 {
@@ -57,3 +60,5 @@ void Dipolar::fill(Eigen::MatrixXcd * hamiltonian, const SpinVector& spins,
       spin_label1,spin_label2,false,std::complex<double>(-0.25,0.0));
   return;
 }
+
+} // namespace SpinDecoherence

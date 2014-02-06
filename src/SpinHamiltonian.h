@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <string>
 
@@ -22,6 +22,8 @@
 
 #include <Eigen/Dense>
 
+namespace SpinDecoherence
+{
 
 class SpinHamiltonian : public SpinOperator
 {
@@ -62,5 +64,7 @@ public:
       const double time) const;
 
 };
+
+} // namespace SpinDecoherence
 
 #endif // SPINHAMILTONIAN_H_

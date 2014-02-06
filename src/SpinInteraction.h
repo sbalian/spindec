@@ -5,7 +5,7 @@
 //
 // Abstract base class for interaction between a pair of spins.
 //
-// Seto Balian, Jan 31, 2014
+// Seto Balian, Feb 6, 2014
 
 #include <Eigen/Dense>
 
@@ -15,6 +15,9 @@
 #include "UniformMagneticField.h"
 
 #include <complex>
+
+namespace SpinDecoherence
+{
 
 class SpinInteraction
 {
@@ -74,5 +77,7 @@ public:
   virtual ~SpinInteraction();
 
 };
+
+} // namespace SpinDecoherence
 
 #endif // SPININTERACTION_H_

@@ -1,8 +1,11 @@
 // See HyperfineParameters.h for description.
-// Seto Balian, Feb 5, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "HyperfineParameters.h"
 #include "Errors.h"
+
+namespace SpinDecoherence
+{
 
 void HyperfineParameters::check_form()
 {
@@ -88,3 +91,4 @@ std::string HyperfineParameters::get_form() const
   return form_;
 }
 
+} // namespace SpinDecoherence

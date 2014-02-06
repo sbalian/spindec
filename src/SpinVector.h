@@ -5,10 +5,13 @@
 //
 // Multiple Spin container
 //
-// Seto Balian, Jan 29, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "Spin.h"
 #include <vector>
+
+namespace SpinDecoherence
+{
 
 class SpinVector {
   
@@ -17,7 +20,7 @@ private:
   
 public:
   SpinVector();
-  SpinVector(const Spin & spin); // single Spin
+  explicit SpinVector(const Spin & spin); // single Spin
   
   void push_back(const Spin & spin); // add element
   
@@ -32,4 +35,6 @@ public:
   
 };
 
-#endif	 // SPINVECTOR_H_
+} // namespace SpinDecoherence
+
+#endif  // SPINVECTOR_H_

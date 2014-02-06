@@ -1,10 +1,12 @@
 // For testing SpinDecoherence
-// Seto Balian, Jan 29, 2013
+// Seto Balian, Feb 6, 2014
 
 #include <iostream>
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
+
+using namespace SpinDecoherence;
 
 int main() {
 

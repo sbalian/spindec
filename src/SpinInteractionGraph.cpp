@@ -1,10 +1,13 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Jan 28, 2014
+// Seto Balian, Feb 6, 2014
 
 #include "SpinInteractionGraph.h"
 #include "Errors.h"
 
 #include <algorithm>
+
+namespace SpinDecoherence
+{
 
 // Check if vertex label exists
 void SpinInteractionGraph::check_vertex_label(const unsigned int label) const
@@ -150,3 +153,4 @@ SpinVector SpinInteractionGraph::get_spins() const
   return spins_;
 }
 
+} // namespace SpinDecoherence
