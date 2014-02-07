@@ -1,5 +1,5 @@
 // See IsingHyperfine.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "IsingHyperfine.h"
 
@@ -17,10 +17,8 @@ IsingHyperfine::IsingHyperfine(const ElectronSpin& electron,
 {
 }
 
-IsingHyperfine::IsingHyperfine(const ElectronSpin& electron,
-    const NuclearSpin& nucleus, const double strength,
-    const UniformMagneticField& field, const HyperfineParameters& parameters) :
-        Hyperfine(electron,nucleus,strength,field,parameters)
+IsingHyperfine::IsingHyperfine(const double strength) :
+        Hyperfine(strength)
 {
 }
 

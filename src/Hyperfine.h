@@ -45,7 +45,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"
@@ -83,10 +83,7 @@ public:
                   const UniformMagneticField & field,
                   const HyperfineParameters & parameters);
 
-  Hyperfine(const ElectronSpin & electron,
-                  const NuclearSpin & nucleus, const double strength,
-                  const UniformMagneticField & field,
-                  const HyperfineParameters & parameters);
+  explicit Hyperfine(const double strength);
 
   virtual double calculate(const Eigen::Vector3d & position1,
                            const Eigen::Vector3d & position2);

@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include <string>
 
@@ -30,9 +30,6 @@ class SpinHamiltonian : public SpinOperator
 private:
 
   const UniformMagneticField field_;
-
-  // build a combined (like tensor product) SpinBasis and return it
-  SpinBasis build_basis(const SpinInteractionGraph & graph) const;
   
   // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
   // field_strength for all spins in the graph

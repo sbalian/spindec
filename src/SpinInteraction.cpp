@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "SpinInteraction.h"
 #include <cmath>
@@ -8,6 +8,7 @@ namespace SpinDecoherence
 {
 
 SpinInteraction::SpinInteraction() :
+  preset_(true),
   spin1_(Spin()),
   spin2_(Spin()),
   field_(UniformMagneticField())
@@ -18,6 +19,7 @@ SpinInteraction::SpinInteraction() :
 
 SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
     const UniformMagneticField & field) :
+    preset_(false),
     spin1_(spin1),
     spin2_(spin2),
     field_(field)
@@ -26,20 +28,14 @@ SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
   non_spatial_dependence_ = 0.0;
 }
 
-SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
-    const UniformMagneticField & field,
-    const double strength) :
-    spin1_(spin1),
-    spin2_(spin2),
-    field_(field)
+SpinInteraction::SpinInteraction(const double strength) :
+    preset_(true),
+    spin1_(Spin()),
+    spin2_(Spin()),
+    field_(UniformMagneticField())
 {
   strength_ = strength;
   non_spatial_dependence_ = 0.0;
-}
-
-double SpinInteraction::get_strength() const
-{
-  return strength_;
 }
 
 UniformMagneticField SpinInteraction::get_field() const
@@ -100,7 +96,7 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd * hamiltonian,
     m1_i = basis.get_element(i,spin_label1);
     m2_i = basis.get_element(i,spin_label2);
     
-    (*hamiltonian)(i,i) += std::complex<double>(get_strength()*m1_i*m2_i,0.0);
+    (*hamiltonian)(i,i) += std::complex<double>(strength_*m1_i*m2_i,0.0);
     
     // Only fill diagonals for Ising only
     if (ising_only) {continue;}
@@ -171,7 +167,7 @@ void SpinInteraction::fill_ising_flipflop(Eigen::MatrixXcd * hamiltonian,
         }
       
       (*hamiltonian)(i,j) +=
-      std::complex<double>(get_strength()*
+      std::complex<double>(strength_*
                   std::sqrt(coeff_1*coeff_2),0.0)*
                   flipflop_form;
         

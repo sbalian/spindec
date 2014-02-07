@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "SpinInteractionGraph.h"
 #include "Errors.h"
@@ -41,6 +41,7 @@ void SpinInteractionGraph::add_vertex(const Spin& spin, const SpinState& state,
   spins_.push_back(spin);
   states_.push_back(state);
   positions_.push_back(position);
+  join_basis_.push_back(helloworld);
   num_vertices_++;
   return;
 }
@@ -151,6 +152,25 @@ std::pair<unsigned int,unsigned int> SpinInteractionGraph::
 SpinVector SpinInteractionGraph::get_spins() const
 {
   return spins_;
+}
+
+void SpinDecoherence::SpinInteractionGraph::add_vertex(const Spin& spin,
+    const Eigen::Vector3d& position)
+{
+  spins_.push_back(spin);
+  states_.push_back( SpinState(SpinBasis(spin)) );
+  positions_.push_back(position);
+  num_vertices_++;
+  return;
+}
+
+SpinBasis SpinInteractionGraph::build_basis() const
+{
+  SpinBasis basis = get_state(0).get_basis();
+  for (unsigned int i = 1; i<num_vertices();i++) {
+    basis = basis^get_state(i).get_basis();
+  }
+  return basis;
 }
 
 } // namespace SpinDecoherence
