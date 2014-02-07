@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -13,6 +13,8 @@ namespace SpinDecoherence
 
 double Hyperfine::calculate_non_spatial_dependence() const
 {
+  
+  if (preset_ == true) {return 0.0;}
   
   // Units M rad s-1 m^3
   
@@ -130,17 +132,18 @@ Hyperfine::Hyperfine(const ElectronSpin& electron, const NuclearSpin& nucleus,
   //
 }
 
-Hyperfine::Hyperfine(const ElectronSpin& electron, const NuclearSpin& nucleus,
-    const double strength, const UniformMagneticField& field,
-    const HyperfineParameters& parameters)
-    : SpinInteraction(electron,nucleus,field,strength),parameters_(parameters)
+Hyperfine::Hyperfine(const double strength)
+    : SpinInteraction(strength)
 {
-  non_spatial_dependence_ = calculate_non_spatial_dependence();
+  //
 }
 
 double Hyperfine::calculate(const Eigen::Vector3d& position1,
     const Eigen::Vector3d& position2)
 {
+  
+  if (preset_ == true) {return strength_;}
+
   
   // Units M rad s-1
   

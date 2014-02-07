@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
@@ -10,16 +10,6 @@
 
 namespace SpinDecoherence
 {
-
-// build a combined (like tensor product) SpinBasis
-SpinBasis SpinHamiltonian::build_basis(const SpinInteractionGraph& graph) const
-{
-  SpinBasis basis = graph.get_state(0).get_basis();
-  for (unsigned int i = 1; i<graph.num_vertices();i++) {
-    basis = basis^graph.get_state(i).get_basis();
-  }
-  return basis;
-}
 
 // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
 // field_strength for all spins in the graph

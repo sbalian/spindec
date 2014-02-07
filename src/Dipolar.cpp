@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
@@ -11,6 +11,9 @@ namespace SpinDecoherence
 
 double Dipolar::calculate_non_spatial_dependence() const
 {
+  
+  if (preset_ == true) {return 0.0;}
+  
   const double prefactor = 1.0e-31*MathPhysConstants::reduced_planck();
   const double gamma_product = spin1_.get_gyromagnetic_ratio()
                               *spin2_.get_gyromagnetic_ratio();
@@ -28,16 +31,18 @@ Dipolar::Dipolar(const Spin& spin1, const Spin& spin2,
   non_spatial_dependence_ = calculate_non_spatial_dependence();
 }
 
-Dipolar::Dipolar(const Spin& spin1, const Spin& spin2, const double strength,
-    const UniformMagneticField& field) :
-        SpinInteraction(spin1,spin2,field,strength)
+Dipolar::Dipolar(const double strength) :
+        SpinInteraction(strength)
 {
-  non_spatial_dependence_ = calculate_non_spatial_dependence();
+  //
 }
 
 double Dipolar::calculate(const Eigen::Vector3d& position1,
     const Eigen::Vector3d& position2)
 {
+  
+  if (preset_ == true) {return strength_;}
+  
   double strength = 0.0;
   const double radial_dependence =
       1.0/std::pow(get_field().get_magnitude(),3.0);

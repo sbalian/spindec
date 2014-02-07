@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 7, 2014
 
 #include <vector>
 #include <utility>
@@ -32,11 +32,20 @@ private:
   
   unsigned int num_vertices_;
   unsigned int num_edges_;
+
+  std::vector<bool> join_basis_; // This is of size num_vertices_.
+                                 // Entries specify whether or not the basis
+                                 // should be joined to the previous basis
+                                 // instead of combined (true for join).
+                                 // E.g. when building a basis in
+                                 // SpinHamiltonian
+                                 // TODO Improve this
+
   
   // Edges
   std::vector<unsigned int> vertex_labels1_, vertex_labels2_;
   std::vector<SpinInteraction*> interactions_;
-  
+    
   void check_vertex_label(const unsigned int label) const;
   void check_edge_index(const unsigned int index) const;
 
@@ -48,6 +57,9 @@ public:
   void add_vertex(const Spin & spin,
                   const SpinState & state,
                   const Eigen::Vector3d & position);
+  
+  // The initial state has all entries set to zero
+  void add_vertex(const Spin & spin, const Eigen::Vector3d & position);
 
   void add_edge(unsigned int label1,
                 unsigned int label2,
@@ -70,8 +82,12 @@ public:
       const unsigned int index) const;
   
   SpinVector get_spins() const;
+  
+  // build a combined (like tensor product) SpinBasis and return it
+  SpinBasis build_basis() const;
 
   void join(const SpinInteractionGraph & to_join);
+  
   
 };
 
