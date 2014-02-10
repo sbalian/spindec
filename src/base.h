@@ -1,11 +1,13 @@
-#ifndef SPINDECOHERENCE_H_
-#define SPINDECOHERENCE_H_
+#ifndef BASE_H_
+#define BASE_H_
 
 // SpinDecoherence includes
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <Eigen/Dense>
+
+#include "types.h"
 
 #include "BoostEigen.h"
 #include "Dipolar.h"
@@ -21,7 +23,6 @@
 #include "NuclearSpin.h"
 #include "Spin.h"
 #include "SpinBasis.h"
-#include "SpinDecoherence.h"
 #include "SpinHamiltonian.h"
 #include "SpinInteraction.h"
 #include "SpinInteractionGraph.h"
@@ -30,4 +31,4 @@
 #include "SpinVector.h"
 #include "UniformMagneticField.h"
 
-#endif // SPINDECOHERENCE_H_
+#endif // BASE_H_

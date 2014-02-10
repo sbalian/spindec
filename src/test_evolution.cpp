@@ -2,7 +2,8 @@
 // Seto Balian, Feb 10, 2014
 
 #include <iostream>
-#include "SpinDecoherence.h"
+
+#include "base.h"
 
 using namespace SpinDecoherence;
 
