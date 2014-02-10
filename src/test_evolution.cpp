@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <iostream>
 #include "SpinDecoherence.h"
@@ -28,23 +28,33 @@ int main ()
   SpinInteractionGraph twocluster_graph;
   
   // Central electron and nucleus
-  twocluster_graph.add_vertex(electron,origin); // takes label 0
+  twocluster_graph.add_vertex(electron,origin);           // takes label 0
   twocluster_graph.add_vertex(bismuth,origin); // takes label 1
   
   // interacting with a preset hyperfine interaction
   // first set up the hyperfine interaction (9e3 M rad s-1) 
   Hyperfine interaction_A(9.0e3);
+  twocluster_graph.add_edge(0,1,&interaction_A);
   
+  // A pair of bath 29Si nuclei
+  twocluster_graph.add_vertex(si29,si29_position1);
+  twocluster_graph.add_vertex(si29,si29_position2);
   
-  twocluster_graph.add_vertex(si29,null_state,bath_position1);
-  twocluster_graph.add_vertex(si29,null_state,bath_position2);
+  // each 29Si interacting with the central electron via a (caluclated)
+  // isotropic hyperfine interaction
+  // Si:Bi and diamond cubic parameters
+  HyperfineParameters hyperfine_parameters(5.43,25.09,14.43,0.069,186.0,
+      
+      "Isotropic");
+  IsingHyperfine interaction_J(electron,si29,field,hyperfine_parameters);
   
-  HyperfineParameters hyperfine_parameters
+  twocluster_graph.add_edge(0,2,&interaction_J);
+  twocluster_graph.add_edge(0,3,&interaction_J);
   
-  twocluster_graph.add_edge(0,1,
-      Hyperfine(electron,nucleus,));
+  // Construct the spin Hamiltonian
+  SpinHamiltonian H(twocluster_graph,field);
   
-  
+  std::cout << H.get_basis() << std::endl;
   
   return 0;
 }

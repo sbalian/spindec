@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "SpinInteraction.h"
 #include <cmath>
@@ -10,20 +10,20 @@ namespace SpinDecoherence
 SpinInteraction::SpinInteraction() :
   preset_(true),
   spin1_(Spin()),
-  spin2_(Spin()),
-  field_(UniformMagneticField())
+  spin2_(Spin())
 {
+  field_ = UniformMagneticField();
   strength_ = 0.0;
   non_spatial_dependence_ = 0.0;
 }
 
-SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
+SpinInteraction::SpinInteraction(const Spin & spin1, const Spin & spin2,
     const UniformMagneticField & field) :
     preset_(false),
     spin1_(spin1),
-    spin2_(spin2),
-    field_(field)
+    spin2_(spin2)
 {
+  field_ = field;
   strength_ = 0.0;
   non_spatial_dependence_ = 0.0;
 }
@@ -31,9 +31,9 @@ SpinInteraction::SpinInteraction(const Spin& spin1, const Spin& spin2,
 SpinInteraction::SpinInteraction(const double strength) :
     preset_(true),
     spin1_(Spin()),
-    spin2_(Spin()),
-    field_(UniformMagneticField())
+    spin2_(Spin())
 {
+  field_ = UniformMagneticField();
   strength_ = strength;
   non_spatial_dependence_ = 0.0;
 }
@@ -41,12 +41,6 @@ SpinInteraction::SpinInteraction(const double strength) :
 UniformMagneticField SpinInteraction::get_field() const
 {
   return field_;
-}
-
-void SpinInteraction::set_strength(const double strength)
-{
-  strength_ = strength;
-  return;
 }
 
 SpinInteraction::~SpinInteraction()

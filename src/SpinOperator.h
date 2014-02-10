@@ -5,10 +5,11 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <Eigen/Dense>
 #include <complex>
+#include <iostream>
 
 #include "SpinBasis.h"
 #include "MatrixRepresentation.h"
@@ -43,6 +44,10 @@ public:
   SpinOperator operator^(const SpinOperator & rhs);
   
   virtual void set_zero(); // set all elements to zero
+  
+  // Print with cout
+  friend std::ostream& operator<<(std::ostream& os,
+      SpinOperator const & spin_operator);
 
 };
 

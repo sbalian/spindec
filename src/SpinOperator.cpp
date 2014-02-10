@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "SpinOperator.h"
 #include "BoostEigen.h"
@@ -78,5 +78,21 @@ void SpinOperator::add_to_element(const unsigned int i, const unsigned int j,
   matrix_(i,j) += to_add;
   return;
 }
+
+std::ostream& operator<<(std::ostream& os,
+    SpinOperator const & spin_operator)
+{
+
+  // To restore formatting later
+  std::ios::fmtflags f( std::cout.flags() );
+  
+  os << spin_operator.get_matrix() << std::endl;
+  
+  // Restore formatting
+  std::cout.flags( f );
+  
+  return os;
+}
+
 
 } // namespace SpinDecoherence

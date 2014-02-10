@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -151,6 +151,7 @@ double Hyperfine::calculate(const Eigen::Vector3d& position1,
       scaled_probability_density(position2 - position1);
   
   if (parameters_.get_form() == "Isotropic") {
+      strength_ = isotropic_part;
       return isotropic_part;
   }
 
@@ -163,10 +164,12 @@ double Hyperfine::calculate(const Eigen::Vector3d& position1,
   }
   
   if (parameters_.get_form() == "Anisotropic") {
+      strength_ = anisotropic_part;
       return anisotropic_part;
   }
   
   // form = "Full"
+  strength_ = isotropic_part + anisotropic_part;
   return isotropic_part + anisotropic_part;
 
 }

@@ -12,7 +12,7 @@ MatrixRepresentation::MatrixRepresentation() : dimension_(0),
 {/**/}
 
 MatrixRepresentation::MatrixRepresentation(const unsigned int dimension) :
-    dimension_(dimension), basis_(SpinBasis(dimension))
+    dimension_(dimension), basis_(SpinBasis())
 {/**/}
 
 MatrixRepresentation::MatrixRepresentation(const SpinBasis & basis) :
