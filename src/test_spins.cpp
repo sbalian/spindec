@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <iostream>
 
@@ -7,6 +7,8 @@
 #include "ElectronSpin.h"
 #include "NuclearSpin.h"
 #include "SpinVector.h"
+
+#include "base.h"
 
 using namespace SpinDecoherence;
 

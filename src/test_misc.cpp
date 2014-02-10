@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <iostream>
 #include <complex>
@@ -8,6 +8,8 @@
 #include <Eigen/Dense>
 
 #include "MathPhysConstants.h"
+
+#include "base.h"
 
 using namespace SpinDecoherence;
 
