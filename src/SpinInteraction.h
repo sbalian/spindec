@@ -5,7 +5,7 @@
 //
 // Abstract base class for interaction between a pair of spins.
 //
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <Eigen/Dense>
 
@@ -29,9 +29,9 @@ protected:
   double strength_; // M rad s-1 (calculated or set)
   double non_spatial_dependence_; // strength_ / "spatial part"
                                   // (so that this is calculated once)
-
-  const Spin spin1_;
-  const Spin spin2_;
+  
+  const Spin & spin1_;
+  const Spin & spin2_;
 
   UniformMagneticField field_;
 
@@ -39,12 +39,12 @@ protected:
   virtual double calculate_non_spatial_dependence() const = 0;
 
   SpinInteraction();
-  SpinInteraction(const Spin & spin1,
-                  const Spin & spin2, const UniformMagneticField & field);
+  SpinInteraction(const Spin & spin1, const Spin & spin2,
+                  const UniformMagneticField & field);
 
   // if you don't wish to calculate ...
   explicit SpinInteraction(const double strength);
-  
+
   // ISING            + FLIPFLOP
   // strength*S1z S2z + flipflop_form*strength*(S1+ S2- + S1- S2+)
   // flipflop_form is a complex double
@@ -65,9 +65,6 @@ public:
                            const Eigen::Vector3d & position2)  = 0;
 
   UniformMagneticField get_field() const;
-
-  // if you don't wish to calculate
-  void set_strength(const double strength);
 
   virtual void fill(Eigen::MatrixXcd * hamiltonian,
                    const SpinVector & spins,

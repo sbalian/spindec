@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "SpinInteractionGraph.h"
 #include "Errors.h"
@@ -41,7 +41,7 @@ void SpinInteractionGraph::add_vertex(const Spin& spin, const SpinState& state,
   spins_.push_back(spin);
   states_.push_back(state);
   positions_.push_back(position);
-  join_basis_.push_back(helloworld);
+  join_basis_.push_back(false);
   num_vertices_++;
   return;
 }
@@ -135,6 +135,13 @@ Eigen::Vector3d SpinInteractionGraph::get_position(
   return positions_[label];
 }
 
+bool SpinInteractionGraph::get_join_basis(
+    const unsigned int label) const
+{
+  check_vertex_label(label);
+  return join_basis_[label];
+}
+
 SpinInteraction* SpinInteractionGraph::get_interaction(
     const unsigned int index) const
 {
@@ -160,6 +167,29 @@ void SpinDecoherence::SpinInteractionGraph::add_vertex(const Spin& spin,
   spins_.push_back(spin);
   states_.push_back( SpinState(SpinBasis(spin)) );
   positions_.push_back(position);
+  join_basis_.push_back(false);
+  num_vertices_++;
+  return;
+}
+
+void SpinInteractionGraph::add_vertex_join_basis(const Spin& spin,
+  const SpinState& state, const Eigen::Vector3d& position)
+{
+  spins_.push_back(spin);
+  states_.push_back(state);
+  positions_.push_back(position);
+  join_basis_.push_back(true);
+  num_vertices_++;
+  return;
+}
+
+void SpinInteractionGraph::add_vertex_join_basis(const Spin& spin,
+  const Eigen::Vector3d& position)
+{
+  spins_.push_back(spin);
+  states_.push_back( SpinState(SpinBasis(spin)) );
+  positions_.push_back(position);
+  join_basis_.push_back(true);
   num_vertices_++;
   return;
 }
@@ -168,7 +198,11 @@ SpinBasis SpinInteractionGraph::build_basis() const
 {
   SpinBasis basis = get_state(0).get_basis();
   for (unsigned int i = 1; i<num_vertices();i++) {
-    basis = basis^get_state(i).get_basis();
+    if (get_join_basis(i) == true) {
+      basis = basis + (get_state(i).get_basis());
+    } else {
+        basis = basis^get_state(i).get_basis();
+    }
   }
   return basis;
 }

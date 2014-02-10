@@ -28,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "SpinInteraction.h"
 #include "UniformMagneticField.h"
@@ -46,9 +46,8 @@ private:
 public:
   
   Dipolar();
-  Dipolar(const Spin & spin1,
-                  const Spin & spin2,
-                  const UniformMagneticField & field);
+  Dipolar(const Spin & spin1, const Spin & spin2,
+      const UniformMagneticField & field);
 
   explicit Dipolar(const double strength);
   

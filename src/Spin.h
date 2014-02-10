@@ -3,40 +3,49 @@
 
 // Spin
 //
-// Contains spin quantum number S and gyromagnetic ratio [M rad s-1 T-1].
+// Contains spin quantum number S, gyromagnetic ratio [M rad s-1 T-1], spatial
+// position [Angstroms] and quantum state.
 // Also gives the spin multiplicity = 2 S + 1.
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <iostream>
+#include <Eigen/Dense>
+
+#include "SpinState.h"
+#include "types.h"
 
 namespace SpinDecoherence
 {
 
 class Spin
 {
-
 protected:
 
-  double quantum_number_; 
-  double gyromagnetic_ratio_;
-  unsigned int multiplicity_;
-
-  unsigned int calculate_multiplicity() const;
-
-  Spin(const double quantum_number,
-       const double gyromagnetic_ratio,
-       const unsigned int multiplicity);
+  const double quantum_number_;
+  const double gyromagnetic_ratio_;
+  
+  ThreeVector position_; // Spatial position in Angstroms
+  SpinState state_;
+  
+  const unsigned int multiplicity_;
+  unsigned int calc_multiplicity() const;
 
 public:
 
   Spin();
-  Spin(const double quantum_number, const double gyromagnetic_ratio);
+  Spin(const double quantum_number,
+       const double gyromagnetic_ratio,
+       const ThreeVector & position,
+       const SpinState & state);
 
-  double get_gyromagnetic_ratio() const;
   double get_quantum_number() const;
+  double get_gyromagnetic_ratio() const;
+  ThreeVector get_position() const;
+  SpinState get_state() const;
+  
   unsigned int get_multiplicity() const;
 
   // Print with cout

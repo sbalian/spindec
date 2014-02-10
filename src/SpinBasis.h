@@ -13,7 +13,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "Spin.h"
 #include "SpinVector.h"

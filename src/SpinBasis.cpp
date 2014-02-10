@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "SpinBasis.h"
 #include "Errors.h"
@@ -122,7 +122,7 @@ SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
   }
   Eigen::ArrayXXd joined(dimension(),num_spins() + to_join.num_spins());
   joined << basis_as_array_, to_join.basis_as_array_;
-  return joined;
+  return SpinBasis(joined);
 }
 
 SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const

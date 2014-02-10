@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "Dipolar.h"
 #include "MathPhysConstants.h"
@@ -25,8 +25,9 @@ Dipolar::Dipolar() : SpinInteraction()
   //
 }
 
-Dipolar::Dipolar(const Spin& spin1, const Spin& spin2,
-    const UniformMagneticField& field) : SpinInteraction(spin1, spin2, field)
+Dipolar::Dipolar(const Spin & spin1, const Spin & spin2,
+    const UniformMagneticField& field) :
+    SpinInteraction(spin1,spin2,field)
 {
   non_spatial_dependence_ = calculate_non_spatial_dependence();
 }
@@ -53,8 +54,8 @@ double Dipolar::calculate(const Eigen::Vector3d& position1,
                                                   field_direction),2.0) );
   
   strength = non_spatial_dependence_*radial_dependence*angular_dependence;
-  set_strength(strength);
-  return strength;
+  strength_ = strength;
+  return strength_;
 }
 
 void Dipolar::fill(Eigen::MatrixXcd * hamiltonian, const SpinVector& spins,

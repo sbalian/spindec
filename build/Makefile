@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Feb 6, 2014
+# Seto Balian, Feb 10, 2014
 
 # Basic user input
 #####################
@@ -100,10 +100,31 @@ test_misc: $(TEST_MISC_OBJECTS)
 	# test_evolution
 TEST_EVOLUTION_OBJECTS=\
 test_evolution.o\
-UniformMagneticField.o
+UniformMagneticField.o\
+Spin.o\
+ElectronSpin.o\
+NuclearSpin.o\
+SpinInteraction.o\
+Dipolar.o\
+MathPhysConstants.o\
+SpinBasis.o\
+SpinState.o\
+SpinOperator.o\
+SpinHamiltonian.o\
+SpinInteractionGraph.o\
+MatrixRepresentation.o\
+SpinVector.o\
+BoostEigen.o\
+Errors.o\
+Eigenspectrum.o\
+HermitianEigenspectrum.o\
+Hyperfine.o\
+IsingHyperfine.o\
+HyperfineParameters.o\
 
 test_evolution: $(TEST_EVOLUTION_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) $(TEST_EVOLUTION_OBJECTS) -o test_evolution
+	$(COMPILER) $(COMPILER_FLAGS) $(TEST_EVOLUTION_OBJECTS) $(LAPACK_FLAGS)\
+  -o test_evolution
 
 #####################
 

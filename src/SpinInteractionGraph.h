@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include <vector>
 #include <utility>
@@ -58,8 +58,16 @@ public:
                   const SpinState & state,
                   const Eigen::Vector3d & position);
   
+  void add_vertex_join_basis(const Spin & spin,
+                  const SpinState & state,
+                  const Eigen::Vector3d & position);
+
+  
   // The initial state has all entries set to zero
   void add_vertex(const Spin & spin, const Eigen::Vector3d & position);
+  void add_vertex_join_basis(
+      const Spin & spin, const Eigen::Vector3d & position);
+
 
   void add_edge(unsigned int label1,
                 unsigned int label2,
@@ -76,6 +84,7 @@ public:
   Spin get_spin(const unsigned int label) const;  
   SpinState get_state(const unsigned int label) const;
   Eigen::Vector3d get_position(const unsigned int label) const;
+  bool get_join_basis(const unsigned int label) const;
   
   SpinInteraction* get_interaction(const unsigned int index) const;
   std::pair<unsigned int,unsigned int> get_interaction_labels(

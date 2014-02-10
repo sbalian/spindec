@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 10, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
@@ -67,7 +67,7 @@ SpinHamiltonian::SpinHamiltonian() : SpinOperator(),
 
 SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
     const UniformMagneticField & field) :
-    SpinOperator(build_basis(graph)),
+    SpinOperator(graph.build_basis()),
     field_(field)
 {
   fill_matrix(graph);
@@ -93,5 +93,6 @@ Eigen::MatrixXcd SpinHamiltonian::evolution_matrix(
                                         std::complex<double>(0.0,-time) ) 
                                                  );
 }
+
 
 } // namespace SpinDecoherence
