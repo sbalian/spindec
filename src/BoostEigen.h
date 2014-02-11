@@ -7,11 +7,13 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDecoherence.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 11, 2014
 
 #include <Eigen/Dense>
 
 #include <complex>
+
+#include "types.h"
 
 namespace SpinDecoherence
 {
@@ -22,21 +24,21 @@ class BoostEigen
 public:
 
   // Cosine of angle between real vectors a and b = a.b/ab
-  static double cosAngleBetween(const Eigen::Vector3d & a,
-                                const Eigen::Vector3d & b);
+  static double cosAngleBetween(const d3vector & a,
+                                const d3vector & b);
 
   // Maximum of ( abs(a1), abs(a2), abs(a3) ) for a real 3-vector
-  static double maxAbsCoeff(const Eigen::Vector3d & a);
+  static double maxAbsCoeff(const d3vector & a);
   
   // Exponentiate (element-wise complex exponentiation) for complex vectors
-  static Eigen::VectorXcd exp(const Eigen::VectorXcd & a);
+  static cdvector exp(const cdvector & a);
 
   // Tensor product for complex matrices
   // This evaluates C = A X B. For example, for 2 x 2 matrices,
   // C = A_11*B A_12*B
   //     A_21*B A_22*B
-  static Eigen::MatrixXcd tensorProduct(const Eigen::MatrixXcd & A,
-                                        const Eigen::MatrixXcd & B);
+  static cdmatrix tensorProduct(const cdmatrix & A,
+                                        const cdmatrix & B);
   
   // Tensor product for complex vectors
   // This evaluates c = a X b. For example, for 2-vectors,
@@ -44,26 +46,26 @@ public:
   //     a_1*B_2
   //     a_2*B_1
   //     a_2*B_2
-  static Eigen::VectorXcd tensorProduct(const Eigen::VectorXcd & a,
-                                        const Eigen::VectorXcd & b);
+  static cdvector tensorProduct(const cdvector & a,
+                                        const cdvector & b);
 
   // Partial trace for complex matrices
   // Given C = A x B, where x denotes the tensor product,
   // in addition to the dimension of B, this method outputs
   // Tr[B] A (where Tr denotes the sum of the diagonal elements)
-  static Eigen::MatrixXcd partialTrace(const Eigen::MatrixXcd & AB,
+  static cdmatrix partialTrace(const cdmatrix & AB,
                                          const unsigned int dimension_B);
   
   // The spectral decomposition of a complex matrix is
   // A = V D V-1, where D is the diagonal of eigenvalues
   // and V is the eigenvector matrix (col -> evector)
-  static Eigen::MatrixXcd spectralDecomposition(
-                                         const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXcd & eigenvalues);
+  static cdmatrix spectralDecomposition(
+                                         const cdmatrix & eigenvectors,
+                                         const cdvector & eigenvalues);
   // For a unitary matrix, V-1 = V^+
-  static Eigen::MatrixXcd unitarySpectralDecomposition(
-                                         const Eigen::MatrixXcd & eigenvectors,
-                                         const Eigen::VectorXcd & eigenvalues);
+  static cdmatrix unitarySpectralDecomposition(
+                                         const cdmatrix & eigenvectors,
+                                         const cdvector & eigenvalues);
 
 };
 

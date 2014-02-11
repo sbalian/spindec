@@ -1,31 +1,30 @@
 // See Errors.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 11, 2014
 
 #include "Errors.h"
 #include <cstdlib>
-#include <iostream>
 
 namespace SpinDecoherence
 {
 
 void Errors::quit()
 {
-  exit(1);
+  std::exit(1);
   return;
 }
 
-void Errors::quit(const std::string & message)
+void Errors::quit(const string & message)
 {
-  std::cout << "### FATAL ERROR!" << std::endl;
-  std::cout << "    " << message << std::endl;
+  cout << "### FATAL ERROR!" << endl;
+  cout << "    " << message << endl;
   quit();
   return;
 }
 
-void Errors::warning(const std::string & message)
+void Errors::warning(const string & message)
 {
-  std::cout << "### WARNING!" << std::endl;
-  std::cout << "    " << message << std::endl;
+  cout << "### WARNING!" << endl;
+  cout << "    " << message << endl;
   return;
 }
 

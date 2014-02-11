@@ -1,17 +1,34 @@
 // See SpinBasis.h for description.
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 11, 2014
 
 #include "SpinBasis.h"
 #include "Errors.h"
 
+#include <iomanip>
+
 namespace SpinDecoherence
 {
 
-void SpinBasis::build(const SpinVector & spin_vector)
+unsigned int SpinBasis::calc_multiplicity(const double quantum_number) const
+{
+  return static_cast<unsigned int>(2.0*quantum_number + 1.0);
+}
+
+unsigned int SpinBasis::calc_multiplicity(const dvector & quantum_numbers) const
+{
+  unsigned int M = 1;
+  for (unsigned int i =0; i<quantum_numbers.size(); i++ ) {
+    M*= calc_multiplicity(quantum_numbers[i]);
+  }
+  return M;
+}
+
+Eigen::ArrayXXd SpinBasis::build(const dvector & quantum_numbers)
 {
   
-  int n = static_cast<int>(spin_vector.size()); // number of spins
-  int M = static_cast<int>(spin_vector.get_multiplicity());// total multiplicity
+  int n = static_cast<int>(quantum_numbers.size()); // number of spins
+  int M = static_cast<int>(calc_multiplicity(quantum_numbers));
+                                                    // total multiplicity
   
   // Initialise basis to be built
   Eigen::ArrayXXd basis(M,n);
@@ -44,7 +61,7 @@ void SpinBasis::build(const SpinVector & spin_vector)
   M_0_to_j = 1;
   // Loop over spins
   for (j=0;j<n;j++) {
-    M_j = spin_vector[j].get_multiplicity();
+    M_j = calc_multiplicity(quantum_numbers[j]);
     M_0_to_j = M_0_to_j*M_j;
 
     C_j = M_0_to_j / M_j;
@@ -53,7 +70,7 @@ void SpinBasis::build(const SpinVector & spin_vector)
     p = 0;
     l = 0;
     while (p<C_j) {
-      spin_QN = -spin_vector[j].get_quantum_number();
+      spin_QN = -quantum_numbers[j];
       for (m=0;m<M_j;m++) {
         q = 0;
         while (q<c_j) {
@@ -67,32 +84,31 @@ void SpinBasis::build(const SpinVector & spin_vector)
     }
   }
 
-  basis_as_array_ = basis;
-  return;
+  return basis;
+  
 }
 
-void SpinBasis::build(const Spin& spin)
+Eigen::ArrayXXd SpinBasis::build(const double quantum_number)
 {
-  build(SpinVector(spin));
-  return;
+  dvector temp(1);
+  temp.push_back(quantum_number);
+  build(temp);
+  return build(temp);
 }
 
-SpinBasis::SpinBasis() {/**/}
+SpinBasis::SpinBasis() {/**/} // TODO how is basis_as_array_ initialized here?
 
-SpinBasis::SpinBasis(const SpinVector & spin_vector)
-{
-  build(spin_vector);
-}
+SpinBasis::SpinBasis(const dvector & quantum_numbers) :
+    basis_as_array_(build(quantum_numbers))
+{/**/}
 
-SpinBasis::SpinBasis(const Spin& spin)
-{
-  build(spin);
-}
+SpinBasis::SpinBasis(const double quantum_number) :
+    basis_as_array_(build(quantum_number))
+{/**/}
 
-SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis_as_array)
-{
-  basis_as_array_ = basis_as_array;
-}
+SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis_as_array) :
+        basis_as_array_(basis_as_array)
+{/**/}
 
 Eigen::ArrayXXd SpinBasis::get_basis_as_array() const
 {
@@ -179,6 +195,26 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   return SpinBasis(basis_out);
 }
 
+bool SpinBasis::is_equal(const SpinBasis to_compare) const
+{
+  if (to_compare.num_spins() != num_spins())
+  {
+    return false;
+  }
+  if (to_compare.dimension() != dimension())
+  {
+    return false;
+  }
+  for (unsigned int i = 0; i<num_spins(); i++) {
+    for (unsigned int j=0; j<dimension();j++) {
+      if (get_element(j,i) != to_compare.get_element(j,i)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
 {
 
@@ -222,7 +258,7 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
 //    for (unsigned int j=0; j<original_dimension;j++) {
 //      
 //      // construct test vector from original basis with the correct spin
-//      // magnetic quantum numbers (ie for those spins specified by spin_indices)
+//    // magnetic quantum numbers (ie for those spins specified by spin_indices)
 //      Eigen::ArrayXd test_vector(to_keep_cols);
 //      for (unsigned int k=0;k<to_keep_cols;k++) {
 //        test_vector(k) = basis_as_array_(j,spin_indices[k]);
