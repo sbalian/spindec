@@ -5,9 +5,9 @@
 //
 // Error and warning handling.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 11, 2014
 
-#include <string>
+#include "types.h"
 
 namespace SpinDecoherence
 {
@@ -19,8 +19,8 @@ public:
 
   static void quit();
   
-  static void quit(const std::string & message);
-  static void warning(const std::string & message);
+  static void quit(const string & message);
+  static void warning(const string & message);
 
 };
 

@@ -3,15 +3,37 @@
 
 // Custom types for SpinDecoherence.
 //
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 11, 2014
 
 #include <Eigen/Dense>
+#include <complex>
+#include <vector>
+#include <string>
+#include <iostream>
 
 namespace SpinDecoherence {
 
 // Real 3-vector
-typedef Eigen::Vector3d ThreeVector;
+typedef Eigen::Vector3d d3vector;
 
+// Complex double
+typedef std::complex<double> cdouble;
+
+// Matrix of complex doubles
+typedef Eigen::MatrixXcd cdmatrix;
+
+// Vector of complex doubles
+typedef Eigen::VectorXcd cdvector;
+
+// std vector of doubles
+typedef std::vector<double> dvector;
+
+// std string
+using std::string;
+
+// std cout, endl
+using std::cout;
+using std::endl;
 
 }
 

@@ -37,6 +37,7 @@ Seto Balian, Jan 31, 2014
   units + if need be separate out calculations and do the "different order of
   magnitude" operation once at the end (what's the best strategy for this sort
   of problem?)
+- Do default constructors properly (also destructors?)
 
 
 GRAVEYARD

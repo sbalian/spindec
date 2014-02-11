@@ -1,29 +1,36 @@
 // See Spin.h for description.
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 11, 2014
 
 #include "Spin.h"
+#include "Errors.h"
+
 #include <iomanip>
 
 namespace SpinDecoherence
 {
 
-unsigned int Spin::calc_multiplicity() const
-{
-  return static_cast<unsigned int>(2.0*get_quantum_number() + 1.0);
-}
-
 Spin::Spin(const double quantum_number,
-     const double gyromagnetic_ratio,
-     const ThreeVector & position,
-     const SpinState & state) :
+           const double gyromagnetic_ratio,
+           const d3vector & position,
+           const SpinState & state) :
       quantum_number_(quantum_number),
       gyromagnetic_ratio_(gyromagnetic_ratio),
       position_(position),
       state_(state),
-      multiplicity_(calc_multiplicity())
-{/**/}
+      multiplicity_(state.get_dimension())
+{
+  SpinBasis correct_basis(quantum_number);
+  if (!correct_basis.is_equal(state.get_basis())) {
+    Errors::quit("State has invalid basis.");
+  }
+}
 
-Spin::Spin() : Spin(0.0,0.0,ThreeVector::Zero(),SpinState())
+Spin::Spin() :
+          quantum_number_(0.0),
+          gyromagnetic_ratio_(0.0),
+          position_(d3vector::Zero()),
+          state_(SpinState()),
+          multiplicity_(0)
 {/**/}
 
 double Spin::get_quantum_number() const
@@ -36,12 +43,12 @@ double Spin::get_gyromagnetic_ratio() const
   return gyromagnetic_ratio_;
 }
 
-ThreeVector Spin::get_position() const
+const d3vector & Spin::get_position() const
 {
   return position_;
 }
 
-SpinState Spin::get_state() const
+const SpinState & Spin::get_state() const
 {
   return state_;
 }

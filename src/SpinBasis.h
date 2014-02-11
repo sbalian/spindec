@@ -13,35 +13,38 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Feb 10, 2014
-
-#include "Spin.h"
-#include "SpinVector.h"
+// Seto Balian, Feb 11, 2014
 
 #include <Eigen/Dense>
+#include <iostream>
+
+#include "types.h"
 
 namespace SpinDecoherence
 {
 
 class SpinBasis
 {
-
-protected:
-
-  void build (const SpinVector & spin_vector);
-                                               // automatically build
-                                               // using spin multiplicities
-  void build(const Spin & spin);               // build using multiplicity
+private:
   
-  Eigen::ArrayXXd basis_as_array_;
+  unsigned int calc_multiplicity(const double quantum_number) const;
+  unsigned int calc_multiplicity(const dvector & quantum_numbers) const;
+
+  Eigen::ArrayXXd build (const dvector & quantum_numbers);
+                                           // automatically build
+                                           // using spin multiplicities
+  
+  Eigen::ArrayXXd build(const double quantum_number); // build using multiplicity
+  
+  const Eigen::ArrayXXd basis_as_array_;
 
 public:
 
   SpinBasis();
-  explicit SpinBasis(const SpinVector & spin_vector); // automatically build
+  explicit SpinBasis(const dvector & quantum_numbers); // automatically build
                                              // using spin multiplicities
-  explicit SpinBasis(const Spin & spin); // automatically build
-                                // using spin multiplicity
+  explicit SpinBasis(const double quantum_number); // automatically build
+                                              // using spin multiplicity
   
   explicit SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
   Eigen::ArrayXXd get_basis_as_array() const;
@@ -74,6 +77,9 @@ public:
   //                      4.5  0.5
   //                     -4.5 -0.5
   SpinBasis operator^(const SpinBasis & to_combine) const;
+  
+  bool is_equal(const SpinBasis to_compare) const; // check if bases are
+                                                   // identical
   
   // Print with cout
   friend std::ostream& operator<<(std::ostream& os, SpinBasis const & basis);
