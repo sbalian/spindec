@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Feb 10, 2014
+# Seto Balian, Feb 14, 2014
 
 # Basic user input
 #####################
@@ -134,7 +134,7 @@ test_evolution: $(TEST_EVOLUTION_OBJECTS)
 # Make sure this is all safe!!!
 
 clean:
-	rm -f $(EXECUTABLES) && rm -f $(TEST_EXCUTABLES) rm -f *.o
+	rm -f $(EXECUTABLES) && rm -f $(TEST_EXCUTABLES) && rm -f *.o
 
 tidy:
 	rm -f *.o
