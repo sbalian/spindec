@@ -1,8 +1,7 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include <iostream>
-#include <Eigen/Dense>
 
 #include "base.h"
 

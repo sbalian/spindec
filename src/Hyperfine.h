@@ -45,18 +45,14 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "SpinInteraction.h"
-#include "UniformMagneticField.h"
-#include "SpinBasis.h"
 
 #include "ElectronSpin.h"
 #include "NuclearSpin.h"
 
 #include "HyperfineParameters.h"
-
-#include <Eigen/Dense>
 
 namespace SpinDecoherence
 {
@@ -66,29 +62,25 @@ class Hyperfine : public SpinInteraction
 private:
 
   HyperfineParameters parameters_;
-  virtual double calculate_non_spatial_dependence() const;
+  virtual double calculate() const;
   
   double envelope_function(const unsigned int index,
-      const Eigen::Vector3d & separation) const;
+      const d3vector & separation) const;
   double n_parameter() const;
   double n_times_a() const;
   double n_times_b() const;
-  double scaled_probability_density(const Eigen::Vector3d & separation) const;
+  double scaled_probability_density(const d3vector & separation) const;
 
 public:
   
   Hyperfine();
+  Hyperfine(const double strength);
   Hyperfine(const ElectronSpin & electron,
                   const NuclearSpin & nucleus,
                   const UniformMagneticField & field,
                   const HyperfineParameters & parameters);
 
-  explicit Hyperfine(const double strength);
-
-  virtual double calculate(const Eigen::Vector3d & position1,
-                           const Eigen::Vector3d & position2);
-
-  virtual void fill(Eigen::MatrixXcd * hamiltonian,
+  virtual void fill(cdmatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,

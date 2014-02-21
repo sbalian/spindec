@@ -1,5 +1,5 @@
 // See HyperfineParameters.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "HyperfineParameters.h"
 #include "Errors.h"
@@ -86,7 +86,7 @@ double HyperfineParameters::get_charge_density() const
   return charge_density_;
 }
 
-std::string HyperfineParameters::get_form() const
+const std::string& HyperfineParameters::get_form() const
 {
   return form_;
 }

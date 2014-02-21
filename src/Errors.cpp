@@ -1,5 +1,5 @@
 // See Errors.h for description.
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "Errors.h"
 #include <cstdlib>
@@ -15,16 +15,16 @@ void Errors::quit()
 
 void Errors::quit(const string & message)
 {
-  cout << "### FATAL ERROR!" << endl;
-  cout << "    " << message << endl;
+  cout << "!!! SpinDecoherence fatal error!" << endl;
+  cout << "!!! " << message << endl;
   quit();
   return;
 }
 
 void Errors::warning(const string & message)
 {
-  cout << "### WARNING!" << endl;
-  cout << "    " << message << endl;
+  cout << "!!! SpinDecoherence warning!" << endl;
+  cout << "!!! " << message << endl;
   return;
 }
 

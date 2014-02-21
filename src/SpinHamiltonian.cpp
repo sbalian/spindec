@@ -1,10 +1,8 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
-
-#include <map>
 
 #include <complex>
 
@@ -40,15 +38,11 @@ void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
   // Loop over edges
   for (unsigned int i=0;i<graph.num_edges();i++) {
     interaction_ptr = graph.get_interaction(i);
-    interaction_ptr->calculate(
-        graph.get_position(graph.get_interaction_labels(i).first  ) ,
-        graph.get_position(graph.get_interaction_labels(i).second ) );
     interaction_ptr->fill(&matrix_,graph.get_spins(),
         get_basis(),
-        graph.get_interaction_labels(i).first,
-        graph.get_interaction_labels(i).second);
+        graph.get_edge(i).get_vertex1().get_label(),
+        graph.get_edge(i).get_vertex1().get_label());
   }
-  
   return;
 }
 

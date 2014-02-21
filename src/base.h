@@ -2,8 +2,8 @@
 #define BASE_H_
 
 // SpinDecoherence includes
-//
-// Seto Balian, Feb 10, 2014
+
+// Seto Balian, Feb 21, 2014
 
 #include <Eigen/Dense>
 
@@ -25,10 +25,13 @@
 #include "SpinBasis.h"
 #include "SpinHamiltonian.h"
 #include "SpinInteraction.h"
+#include "SpinInteractionEdge.h"
 #include "SpinInteractionGraph.h"
+#include "SpinInteractionVertex.h"
 #include "SpinOperator.h"
 #include "SpinState.h"
 #include "SpinVector.h"
 #include "UniformMagneticField.h"
 
 #endif // BASE_H_
+

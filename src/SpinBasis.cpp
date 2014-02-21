@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "SpinBasis.h"
 #include "Errors.h"
@@ -29,7 +29,7 @@ Eigen::ArrayXXd SpinBasis::build(const dvector & quantum_numbers)
   int n = static_cast<int>(quantum_numbers.size()); // number of spins
   int M = static_cast<int>(calc_multiplicity(quantum_numbers));
                                                     // total multiplicity
-  
+    
   // Initialise basis to be built
   Eigen::ArrayXXd basis(M,n);
   basis.setZero();
@@ -90,13 +90,15 @@ Eigen::ArrayXXd SpinBasis::build(const dvector & quantum_numbers)
 
 Eigen::ArrayXXd SpinBasis::build(const double quantum_number)
 {
-  dvector temp(1);
+  dvector temp;
   temp.push_back(quantum_number);
   build(temp);
   return build(temp);
 }
 
-SpinBasis::SpinBasis() {/**/} // TODO how is basis_as_array_ initialized here?
+SpinBasis::SpinBasis() :
+    basis_as_array_(Eigen::ArrayXXd::Zero(0,0)) // TODO Is this OK?
+{/**/}
 
 SpinBasis::SpinBasis(const dvector & quantum_numbers) :
     basis_as_array_(build(quantum_numbers))
@@ -115,7 +117,7 @@ Eigen::ArrayXXd SpinBasis::get_basis_as_array() const
   return basis_as_array_;
 }
 
-unsigned int SpinBasis::dimension() const
+unsigned int SpinBasis::num_basis_states() const
 {
   return static_cast<int>(basis_as_array_.rows());
 }
@@ -133,10 +135,10 @@ double SpinBasis::get_element(const unsigned int index,
 
 SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
 {
-  if (dimension() != to_join.dimension()) {
-    Errors::quit("Dimension mismatch when joining bases.");
+  if (num_basis_states() != to_join.num_basis_states()) {
+    Errors::quit("Number of basis states mismatch when joining bases.");
   }
-  Eigen::ArrayXXd joined(dimension(),num_spins() + to_join.num_spins());
+  Eigen::ArrayXXd joined(num_basis_states(),num_spins() + to_join.num_spins());
   joined << basis_as_array_, to_join.basis_as_array_;
   return SpinBasis(joined);
 }
@@ -148,22 +150,22 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   
   // C = A.combine(B)
   
-  unsigned int dimension_A = dimension();
-  unsigned int dimension_B = to_combine.dimension();
-  unsigned int dimension_C = dimension_A*dimension_B;
+  unsigned int num_basis_states_A = num_basis_states();
+  unsigned int num_basis_states_B = to_combine.num_basis_states();
+  unsigned int num_basis_states_C = num_basis_states_A*num_basis_states_B;
   unsigned int new_num_spins = num_spins() + to_combine.num_spins();
 
   // prepare expanded basis A with zero elements
-  Eigen::ArrayXXd expanded_basis_A(dimension_C,num_spins());
+  Eigen::ArrayXXd expanded_basis_A(num_basis_states_C,num_spins());
   expanded_basis_A.setZero();
   
   // loop over elements of expanded basis A and fill A elements
-  // repeated in rows dimension_B times
+  // repeated in rows num_basis_states_B times
   for (unsigned int i=0;i<num_spins();i++) { // loop over A columns
     unsigned int l = 0; // new row index
-    for (unsigned int j=0;j<dimension_A;j++) { // loop over A rows
+    for (unsigned int j=0;j<num_basis_states_A;j++) { // loop over A rows
       unsigned int k=0;
-      while (k<dimension_B) { // loop dimension_B times
+      while (k<num_basis_states_B) { // loop num_basis_states_B times
         expanded_basis_A(l,i) = get_basis_as_array()(j,i);
         l += 1;
         k += 1;
@@ -174,15 +176,15 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   
   
   // new columns from B
-  Eigen::ArrayXXd new_columns_B(dimension_C,to_combine.num_spins());
+  Eigen::ArrayXXd new_columns_B(num_basis_states_C,to_combine.num_spins());
   new_columns_B.setZero();
   
   
-  // fill new columns: new rows repeated dimension_B times
+  // fill new columns: new rows repeated num_basis_states_B times
   unsigned int l = 0; // new row index
-  for (unsigned int i = 0;i<dimension_A;i++) {
+  for (unsigned int i = 0;i<num_basis_states_A;i++) {
     unsigned int k = 0;
-    while (k<dimension_B) {
+    while (k<num_basis_states_B) {
         new_columns_B.row(l) = to_combine.get_basis_as_array().row(k);
         k+=1;
         l+=1;
@@ -190,23 +192,23 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
   }
     
   // return SpinBasis with new basis
-  Eigen::ArrayXXd basis_out(dimension_C,new_num_spins);
+  Eigen::ArrayXXd basis_out(num_basis_states_C,new_num_spins);
   basis_out << expanded_basis_A, new_columns_B; // join  
   return SpinBasis(basis_out);
 }
 
-bool SpinBasis::is_equal(const SpinBasis to_compare) const
+bool SpinBasis::operator==(const SpinBasis to_compare) const
 {
   if (to_compare.num_spins() != num_spins())
   {
     return false;
   }
-  if (to_compare.dimension() != dimension())
+  if (to_compare.num_basis_states() != num_basis_states())
   {
     return false;
   }
   for (unsigned int i = 0; i<num_spins(); i++) {
-    for (unsigned int j=0; j<dimension();j++) {
+    for (unsigned int j=0; j<num_basis_states();j++) {
       if (get_element(j,i) != to_compare.get_element(j,i)) {
         return false;
       }
@@ -244,7 +246,7 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
 //              "Number of spins != number of columns in \"to keep\" array");
 //  }
 //  
-//  const unsigned int original_dimension = dimension();
+//  const unsigned int original_num_basis_states = num_basis_states();
 //  
 //  // truncate
 //
@@ -255,7 +257,7 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
 //  for (unsigned int i = 0; i<to_keep_rows ; i++) { // loop over rows to keep
 //    
 //    // loop over rows in original basis to decide to keep or not
-//    for (unsigned int j=0; j<original_dimension;j++) {
+//    for (unsigned int j=0; j<original_num_basis_states;j++) {
 //      
 //      // construct test vector from original basis with the correct spin
 //    // magnetic quantum numbers (ie for those spins specified by spin_indices)

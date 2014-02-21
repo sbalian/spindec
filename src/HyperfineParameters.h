@@ -6,7 +6,7 @@
 // Parameters to cacluate the hyperfine interaction between and electron
 // and a nucleus in a lattice.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 21, 2014
 
 #include <string>
 
@@ -47,7 +47,7 @@ public:
   double get_lattice_parameter_b() const;
   double get_electron_ionization_energy() const;
   double get_charge_density() const;
-  std::string get_form() const;
+  const std::string& get_form() const;
   
 };
 

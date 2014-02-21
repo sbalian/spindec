@@ -6,7 +6,7 @@
 // Abstract base class for SpinState and SpinOperator in the matrix
 // representation. Holds the Zeeman basis and a dimension.
 //
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Feb 20, 2014
 
 #include "SpinBasis.h"
 
@@ -18,15 +18,15 @@ class MatrixRepresentation
 
 protected:
   
-  const unsigned int dimension_; // dimension of Hilbert space
-  const SpinBasis basis_;
+  unsigned int dimension_; // dimension of Hilbert space
+  SpinBasis basis_;
 
   MatrixRepresentation();
-  explicit MatrixRepresentation(const unsigned int dimension);
   explicit MatrixRepresentation(const SpinBasis & basis);
-
-  virtual void quit_if_dimension_mismatch() const = 0;
   
+  // TODO Can you avoid using this? Eigen allows = between different sized
+  // vectors/matrices ...
+  virtual void quit_if_dimension_mismatch() const = 0;
 
 public:
 

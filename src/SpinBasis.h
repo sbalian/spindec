@@ -4,6 +4,7 @@
 // SpinBasis (Zeeman basis)
 //
 // Holds magnetic quantum numbers for in general multiple spins.
+// Includes build methods.
 // Columns: spins
 // Rows: magnetic quantum numbers
 // For example, for 2 electrons, this is
@@ -13,7 +14,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Feb 19, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
@@ -34,9 +35,9 @@ private:
                                            // automatically build
                                            // using spin multiplicities
   
-  Eigen::ArrayXXd build(const double quantum_number); // build using multiplicity
+  Eigen::ArrayXXd build(const double quantum_number);// build using multiplicity
   
-  const Eigen::ArrayXXd basis_as_array_;
+  Eigen::ArrayXXd basis_as_array_;
 
 public:
 
@@ -49,10 +50,7 @@ public:
   explicit SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
   Eigen::ArrayXXd get_basis_as_array() const;
   
-  // Number of basis states
-  unsigned int dimension() const;
-
-  // Number of spins
+  unsigned int num_basis_states() const;
   unsigned int num_spins() const;
 
   double get_element(const unsigned int index, const unsigned int slot) const;  
@@ -78,8 +76,8 @@ public:
   //                     -4.5 -0.5
   SpinBasis operator^(const SpinBasis & to_combine) const;
   
-  bool is_equal(const SpinBasis to_compare) const; // check if bases are
-                                                   // identical
+  bool operator==(const SpinBasis to_compare) const; // check if bases are
+                                                     // identical
   
   // Print with cout
   friend std::ostream& operator<<(std::ostream& os, SpinBasis const & basis);

@@ -1,5 +1,5 @@
 // See IsingHyperfine.h for description.
-// Seto Balian, Feb 7, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "IsingHyperfine.h"
 
@@ -27,8 +27,8 @@ void IsingHyperfine::fill(Eigen::MatrixXcd* hamiltonian,
     const unsigned int spin_label1, const unsigned int spin_label2) const
 {
   SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
-      spin_label1,spin_label2,true,std::complex<double>(0.5,0.0));// Ising only
-                                                                  // set to true
+      spin_label1,spin_label2,true,cdouble(0.5,0.0));// Ising only
+                                                     // set to true
   return;
 }
 
