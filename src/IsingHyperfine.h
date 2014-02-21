@@ -6,7 +6,7 @@
 // Like Hyperfine but fill method ignores (1/2) A [S+I- + S-I+]
 // in H_A = A Sz Iz + (1/2) A [S+I- + S-I+].
 //
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "Hyperfine.h"
 
@@ -19,14 +19,13 @@ class IsingHyperfine : public Hyperfine
 public:
   
   IsingHyperfine();
+  IsingHyperfine(const double strength);
   IsingHyperfine(const ElectronSpin & electron,
                   const NuclearSpin & nucleus,
                   const UniformMagneticField & field,
                   const HyperfineParameters & parameters);
 
-  explicit IsingHyperfine(const double strength);
-
-  virtual void fill(Eigen::MatrixXcd * hamiltonian,
+  virtual void fill(cdmatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,

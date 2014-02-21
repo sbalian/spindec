@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Feb 14, 2014
+# Seto Balian, Feb 21, 2014
 
 # Basic user input
 #####################
@@ -41,6 +41,10 @@ all: $(EXECUTABLES)
 %.o: $(SOURCE_PATH)%.cpp
 	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH) $<
 
+allobjects:
+	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH)\
+  $(wildcard $(SOURCE_PATH)*.cpp)
+
 #####################
 
 # Tests
@@ -70,7 +74,12 @@ Spin.o\
 ElectronSpin.o\
 NuclearSpin.o\
 SpinVector.o\
-MathPhysConstants.o
+MathPhysConstants.o\
+SpinState.o\
+MatrixRepresentation.o\
+SpinBasis.o\
+Errors.o\
+BoostEigen.o
 
 test_spins: $(TEST_SPINS_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINS_OBJECTS) -o test_spins
@@ -84,7 +93,10 @@ ElectronSpin.o\
 NuclearSpin.o\
 SpinVector.o\
 MathPhysConstants.o\
-Errors.o
+Errors.o\
+MatrixRepresentation.o\
+SpinState.o\
+BoostEigen.o
 
 test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINBASIS_OBJECTS) -o test_spinbasis
@@ -97,7 +109,7 @@ MathPhysConstants.o
 test_misc: $(TEST_MISC_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $(TEST_MISC_OBJECTS) -o test_misc
 
-	# test_evolution
+# test_evolution
 TEST_EVOLUTION_OBJECTS=\
 test_evolution.o\
 UniformMagneticField.o\
@@ -121,6 +133,8 @@ HermitianEigenspectrum.o\
 Hyperfine.o\
 IsingHyperfine.o\
 HyperfineParameters.o\
+SpinInteractionVertex.o\
+SpinInteractionEdge.o
 
 test_evolution: $(TEST_EVOLUTION_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $(TEST_EVOLUTION_OBJECTS) $(LAPACK_FLAGS)\

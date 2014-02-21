@@ -28,33 +28,27 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "SpinInteraction.h"
-#include "UniformMagneticField.h"
-#include "SpinBasis.h"
 
 namespace SpinDecoherence
 {
 
 class Dipolar : public SpinInteraction
 {
+
 private:
-  
-  virtual double calculate_non_spatial_dependence() const;
+  virtual double calculate() const;
 
 public:
   
   Dipolar();
+  Dipolar(const double strength);
   Dipolar(const Spin & spin1, const Spin & spin2,
       const UniformMagneticField & field);
-
-  explicit Dipolar(const double strength);
   
-  virtual double calculate(const Eigen::Vector3d & position1,
-                           const Eigen::Vector3d & position2);
-  
-  virtual void fill(Eigen::MatrixXcd * hamiltonian,
+  virtual void fill(cdmatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,

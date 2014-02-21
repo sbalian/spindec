@@ -1,4 +1,4 @@
-Seto Balian, Jan 31, 2014
+Seto Balian, Feb 20, 2014
 
 - BoostEigen -> proper extension of Eigen? See Eigen documentation
 - Make BoostEigen methods to work on Eigen base types
@@ -14,6 +14,7 @@ Seto Balian, Jan 31, 2014
 - make sure ArrayXd vs ArrayXXd setting one to another works as expected ...
 - Add support for eigenvalues and eigenvectors for non-Hamiltonian operators
 - Better const correctness (particularly with data members) and resolve issues
+  (e.g. vectors)
   with std::vector. Now relies on public set methods ...
 - Throw exceptions (kill Errors.h)
 - Virtual destructors also for derived classes?

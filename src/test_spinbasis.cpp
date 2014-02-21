@@ -1,13 +1,7 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include <iostream>
-#include <Eigen/Dense>
-
-#include "Spin.h"
-#include "ElectronSpin.h"
-#include "NuclearSpin.h"
-#include "SpinBasis.h"
 
 #include "base.h"
 
@@ -27,10 +21,9 @@ std::cout << basis1.rows() << "\t" << basis1.cols() << std::endl;
 
 ElectronSpin electron;
 NuclearSpin nucleus(4.5,0.0);
-    
-SpinBasis electron_basis(electron);
-SpinBasis nucleus_basis(nucleus);
 
+SpinBasis electron_basis = electron.get_state().get_basis();
+SpinBasis nucleus_basis = nucleus.get_state().get_basis();
 
 std::cout << "Electron basis\n" << electron_basis << std::endl;
 std::cout << "Nucleus basis\n" << nucleus_basis << std::endl;

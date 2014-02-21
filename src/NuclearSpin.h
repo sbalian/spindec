@@ -5,7 +5,7 @@
 //
 // Nothing special for now, just Spin ...
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "Spin.h"
 
@@ -16,9 +16,17 @@ class NuclearSpin : public Spin
 {
 
 public:
+  
   NuclearSpin();
-  NuclearSpin(const double quantum_number, const double gyromagnetic_ratio);
+  NuclearSpin(const double quantum_number,
+       const double gyromagnetic_ratio,
+       const d3vector & position,
+       const Eigen::VectorXcd & state_vector);  
+  NuclearSpin(const double quantum_number,
+       const double gyromagnetic_ratio); // zero state vector and position at
+                                         // 000
 
+  
 };
 
 } // namespace SpinDecoherence

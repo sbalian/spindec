@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "SpinOperator.h"
 #include "BoostEigen.h"
@@ -9,9 +9,11 @@ namespace SpinDecoherence
 {
 
 SpinOperator::SpinOperator() : MatrixRepresentation()
-{/**/}
+{
+  set_matrix(cdmatrix::Zero(0,0)); // TODO Is this OK?
+}
 
-SpinOperator::SpinOperator(const Eigen::MatrixXcd & matrix,
+SpinOperator::SpinOperator(const cdmatrix & matrix,
     const SpinBasis & basis) :
     MatrixRepresentation(basis)
 {
@@ -21,15 +23,15 @@ SpinOperator::SpinOperator(const Eigen::MatrixXcd & matrix,
 SpinOperator::SpinOperator(const SpinBasis & basis) :
     MatrixRepresentation(basis)
 {
-  set_matrix(Eigen::MatrixXcd::Zero(get_dimension(),get_dimension()));
+  set_matrix(cdmatrix::Zero(get_dimension(),get_dimension()));
 }
 
-Eigen::MatrixXcd SpinOperator::get_matrix() const
+const cdmatrix& SpinOperator::get_matrix() const
 {
   return matrix_;
 }
 
-void SpinOperator::set_matrix(const Eigen::MatrixXcd & matrix)
+void SpinOperator::set_matrix(const cdmatrix & matrix)
 {
   matrix_ = matrix;
   quit_if_dimension_mismatch();
@@ -55,25 +57,25 @@ void SpinOperator::quit_if_dimension_mismatch() const
 
 void SpinOperator::set_zero()
 {
-  matrix_.setZero(get_dimension(),get_dimension());
+  matrix_.setZero();
   return;
 }
 
-std::complex<double> SpinOperator::get_element(const unsigned int i,
+const cdouble& SpinOperator::get_element(const unsigned int i,
     const unsigned int j) const
 {
   return matrix_(i,j);
 }
 
 void SpinOperator::set_element(const unsigned int i, const unsigned int j,
-    std::complex<double> element)
+    const cdouble& element)
 {
   matrix_(i,j) = element;
   return;
 }
 
 void SpinOperator::add_to_element(const unsigned int i, const unsigned int j,
-    std::complex<double> to_add)
+    const cdouble& to_add)
 {
   matrix_(i,j) += to_add;
   return;

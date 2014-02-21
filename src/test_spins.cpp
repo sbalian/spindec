@@ -1,12 +1,7 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include <iostream>
-
-#include "Spin.h"
-#include "ElectronSpin.h"
-#include "NuclearSpin.h"
-#include "SpinVector.h"
 
 #include "base.h"
 
@@ -19,7 +14,7 @@ std::cout << electron;// << std::endl;
 
 NuclearSpin nucleus(4.5,0.0);
 std::cout << nucleus;
-  
+
 SpinVector spin_vector;
 
 spin_vector.push_back(electron);

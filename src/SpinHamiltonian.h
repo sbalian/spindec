@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include <string>
 
@@ -18,7 +18,6 @@
 #include "HermitianEigenspectrum.h"
 
 #include "UniformMagneticField.h"
-#include "SpinBasis.h"
 
 #include <Eigen/Dense>
 
@@ -29,7 +28,7 @@ class SpinHamiltonian : public SpinOperator
 {
 private:
 
-  const UniformMagneticField field_;
+  UniformMagneticField field_;
   
   // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
   // field_strength for all spins in the graph

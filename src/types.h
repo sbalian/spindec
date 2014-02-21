@@ -1,9 +1,10 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
-// Custom types for SpinDecoherence.
+// Custom built in types for SpinDecoherence.
+// IMPORTANT: Do not include any SpinDecoherence classes here!
 //
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Feb 21, 2014
 
 #include <Eigen/Dense>
 #include <complex>

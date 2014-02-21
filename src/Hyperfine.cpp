@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Feb 10, 2014
+// Seto Balian, Feb 21, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -10,26 +10,6 @@
 
 namespace SpinDecoherence
 {
-
-double Hyperfine::calculate_non_spatial_dependence() const
-{
-  
-  if (preset_ == true) {return 0.0;}
-  
-  // Units M rad s-1 m^3
-  
-  const double electron_gyromagnetic_ratio = spin1_.get_gyromagnetic_ratio();
-  const double nuclear_gyromagnetic_ratio = spin2_.get_gyromagnetic_ratio();
-  const double hbar = MathPhysConstants::reduced_planck();
-  const double pi = MathPhysConstants::pi();
-  
-  return (16.0*pi/9.0)*1.0e-07*1.0e+06*hbar*
-      electron_gyromagnetic_ratio*
-      nuclear_gyromagnetic_ratio*
-      parameters_.get_charge_density();
-  // NOTE the 1.0e6 factor should be here because (Mega)^2
-  
-}
 
 double Hyperfine::envelope_function(const unsigned int index,
     const Eigen::Vector3d & separation) const
@@ -115,8 +95,6 @@ double Hyperfine::scaled_probability_density(
        // 1.0e+30 to convert from Angstroms to metres
 }
 
-
-
 Hyperfine::Hyperfine() : SpinInteraction()
 {
   //
@@ -129,7 +107,7 @@ Hyperfine::Hyperfine(const ElectronSpin& electron, const NuclearSpin& nucleus,
                                              // (also for nucleus)
     parameters_(parameters)
 {
-  //
+  strength_ = calculate();
 }
 
 Hyperfine::Hyperfine(const double strength)
@@ -138,48 +116,54 @@ Hyperfine::Hyperfine(const double strength)
   //
 }
 
-double Hyperfine::calculate(const Eigen::Vector3d& position1,
-    const Eigen::Vector3d& position2)
+double Hyperfine::calculate() const
 {
+  // Units M rad s-1 m^3
+  const double electron_gyromagnetic_ratio = spin1_.get_gyromagnetic_ratio();
+  const double nuclear_gyromagnetic_ratio = spin2_.get_gyromagnetic_ratio();
+  const double hbar = MathPhysConstants::reduced_planck();
+  const double pi = MathPhysConstants::pi();
   
-  if (preset_ == true) {return strength_;}
+  const double non_spatial_dependence =
+  (16.0*pi/9.0)*1.0e-07*1.0e+06*hbar*
+      electron_gyromagnetic_ratio*
+      nuclear_gyromagnetic_ratio*
+      parameters_.get_charge_density();
+  // NOTE the 1.0e6 factor should be here because (Mega)^2
 
-  
+
   // Units M rad s-1
-  
-  const double isotropic_part = non_spatial_dependence_*
-      scaled_probability_density(position2 - position1);
+  const double isotropic_part = non_spatial_dependence*
+      scaled_probability_density(spin2_.get_position() - spin1_.get_position());
   
   if (parameters_.get_form() == "Isotropic") {
-      strength_ = isotropic_part;
       return isotropic_part;
   }
 
-  Dipolar dipolar_interaction(spin1_,spin2_,get_field());
-  const double cutoff = (position2 - position1).norm() - n_times_a();
+  Dipolar dipolar_interaction(spin1_,spin2_,field_);
+  const double cutoff = (spin2_.get_position() - spin1_.get_position()).norm()
+                                      - n_times_a();
  
   double anisotropic_part = 0.0;
   if (cutoff >= 0.0) {
-    anisotropic_part = -dipolar_interaction.calculate(position1,position2);
+    anisotropic_part = -dipolar_interaction.get_strength();
   }
   
   if (parameters_.get_form() == "Anisotropic") {
-      strength_ = anisotropic_part;
       return anisotropic_part;
   }
   
   // form = "Full"
-  strength_ = isotropic_part + anisotropic_part;
   return isotropic_part + anisotropic_part;
 
 }
 
-void Hyperfine::fill(Eigen::MatrixXcd * hamiltonian, const SpinVector& spins,
+void Hyperfine::fill(cdmatrix * hamiltonian, const SpinVector& spins,
     const SpinBasis& basis, const unsigned int spin_label1,
     const unsigned int spin_label2) const
 {
   SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
-      spin_label1,spin_label2,false,std::complex<double>(0.5,0.0));
+      spin_label1,spin_label2,false,cdouble(0.5,0.0));
   return;
 }
 
