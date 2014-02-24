@@ -45,7 +45,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Feb 24, 2014
 
 #include "SpinInteraction.h"
 
@@ -62,7 +62,6 @@ class Hyperfine : public SpinInteraction
 private:
 
   HyperfineParameters parameters_;
-  virtual double calculate() const;
   
   double envelope_function(const unsigned int index,
       const d3vector & separation) const;
@@ -70,15 +69,18 @@ private:
   double n_times_a() const;
   double n_times_b() const;
   double scaled_probability_density(const d3vector & separation) const;
-
+  
 public:
   
   Hyperfine();
+  // If you wish to calculate
+  explicit Hyperfine(const HyperfineParameters & parameters);
+  // If you don't wish to calculate
   Hyperfine(const double strength);
-  Hyperfine(const ElectronSpin & electron,
-                  const NuclearSpin & nucleus,
-                  const UniformMagneticField & field,
-                  const HyperfineParameters & parameters);
+  
+  virtual void calculate(const Spin & electron,
+      const Spin & nucleus,
+      const UniformMagneticField & field);
 
   virtual void fill(cdmatrix * hamiltonian,
                    const SpinVector & spins,

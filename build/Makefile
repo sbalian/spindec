@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Feb 21, 2014
+# Seto Balian, Feb 24, 2014
 
 # Basic user input
 #####################

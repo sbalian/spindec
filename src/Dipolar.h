@@ -28,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Feb 24, 2014
 
 #include "SpinInteraction.h"
 
@@ -38,14 +38,14 @@ namespace SpinDecoherence
 class Dipolar : public SpinInteraction
 {
 
-private:
-  virtual double calculate() const;
-
 public:
   
+  // If you wish to calculate
   Dipolar();
+  // If you don't wish to calculate
   Dipolar(const double strength);
-  Dipolar(const Spin & spin1, const Spin & spin2,
+  
+  virtual void calculate(const Spin & spin1, const Spin & spin2,
       const UniformMagneticField & field);
   
   virtual void fill(cdmatrix * hamiltonian,
