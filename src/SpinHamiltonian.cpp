@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Feb 24, 2014
 
 #include "SpinHamiltonian.h"
 #include "BoostEigen.h"
@@ -38,10 +38,16 @@ void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
   // Loop over edges
   for (unsigned int i=0;i<graph.num_edges();i++) {
     interaction_ptr = graph.get_interaction(i);
+    if (!interaction_ptr->strength_preset()) { // calculate only if strength
+                                               // NOT preset
+      interaction_ptr -> calculate(graph.get_edge(i).get_vertex1().get_spin(),
+                                   graph.get_edge(i).get_vertex2().get_spin(),
+                                   get_field()); 
+    }
     interaction_ptr->fill(&matrix_,graph.get_spins(),
         get_basis(),
         graph.get_edge(i).get_vertex1().get_label(),
-        graph.get_edge(i).get_vertex1().get_label());
+        graph.get_edge(i).get_vertex2().get_label());
   }
   return;
 }

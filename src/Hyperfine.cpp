@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Feb 24, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -95,32 +95,38 @@ double Hyperfine::scaled_probability_density(
        // 1.0e+30 to convert from Angstroms to metres
 }
 
-Hyperfine::Hyperfine() : SpinInteraction()
+Hyperfine::Hyperfine() : SpinInteraction(),
+    parameters_(HyperfineParameters())
 {
   //
 }
 
-Hyperfine::Hyperfine(const ElectronSpin& electron, const NuclearSpin& nucleus,
-    const UniformMagneticField& field, const HyperfineParameters& parameters)
-  : SpinInteraction(electron,nucleus,field), // TODO make sure this is an
-                                             // electron and not just a spin
-                                             // (also for nucleus)
+Hyperfine::Hyperfine(const HyperfineParameters & parameters) :
+    SpinInteraction(),
     parameters_(parameters)
 {
-  strength_ = calculate();
 }
+
 
 Hyperfine::Hyperfine(const double strength)
-    : SpinInteraction(strength)
+    : SpinInteraction(strength),
+      parameters_(HyperfineParameters())
 {
-  //
+//
 }
 
-double Hyperfine::calculate() const
+void Hyperfine::calculate(const Spin & electron,
+    const Spin & nucleus,
+    const UniformMagneticField & field)
 {
+  
+  if (strength_preset_ == true) {
+    warn_if_preset_then_calculated();
+  }
+  
   // Units M rad s-1 m^3
-  const double electron_gyromagnetic_ratio = spin1_.get_gyromagnetic_ratio();
-  const double nuclear_gyromagnetic_ratio = spin2_.get_gyromagnetic_ratio();
+  const double electron_gyromagnetic_ratio = electron.get_gyromagnetic_ratio();
+  const double nuclear_gyromagnetic_ratio = nucleus.get_gyromagnetic_ratio();
   const double hbar = MathPhysConstants::reduced_planck();
   const double pi = MathPhysConstants::pi();
   
@@ -134,15 +140,18 @@ double Hyperfine::calculate() const
 
   // Units M rad s-1
   const double isotropic_part = non_spatial_dependence*
-      scaled_probability_density(spin2_.get_position() - spin1_.get_position());
+      scaled_probability_density(nucleus.get_position()
+          - electron.get_position());
   
   if (parameters_.get_form() == "Isotropic") {
-      return isotropic_part;
+      strength_ = isotropic_part;
+      return;
   }
 
-  Dipolar dipolar_interaction(spin1_,spin2_,field_);
-  const double cutoff = (spin2_.get_position() - spin1_.get_position()).norm()
-                                      - n_times_a();
+  Dipolar dipolar_interaction;
+  dipolar_interaction.calculate(electron,nucleus,field);
+  const double cutoff =
+      (nucleus.get_position() - electron.get_position()).norm() - n_times_a();
  
   double anisotropic_part = 0.0;
   if (cutoff >= 0.0) {
@@ -150,11 +159,13 @@ double Hyperfine::calculate() const
   }
   
   if (parameters_.get_form() == "Anisotropic") {
-      return anisotropic_part;
+      strength_ = anisotropic_part;
+      return;
   }
   
   // form = "Full"
-  return isotropic_part + anisotropic_part;
+  strength_ = isotropic_part + anisotropic_part;
+  return;
 
 }
 

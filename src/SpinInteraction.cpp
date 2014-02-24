@@ -1,35 +1,22 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Feb 24, 2014
 
 #include "SpinInteraction.h"
+#include "Errors.h"
 #include <cmath>
 
 namespace SpinDecoherence
 {
 
 SpinInteraction::SpinInteraction() :
-  spin1_(Spin()),
-  spin2_(Spin()),
-  field_(UniformMagneticField()),
-  strength_(0.0)
+  strength_(0.0),
+  strength_preset_(false)
 {
-}
-
-SpinInteraction::SpinInteraction(const Spin & spin1, const Spin & spin2,
-    const UniformMagneticField & field) :
-          spin1_(spin1),
-          spin2_(spin2),
-          field_(field),
-          strength_(0.0)
-{
-  // calculate in derived classes (can't use calculate() in constructors here)
 }
 
 SpinInteraction::SpinInteraction(const double strength) :
-      spin1_(Spin()),
-      spin2_(Spin()),
-      field_(UniformMagneticField()),
-      strength_(strength)
+  strength_(strength),
+  strength_preset_(true)
 {
 }
 
@@ -79,7 +66,7 @@ void SpinInteraction::fill_ising_flipflop(cdmatrix * hamiltonian,
     m1_i = basis.get_element(i,spin_label1);
     m2_i = basis.get_element(i,spin_label2);
     
-    (*hamiltonian)(i,i) += cdouble(strength_*m1_i*m2_i,0.0);
+    (*hamiltonian)(i,i) += cdouble(get_strength()*m1_i*m2_i,0.0);
     
     // Only fill diagonals for Ising only
     if (ising_only) {continue;}
@@ -150,7 +137,7 @@ void SpinInteraction::fill_ising_flipflop(cdmatrix * hamiltonian,
         }
       
       (*hamiltonian)(i,j) +=
-      cdouble(strength_*
+      cdouble(get_strength()*
                   std::sqrt(coeff_1*coeff_2),0.0)*
                   flipflop_form;
         
@@ -160,6 +147,17 @@ void SpinInteraction::fill_ising_flipflop(cdmatrix * hamiltonian,
   }
   return;
 
+}
+
+void SpinInteraction::warn_if_preset_then_calculated() const
+{
+  Errors::warning("Calculating a preset spin interaction");
+  return;
+}
+
+bool SpinInteraction::strength_preset() const
+{
+  return strength_preset_;
 }
 
 double SpinInteraction::get_strength() const
