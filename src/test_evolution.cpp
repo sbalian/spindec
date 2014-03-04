@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 3, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -65,7 +65,7 @@ int main ()
   
   // Diagonalize
   HermitianEigenspectrum eigenspectrum(H.get_matrix(),"Lapack");
-  
+    
   std::cout << std::setprecision(10) << std::left;
   std::cout << std::scientific << std::endl;
   std::cout << eigenspectrum.get_eigenvalues().real() << std::endl << std::endl;

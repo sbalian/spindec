@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 3, 2014
 
 #include "SpinInteractionGraph.h"
 #include "Errors.h"
@@ -13,7 +13,7 @@ void SpinInteractionGraph::quit_if_vertex_label_out_of_bounds(
     const unsigned int label) const
 {
   if (label >= num_vertices()) {
-    Errors::quit("Vertex label out of bounds");
+    Errors::quit("Vertex label out of bounds.");
   }
   return;
 }
@@ -22,7 +22,7 @@ void SpinInteractionGraph::quit_if_edge_index_out_of_bounds(
     const unsigned int index) const
 {
   if (index >= num_edges()) {
-    Errors::quit("Edge index out of bounds");
+    Errors::quit("Edge index out of bounds.");
   }
   return;
 }
@@ -140,5 +140,35 @@ SpinBasis  SpinInteractionGraph::build_basis() const
   }
   return basis;
 }
+
+void SpinInteractionGraph::join(const SpinInteractionGraph& to_join)
+{
+  // Add vertices
+  for (unsigned int i=0;i<to_join.num_vertices();i++) {
+    add_vertex(to_join.get_vertex(i).get_spin());
+  }
+  // Add edges
+  for (unsigned int i=0;i<to_join.num_edges();i++) {
+    add_edge(to_join.get_edge(i).get_vertex1().get_label() + num_vertices(),
+             to_join.get_edge(i).get_vertex2().get_label() + num_vertices(),
+             to_join.get_interaction(i));
+  }
+  return;
+}
+
+void SpinInteractionGraph::join(const SpinInteractionGraph& to_join,
+    const std::vector<SpinInteractionEdge>& edges)
+{
+  join(to_join);
+  for (unsigned int i=0;i<edges.size();i++) {
+    add_edge( edges[i].get_vertex1().get_label(),
+              edges[i].get_vertex2().get_label(),
+              edges[i].get_interaction());
+  }
+  return;
+}
+
+SpinInteractionGraph::~SpinInteractionGraph()
+{/**/}
 
 } // namespace SpinDecoherence

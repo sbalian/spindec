@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 3, 2014
 
 #include "SpinInteraction.h"
 #include "Errors.h"
@@ -151,7 +151,7 @@ void SpinInteraction::fill_ising_flipflop(cdmatrix * hamiltonian,
 
 void SpinInteraction::warn_if_preset_then_calculated() const
 {
-  Errors::warning("Calculating a preset spin interaction");
+  Errors::warning("Calculating a preset spin interaction.");
   return;
 }
 

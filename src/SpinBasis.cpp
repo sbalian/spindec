@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 3, 2014
 
 #include "SpinBasis.h"
 #include "Errors.h"
@@ -112,7 +112,7 @@ SpinBasis::SpinBasis(const Eigen::ArrayXXd & basis_as_array) :
         basis_as_array_(basis_as_array)
 {/**/}
 
-Eigen::ArrayXXd SpinBasis::get_basis_as_array() const
+const Eigen::ArrayXXd& SpinBasis::get_basis_as_array() const
 {
   return basis_as_array_;
 }

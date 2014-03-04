@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 3, 2014
 
 #include "SpinInteractionVertex.h"
 #include "SpinInteractionEdge.h"
@@ -58,9 +58,19 @@ public:
 
     
   // build a combined (like tensor product) SpinBasis and return it
-  SpinBasis build_basis() const;
+  virtual SpinBasis build_basis() const;
 
+  // Adds input graph to current graph, preserving all vertices and edges.
+  // Vertex labels of given graph 0,1,2 ... become n, n+1, n+2
+  // where n is the number of vertices of the original graph.
+  // There are no edges connecting the two graphs.
   void join(const SpinInteractionGraph & to_join);
+  // Same as above, but with edges connecting the two graphs.
+  // Edges should be valid for the graph after joining!
+  void join(const SpinInteractionGraph & to_join,
+            const std::vector<SpinInteractionEdge> & edges);
+  
+  virtual ~SpinInteractionGraph();
   
 };
 
