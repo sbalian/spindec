@@ -14,7 +14,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Feb 19, 2014
+// Seto Balian, Mar 3, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
@@ -48,7 +48,7 @@ public:
                                               // using spin multiplicity
   
   explicit SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
-  Eigen::ArrayXXd get_basis_as_array() const;
+  const Eigen::ArrayXXd& get_basis_as_array() const;
   
   unsigned int num_basis_states() const;
   unsigned int num_spins() const;

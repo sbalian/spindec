@@ -1,5 +1,5 @@
 # SpinDecoherence Makefile
-# Seto Balian, Feb 24, 2014
+# Seto Balian, Mar 3, 2014
 
 # Basic user input
 #####################
@@ -37,6 +37,11 @@ EXECUTABLES=
 #####################
 
 all: $(EXECUTABLES)
+
+# TODO Are the two %.o's OK?
+
+%.o: $(SOURCE_PATH)%.cpp $(SOURCE_PATH)%.h
+	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH) $<
 
 %.o: $(SOURCE_PATH)%.cpp
 	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH) $<

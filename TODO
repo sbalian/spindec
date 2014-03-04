@@ -1,4 +1,4 @@
-Seto Balian, Feb 20, 2014
+Seto Balian, Mar 3, 2014
 
 - BoostEigen -> proper extension of Eigen? See Eigen documentation
 - Make BoostEigen methods to work on Eigen base types
@@ -39,6 +39,12 @@ Seto Balian, Feb 20, 2014
   magnitude" operation once at the end (what's the best strategy for this sort
   of problem?)
 - Do default constructors properly (also destructors?)
+- Relative paths for includes
+- where to put global constants?
+- where to put global functions?
+- PLUS and MINUS? OK?
+- Deal with Hermitian REAL eigenvalues ... double, not cdouble ...
+- Adhere to Google style guide better, constants, typedefs, etc.
 
 
 GRAVEYARD
