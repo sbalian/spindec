@@ -5,7 +5,7 @@
 //
 // Nothing special for now, just Spin ...
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "Spin.h"
 
@@ -20,7 +20,7 @@ public:
   NuclearSpin();
   NuclearSpin(const double quantum_number,
        const double gyromagnetic_ratio,
-       const d3vector & position,
+       const ThreeVector & position,
        const Eigen::VectorXcd & state_vector);  
   NuclearSpin(const double quantum_number,
        const double gyromagnetic_ratio); // zero state vector and position at

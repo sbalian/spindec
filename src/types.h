@@ -6,7 +6,7 @@
 // IMPORTANT: Do not include any SpinDecoherence classes here!
 // TODO consts OK here?
 //
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <Eigen/Dense>
 #include <complex>
@@ -17,22 +17,28 @@
 namespace SpinDecoherence {
 
 // Real 3-vector
-typedef Eigen::Vector3d d3vector;
+typedef Eigen::Vector3d ThreeVector;
 
 // Complex double
 typedef std::complex<double> cdouble;
 
 // Matrix of complex doubles
-typedef Eigen::MatrixXcd cdmatrix;
+typedef Eigen::MatrixXcd ComplexMatrix;
 
 // Vector of complex doubles
-typedef Eigen::VectorXcd cdvector;
+typedef Eigen::VectorXcd ComplexVector;
 
 // std vector of doubles
 typedef std::vector<double> dvector;
 
 // std vector of integers
 typedef std::vector<int> ivector;
+
+// std vector of unsigned integers
+typedef std::vector<unsigned int> uivector;
+
+// std vector of complex doubles
+typedef std::vector< cdouble > cdvector;
 
 // std string
 using std::string;

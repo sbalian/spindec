@@ -6,7 +6,7 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <Eigen/Dense>
 
@@ -36,7 +36,7 @@ protected:
   // ISING            + FLIPFLOP
   // strength*S1z S2z + flipflop_form*strength*(S1+ S2- + S1- S2+)
   // flipflop_form is a complex double
-  void fill_ising_flipflop(cdmatrix* hamiltonian,
+  void fill_ising_flipflop(ComplexMatrix* hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,
@@ -54,7 +54,7 @@ public:
   double get_strength() const;
   bool strength_preset() const;
   
-  virtual void fill(cdmatrix * hamiltonian,
+  virtual void fill(ComplexMatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,

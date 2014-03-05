@@ -28,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinInteraction.h"
 
@@ -48,7 +48,7 @@ public:
   virtual void calculate(const Spin & spin1, const Spin & spin2,
       const UniformMagneticField & field);
   
-  virtual void fill(cdmatrix * hamiltonian,
+  virtual void fill(ComplexMatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,

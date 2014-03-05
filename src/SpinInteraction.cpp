@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinInteraction.h"
 #include "Errors.h"
@@ -23,7 +23,7 @@ SpinInteraction::SpinInteraction(const double strength) :
 SpinInteraction::~SpinInteraction()
 {/**/}
 
-void SpinInteraction::fill_ising_flipflop(cdmatrix * hamiltonian,
+void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
     const SpinVector& spins, const SpinBasis & basis,
     const unsigned int spin_label1, const unsigned int spin_label2,
     const bool ising_only, const cdouble & flipflop_form) const

@@ -5,7 +5,7 @@
 //
 // Uniform magnetic field parallel to some direction in Cartesian coordinates.
 //
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <Eigen/Dense>
 
@@ -19,7 +19,7 @@ class UniformMagneticField
 private:
   
   double magnitude_; // Tesla
-  d3vector direction_; // normalized
+  ThreeVector direction_; // normalized
   
 public:
   
@@ -28,13 +28,13 @@ public:
                                                 // null direction (0 0 0)
                                                 // TODO is this safe?
   UniformMagneticField(const double magnitude,
-      const d3vector & direction);
+      const ThreeVector & direction);
   
   double get_magnitude() const;
-  d3vector get_direction() const;
+  ThreeVector get_direction() const;
   
   void set_magnitude(const double magnitude);
-  void set_direction(const d3vector & direction);
+  void set_direction(const ThreeVector & direction);
 
 };
 

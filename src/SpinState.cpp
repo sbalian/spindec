@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinState.h"
 #include "BoostEigen.h"
@@ -10,10 +10,10 @@ namespace SpinDecoherence
 
 SpinState::SpinState() : MatrixRepresentation()
 {
-  set_state_vector(cdvector::Zero(0)); // TODO Is this OK?
+  set_state_vector(ComplexVector::Zero(0)); // TODO Is this OK?
 }
 
-SpinState::SpinState(const cdvector & state_vector,
+SpinState::SpinState(const ComplexVector & state_vector,
     const SpinBasis & basis) :
     MatrixRepresentation(basis)
 {
@@ -22,15 +22,15 @@ SpinState::SpinState(const cdvector & state_vector,
 
 SpinState::SpinState(const SpinBasis & basis) : MatrixRepresentation(basis)
 {
-  set_state_vector(cdvector::Zero(get_dimension()));
+  set_state_vector(ComplexVector::Zero(get_dimension()));
 }
 
-const cdvector& SpinState::get_state_vector() const
+const ComplexVector& SpinState::get_state_vector() const
 {
   return state_vector_;
 }
 
-void SpinState::set_state_vector(const cdvector & state_vector)
+void SpinState::set_state_vector(const ComplexVector & state_vector)
 {
   state_vector_ = state_vector;
   quit_if_dimension_mismatch();

@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <complex>
 #include <iostream>
@@ -22,16 +22,16 @@ class SpinOperator : public MatrixRepresentation
 {
 protected:
 
-  cdmatrix matrix_;
+  ComplexMatrix matrix_;
   virtual void quit_if_dimension_mismatch() const;
   
 public:
   SpinOperator();
-  SpinOperator(const cdmatrix & matrix, const SpinBasis & basis);
+  SpinOperator(const ComplexMatrix & matrix, const SpinBasis & basis);
   explicit SpinOperator(const SpinBasis & basis); // zero matrix
 
-  const cdmatrix& get_matrix() const;
-  void set_matrix(const cdmatrix & matrix);
+  const ComplexMatrix& get_matrix() const;
+  void set_matrix(const ComplexMatrix & matrix);
   
   const cdouble& get_element(const unsigned int i,
       const unsigned int j) const;

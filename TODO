@@ -1,4 +1,4 @@
-Seto Balian, Mar 3, 2014
+Seto Balian, Mar 5, 2014
 
 - BoostEigen -> proper extension of Eigen? See Eigen documentation
 - Make BoostEigen methods to work on Eigen base types
@@ -45,6 +45,8 @@ Seto Balian, Mar 3, 2014
 - PLUS and MINUS? OK?
 - Deal with Hermitian REAL eigenvalues ... double, not cdouble ...
 - Adhere to Google style guide better, constants, typedefs, etc.
+- Struct declare in header and implement in source? or all in header?
+- Extensive commenting and doc
 
 
 GRAVEYARD

@@ -1,5 +1,5 @@
 // See ElectronSpin.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "ElectronSpin.h"
 #include "MathPhysConstants.h"
@@ -17,14 +17,14 @@ ElectronSpin::ElectronSpin(const double gyromagnetic_ratio) :
         Spin(0.5,gyromagnetic_ratio)
 {/**/}
 
-ElectronSpin::ElectronSpin(const d3vector & position,
+ElectronSpin::ElectronSpin(const ThreeVector & position,
              const Eigen::VectorXcd & state_vector) :
       Spin(0.5,free_gamma_e,position,state_vector)
 {/**/}
 
 
 ElectronSpin::ElectronSpin(const double gyromagnetic_ratio,
-             const d3vector & position,
+             const ThreeVector & position,
              const Eigen::VectorXcd & state_vector) :
    Spin(0.5,gyromagnetic_ratio,position,state_vector)
 {/**/}
