@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "BoostEigen.h"
 #include <Eigen/Dense>
@@ -7,31 +7,31 @@
 namespace SpinDecoherence
 {
 
-double BoostEigen::cosAngleBetween(const d3vector & a,
-                                       const d3vector & b)
+double BoostEigen::cosAngleBetween(const ThreeVector & a,
+                                       const ThreeVector & b)
 {
   return  ( a.dot(b) / (a.norm()*b.norm()) );
 }
 
-double BoostEigen::maxAbsCoeff(const d3vector & a)
+double BoostEigen::maxAbsCoeff(const ThreeVector & a)
 {
   return (a.cwiseAbs()).maxCoeff();
 }
 
-cdvector BoostEigen::exp(const cdvector & a)
+ComplexVector BoostEigen::exp(const ComplexVector & a)
 {
   return Eigen::ArrayXcd(a.array().exp()).matrix();
 }
 
-cdmatrix BoostEigen::tensorProduct(const cdmatrix & A,
-                                           const cdmatrix & B)
+ComplexMatrix BoostEigen::tensorProduct(const ComplexMatrix & A,
+                                           const ComplexMatrix & B)
 {
   unsigned int dimension_A    = A.rows();
   unsigned int dimension_B    = B.rows();
   unsigned int dimension_AB    = dimension_A*dimension_B;
   
   //output
-  cdmatrix product(dimension_AB,dimension_AB);
+  ComplexMatrix product(dimension_AB,dimension_AB);
   
   // consistently with other methods
   for (unsigned int i=0;i<dimension_A;i++) {
@@ -43,11 +43,11 @@ cdmatrix BoostEigen::tensorProduct(const cdmatrix & A,
   return product;
 }
 
-cdvector BoostEigen::tensorProduct(const cdvector & a,
-                                                  const cdvector & b)
+ComplexVector BoostEigen::tensorProduct(const ComplexVector & a,
+                                                  const ComplexVector & b)
 {
   // output
-  cdvector product(a.rows()*b.rows());
+  ComplexVector product(a.rows()*b.rows());
   
   // consistently with other methods
   unsigned int k = 0;
@@ -60,7 +60,7 @@ cdvector BoostEigen::tensorProduct(const cdvector & a,
   return product;
 }
 
-cdmatrix BoostEigen::partialTrace(const cdmatrix & AB,
+ComplexMatrix BoostEigen::partialTrace(const ComplexMatrix & AB,
                                        const unsigned int dimension_B)
 {
 
@@ -68,7 +68,7 @@ cdmatrix BoostEigen::partialTrace(const cdmatrix & AB,
   unsigned int dimension_A  = dimension_AB/dimension_B;
   
   // output
-  cdmatrix partial_trace(dimension_A,dimension_A);
+  ComplexMatrix partial_trace(dimension_A,dimension_A);
 
   // consistently with other methods
   unsigned int i=0, j=0;
@@ -84,14 +84,14 @@ cdmatrix BoostEigen::partialTrace(const cdmatrix & AB,
   return partial_trace;
 }
 
-cdmatrix BoostEigen::spectralDecomposition(
-    const cdmatrix& eigenvectors, const cdvector& eigenvalues)
+ComplexMatrix BoostEigen::spectralDecomposition(
+    const ComplexMatrix& eigenvectors, const ComplexVector& eigenvalues)
 {
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.inverse());
 }
 
-cdmatrix BoostEigen::unitarySpectralDecomposition(
-    const cdmatrix& eigenvectors, const cdvector& eigenvalues)
+ComplexMatrix BoostEigen::unitarySpectralDecomposition(
+    const ComplexMatrix& eigenvectors, const ComplexVector& eigenvalues)
 {
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.adjoint());
 }

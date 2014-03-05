@@ -1,5 +1,5 @@
 // See Spin.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "Spin.h"
 #include "Errors.h"
@@ -12,7 +12,7 @@ namespace SpinDecoherence
 Spin::Spin() :
           quantum_number_(0.0),
           gyromagnetic_ratio_(0.0),
-          position_(d3vector::Zero()),
+          position_(ThreeVector::Zero()),
           state_(SpinState()),
           multiplicity_(0)
 {/**/}
@@ -20,8 +20,8 @@ Spin::Spin() :
 
 Spin::Spin(const double quantum_number,
            const double gyromagnetic_ratio,
-           const d3vector & position,
-           const cdvector & state_vector) :
+           const ThreeVector & position,
+           const ComplexVector & state_vector) :
       quantum_number_(quantum_number),
       gyromagnetic_ratio_(gyromagnetic_ratio),
       position_(position),
@@ -32,11 +32,11 @@ Spin::Spin(const double quantum_number,
 Spin::Spin(const double quantum_number, const double gyromagnetic_ratio) :
           quantum_number_(quantum_number),
           gyromagnetic_ratio_(gyromagnetic_ratio),
-          position_(d3vector::Zero())
+          position_(ThreeVector::Zero())
 {
   SpinBasis basis(quantum_number);
   SpinState state(basis);
-  cdvector spin_vector = state.get_state_vector();
+  ComplexVector spin_vector = state.get_state_vector();
   state_ = SpinState(spin_vector,basis);
   multiplicity_ = state_.get_dimension();
   // TODO Maybe a better way to do this ...
@@ -53,7 +53,7 @@ double Spin::get_gyromagnetic_ratio() const
   return gyromagnetic_ratio_;
 }
 
-const d3vector & Spin::get_position() const
+const ThreeVector & Spin::get_position() const
 {
   return position_;
 }
@@ -68,13 +68,13 @@ unsigned int Spin::get_multiplicity() const
   return multiplicity_;
 }
 
-void Spin::set_position(const d3vector& position)
+void Spin::set_position(const ThreeVector& position)
 {
   position_ = position;
   return;
 }
 
-void Spin::set_state_vector(const cdvector& state_vector)
+void Spin::set_state_vector(const ComplexVector& state_vector)
 {
   state_.set_state_vector(state_vector);
   return;

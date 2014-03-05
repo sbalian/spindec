@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -10,7 +10,7 @@ using namespace SpinDecoherence;
 
 int main ()
 {
-  d3vector field_direction(1.0,1.0,0.0);
+  ThreeVector field_direction(1.0,1.0,0.0);
   
   // Set up magnetic field (T)
   UniformMagneticField field(0.480,field_direction);
@@ -23,8 +23,8 @@ int main ()
   // Set up spin interaction graph
 
   // Spatial positions (A)
-  d3vector si29_position1(3.0,-2.0,1.0);
-  d3vector si29_position2(1.0,1.5,0.0);
+  ThreeVector si29_position1(3.0,-2.0,1.0);
+  ThreeVector si29_position2(1.0,1.5,0.0);
   NuclearSpin si29_1 = si29;
   si29_1.set_position(si29_position1);
   NuclearSpin si29_2 = si29;

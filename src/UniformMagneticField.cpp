@@ -1,5 +1,5 @@
 // See UniformMagneticField.h for description.
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "UniformMagneticField.h"
 
@@ -9,17 +9,17 @@ namespace SpinDecoherence
 UniformMagneticField::UniformMagneticField()
 {
   set_magnitude(0.0);
-  set_direction(d3vector::Zero());
+  set_direction(ThreeVector::Zero());
 }
 
 UniformMagneticField::UniformMagneticField(const double magnitude)
 {
   set_magnitude(magnitude);
-  set_direction(d3vector::Zero());
+  set_direction(ThreeVector::Zero());
 }
 
 UniformMagneticField::UniformMagneticField(const double magnitude,
-    const d3vector& direction)
+    const ThreeVector& direction)
 {
   set_magnitude(magnitude);
   set_direction(direction);
@@ -30,7 +30,7 @@ double UniformMagneticField::get_magnitude() const
   return magnitude_;
 }
 
-d3vector UniformMagneticField::get_direction() const
+ThreeVector UniformMagneticField::get_direction() const
 {
   return direction_;
 }
@@ -41,7 +41,7 @@ void UniformMagneticField::set_magnitude(const double magnitude)
   return;
 }
 
-void UniformMagneticField::set_direction(const d3vector& direction)
+void UniformMagneticField::set_direction(const ThreeVector& direction)
 {
   if (direction.norm() == 1.0) {
     direction_ = direction;

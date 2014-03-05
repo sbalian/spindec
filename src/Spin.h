@@ -9,7 +9,7 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ protected:
   double quantum_number_;
   double gyromagnetic_ratio_; // in M rad s-1
   
-  d3vector position_; // Spatial position in Angstroms
+  ThreeVector position_; // Spatial position in Angstroms
   SpinState state_;
   
   unsigned int multiplicity_;
@@ -37,8 +37,8 @@ public:
   Spin();
   Spin(const double quantum_number,
        const double gyromagnetic_ratio,
-       const d3vector & position,
-       const cdvector & state_vector);
+       const ThreeVector & position,
+       const ComplexVector & state_vector);
   
   Spin(const double quantum_number,
        const double gyromagnetic_ratio); // zero state vector and position at
@@ -46,11 +46,11 @@ public:
 
   double get_quantum_number() const;
   double get_gyromagnetic_ratio() const;
-  const d3vector & get_position() const;
+  const ThreeVector & get_position() const;
   const SpinState & get_state() const;
   
-  void set_position(const d3vector & position);
-  void set_state_vector(const cdvector & state_vector);
+  void set_position(const ThreeVector & position);
+  void set_state_vector(const ComplexVector & state_vector);
   
   unsigned int get_multiplicity() const;
 

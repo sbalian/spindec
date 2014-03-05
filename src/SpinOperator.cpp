@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinOperator.h"
 #include "BoostEigen.h"
@@ -10,10 +10,10 @@ namespace SpinDecoherence
 
 SpinOperator::SpinOperator() : MatrixRepresentation()
 {
-  set_matrix(cdmatrix::Zero(0,0)); // TODO Is this OK?
+  set_matrix(ComplexMatrix::Zero(0,0)); // TODO Is this OK?
 }
 
-SpinOperator::SpinOperator(const cdmatrix & matrix,
+SpinOperator::SpinOperator(const ComplexMatrix & matrix,
     const SpinBasis & basis) :
     MatrixRepresentation(basis)
 {
@@ -23,15 +23,15 @@ SpinOperator::SpinOperator(const cdmatrix & matrix,
 SpinOperator::SpinOperator(const SpinBasis & basis) :
     MatrixRepresentation(basis)
 {
-  set_matrix(cdmatrix::Zero(get_dimension(),get_dimension()));
+  set_matrix(ComplexMatrix::Zero(get_dimension(),get_dimension()));
 }
 
-const cdmatrix& SpinOperator::get_matrix() const
+const ComplexMatrix& SpinOperator::get_matrix() const
 {
   return matrix_;
 }
 
-void SpinOperator::set_matrix(const cdmatrix & matrix)
+void SpinOperator::set_matrix(const ComplexMatrix & matrix)
 {
   matrix_ = matrix;
   quit_if_dimension_mismatch();

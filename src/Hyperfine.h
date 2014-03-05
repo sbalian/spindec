@@ -45,7 +45,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinInteraction.h"
 
@@ -64,11 +64,11 @@ private:
   HyperfineParameters parameters_;
   
   double envelope_function(const unsigned int index,
-      const d3vector & separation) const;
+      const ThreeVector & separation) const;
   double n_parameter() const;
   double n_times_a() const;
   double n_times_b() const;
-  double scaled_probability_density(const d3vector & separation) const;
+  double scaled_probability_density(const ThreeVector & separation) const;
   
 public:
   
@@ -82,7 +82,7 @@ public:
       const Spin & nucleus,
       const UniformMagneticField & field);
 
-  virtual void fill(cdmatrix * hamiltonian,
+  virtual void fill(ComplexMatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
                    const unsigned int spin_label1,

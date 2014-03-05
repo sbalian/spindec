@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinInteractionGraph.h"
 #include "Errors.h"
@@ -141,7 +141,7 @@ SpinBasis  SpinInteractionGraph::build_basis() const
   return basis;
 }
 
-void SpinInteractionGraph::join(const SpinInteractionGraph& to_join)
+void SpinInteractionGraph::join_in_place(const SpinInteractionGraph& to_join)
 {
   // Add vertices
   for (unsigned int i=0;i<to_join.num_vertices();i++) {
@@ -156,7 +156,7 @@ void SpinInteractionGraph::join(const SpinInteractionGraph& to_join)
   return;
 }
 
-void SpinInteractionGraph::join(const SpinInteractionGraph& to_join,
+void SpinInteractionGraph::join_in_place(const SpinInteractionGraph& to_join,
     const std::vector<SpinInteractionEdge>& edges)
 {
   join(to_join);
@@ -166,6 +166,23 @@ void SpinInteractionGraph::join(const SpinInteractionGraph& to_join,
               edges[i].get_interaction());
   }
   return;
+}
+
+SpinInteractionGraph SpinInteractionGraph::join(
+    const SpinInteractionGraph & to_join) const
+{
+  SpinInteractionGraph output = *this;
+  output.join_in_place(to_join);
+  return output;
+}
+
+SpinInteractionGraph SpinInteractionGraph::join(
+    const SpinInteractionGraph & to_join,
+    const std::vector<SpinInteractionEdge> & edges) const
+{
+  SpinInteractionGraph output = *this;
+  output.join_in_place(to_join,edges);
+  return output;
 }
 
 SpinInteractionGraph::~SpinInteractionGraph()

@@ -1,5 +1,5 @@
 // For testing SpinDecoherence
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include <iostream>
 

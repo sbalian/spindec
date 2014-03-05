@@ -5,7 +5,7 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "SpinBasis.h"
 #include "MatrixRepresentation.h"
@@ -19,18 +19,18 @@ class SpinState : public MatrixRepresentation
 {
 private:
   
-  cdvector state_vector_;
+  ComplexVector state_vector_;
 
   virtual void quit_if_dimension_mismatch() const;
   
 public:
   SpinState();
-  SpinState(const cdvector & state_vector,
+  SpinState(const ComplexVector & state_vector,
       const SpinBasis & basis);
   explicit SpinState(const SpinBasis & basis); // zero state vector
 
-  const cdvector& get_state_vector() const;
-  void set_state_vector(const cdvector & state_vector);
+  const ComplexVector& get_state_vector() const;
+  void set_state_vector(const ComplexVector & state_vector);
   
   // States: tensor product ^, Bases: combine ^ (like tensor product)
   SpinState operator^(const SpinState & rhs);

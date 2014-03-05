@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "Hyperfine.h"
 #include "MathPhysConstants.h"
@@ -169,7 +169,7 @@ void Hyperfine::calculate(const Spin & electron,
 
 }
 
-void Hyperfine::fill(cdmatrix * hamiltonian, const SpinVector& spins,
+void Hyperfine::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
     const SpinBasis& basis, const unsigned int spin_label1,
     const unsigned int spin_label2) const
 {

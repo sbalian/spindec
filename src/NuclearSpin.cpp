@@ -1,5 +1,5 @@
 // See NuclearSpin.h for description.
-// Seto Balian, Feb 21, 2014
+// Seto Balian, Mar 5, 2014
 
 #include "NuclearSpin.h"
 
@@ -12,7 +12,7 @@ NuclearSpin::NuclearSpin() :
 
 NuclearSpin::NuclearSpin(const double quantum_number,
     const double gyromagnetic_ratio,
-    const d3vector & position,
+    const ThreeVector & position,
     const Eigen::VectorXcd & state_vector) :
   Spin(quantum_number, gyromagnetic_ratio,position,state_vector)
 {/**/}
