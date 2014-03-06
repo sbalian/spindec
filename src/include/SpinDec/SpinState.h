@@ -5,14 +5,14 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinBasis.h"
-#include "MatrixRepresentation.h"
+#include "SpinDec/SpinBasis.h"
+#include "SpinDec/MatrixRepresentation.h"
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinState : public MatrixRepresentation
@@ -39,6 +39,6 @@ public:
     
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPINSTATE_H_

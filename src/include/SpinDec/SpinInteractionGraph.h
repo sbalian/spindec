@@ -5,16 +5,16 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteractionVertex.h"
-#include "SpinInteractionEdge.h"
+#include "SpinDec/SpinInteractionVertex.h"
+#include "SpinDec/SpinInteractionEdge.h"
 
-#include "SpinVector.h"
+#include "SpinDec/SpinVector.h"
 
 #include <vector>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinInteractionGraph
@@ -80,6 +80,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPININTERACTIONGRAPH_H_

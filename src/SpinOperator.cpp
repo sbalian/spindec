@@ -1,11 +1,11 @@
 // See SpinOperator.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinOperator.h"
-#include "BoostEigen.h"
-#include "Errors.h"
+#include "SpinDec/SpinOperator.h"
+#include "SpinDec/BoostEigen.h"
+#include "SpinDec/Errors.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 SpinOperator::SpinOperator() : MatrixRepresentation()
@@ -97,4 +97,4 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

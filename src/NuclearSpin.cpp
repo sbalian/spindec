@@ -1,9 +1,9 @@
 // See NuclearSpin.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "NuclearSpin.h"
+#include "SpinDec/NuclearSpin.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 NuclearSpin::NuclearSpin() :
@@ -21,4 +21,4 @@ NuclearSpin::NuclearSpin(const double quantum_number,
     const double gyromagnetic_ratio) : Spin(quantum_number,gyromagnetic_ratio)
 {/**/}
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

@@ -1,12 +1,12 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinHamiltonian.h"
-#include "BoostEigen.h"
+#include "SpinDec/SpinHamiltonian.h"
+#include "SpinDec/BoostEigen.h"
 
 #include <complex>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
@@ -95,4 +95,4 @@ Eigen::MatrixXcd SpinHamiltonian::evolution_matrix(
 }
 
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

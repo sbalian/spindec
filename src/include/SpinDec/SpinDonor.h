@@ -10,21 +10,21 @@
 // TODO Organise and clean up comments.
 // TODO Also, "level" and "label" may be confusing and/or not consistent ...
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteractionGraph.h"
-#include "UniformMagneticField.h"
-#include "ElectronSpin.h"
-#include "NuclearSpin.h"
-#include "Hyperfine.h"
-#include "SpinBasis.h"
-#include "SpinState.h"
+#include "SpinDec/SpinInteractionGraph.h"
+#include "SpinDec/UniformMagneticField.h"
+#include "SpinDec/ElectronSpin.h"
+#include "SpinDec/NuclearSpin.h"
+#include "SpinDec/Hyperfine.h"
+#include "SpinDec/SpinBasis.h"
+#include "SpinDec/SpinState.h"
 
 #include <vector>
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 // Energy levels (adiabatic states).
@@ -204,6 +204,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPINDONOR_H_

@@ -1,9 +1,9 @@
 // See IsingHyperfine.h for description.
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "IsingHyperfine.h"
+#include "SpinDec/IsingHyperfine.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 IsingHyperfine::IsingHyperfine() : Hyperfine()
@@ -31,4 +31,4 @@ void IsingHyperfine::fill(Eigen::MatrixXcd* hamiltonian,
   return;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

@@ -6,11 +6,11 @@
 // Spin with fixed quantum number 1/2 and hence multiplicity (= 2).
 // Gyromagnetic ratio is for the free electron by default.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Spin.h"
+#include "SpinDec/Spin.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class ElectronSpin : public Spin
@@ -35,6 +35,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // ELECTRONSPIN_H_

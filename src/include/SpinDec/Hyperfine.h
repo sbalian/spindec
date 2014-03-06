@@ -45,16 +45,16 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteraction.h"
+#include "SpinDec/SpinInteraction.h"
 
-#include "ElectronSpin.h"
-#include "NuclearSpin.h"
+#include "SpinDec/ElectronSpin.h"
+#include "SpinDec/NuclearSpin.h"
 
-#include "HyperfineParameters.h"
+#include "SpinDec/HyperfineParameters.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class Hyperfine : public SpinInteraction
@@ -90,6 +90,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // HYPERFINE_H_

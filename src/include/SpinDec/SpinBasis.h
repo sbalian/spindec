@@ -14,14 +14,14 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinBasis
@@ -85,7 +85,7 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPINBASIS_H_
 

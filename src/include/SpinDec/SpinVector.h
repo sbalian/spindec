@@ -5,12 +5,12 @@
 //
 // Multiple Spin container
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Spin.h"
+#include "SpinDec/Spin.h"
 #include <vector>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinVector {
@@ -35,6 +35,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif  // SPINVECTOR_H_

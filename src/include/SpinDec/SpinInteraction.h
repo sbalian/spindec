@@ -6,18 +6,18 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <Eigen/Dense>
 
-#include "Spin.h"
-#include "SpinVector.h"
-#include "SpinBasis.h"
-#include "UniformMagneticField.h"
+#include "SpinDec/Spin.h"
+#include "SpinDec/SpinVector.h"
+#include "SpinDec/SpinBasis.h"
+#include "SpinDec/UniformMagneticField.h"
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinInteraction
@@ -64,6 +64,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPININTERACTION_H_

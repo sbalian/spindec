@@ -1,11 +1,11 @@
 // See Eigenspectrum.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Eigenspectrum.h"
-#include "BoostEigen.h"
-#include "Errors.h"
+#include "SpinDec/Eigenspectrum.h"
+#include "SpinDec/BoostEigen.h"
+#include "SpinDec/Errors.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 Eigenspectrum::Eigenspectrum() : diagonalizer_("Eigen")
@@ -108,4 +108,4 @@ void Eigenspectrum::diagonalize(const Eigen::MatrixXcd& matrix)
 
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

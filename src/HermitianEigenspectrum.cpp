@@ -1,9 +1,9 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "HermitianEigenspectrum.h"
-#include "BoostEigen.h"
-#include "Errors.h"
+#include "SpinDec/HermitianEigenspectrum.h"
+#include "SpinDec/BoostEigen.h"
+#include "SpinDec/Errors.h"
 
 // For Lapack zheev diagonalizer (Intel example TODO link)
 // ---------------------------------------------
@@ -16,7 +16,7 @@ extern "C" void zheev_(const char* jobz,const char* uplo, int* n,
     double* rwork, int* info );
 // ---------------------------------------------
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 void HermitianEigenspectrum::diagonalize_lapack(
@@ -138,4 +138,4 @@ Eigen::MatrixXcd HermitianEigenspectrum::spectralDecomposition() const
   return BoostEigen::unitarySpectralDecomposition(eigenvectors_, eigenvalues_);
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

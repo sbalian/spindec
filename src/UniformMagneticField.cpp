@@ -1,9 +1,9 @@
 // See UniformMagneticField.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "UniformMagneticField.h"
+#include "SpinDec/UniformMagneticField.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 UniformMagneticField::UniformMagneticField()
@@ -53,4 +53,4 @@ void UniformMagneticField::set_direction(const ThreeVector& direction)
   
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

@@ -5,11 +5,11 @@
 //
 // Nothing special for now, just Spin ...
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Spin.h"
+#include "SpinDec/Spin.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class NuclearSpin : public Spin
@@ -29,6 +29,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // NUCLEARSPIN_H_

@@ -1,12 +1,12 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteractionGraph.h"
-#include "Errors.h"
+#include "SpinDec/SpinInteractionGraph.h"
+#include "SpinDec/Errors.h"
 
 #include <algorithm>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 void SpinInteractionGraph::quit_if_vertex_label_out_of_bounds(
@@ -188,4 +188,4 @@ SpinInteractionGraph SpinInteractionGraph::join(
 SpinInteractionGraph::~SpinInteractionGraph()
 {/**/}
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

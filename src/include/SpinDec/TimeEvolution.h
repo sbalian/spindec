@@ -6,12 +6,12 @@
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "types.h"
+#include "SpinDec/types.h"
 #include <iostream>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class TimeEvolution
@@ -75,6 +75,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // TIMEEVOLUTION_H_

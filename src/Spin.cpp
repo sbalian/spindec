@@ -1,12 +1,12 @@
 // See Spin.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Spin.h"
-#include "Errors.h"
+#include "SpinDec/Spin.h"
+#include "SpinDec/Errors.h"
 
 #include <iomanip>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 Spin::Spin() :
@@ -111,4 +111,4 @@ std::ostream& operator<<(std::ostream& os, Spin const & spin)
   return os;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

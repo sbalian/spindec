@@ -1,13 +1,13 @@
 // See Dipolar.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Dipolar.h"
-#include "MathPhysConstants.h"
-#include "BoostEigen.h"
+#include "SpinDec/Dipolar.h"
+#include "SpinDec/MathPhysConstants.h"
+#include "SpinDec/BoostEigen.h"
 
 #include <cmath>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 void Dipolar::calculate(const Spin & spin1, const Spin & spin2,
@@ -54,4 +54,4 @@ void Dipolar::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
   return;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

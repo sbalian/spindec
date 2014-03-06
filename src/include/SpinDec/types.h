@@ -1,12 +1,12 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
-// Custom built in typedefs, usings and consts for SpinDecoherence.
-// All in the SpinDecoherence namespace.
-// IMPORTANT: Do not include any SpinDecoherence classes here!
+// Custom built in typedefs, usings and consts for SpinDec.
+// All in the SpinDec namespace.
+// IMPORTANT: Do not include any SpinDec classes here!
 // TODO consts OK here?
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <Eigen/Dense>
 #include <complex>
@@ -14,7 +14,7 @@
 #include <string>
 #include <iostream>
 
-namespace SpinDecoherence {
+namespace SpinDec {
 
 // Real 3-vector
 typedef Eigen::Vector3d ThreeVector;

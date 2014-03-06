@@ -1,12 +1,12 @@
 // See SpinBasis.h for description.
-// Seto Balian, Mar 3, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinBasis.h"
-#include "Errors.h"
+#include "SpinDec/SpinBasis.h"
+#include "SpinDec/Errors.h"
 
 #include <iomanip>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 unsigned int SpinBasis::calc_multiplicity(const double quantum_number) const
@@ -231,7 +231,7 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
   return os;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 // Don't use this ...
 //void SpinBasis::truncate(const std::vector<unsigned int> & spin_indices,

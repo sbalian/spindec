@@ -6,11 +6,11 @@
 // Abstract base class for SpinState and SpinOperator in the matrix
 // representation. Holds the Zeeman basis and a dimension.
 //
-// Seto Balian, Feb 20, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinBasis.h"
+#include "SpinDec/SpinBasis.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class MatrixRepresentation
@@ -40,6 +40,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // MATRIXREPRESENTATION_H_

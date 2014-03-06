@@ -1,11 +1,11 @@
-// For testing SpinDecoherence
-// Seto Balian, Feb 21, 2014
+// For testing SpinDec
+// Seto Balian, Mar 6, 2014
 
 #include <iostream>
 
-#include "base.h"
+#include "SpinDec/base.h"
 
-using namespace SpinDecoherence;
+using namespace SpinDec;
 
 int main() {
 

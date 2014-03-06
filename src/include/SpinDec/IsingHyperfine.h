@@ -6,11 +6,11 @@
 // Like Hyperfine but fill method ignores (1/2) A [S+I- + S-I+]
 // in H_A = A Sz Iz + (1/2) A [S+I- + S-I+].
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Hyperfine.h"
+#include "SpinDec/Hyperfine.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class IsingHyperfine : public Hyperfine
@@ -30,6 +30,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // ISINGHYPERFINE_H_

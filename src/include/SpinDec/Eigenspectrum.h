@@ -10,13 +10,13 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <Eigen/Dense>
 #include <complex>
 #include <string>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class Eigenspectrum
@@ -60,6 +60,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // EIGENSPECTRUM_H_
