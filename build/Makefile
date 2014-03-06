@@ -1,5 +1,5 @@
-# SpinDecoherence Makefile
-# Seto Balian, Mar 3, 2014
+# SpinDec Makefile
+# Seto Balian, Mar 6, 2014
 
 # Basic user input
 #####################
@@ -13,7 +13,7 @@ DEBUG=1
 SOURCE_PATH=../src/
 
 # Download and extract Eigen from http://eigen.tuxfamily.org
-EIGEN_PATH=../src/eigen/
+EIGEN_PATH=/home/sbalian/eigen/
 # Download and extract boost from http://www.boost.org/
 # BOOSTPATH=../boost/ 
 
@@ -29,6 +29,10 @@ else
 COMPILER_FLAGS=-O3 -Wall
 endif
 
+# Other variables
+# Header path
+HEADER_PATH=$(SOURCE_PATH)include/
+
 #####################
 
 # List of executables
@@ -40,15 +44,17 @@ all: $(EXECUTABLES)
 
 # TODO Are the two %.o's OK?
 
-%.o: $(SOURCE_PATH)%.cpp $(SOURCE_PATH)%.h
-	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH) $<
+ALL_SOURCE=$(wildcard $(SOURCE_PATH)*.cpp)
+
+%.o: $(SOURCE_PATH)%.cpp $(HEADER_PATH)%.h
+	$(COMPILER) -c $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) $<
 
 %.o: $(SOURCE_PATH)%.cpp
-	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH) $<
+	$(COMPILER) -c $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) $<
 
-allobjects:
-	$(COMPILER) -c $(COMPILER_FLAGS) -I$(EIGEN_PATH)\
-  $(wildcard $(SOURCE_PATH)*.cpp)
+#objects:
+#	$(COMPILER) -c $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH)\
+#  $(wildcard $(SOURCE_PATH)*.cpp)
 
 #####################
 
@@ -70,7 +76,8 @@ test_boosteigen.o\
 BoostEigen.o
 
 test_boosteigen: $(TEST_BOOSTEIGEN_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) $(TEST_BOOSTEIGEN_OBJECTS) -o test_boosteigen
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_BOOSTEIGEN_OBJECTS)\
+-o test_boosteigen
 
 # test_spins
 TEST_SPINS_OBJECTS=\
@@ -87,7 +94,8 @@ Errors.o\
 BoostEigen.o
 
 test_spins: $(TEST_SPINS_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINS_OBJECTS) -o test_spins
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINS_OBJECTS)\
+-o test_spins
 
 # test_spinbasis
 TEST_SPINBASIS_OBJECTS=\
@@ -104,7 +112,8 @@ SpinState.o\
 BoostEigen.o
 
 test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) $(TEST_SPINBASIS_OBJECTS) -o test_spinbasis
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINBASIS_OBJECTS)\
+-o test_spinbasis
 
 # test_misc
 TEST_MISC_OBJECTS=\
@@ -112,7 +121,8 @@ test_misc.o\
 MathPhysConstants.o
 
 test_misc: $(TEST_MISC_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) $(TEST_MISC_OBJECTS) -o test_misc
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_MISC_OBJECTS)\
+-o test_misc
 
 # test_evolution
 TEST_EVOLUTION_OBJECTS=\
@@ -142,7 +152,8 @@ SpinInteractionVertex.o\
 SpinInteractionEdge.o
 
 test_evolution: $(TEST_EVOLUTION_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) $(TEST_EVOLUTION_OBJECTS) $(LAPACK_FLAGS)\
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_EVOLUTION_OBJECTS)\
+$(LAPACK_FLAGS)\
   -o test_evolution
 
 #####################
@@ -152,10 +163,11 @@ test_evolution: $(TEST_EVOLUTION_OBJECTS)
 
 # Make sure this is all safe!!!
 
-clean:
-	rm -f $(EXECUTABLES) && rm -f $(TEST_EXCUTABLES) && rm -f *.o
+clean: tidy
+	rm -f $(EXECUTABLES) && rm -f test_*
 
 tidy:
 	rm -f *.o
+
 
 #####################

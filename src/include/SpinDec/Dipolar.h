@@ -28,11 +28,11 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteraction.h"
+#include "SpinDec/SpinInteraction.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class Dipolar : public SpinInteraction
@@ -56,6 +56,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif	 // DIPOLAR_H_

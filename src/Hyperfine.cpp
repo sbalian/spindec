@@ -1,14 +1,14 @@
 // See Hyperfine.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Hyperfine.h"
-#include "MathPhysConstants.h"
+#include "SpinDec/Hyperfine.h"
+#include "SpinDec/MathPhysConstants.h"
 #include <cmath>
 
-#include "Errors.h"
-#include "Dipolar.h"
+#include "SpinDec/Errors.h"
+#include "SpinDec/Dipolar.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 double Hyperfine::envelope_function(const unsigned int index,
@@ -178,4 +178,4 @@ void Hyperfine::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
   return;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

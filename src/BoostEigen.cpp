@@ -1,10 +1,10 @@
 // See BoostEigen.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "BoostEigen.h"
+#include "SpinDec/BoostEigen.h"
 #include <Eigen/Dense>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 double BoostEigen::cosAngleBetween(const ThreeVector & a,
@@ -96,4 +96,4 @@ ComplexMatrix BoostEigen::unitarySpectralDecomposition(
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.adjoint());
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

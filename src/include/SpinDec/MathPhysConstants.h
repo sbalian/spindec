@@ -5,9 +5,9 @@
 //
 // Static methods for mathematical and physical constants.
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Mar 6, 2014
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class MathPhysConstants
@@ -28,6 +28,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // MATHPHYSCONSTANTS_H_

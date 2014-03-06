@@ -5,13 +5,13 @@
 //
 // Edge for a spin interaction graph.
 //
-// Seto Balian, Feb 20, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <utility>
-#include "SpinInteractionVertex.h"
-#include "SpinInteraction.h"
+#include "SpinDec/SpinInteractionVertex.h"
+#include "SpinDec/SpinInteraction.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinInteractionEdge
@@ -32,6 +32,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPININTERACTIONEDGE_H_

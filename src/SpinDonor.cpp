@@ -1,13 +1,13 @@
 // See SpinDonor.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 // TODO double comparisons, make sure it's all safe ... test it.
 // TODO Organise and clean up comments.
 
-#include "SpinDonor.h"
-#include "Errors.h"
+#include "SpinDec/SpinDonor.h"
+#include "SpinDec/Errors.h"
 #include <cmath>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 struct AdiabaticLabel // TODO Is this OK here?
@@ -425,5 +425,5 @@ unsigned int SpinDonor::orthogonal_label(const unsigned int label) const
 }
 
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 

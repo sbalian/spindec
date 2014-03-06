@@ -8,20 +8,20 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Feb 24, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <string>
 
-#include "SpinOperator.h"
+#include "SpinDec/SpinOperator.h"
 
-#include "SpinInteractionGraph.h"
-#include "HermitianEigenspectrum.h"
+#include "SpinDec/SpinInteractionGraph.h"
+#include "SpinDec/HermitianEigenspectrum.h"
 
-#include "UniformMagneticField.h"
+#include "SpinDec/UniformMagneticField.h"
 
 #include <Eigen/Dense>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinHamiltonian : public SpinOperator
@@ -61,6 +61,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPINHAMILTONIAN_H_

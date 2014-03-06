@@ -1,11 +1,11 @@
 // See SpinState.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinState.h"
-#include "BoostEigen.h"
-#include "Errors.h"
+#include "SpinDec/SpinState.h"
+#include "SpinDec/BoostEigen.h"
+#include "SpinDec/Errors.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 SpinState::SpinState() : MatrixRepresentation()
@@ -59,4 +59,4 @@ void SpinState::set_zero()
   return;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

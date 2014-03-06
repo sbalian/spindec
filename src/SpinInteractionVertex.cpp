@@ -1,9 +1,9 @@
 // See SpinInteractionVertex.h for description.
-// Seto Balian, Feb 20, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteractionVertex.h"
+#include "SpinDec/SpinInteractionVertex.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 SpinInteractionVertex::SpinInteractionVertex() :
@@ -32,5 +32,5 @@ void SpinInteractionVertex::set_spin(const Spin& spin)
   return;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 

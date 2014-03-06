@@ -9,15 +9,15 @@
 //
 // gyromagnetic ratio = Larmor frequency / magnetic field
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <iostream>
 
-#include "SpinState.h"
+#include "SpinDec/SpinState.h"
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class Spin
@@ -48,10 +48,10 @@ public:
   double get_gyromagnetic_ratio() const;
   const ThreeVector & get_position() const;
   const SpinState & get_state() const;
-  
+
   void set_position(const ThreeVector & position);
   void set_state_vector(const ComplexVector & state_vector);
-  
+
   unsigned int get_multiplicity() const;
 
   // Print with cout
@@ -59,6 +59,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPIN_H_

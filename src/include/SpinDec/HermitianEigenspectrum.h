@@ -11,11 +11,11 @@
 // DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
 //         "Lapack" - Lapack zheev
 //
-// Seto Balian, Feb 6, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Eigenspectrum.h"
+#include "SpinDec/Eigenspectrum.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class HermitianEigenspectrum : public Eigenspectrum
@@ -45,6 +45,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // HERMITIANEIGENSPECTRUM_H_

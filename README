@@ -1,5 +1,5 @@
 ================================================================================
-                                SpinDecoherence
+                                SpinDec
 ================================================================================
 (X) Introduction
 (X) Installation
@@ -21,7 +21,7 @@ Implements:
 
 Notes:
 - Most code in C++
-- Based on old code "cce" -> "SpinDecoherence" developed in 2011-2013
+- Based on old code "cce" -> "SpinDec" developed in 2011-2013
 - This version started 19/05/2013
 - Some methods were originally written in Fortran by Tania Monteiro
 
@@ -78,7 +78,7 @@ Seto Balian <seto.balian@gmail.com>
 
 ================================================================================
 
-Last modified: Jan 29, 2014
+Last modified: Mar 06, 2014
 
 ================================================================================
 

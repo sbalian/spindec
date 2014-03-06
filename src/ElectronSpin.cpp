@@ -1,10 +1,10 @@
 // See ElectronSpin.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "ElectronSpin.h"
-#include "MathPhysConstants.h"
+#include "SpinDec/ElectronSpin.h"
+#include "SpinDec/MathPhysConstants.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 const double free_gamma_e = MathPhysConstants::electron_gyromagnetic_ratio();
@@ -30,4 +30,4 @@ ElectronSpin::ElectronSpin(const double gyromagnetic_ratio,
 {/**/}
 
 
-} // namespace SpinDecoherence
+} // namespace SpinDec

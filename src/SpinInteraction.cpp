@@ -1,11 +1,11 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteraction.h"
-#include "Errors.h"
+#include "SpinDec/SpinInteraction.h"
+#include "SpinDec/Errors.h"
 #include <cmath>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 SpinInteraction::SpinInteraction() :
@@ -165,5 +165,5 @@ double SpinInteraction::get_strength() const
   return strength_;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 

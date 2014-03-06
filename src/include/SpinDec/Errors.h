@@ -5,11 +5,11 @@
 //
 // Error and warning handling.
 //
-// Seto Balian, Feb 11, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class Errors
@@ -24,6 +24,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // ERRORS_H_

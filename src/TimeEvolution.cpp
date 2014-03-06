@@ -1,14 +1,14 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "TimeEvolution.h"
+#include "SpinDec/TimeEvolution.h"
 #include <cmath>
 #include <algorithm>
-#include "Errors.h"
+#include "SpinDec/Errors.h"
 
 #include <iomanip>
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 void TimeEvolution::clear()
@@ -226,5 +226,5 @@ std::ostream& operator<<(std::ostream& os, TimeEvolution const & time_evolution)
 
 
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 

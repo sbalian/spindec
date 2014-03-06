@@ -5,13 +5,13 @@
 //
 // Uniform magnetic field parallel to some direction in Cartesian coordinates.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <Eigen/Dense>
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class UniformMagneticField
@@ -38,6 +38,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // UNIFORMMAGNETICFIELD_H_

@@ -5,11 +5,11 @@
 //
 // Vertex for a spin interaction graph. Contains a label and a spin.
 //
-// Seto Balian, Feb 20, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "Spin.h"
+#include "SpinDec/Spin.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinInteractionVertex
@@ -29,6 +29,6 @@ public:
   
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPININTERACTIONVERTEX_H_

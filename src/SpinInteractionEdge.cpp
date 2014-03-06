@@ -1,9 +1,9 @@
 // See SpinInteractionEdge.h for description.
-// Seto Balian, Feb 20, 2014
+// Seto Balian, Mar 6, 2014
 
-#include "SpinInteractionEdge.h"
+#include "SpinDec/SpinInteractionEdge.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 SpinInteractionEdge::SpinInteractionEdge() :
@@ -39,5 +39,5 @@ SpinInteraction* SpinInteractionEdge::get_interaction() const
   return interaction_;
 }
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 

@@ -5,17 +5,17 @@
 //
 // Static methods to extend Eigen (linear algebra package).
 // Note that the naming convention complies with that of Eigen, and is different
-// from the rest of SpinDecoherence.
+// from the rest of SpinDec.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <Eigen/Dense>
 
 #include <complex>
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class BoostEigen
@@ -69,7 +69,7 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // BOOSTEIGEN_H_
 

@@ -5,17 +5,17 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Mar 5, 2014
+// Seto Balian, Mar 6, 2014
 
 #include <complex>
 #include <iostream>
 
-#include "SpinBasis.h"
-#include "MatrixRepresentation.h"
+#include "SpinDec/SpinBasis.h"
+#include "SpinDec/MatrixRepresentation.h"
 
-#include "types.h"
+#include "SpinDec/types.h"
 
-namespace SpinDecoherence
+namespace SpinDec
 {
 
 class SpinOperator : public MatrixRepresentation
@@ -54,6 +54,6 @@ public:
 
 };
 
-} // namespace SpinDecoherence
+} // namespace SpinDec
 
 #endif // SPINOPERATOR_H_
