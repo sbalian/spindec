@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include "SpinDec/MathPhysConstants.h"
@@ -176,6 +176,11 @@ void Hyperfine::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
   SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
       spin_label1,spin_label2,false,cdouble(0.5,0.0));
   return;
+}
+
+std::auto_ptr<SpinInteraction> Hyperfine::clone() const
+{
+  return std::auto_ptr<SpinInteraction>( new Hyperfine(*this) );
 }
 
 } // namespace SpinDec

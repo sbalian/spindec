@@ -1,8 +1,9 @@
 // For testing SpinDec
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 
 #include <iostream>
 #include <iomanip>
+#include <memory>
 
 #include "SpinDec/base.h"
 
@@ -39,8 +40,7 @@ int main ()
   
   // Interacting with a preset hyperfine interaction (9e3 M rad s-1) 
   Hyperfine interaction_A(9.0e3);
-  twocluster_graph.add_edge(0,1,&interaction_A);
-
+  twocluster_graph.add_edge(0,1,interaction_A.clone());
 
   // A pair of bath 29Si nuclei at different positions
   twocluster_graph.add_vertex(si29_1);
@@ -53,12 +53,12 @@ int main ()
   IsingHyperfine interaction_J1(hyperfine_parameters);
   IsingHyperfine interaction_J2(hyperfine_parameters);
 
-  twocluster_graph.add_edge(0,2,&interaction_J1);
-  twocluster_graph.add_edge(0,3,&interaction_J2);
+  twocluster_graph.add_edge(0,2,interaction_J1.clone());
+  twocluster_graph.add_edge(0,3,interaction_J2.clone());
   
   // Dipolar interaction between the two 29Si
   Dipolar interaction_C12;
-  twocluster_graph.add_edge(2,3,&interaction_C12);
+  twocluster_graph.add_edge(2,3,interaction_C12.clone());
   
   // Construct the spin Hamiltonian
   SpinHamiltonian H(twocluster_graph,field);

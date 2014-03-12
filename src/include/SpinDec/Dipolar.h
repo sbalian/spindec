@@ -28,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 
 #include "SpinDec/SpinInteraction.h"
 
@@ -53,6 +53,8 @@ public:
                    const SpinBasis & basis,
                    const unsigned int spin_label1,
                    const unsigned int spin_label2) const;
+  
+  virtual std::auto_ptr<SpinInteraction> clone() const;
 
 };
 
