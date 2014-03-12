@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 // TODO double comparisons, make sure it's all safe ... test it.
 // TODO Organise and clean up comments.
 
@@ -48,7 +48,7 @@ void SpinDonor::build_graph()
 {
   add_vertex(electron_);
   add_vertex(nucleus_);
-  add_edge(0,1,&hyperfine_);
+  add_edge(0,1,hyperfine_.clone());
   return;
 }
 

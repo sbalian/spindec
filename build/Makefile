@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Mar 6, 2014
+# Seto Balian, Mar 10, 2014
 
 # Basic user input
 #####################
@@ -76,7 +76,7 @@ test_boosteigen.o\
 BoostEigen.o
 
 test_boosteigen: $(TEST_BOOSTEIGEN_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_BOOSTEIGEN_OBJECTS)\
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_BOOSTEIGEN_OBJECTS) \
 -o test_boosteigen
 
 # test_spins
@@ -94,7 +94,7 @@ Errors.o\
 BoostEigen.o
 
 test_spins: $(TEST_SPINS_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINS_OBJECTS)\
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINS_OBJECTS) \
 -o test_spins
 
 # test_spinbasis
@@ -112,7 +112,7 @@ SpinState.o\
 BoostEigen.o
 
 test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINBASIS_OBJECTS)\
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINBASIS_OBJECTS) \
 -o test_spinbasis
 
 # test_misc
@@ -121,7 +121,7 @@ test_misc.o\
 MathPhysConstants.o
 
 test_misc: $(TEST_MISC_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_MISC_OBJECTS)\
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_MISC_OBJECTS) \
 -o test_misc
 
 # test_evolution
@@ -152,7 +152,7 @@ SpinInteractionVertex.o\
 SpinInteractionEdge.o
 
 test_evolution: $(TEST_EVOLUTION_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_EVOLUTION_OBJECTS)\
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_EVOLUTION_OBJECTS) \
 $(LAPACK_FLAGS)\
   -o test_evolution
 

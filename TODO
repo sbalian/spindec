@@ -47,6 +47,10 @@ Seto Balian, Mar 5, 2014
 - Adhere to Google style guide better, constants, typedefs, etc.
 - Struct declare in header and implement in source? or all in header?
 - Extensive commenting and doc
+- Make sure using the custom copy constructor and the assignment operators
+  properly. Also, rule of three? Do I really need a destructor for
+  edge class? Also, use = in copy constructor?
+- Make sure you're using auto_ptr properly
 
 
 GRAVEYARD

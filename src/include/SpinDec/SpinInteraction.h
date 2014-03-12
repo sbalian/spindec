@@ -6,7 +6,7 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 
 #include <Eigen/Dense>
 
@@ -16,6 +16,8 @@
 #include "SpinDec/UniformMagneticField.h"
 
 #include "SpinDec/types.h"
+
+#include <memory>
 
 namespace SpinDec
 {
@@ -59,6 +61,8 @@ public:
                    const SpinBasis & basis,
                    const unsigned int spin_label1,
                    const unsigned int spin_label2) const = 0;
+  
+  virtual std::auto_ptr<SpinInteraction> clone() const = 0;
   
   virtual ~SpinInteraction();
 

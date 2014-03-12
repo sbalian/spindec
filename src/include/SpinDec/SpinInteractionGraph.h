@@ -5,14 +5,18 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 
 #include "SpinDec/SpinInteractionVertex.h"
 #include "SpinDec/SpinInteractionEdge.h"
 
 #include "SpinDec/SpinVector.h"
 
+#include "SpinDec/SpinBasis.h"
+#include "SpinDec/SpinState.h"
+
 #include <vector>
+#include <memory>
 
 namespace SpinDec
 {
@@ -27,20 +31,24 @@ private:
   // Edges
   std::vector<SpinInteractionEdge> edges_;
   
+  SpinBasis basis_;
+  SpinState state_;
+  
   void quit_if_vertex_label_out_of_bounds(const unsigned int label) const;
   void quit_if_edge_index_out_of_bounds(const unsigned int index) const;
   
   void set_vertex(const unsigned int label,const SpinInteractionVertex& vertex);
   void set_edge(const unsigned int index,const SpinInteractionEdge& edge);
-  
+    
 public:
 
   SpinInteractionGraph();
   
   void add_vertex(const Spin & spin);
+  
   void add_edge(unsigned int label1,
                 unsigned int label2,
-                SpinInteraction* interaction);
+                const std::auto_ptr<SpinInteraction>& interaction);
   
   void set_spin(const unsigned int label,const Spin& spin);
   
@@ -49,7 +57,7 @@ public:
   void clear();
   
   const Spin& get_spin(const unsigned int label) const;
-  SpinInteraction* get_interaction(const unsigned int index) const;
+  std::auto_ptr<SpinInteraction> get_interaction(const unsigned int index) const;
   
   SpinVector get_spins() const;
   

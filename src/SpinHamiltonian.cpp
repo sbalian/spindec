@@ -1,8 +1,10 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 12, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
+
+#include <memory>
 
 #include <complex>
 
@@ -31,13 +33,10 @@ void SpinHamiltonian::fill_zeeman(const SpinInteractionGraph& graph)
 
 // fill elements for all spin interaction
 void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
-{
-  
-  SpinInteraction* interaction_ptr = NULL;
-  
+{  
   // Loop over edges
   for (unsigned int i=0;i<graph.num_edges();i++) {
-    interaction_ptr = graph.get_interaction(i);
+    std::auto_ptr<SpinInteraction> interaction_ptr = graph.get_interaction(i);
     if (!interaction_ptr->strength_preset()) { // calculate only if strength
                                                // NOT preset
       interaction_ptr -> calculate(graph.get_edge(i).get_vertex1().get_spin(),
