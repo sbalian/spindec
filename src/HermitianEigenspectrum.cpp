@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/HermitianEigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
@@ -20,7 +20,7 @@ namespace SpinDec
 {
 
 void HermitianEigenspectrum::diagonalize_lapack(
-    const Eigen::MatrixXcd & matrix)
+    const ComplexMatrix & matrix)
 {
   // Code adapted from Intel example TODO link
 
@@ -42,7 +42,7 @@ void HermitianEigenspectrum::diagonalize_lapack(
   r = 0;
   for (p=0;p<n;p++) {
     for (q=0;q<n;q++) { // TODO std complex set to MKL complex ... is this OK?
-      a[r].real = std::complex<double>(matrix(q,p)).real();
+      a[r].real = CDouble(matrix(q,p)).real();
       a[r].imag = 0.0;
       r = r + 1;
     }
@@ -65,16 +65,16 @@ void HermitianEigenspectrum::diagonalize_lapack(
   }
 
   eigenvalues_ = Eigen::VectorXcd(n);
-  eigenvectors_ = Eigen::MatrixXcd(n,n);
+  eigenvectors_ = ComplexMatrix(n,n);
 
   for (p=0;p<n;p++) {
-    eigenvalues_(p) = std::complex<double>(w[p],0.0);
+    eigenvalues_(p) = CDouble(w[p],0.0);
   }
 
   r = 0;
   for (p=0;p<n;p++) {
     for (q=0;q<n;q++) {
-      eigenvectors_(q,p) = std::complex<double>(a[r].real,a[r].imag);
+      eigenvectors_(q,p) = CDouble(a[r].real,a[r].imag);
       r = r + 1;
     }
   }
@@ -86,13 +86,13 @@ void HermitianEigenspectrum::diagonalize_lapack(
 }
 
 void HermitianEigenspectrum::diagonalize_eigen(
-    const Eigen::MatrixXcd & matrix)
+    const ComplexMatrix & matrix)
 {
-  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> eigensolver(matrix.rows());
+  Eigen::SelfAdjointEigenSolver<ComplexMatrix> eigensolver(matrix.rows());
   eigensolver.compute(matrix);
 
   eigenvectors_ = eigensolver.eigenvectors();
-  eigenvalues_  = (eigensolver.eigenvalues()).cast< std::complex<double> > ();
+  eigenvalues_  = (eigensolver.eigenvalues()).cast< CDouble > ();
   return;
   
 }
@@ -102,19 +102,19 @@ HermitianEigenspectrum::HermitianEigenspectrum() :
 {/**/}
 
 HermitianEigenspectrum::HermitianEigenspectrum(
-    const Eigen::MatrixXcd & matrix) : Eigenspectrum()
+    const ComplexMatrix & matrix) : Eigenspectrum()
 {
   diagonalize(matrix);
 }
 
-HermitianEigenspectrum::HermitianEigenspectrum(const Eigen::MatrixXcd & matrix,
-    const std::string & diagonalizer) : 
+HermitianEigenspectrum::HermitianEigenspectrum(const ComplexMatrix & matrix,
+    const string & diagonalizer) : 
         Eigenspectrum(diagonalizer)
 {
   diagonalize(matrix);
 }
 
-void HermitianEigenspectrum::diagonalize(const Eigen::MatrixXcd & matrix)
+void HermitianEigenspectrum::diagonalize(const ComplexMatrix & matrix)
 {
   if (diagonalizer_ == "Eigen") {
     diagonalize_eigen(matrix);
@@ -132,7 +132,7 @@ void HermitianEigenspectrum::diagonalize(const Eigen::MatrixXcd & matrix)
   
 }
 
-Eigen::MatrixXcd HermitianEigenspectrum::spectralDecomposition() const
+ComplexMatrix HermitianEigenspectrum::spectralDecomposition() const
 {
   // since eigenvectors orthonormal, V-1 = V^+
   return BoostEigen::unitarySpectralDecomposition(eigenvectors_, eigenvalues_);

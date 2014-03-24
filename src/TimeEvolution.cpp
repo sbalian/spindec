@@ -1,5 +1,5 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/TimeEvolution.h"
 #include <cmath>
@@ -19,20 +19,19 @@ void TimeEvolution::clear()
   return;
 }
 
-TimeEvolution::TimeEvolution(const dvector& time,
-              const cdvector& evolution)
+TimeEvolution::TimeEvolution(const DoubleArray& time,
+              const CDoubleArray& evolution)
 {
   time_ = time;
   evolution_ = evolution;
   dimension_ = time.size();
 }
 
-bool TimeEvolution::is_time_equal(const dvector& time) const
+bool TimeEvolution::is_time_equal(const DoubleArray& time) const
                                          // is time = time_?
                                          // element by element
 {
-  
-  const unsigned int n = time.size();
+  const UInt n = time.size();
   if (n != get_time().size()) {
     Errors::quit("TimeEvolution time dimension mismatch.");
     return false;
@@ -48,14 +47,14 @@ TimeEvolution::TimeEvolution() : dimension_(0)
 {/**/}
 
 TimeEvolution::TimeEvolution(const double initial_time,
-    const double final_time, const unsigned int num_steps)
+    const double final_time, const UInt num_steps)
 {
   initialize(initial_time,final_time,num_steps);
 }
 
 void TimeEvolution::initialize(const double initial_time,
                 const double final_time,
-                const unsigned int num_steps)
+                const UInt num_steps)
 {
   
   clear();
@@ -66,7 +65,7 @@ void TimeEvolution::initialize(const double initial_time,
   
   double time = initial_time;
   time_.push_back(time);
-  for (unsigned int i=0;i<num_steps;i++) {
+  for (UInt i=0;i<num_steps;i++) {
     time += time_step;
     time_.push_back(time);
   }
@@ -79,7 +78,7 @@ void TimeEvolution::initialize(const double initial_time,
 
 void TimeEvolution::initialize_logarithmic(const double initial_exponent,
                             const double final_exponent,
-                            const unsigned int num_steps)
+                            const UInt num_steps)
 {
   clear();
   dimension_ = num_steps + 1;
@@ -90,7 +89,7 @@ void TimeEvolution::initialize_logarithmic(const double initial_exponent,
   double exponent = initial_exponent;
   time_.push_back(std::pow(10.0,exponent));
   
-  for (unsigned int i=0;i<num_steps;i++) {
+  for (UInt i=0;i<num_steps;i++) {
     exponent += exponent_step;
     time_.push_back(std::pow(10.0,exponent));
   }
@@ -101,7 +100,7 @@ void TimeEvolution::initialize_logarithmic(const double initial_exponent,
   
 }
 
-double TimeEvolution::get_time(const unsigned int index) const
+double TimeEvolution::get_time(const UInt index) const
 {
   if (index >= get_dimension()) {
     Errors::quit("Invalid index to retrieve time.");
@@ -109,8 +108,8 @@ double TimeEvolution::get_time(const unsigned int index) const
   return time_[index];
 }
 
-const cdouble& TimeEvolution::get_evolution(
-    const unsigned int index) const
+const CDouble& TimeEvolution::get_evolution(
+    const UInt index) const
 {
   if (index >= get_dimension()) {
     Errors::quit("Invalid index to retrieve evolution.");
@@ -121,35 +120,35 @@ const cdouble& TimeEvolution::get_evolution(
 void TimeEvolution::set_evolution_zeros()
 {
   evolution_.clear();
-  for (unsigned int i=0;i<get_dimension();i++) {
-    evolution_.push_back(cdouble(0.0,0.0));
+  for (UInt i=0;i<get_dimension();i++) {
+    evolution_.push_back(CDouble(0.0,0.0));
   }
 }
 
 void TimeEvolution::set_evolution_ones()
 {
   evolution_.clear();
-  for (unsigned int i=0;i<get_dimension();i++) {
-    evolution_.push_back(cdouble(1.0,0.0));
+  for (UInt i=0;i<get_dimension();i++) {
+    evolution_.push_back(CDouble(1.0,0.0));
   }
 }
 
-const dvector& TimeEvolution::get_time() const
+const DoubleArray& TimeEvolution::get_time() const
 {
   return time_;
 }
 
-const cdvector& TimeEvolution::get_evolution() const
+const CDoubleArray& TimeEvolution::get_evolution() const
 {
   return evolution_;
 }
 
-unsigned int TimeEvolution::num_steps() const
+UInt TimeEvolution::num_steps() const
 {
   return get_dimension() - 1;
 }
 
-unsigned int TimeEvolution::get_dimension() const
+UInt TimeEvolution::get_dimension() const
 {  
   return dimension_;
 }
@@ -161,8 +160,8 @@ TimeEvolution TimeEvolution::operator+(
     Errors::quit("TimeEvolution time vectors not equal.");
   }
 
-  cdvector new_evolution;
-  for (unsigned int i=0;i<get_dimension();i++) {
+  CDoubleArray new_evolution;
+  for (UInt i=0;i<get_dimension();i++) {
     new_evolution.push_back( get_evolution()[i]+to_add.get_evolution()[i] );
   }
   
@@ -177,8 +176,8 @@ TimeEvolution TimeEvolution::operator *(
     Errors::quit("TimeEvolution time vectors not equal.");
   }
 
-  cdvector new_evolution;
-  for (unsigned int i=0;i<get_dimension();i++) {
+  CDoubleArray new_evolution;
+  for (UInt i=0;i<get_dimension();i++) {
     new_evolution.push_back( get_evolution()[i]*to_multiply.get_evolution()[i]);
   }
   
@@ -193,8 +192,8 @@ TimeEvolution TimeEvolution::operator /(
     Errors::quit("TimeEvolution time vectors not equal.");
   }
 
-  cdvector new_evolution;
-  for (unsigned int i=0;i<get_dimension();i++) {
+  CDoubleArray new_evolution;
+  for (UInt i=0;i<get_dimension();i++) {
     new_evolution.push_back( get_evolution()[i]/to_divide.get_evolution()[i] );
   }
   
@@ -212,7 +211,7 @@ std::ostream& operator<<(std::ostream& os, TimeEvolution const & time_evolution)
   os << std::left;
 
   os << "Time evolution (time units: microseconds)" << std::endl;
-  for (unsigned int i=0;i<time_evolution.get_dimension();i++) {
+  for (UInt i=0;i<time_evolution.get_dimension();i++) {
     os << std::setw(12) << time_evolution.get_time(i);
     os << std::setw(12) << time_evolution.get_evolution(i) << std::endl;
   }

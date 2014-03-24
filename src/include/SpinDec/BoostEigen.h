@@ -7,13 +7,13 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDec.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <Eigen/Dense>
 
 #include <complex>
 
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {

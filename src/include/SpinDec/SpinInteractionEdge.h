@@ -5,7 +5,7 @@
 //
 // Edge for a spin interaction graph.
 //
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <utility>
 #include "SpinDec/SpinInteractionVertex.h"

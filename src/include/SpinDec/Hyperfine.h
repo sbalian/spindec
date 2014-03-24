@@ -45,7 +45,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/SpinInteraction.h"
 
@@ -63,7 +63,7 @@ private:
 
   HyperfineParameters parameters_;
   
-  double envelope_function(const unsigned int index,
+  double envelope_function(const UInt index,
       const ThreeVector & separation) const;
   double n_parameter() const;
   double n_times_a() const;
@@ -80,13 +80,15 @@ public:
   
   virtual void calculate(const Spin & electron,
       const Spin & nucleus,
+      const ThreeVector& electron_position,
+      const ThreeVector& nuclear_position,
       const UniformMagneticField & field);
 
   virtual void fill(ComplexMatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
-                   const unsigned int spin_label1,
-                   const unsigned int spin_label2) const;
+                   const UInt spin_label1,
+                   const UInt spin_label2) const;
   
   virtual std::auto_ptr<SpinInteraction> clone() const;
 

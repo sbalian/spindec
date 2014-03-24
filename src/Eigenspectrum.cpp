@@ -1,5 +1,5 @@
 // See Eigenspectrum.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
@@ -13,43 +13,43 @@ Eigenspectrum::Eigenspectrum() : diagonalizer_("Eigen")
 }
 
 
-Eigenspectrum::Eigenspectrum(const Eigen::MatrixXcd & matrix) :
+Eigenspectrum::Eigenspectrum(const ComplexMatrix & matrix) :
     diagonalizer_("Eigen")
 {
   diagonalize(matrix);
   return;
 }
 
-Eigenspectrum::Eigenspectrum(const Eigen::MatrixXcd & matrix,
-    const std::string & diagonalizer) :
+Eigenspectrum::Eigenspectrum(const ComplexMatrix & matrix,
+    const string & diagonalizer) :
         diagonalizer_()
 {
   diagonalize(matrix);
   return;
 }
 
-Eigen::VectorXcd Eigenspectrum::get_eigenvalues() const
+const ComplexVector& Eigenspectrum::get_eigenvalues() const
 {
   return eigenvalues_;
 }
 
-Eigen::MatrixXcd Eigenspectrum::get_eigenvectors() const
+const ComplexMatrix& Eigenspectrum::get_eigenvectors() const
 {
   return eigenvectors_;
 }
 
-std::complex<double> Eigenspectrum::get_eigenvalue(
-    const unsigned int index) const
+CDouble Eigenspectrum::get_eigenvalue(
+    const UInt index) const
 {
   return eigenvalues_(index);
 }
 
-Eigen::VectorXcd Eigenspectrum::get_eigenvector(const unsigned int index) const
+ComplexVector Eigenspectrum::get_eigenvector(const UInt index) const
 {
   return eigenvectors_.col(index);
 }
 
-std::string Eigenspectrum::get_diagonalizer() const
+const string& Eigenspectrum::get_diagonalizer() const
 {
   return diagonalizer_;
 }
@@ -58,9 +58,9 @@ Eigenspectrum::~Eigenspectrum()
 {/**/
 }
 
-void Eigenspectrum::diagonalize_eigen(const Eigen::MatrixXcd& matrix)
+void Eigenspectrum::diagonalize_eigen(const ComplexMatrix& matrix)
 {
-  Eigen::ComplexEigenSolver<Eigen::MatrixXcd> eigensolver(matrix.rows());
+  Eigen::ComplexEigenSolver<ComplexMatrix> eigensolver(matrix.rows());
   eigensolver.compute(matrix);
 
   eigenvectors_ = eigensolver.eigenvectors();
@@ -69,7 +69,7 @@ void Eigenspectrum::diagonalize_eigen(const Eigen::MatrixXcd& matrix)
 
 }
 
-void Eigenspectrum::diagonalize_lapack(const Eigen::MatrixXcd& matrix)
+void Eigenspectrum::diagonalize_lapack(const ComplexMatrix& matrix)
 {
   quit_if_diagonalizer_not_supported();
   return;
@@ -77,24 +77,24 @@ void Eigenspectrum::diagonalize_lapack(const Eigen::MatrixXcd& matrix)
 
 void Eigenspectrum::quit_if_diagonalizer_not_supported() const
 {
-  std::string message = "Diagonalizer \"";
+  string message = "Diagonalizer \"";
   message += diagonalizer_;
   message += "\" not supported.";
   Errors::quit(message);
   return;
 }
 
-Eigenspectrum::Eigenspectrum(const std::string& diagonalizer) :
+Eigenspectrum::Eigenspectrum(const string& diagonalizer) :
     diagonalizer_(diagonalizer)
 {
 }
 
-Eigen::MatrixXcd Eigenspectrum::spectralDecomposition() const
+ComplexMatrix Eigenspectrum::spectralDecomposition() const
 {
   return BoostEigen::spectralDecomposition(eigenvectors_,eigenvalues_);
 }
 
-void Eigenspectrum::diagonalize(const Eigen::MatrixXcd& matrix)
+void Eigenspectrum::diagonalize(const ComplexMatrix& matrix)
 {
   
   if (diagonalizer_ == "Eigen") {

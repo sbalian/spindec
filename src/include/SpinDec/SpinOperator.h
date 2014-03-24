@@ -5,15 +5,13 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <complex>
 #include <iostream>
 
-#include "SpinDec/SpinBasis.h"
 #include "SpinDec/MatrixRepresentation.h"
-
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -24,7 +22,7 @@ protected:
 
   ComplexMatrix matrix_;
   virtual void quit_if_dimension_mismatch() const;
-  
+
 public:
   SpinOperator();
   SpinOperator(const ComplexMatrix & matrix, const SpinBasis & basis);
@@ -33,13 +31,13 @@ public:
   const ComplexMatrix& get_matrix() const;
   void set_matrix(const ComplexMatrix & matrix);
   
-  const cdouble& get_element(const unsigned int i,
-      const unsigned int j) const;
-  void set_element(const unsigned int i, const unsigned int j,
-      const cdouble& element);
+  const CDouble& get_element(const UInt i,
+      const UInt j) const;
+  void set_element(const UInt i, const UInt j,
+      const CDouble& element);
   
-  void add_to_element(const unsigned int i, const unsigned int j,
-      const cdouble& to_add);
+  void add_to_element(const UInt i, const UInt j,
+      const CDouble& to_add);
 
   // Operators: tensor product ^, Bases: combine ^ (like tensor product)
   SpinOperator operator^(const SpinOperator & rhs);

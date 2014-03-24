@@ -1,8 +1,8 @@
 // See Dipolar.h for description.
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/Dipolar.h"
-#include "SpinDec/MathPhysConstants.h"
+#include "SpinDec/constants.h"
 #include "SpinDec/BoostEigen.h"
 
 #include <cmath>
@@ -11,6 +11,7 @@ namespace SpinDec
 {
 
 void Dipolar::calculate(const Spin & spin1, const Spin & spin2,
+    const ThreeVector & position1, const ThreeVector & position2,
     const UniformMagneticField & field)
 {
   
@@ -19,11 +20,11 @@ void Dipolar::calculate(const Spin & spin1, const Spin & spin2,
   }
   
   // TODO Comment more, add units
-  const double prefactor = 1.0e29*MathPhysConstants::reduced_planck();
+  const double prefactor = 1.0e29*kReducedPlanck;
   const double gamma_product = spin1.get_gyromagnetic_ratio()
                               *spin2.get_gyromagnetic_ratio();
   const double non_spatial_dependence =prefactor*gamma_product;
-  const ThreeVector spin_separation = spin2.get_position()-spin1.get_position();
+  const ThreeVector spin_separation = position2-position1;
   
   const double radial_dependence =
       1.0/std::pow(spin_separation.norm(),3.0);
@@ -46,11 +47,11 @@ Dipolar::Dipolar(const double strength) :
 }
 
 void Dipolar::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
-    const SpinBasis& basis, const unsigned int spin_label1,
-    const unsigned int spin_label2) const
+    const SpinBasis& basis, const UInt spin_label1,
+    const UInt spin_label2) const
 {
   SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
-      spin_label1,spin_label2,false,cdouble(-0.25,0.0));
+      spin_label1,spin_label2,false,CDouble(-0.25,0.0));
   return;
 }
 

@@ -5,9 +5,9 @@
 //
 // Error and warning handling.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -18,7 +18,6 @@ class Errors
 public:
 
   static void quit();
-  
   static void quit(const string & message);
   static void warning(const string & message);
 

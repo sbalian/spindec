@@ -5,12 +5,10 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
-#include "SpinDec/SpinBasis.h"
 #include "SpinDec/MatrixRepresentation.h"
-
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -20,7 +18,6 @@ class SpinState : public MatrixRepresentation
 private:
   
   ComplexVector state_vector_;
-
   virtual void quit_if_dimension_mismatch() const;
   
 public:

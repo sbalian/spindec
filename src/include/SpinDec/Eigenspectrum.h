@@ -10,11 +10,13 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <Eigen/Dense>
 #include <complex>
 #include <string>
+
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -22,41 +24,41 @@ namespace SpinDec
 class Eigenspectrum
 {
 protected:
-  Eigen::MatrixXcd eigenvectors_;
-  Eigen::VectorXcd eigenvalues_;
+  ComplexMatrix eigenvectors_;
+  ComplexVector eigenvalues_;
   
-  const std::string diagonalizer_; // string (see above)
+  const string diagonalizer_; // string (see above)
 
-  explicit Eigenspectrum(const std::string & diagonalizer);
+  explicit Eigenspectrum(const string & diagonalizer);
   
   // Diagonalizers
-  virtual void diagonalize_eigen(const Eigen::MatrixXcd & matrix);
-  virtual void diagonalize_lapack(const Eigen::MatrixXcd & matrix);
+  virtual void diagonalize_eigen(const ComplexMatrix & matrix);
+  virtual void diagonalize_lapack(const ComplexMatrix & matrix);
   
   void quit_if_diagonalizer_not_supported() const;
   
-  virtual void diagonalize(const Eigen::MatrixXcd & matrix);
+  virtual void diagonalize(const ComplexMatrix & matrix);
 
 public:
   
   Eigenspectrum();
-  Eigenspectrum(const Eigen::MatrixXcd & matrix);
-  Eigenspectrum(const Eigen::MatrixXcd & matrix,
-      const std::string & diagonalizer);
+  Eigenspectrum(const ComplexMatrix & matrix);
+  Eigenspectrum(const ComplexMatrix & matrix,
+      const string & diagonalizer);
 
   
-  Eigen::VectorXcd get_eigenvalues() const;
-  Eigen::MatrixXcd get_eigenvectors() const;
+  const ComplexVector& get_eigenvalues() const;
+  const ComplexMatrix& get_eigenvectors() const;
 
-  std::complex<double> get_eigenvalue(const unsigned int index) const;
-  Eigen::VectorXcd get_eigenvector(const unsigned int index)    const;
+  CDouble get_eigenvalue(const UInt index) const;
+  ComplexVector get_eigenvector(const UInt index)    const;
     
-  std::string get_diagonalizer() const;
+  const string& get_diagonalizer() const;
 
   virtual ~Eigenspectrum();
   
   // Note the Eigen naming convention here
-  virtual Eigen::MatrixXcd spectralDecomposition() const;
+  virtual ComplexMatrix spectralDecomposition() const;
   
 };
 
