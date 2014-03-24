@@ -1,5 +1,5 @@
 // See MatrixRepresentation.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/Errors.h"
@@ -17,7 +17,7 @@ MatrixRepresentation::MatrixRepresentation(const SpinBasis & basis) :
     basis_(basis)
 {/**/}
 
-unsigned int MatrixRepresentation::get_dimension() const
+UInt MatrixRepresentation::get_dimension() const
 {
   return dimension_;
 }

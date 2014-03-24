@@ -5,11 +5,11 @@
 //
 // Uniform magnetic field parallel to some direction in Cartesian coordinates.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <Eigen/Dense>
 
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {

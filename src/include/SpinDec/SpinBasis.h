@@ -14,12 +14,14 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
 
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
+#include "SpinDec/SpinParameters.h"
+#include "SpinDec/SpinParametersVector.h"
 
 namespace SpinDec
 {
@@ -28,32 +30,32 @@ class SpinBasis
 {
 private:
   
-  unsigned int calc_multiplicity(const double quantum_number) const;
-  unsigned int calc_multiplicity(const dvector & quantum_numbers) const;
-
-  Eigen::ArrayXXd build (const dvector & quantum_numbers);
+  Eigen::ArrayXXd build (const SpinParametersVector & spin_parameters_vector);
                                            // automatically build
                                            // using spin multiplicities
   
-  Eigen::ArrayXXd build(const double quantum_number);// build using multiplicity
+  Eigen::ArrayXXd build(const SpinParameters& spin_parameters);
+  // build using multiplicity
   
   Eigen::ArrayXXd basis_as_array_;
 
 public:
 
   SpinBasis();
-  explicit SpinBasis(const dvector & quantum_numbers); // automatically build
+  explicit SpinBasis(const SpinParametersVector & spin_parameters_vector);
+                                             // automatically build
                                              // using spin multiplicities
-  explicit SpinBasis(const double quantum_number); // automatically build
-                                              // using spin multiplicity
+  explicit SpinBasis(const SpinParameters& spin_parameters);
+                                                  // automatically build
+                                                  // using spin multiplicity
   
   explicit SpinBasis(const Eigen::ArrayXXd & basis_as_array); // custom build
   const Eigen::ArrayXXd& get_basis_as_array() const;
   
-  unsigned int num_basis_states() const;
-  unsigned int num_spins() const;
+  UInt num_basis_states() const;
+  UInt num_spins() const;
 
-  double get_element(const unsigned int index, const unsigned int slot) const;  
+  double get_element(const UInt index, const UInt slot) const;  
   
   // For example,         basis1 = 0.5
   //                              -0.5
@@ -89,6 +91,8 @@ public:
 
 #endif // SPINBASIS_H_
 
-// Don't use this ...
-//void truncate(const std::vector<unsigned int> & spin_indices,
+// GRAVEYARD
+// OLD + Don't use this even if you update it ...
+
+//void truncate(const std::vector<UInt> & spin_indices,
 //                         const Eigen::ArrayXXd & to_keep);

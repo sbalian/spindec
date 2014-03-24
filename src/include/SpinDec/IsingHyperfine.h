@@ -6,7 +6,7 @@
 // Like Hyperfine but fill method ignores (1/2) A [S+I- + S-I+]
 // in H_A = A Sz Iz + (1/2) A [S+I- + S-I+].
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/Hyperfine.h"
 
@@ -25,8 +25,8 @@ public:
   virtual void fill(ComplexMatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
-                   const unsigned int spin_label1,
-                   const unsigned int spin_label2) const;
+                   const UInt spin_label1,
+                   const UInt spin_label2) const;
   
 };
 

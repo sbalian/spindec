@@ -1,33 +1,18 @@
 // See ElectronSpin.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/ElectronSpin.h"
-#include "SpinDec/MathPhysConstants.h"
+#include "SpinDec/constants.h"
 
 namespace SpinDec
 {
 
-const double free_gamma_e = MathPhysConstants::electron_gyromagnetic_ratio();
-
 ElectronSpin::ElectronSpin() :
-    Spin(0.5,free_gamma_e)
+    Spin(0.5,kElectronGyromagneticRatio)
 {/**/}
 
 ElectronSpin::ElectronSpin(const double gyromagnetic_ratio) :
         Spin(0.5,gyromagnetic_ratio)
 {/**/}
-
-ElectronSpin::ElectronSpin(const ThreeVector & position,
-             const Eigen::VectorXcd & state_vector) :
-      Spin(0.5,free_gamma_e,position,state_vector)
-{/**/}
-
-
-ElectronSpin::ElectronSpin(const double gyromagnetic_ratio,
-             const ThreeVector & position,
-             const Eigen::VectorXcd & state_vector) :
-   Spin(0.5,gyromagnetic_ratio,position,state_vector)
-{/**/}
-
 
 } // namespace SpinDec

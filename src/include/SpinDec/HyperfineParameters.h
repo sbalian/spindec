@@ -6,9 +6,9 @@
 // Parameters to cacluate the hyperfine interaction between and electron
 // and a nucleus in a lattice.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
-#include <string>
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -23,7 +23,7 @@ private:
   const double electron_ionization_energy_; 
                         // Donor electron ionization energy in eV
   const double charge_density_; // charge density (dimensionless)
-  const std::string form_; // "Isotropic" (only), "Anisotropic" (only)
+  const string form_; // "Isotropic" (only), "Anisotropic" (only)
                            // "Full" (both of the above) (default)
   void check_form();
   
@@ -40,14 +40,14 @@ public:
       const double lattice_parameter_b,
       const double electron_ionization_energy,
       const double charge_density,
-      const std::string & form);
+      const string & form);
   
   double get_lattice_constant() const;
   double get_lattice_parameter_a() const;
   double get_lattice_parameter_b() const;
   double get_electron_ionization_energy() const;
   double get_charge_density() const;
-  const std::string& get_form() const;
+  const string& get_form() const;
   
 };
 

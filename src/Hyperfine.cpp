@@ -1,18 +1,18 @@
 // See Hyperfine.h for description.
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/Hyperfine.h"
-#include "SpinDec/MathPhysConstants.h"
 #include <cmath>
 
 #include "SpinDec/Errors.h"
 #include "SpinDec/Dipolar.h"
+#include "SpinDec/constants.h"
 
 namespace SpinDec
 {
 
-double Hyperfine::envelope_function(const unsigned int index,
-    const Eigen::Vector3d & separation) const
+double Hyperfine::envelope_function(const UInt index,
+    const ThreeVector & separation) const
 {
   double nbfrac = std::pow(1.0/n_times_b(),2.0);
   double nafrac = std::pow(1.0/n_times_a(),2.0);
@@ -53,7 +53,7 @@ double Hyperfine::envelope_function(const unsigned int index,
   
   // units Angstroms^(-3/2)
   return std::exp(-std::sqrt(nbfrac + nafrac))/
-    (std::sqrt(MathPhysConstants::pi()*std::pow(n_times_a(),2.0)*n_times_b()));
+    (std::sqrt(kPi*std::pow(n_times_a(),2.0)*n_times_b()));
 
 }
 
@@ -77,9 +77,9 @@ double Hyperfine::n_times_b() const
 }
 
 double Hyperfine::scaled_probability_density(
-    const Eigen::Vector3d & separation) const
+    const ThreeVector & separation) const
 {
-  const double k0 = 0.85*2.0*MathPhysConstants::pi()/
+  const double k0 = 0.85*2.0*kPi/
                   parameters_.get_lattice_constant();
   
   const double sep_x = separation(0);
@@ -117,6 +117,8 @@ Hyperfine::Hyperfine(const double strength)
 
 void Hyperfine::calculate(const Spin & electron,
     const Spin & nucleus,
+    const ThreeVector& electron_position,
+    const ThreeVector& nuclear_position,
     const UniformMagneticField & field)
 {
   
@@ -127,8 +129,8 @@ void Hyperfine::calculate(const Spin & electron,
   // Units M rad s-1 m^3
   const double electron_gyromagnetic_ratio = electron.get_gyromagnetic_ratio();
   const double nuclear_gyromagnetic_ratio = nucleus.get_gyromagnetic_ratio();
-  const double hbar = MathPhysConstants::reduced_planck();
-  const double pi = MathPhysConstants::pi();
+  const double hbar = kReducedPlanck;
+  const double pi = kPi;
   
   const double non_spatial_dependence =
   (16.0*pi/9.0)*1.0e-07*1.0e+06*hbar*
@@ -140,8 +142,8 @@ void Hyperfine::calculate(const Spin & electron,
 
   // Units M rad s-1
   const double isotropic_part = non_spatial_dependence*
-      scaled_probability_density(nucleus.get_position()
-          - electron.get_position());
+      scaled_probability_density(nuclear_position
+          - electron_position);
   
   if (parameters_.get_form() == "Isotropic") {
       strength_ = isotropic_part;
@@ -149,9 +151,10 @@ void Hyperfine::calculate(const Spin & electron,
   }
 
   Dipolar dipolar_interaction;
-  dipolar_interaction.calculate(electron,nucleus,field);
+  dipolar_interaction.calculate(electron,nucleus,electron_position
+      ,nuclear_position,field);
   const double cutoff =
-      (nucleus.get_position() - electron.get_position()).norm() - n_times_a();
+      (nuclear_position - electron_position).norm() - n_times_a();
  
   double anisotropic_part = 0.0;
   if (cutoff >= 0.0) {
@@ -170,11 +173,11 @@ void Hyperfine::calculate(const Spin & electron,
 }
 
 void Hyperfine::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
-    const SpinBasis& basis, const unsigned int spin_label1,
-    const unsigned int spin_label2) const
+    const SpinBasis& basis, const UInt spin_label1,
+    const UInt spin_label2) const
 {
   SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
-      spin_label1,spin_label2,false,cdouble(0.5,0.0));
+      spin_label1,spin_label2,false,CDouble(0.5,0.0));
   return;
 }
 

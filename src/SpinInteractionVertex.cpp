@@ -1,5 +1,5 @@
 // See SpinInteractionVertex.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/SpinInteractionVertex.h"
 
@@ -7,12 +7,13 @@ namespace SpinDec
 {
 
 SpinInteractionVertex::SpinInteractionVertex() :
-    label_(0),spin_(Spin())
+    label_(0),spin_(Spin()),position_(ThreeVector()),state_(SpinState())
 {/**/}
 
 SpinInteractionVertex::SpinInteractionVertex(
-    const unsigned int label, const Spin& spin) :
-        label_(label), spin_(spin)
+    UInt label, const Spin& spin, const ThreeVector& position,
+    const SpinState& state) :
+        label_(label), spin_(spin), position_(position), state_(state)
 {
 }
 
@@ -26,10 +27,14 @@ const Spin& SpinInteractionVertex::get_spin() const
   return spin_;
 }
 
-void SpinInteractionVertex::set_spin(const Spin& spin)
+const ThreeVector& SpinInteractionVertex::get_position() const
 {
-  spin_ = spin;
-  return;
+  return position_;
+}
+
+const SpinState& SpinInteractionVertex::get_state() const
+{
+  return state_;
 }
 
 } // namespace SpinDec

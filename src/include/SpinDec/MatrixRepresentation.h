@@ -6,9 +6,10 @@
 // Abstract base class for SpinState and SpinOperator in the matrix
 // representation. Holds the Zeeman basis and a dimension.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/SpinBasis.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -18,7 +19,7 @@ class MatrixRepresentation
 
 protected:
   
-  unsigned int dimension_; // dimension of Hilbert space
+  UInt dimension_; // dimension of Hilbert space
   SpinBasis basis_;
 
   MatrixRepresentation();
@@ -30,7 +31,7 @@ protected:
 
 public:
 
-  unsigned int get_dimension() const;
+  UInt get_dimension() const;
   
   const SpinBasis& get_basis() const;
   

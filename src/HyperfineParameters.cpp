@@ -1,5 +1,5 @@
 // See HyperfineParameters.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/HyperfineParameters.h"
 #include "SpinDec/Errors.h"
@@ -50,7 +50,7 @@ HyperfineParameters::HyperfineParameters(const double lattice_constant,
 HyperfineParameters::HyperfineParameters(const double lattice_constant,
     const double lattice_parameter_a, const double lattice_parameter_b,
     const double electron_ionization_energy, const double charge_density,
-    const std::string& form) :
+    const string& form) :
         lattice_constant_(lattice_constant),
         lattice_parameter_a_(lattice_parameter_a),
         lattice_parameter_b_(lattice_parameter_b),
@@ -86,7 +86,7 @@ double HyperfineParameters::get_charge_density() const
   return charge_density_;
 }
 
-const std::string& HyperfineParameters::get_form() const
+const string& HyperfineParameters::get_form() const
 {
   return form_;
 }

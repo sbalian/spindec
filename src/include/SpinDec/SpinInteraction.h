@@ -6,7 +6,7 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 24, 2014
 
 #include <Eigen/Dense>
 
@@ -15,7 +15,7 @@
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/UniformMagneticField.h"
 
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 #include <memory>
 
@@ -41,16 +41,17 @@ protected:
   void fill_ising_flipflop(ComplexMatrix* hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
-                   const unsigned int spin_label1,
-                   const unsigned int spin_label2,
+                   const UInt spin_label1,
+                   const UInt spin_label2,
                    const bool ising_only,
-                   const cdouble & flipflop_form) const;
+                   const CDouble & flipflop_form) const;
   
   void warn_if_preset_then_calculated() const;
 
 public:
   
   virtual void calculate(const Spin & spin1, const Spin & spin2,
+      const ThreeVector & position1, const ThreeVector & position2,
       const UniformMagneticField & field) = 0;
 
   double get_strength() const;
@@ -59,8 +60,8 @@ public:
   virtual void fill(ComplexMatrix * hamiltonian,
                    const SpinVector & spins,
                    const SpinBasis & basis,
-                   const unsigned int spin_label1,
-                   const unsigned int spin_label2) const = 0;
+                   const UInt spin_label1,
+                   const UInt spin_label2) const = 0;
   
   virtual std::auto_ptr<SpinInteraction> clone() const = 0;
   

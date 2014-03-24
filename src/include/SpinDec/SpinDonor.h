@@ -10,7 +10,7 @@
 // TODO Organise and clean up comments.
 // TODO Also, "level" and "label" may be confusing and/or not consistent ...
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/UniformMagneticField.h"
@@ -22,7 +22,7 @@
 
 #include <vector>
 
-#include "SpinDec/types.h"
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {

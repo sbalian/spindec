@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 24, 2014
 
 #include "SpinDec/SpinInteraction.h"
 #include "SpinDec/Errors.h"
@@ -25,8 +25,8 @@ SpinInteraction::~SpinInteraction()
 
 void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
     const SpinVector& spins, const SpinBasis & basis,
-    const unsigned int spin_label1, const unsigned int spin_label2,
-    const bool ising_only, const cdouble & flipflop_form) const
+    const UInt spin_label1, const UInt spin_label2,
+    const bool ising_only, const CDouble & flipflop_form) const
 {
 
   // Get spin quantum numbers
@@ -34,10 +34,10 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
   const double S2 = spins[spin_label2].get_quantum_number();
   
   // Dimension of Hilbert space
-  const unsigned int dimension = hamiltonian->rows();
+  const UInt dimension = hamiltonian->rows();
   
   // Number of spins
-  const unsigned int nspins = spins.size();
+  const UInt nspins = spins.size();
   
   // Magnetic quantum numbers (labeled)
   double m1_i, m1_j; 
@@ -59,14 +59,14 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
   // S_1^z,S_2^z: z-component of the spin operators (magnetic field along z)
   // S_1^+,S_1^-,S_2^+,S_2^-: spin raising and lowering operators
   
-  for (unsigned int i=0; i< dimension; i++) {
+  for (UInt i=0; i< dimension; i++) {
   
     // Calculate Ising part: D S_1^z S_2^z
     // Matrix elements <i| H_dipolar |j> (i == j)
     m1_i = basis.get_element(i,spin_label1);
     m2_i = basis.get_element(i,spin_label2);
     
-    (*hamiltonian)(i,i) += cdouble(get_strength()*m1_i*m2_i,0.0);
+    (*hamiltonian)(i,i) += CDouble(get_strength()*m1_i*m2_i,0.0);
     
     // Only fill diagonals for Ising only
     if (ising_only) {continue;}
@@ -74,7 +74,7 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
     // Calculate flip-flop part: D F (S_1^+ S_2^- + S_1^- S_2^+)
     // sieving out zeros
     // Matrix elements <i| H_dipolar |j> (i != j)
-    for (unsigned int j=0; j<dimension; j++) {
+    for (UInt j=0; j<dimension; j++) {
     
       // Initialise test variables
       reject     = 0;
@@ -87,7 +87,7 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
   
       // If the ith and jth magnetic quantum numbers differ for any of the
       // other spins, matrix element is zero
-      for (unsigned int p=0;p<nspins;p++) {
+      for (UInt p=0;p<nspins;p++) {
         if ((p != spin_label1) && (p != spin_label2)) {
           m_other_i = basis.get_element(i,p);
           m_other_j = basis.get_element(j,p);
@@ -137,7 +137,7 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
         }
       
       (*hamiltonian)(i,j) +=
-      cdouble(get_strength()*
+      CDouble(get_strength()*
                   std::sqrt(coeff_1*coeff_2),0.0)*
                   flipflop_form;
         
