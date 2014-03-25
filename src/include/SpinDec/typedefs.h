@@ -5,7 +5,7 @@
 // Also includes some usings ...
 // All in the SpinDec namespace.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include <Eigen/Dense>
 
@@ -14,6 +14,9 @@
 
 #include <string>
 #include <iostream>
+
+#include <memory>
+#include <utility>
 
 namespace SpinDec {
 
@@ -48,9 +51,18 @@ typedef std::vector< CDouble > CDoubleArray;
 // std string
 using std::string;
 
+// std auto_ptr
+using std::auto_ptr;
+
 // std cout, endl
 using std::cout;
 using std::endl;
+
+// std pair
+using std::pair;
+
+// std vector
+using std::vector;
 
 }
 

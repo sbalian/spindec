@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/SpinInteraction.h"
 #include "SpinDec/Errors.h"
@@ -24,20 +24,20 @@ SpinInteraction::~SpinInteraction()
 {/**/}
 
 void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
-    const SpinVector& spins, const SpinBasis & basis,
+    const SpinParametersVector& spin_parameters_vector, const SpinBasis & basis,
     const UInt spin_label1, const UInt spin_label2,
     const bool ising_only, const CDouble & flipflop_form) const
 {
 
   // Get spin quantum numbers
-  const double S1 = spins[spin_label1].get_quantum_number();
-  const double S2 = spins[spin_label2].get_quantum_number();
+  const double S1 = spin_parameters_vector[spin_label1].get_quantum_number();
+  const double S2 = spin_parameters_vector[spin_label2].get_quantum_number();
   
   // Dimension of Hilbert space
   const UInt dimension = hamiltonian->rows();
   
   // Number of spins
-  const UInt nspins = spins.size();
+  const UInt nspins = spin_parameters_vector.size();
   
   // Magnetic quantum numbers (labeled)
   double m1_i, m1_j; 

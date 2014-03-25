@@ -5,18 +5,16 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 25, 2014
+
+#include "SpinDec/typedefs.h"
 
 #include "SpinDec/SpinInteractionVertex.h"
 #include "SpinDec/SpinInteractionEdge.h"
 
-#include "SpinDec/SpinVector.h"
+#include "SpinDec/SpinParametersVector.h"
 
 #include "SpinDec/SpinBasis.h"
-#include "SpinDec/SpinState.h"
-
-#include <vector>
-#include <memory>
 
 namespace SpinDec
 {
@@ -25,14 +23,12 @@ class SpinInteractionGraph
 {
   
 private:
-  
   // Vertices
-  std::vector<SpinInteractionVertex> vertices_;
+  vector<SpinInteractionVertex> vertices_;
   // Edges
-  std::vector<SpinInteractionEdge> edges_;
+  vector<SpinInteractionEdge> edges_;
   
   SpinBasis basis_;
-  SpinState state_;
   
   void quit_if_vertex_label_out_of_bounds(const unsigned int label) const;
   void quit_if_edge_index_out_of_bounds(const unsigned int index) const;
@@ -43,27 +39,25 @@ private:
 public:
 
   SpinInteractionGraph();
-  
-  void add_vertex(const Spin & spin);
+  void add_vertex(const SpinParameters & spin, const ThreeVector& position);
   
   void add_edge(unsigned int label1,
                 unsigned int label2,
                 const std::auto_ptr<SpinInteraction>& interaction);
-  
-  void set_spin(const unsigned int label,const Spin& spin);
-  
+    
   unsigned int num_vertices() const;
   unsigned int num_edges() const;
   void clear();
   
-  const Spin& get_spin(const unsigned int label) const;
-  std::auto_ptr<SpinInteraction> get_interaction(const unsigned int index) const;
+  const SpinParameters& get_spin_parameters(const unsigned int label) const;
+  const ThreeVector& get_position(const unsigned int label) const;
+
+  std::auto_ptr<SpinInteraction> get_interaction(const unsigned int index)const;
   
-  SpinVector get_spins() const;
+  SpinParametersVector spin_parameters_vector() const;
   
   const SpinInteractionVertex& get_vertex(const unsigned int label) const;
   const SpinInteractionEdge& get_edge(const unsigned int index) const;
-
     
   // build a combined (like tensor product) SpinBasis and return it
   virtual SpinBasis build_basis() const;
@@ -82,7 +76,6 @@ public:
   SpinInteractionGraph join(const SpinInteractionGraph & to_join) const;
   SpinInteractionGraph join(const SpinInteractionGraph & to_join,
             const std::vector<SpinInteractionEdge> & edges) const;
-
   
   virtual ~SpinInteractionGraph();
   

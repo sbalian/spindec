@@ -1,5 +1,5 @@
 // See SpinInteractionEdge.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/SpinInteractionEdge.h"
 
@@ -7,15 +7,15 @@ namespace SpinDec
 {
 
 SpinInteractionEdge::SpinInteractionEdge() :
-    vertices_(std::pair<SpinInteractionVertex,SpinInteractionVertex>(
+    vertices_(pair<SpinInteractionVertex,SpinInteractionVertex>(
         SpinInteractionVertex(),SpinInteractionVertex()))
 {
 }
 
 SpinInteractionEdge::SpinInteractionEdge(
     const SpinInteractionVertex& vertex1, const SpinInteractionVertex& vertex2,
-    const std::auto_ptr<SpinInteraction>&  interaction) :
-    vertices_(std::pair<SpinInteractionVertex,SpinInteractionVertex>(
+    const auto_ptr<SpinInteraction>&  interaction) :
+    vertices_(pair<SpinInteractionVertex,SpinInteractionVertex>(
         vertex1,vertex2))
 {
   interaction_ = interaction->clone();
@@ -33,7 +33,7 @@ const
   return vertices_.second;
 }
 
-std::auto_ptr<SpinInteraction> SpinInteractionEdge::get_interaction() const
+auto_ptr<SpinInteraction> SpinInteractionEdge::get_interaction() const
 {
   return interaction_->clone();
 }

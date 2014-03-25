@@ -3,14 +3,15 @@
 
 // SpinInteractionEdge
 //
-// Edge for a spin interaction graph.
+// Edge for a spin interaction graph. Contains a pair of vertices and
+// a spin interaction.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
-#include <utility>
 #include "SpinDec/SpinInteractionVertex.h"
 #include "SpinDec/SpinInteraction.h"
-#include <memory>
+
+#include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
@@ -18,19 +19,19 @@ namespace SpinDec
 class SpinInteractionEdge
 {
 private:
-  std::pair<SpinInteractionVertex,SpinInteractionVertex> vertices_;
-  std::auto_ptr<SpinInteraction> interaction_;
+  pair<SpinInteractionVertex,SpinInteractionVertex> vertices_;
+  auto_ptr<SpinInteraction> interaction_;
 
 public:
   SpinInteractionEdge();
   SpinInteractionEdge(const SpinInteractionEdge& other);
   SpinInteractionEdge(const SpinInteractionVertex& vertex1,
                       const SpinInteractionVertex& vertex2,
-                      const std::auto_ptr<SpinInteraction>& interaction);
+                      const auto_ptr<SpinInteraction>& interaction);
   
   const SpinInteractionVertex& get_vertex1() const;
   const SpinInteractionVertex& get_vertex2() const;
-  std::auto_ptr<SpinInteraction> get_interaction() const;
+  auto_ptr<SpinInteraction> get_interaction() const;
   
   SpinInteractionEdge& operator=( const SpinInteractionEdge& other);
 

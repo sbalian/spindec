@@ -3,13 +3,12 @@
 
 // SpinInteractionVertex
 //
-// Vertex for a spin interaction graph. Contains a label, a spin, a position
-// in real space and a spin state.
+// Vertex for a spin interaction graph. Contains a label, spin parameters,
+// and a position in real space.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
-#include "SpinDec/Spin.h"
-#include "SpinDec/SpinState.h"
+#include "SpinDec/SpinParameters.h"
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
@@ -19,19 +18,17 @@ class SpinInteractionVertex
 {
 private:
   UInt label_;
-  Spin spin_;
+  SpinParameters spin_parameters_;
   ThreeVector position_;
-  SpinState state_;
   
 public:
   SpinInteractionVertex();
-  SpinInteractionVertex(const UInt label, const Spin& spin,
-      const ThreeVector & position, const SpinState & state);
+  SpinInteractionVertex(const UInt label, const SpinParameters& spin_parameters,
+      const ThreeVector & position);
   
   UInt get_label() const;
-  const Spin& get_spin() const;
+  const SpinParameters& get_spin_parameters() const;
   const ThreeVector& get_position() const;
-  const SpinState& get_state() const;
   
 };
 

@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Mar 12, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -61,6 +61,13 @@ SpinInteractionGraph::SpinInteractionGraph()
 { // TODO Is this OK with std::vector initialization?
 }
 
+void SpinInteractionGraph::add_vertex(const SpinParameters& spin,
+    const ThreeVector& position)
+{
+  vertices_.push_back(SpinInteractionVertex(num_vertices(),spin));
+  basis_ = basis_^spin.get_state().get_basis();
+}
+
 void SpinInteractionGraph::add_vertex(const Spin& spin)
 {
   vertices_.push_back(SpinInteractionVertex(num_vertices(),spin));
@@ -88,12 +95,6 @@ void  SpinInteractionGraph::add_edge(unsigned int label1,
   return;
 }
 
-void  SpinInteractionGraph::set_spin(const unsigned int label,
-                                     const Spin& spin)
-{
-  set_vertex( label, SpinInteractionVertex(label,spin));
-}
-
 unsigned int SpinInteractionGraph::num_vertices() const
 {
   return vertices_.size();
@@ -111,10 +112,10 @@ void  SpinInteractionGraph::clear()
   return;
 }
 
-const Spin&  SpinInteractionGraph::get_spin(
+const SpinParameters&  SpinInteractionGraph::get_spin_parameters(
     const unsigned int label) const
 {
-  return get_vertex(label).get_spin();
+  return get_vertex(label).get_spin_parameters();
 }
 
 std::auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
@@ -123,19 +124,19 @@ std::auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
   return get_edge(index).get_interaction()->clone();
 }
 
-SpinVector SpinInteractionGraph::get_spins() const
+SpinParametersVector SpinInteractionGraph::spin_parameters_vector() const
 {
-  SpinVector spins;
+  SpinParametersVector spin_parameters_vector;
   for (unsigned int i=0; i<num_vertices();i++) {
-    spins.push_back(get_vertex(i).get_spin());
+    spin_parameters_vector.push_back(get_vertex(i).get_spin_parameters());
   }
-  return spins;
+  return spin_parameters_vector;
 }
 
 SpinBasis  SpinInteractionGraph::build_basis() const
 {
   // Start with basis of first spin
-  SpinBasis basis = get_spin(0).get_state().get_basis();
+  SpinBasis basis = get_spin_parameters(0).get_state().get_basis();
   // Loop over vertices combining bases from the rest of the vertices
   for (unsigned int i = 1; i<num_vertices();i++) {
         basis = basis^get_spin(i).get_state().get_basis();// like tensor product
@@ -185,6 +186,12 @@ SpinInteractionGraph SpinInteractionGraph::join(
   SpinInteractionGraph output = *this;
   output.join_in_place(to_join,edges);
   return output;
+}
+
+
+const ThreeVector& SpinInteractionGraph::get_position(
+    const unsigned int label) const
+{
 }
 
 SpinInteractionGraph::~SpinInteractionGraph()

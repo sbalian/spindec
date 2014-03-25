@@ -3,8 +3,7 @@
 
 // SpinDec includes
 
-// Generated automatically using update-base.sh
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include <Eigen/Dense>
 
@@ -18,7 +17,6 @@
 #include "SpinDec/HyperfineParameters.h"
 #include "SpinDec/IsingHyperfine.h"
 #include "SpinDec/MatrixRepresentation.h"
-#include "SpinDec/NuclearSpin.h"
 #include "SpinDec/Sign.h"
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/SpinBasis.h"
@@ -30,7 +28,7 @@
 #include "SpinDec/SpinInteractionVertex.h"
 #include "SpinDec/SpinOperator.h"
 #include "SpinDec/SpinState.h"
-#include "SpinDec/SpinVector.h"
+#include "SpinDec/SpinParametersVector.h"
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/UniformMagneticField.h"
 #include "SpinDec/constants.h"
