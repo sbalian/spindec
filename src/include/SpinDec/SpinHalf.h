@@ -5,7 +5,7 @@
 //
 // Spin-1/2.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/Spin.h"
 #include "SpinDec/typedefs.h"
@@ -20,12 +20,15 @@ class SpinHalf : public Spin
 public:
 
   SpinHalf();
-  SpinHalf(const double gyromagnetic_ratio);
+  SpinHalf(const double gyromagnetic_ratio,
+           const ComplexVector& state_vector,
+           const ThreeVector& position);
   
-  ComplexVector spin_up()  const;
-  ComplexVector spin_down() const;
+  SpinState spin_up()  const;
+  SpinState spin_down() const;
   
-  
+  void set_spin_up();
+  void set_spin_down();
   
 };
 

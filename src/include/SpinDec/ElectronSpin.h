@@ -3,23 +3,25 @@
 
 // Electron spin
 //
-// Spin with fixed quantum number 1/2 and hence multiplicity (= 2).
-// Gyromagnetic ratio is for the free electron by default.
+// Spin-1/2 with the gyromagnetic ratio for the free electron by default.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
-#include "SpinDec/Spin.h"
+#include "SpinDec/SpinHalf.h"
 
 namespace SpinDec
 {
 
-class ElectronSpin : public Spin
+class ElectronSpin : public SpinHalf
 {
-
 public:
-
+  
   ElectronSpin();
-  ElectronSpin(const double gyromagnetic_ratio);
+  ElectronSpin(const ComplexVector& state_vector,
+               const ThreeVector& position);
+  ElectronSpin(const double gyromagnetic_ratio,
+               const ComplexVector& state_vector,
+               const ThreeVector& position);
 
 };
 

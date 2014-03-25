@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -115,8 +115,8 @@ Hyperfine::Hyperfine(const double strength)
 //
 }
 
-void Hyperfine::calculate(const Spin & electron,
-    const Spin & nucleus,
+void Hyperfine::calculate(const SpinParameters & electron_parameters,
+    const SpinParameters & nuclear_parameters,
     const ThreeVector& electron_position,
     const ThreeVector& nuclear_position,
     const UniformMagneticField & field)
@@ -127,8 +127,10 @@ void Hyperfine::calculate(const Spin & electron,
   }
   
   // Units M rad s-1 m^3
-  const double electron_gyromagnetic_ratio = electron.get_gyromagnetic_ratio();
-  const double nuclear_gyromagnetic_ratio = nucleus.get_gyromagnetic_ratio();
+  const double electron_gyromagnetic_ratio =
+      electron_parameters.get_gyromagnetic_ratio();
+  const double nuclear_gyromagnetic_ratio =
+      nuclear_parameters.get_gyromagnetic_ratio();
   const double hbar = kReducedPlanck;
   const double pi = kPi;
   
@@ -151,7 +153,8 @@ void Hyperfine::calculate(const Spin & electron,
   }
 
   Dipolar dipolar_interaction;
-  dipolar_interaction.calculate(electron,nucleus,electron_position
+  dipolar_interaction.calculate(electron_parameters,
+      nuclear_parameters,electron_position
       ,nuclear_position,field);
   const double cutoff =
       (nuclear_position - electron_position).norm() - n_times_a();
@@ -172,11 +175,12 @@ void Hyperfine::calculate(const Spin & electron,
 
 }
 
-void Hyperfine::fill(ComplexMatrix * hamiltonian, const SpinVector& spins,
+void Hyperfine::fill(ComplexMatrix * hamiltonian,
+    const SpinParametersVector& spin_parameters_vector,
     const SpinBasis& basis, const UInt spin_label1,
     const UInt spin_label2) const
 {
-  SpinInteraction::fill_ising_flipflop(hamiltonian,spins,basis,
+  SpinInteraction::fill_ising_flipflop(hamiltonian,spin_parameters_vector,basis,
       spin_label1,spin_label2,false,CDouble(0.5,0.0));
   return;
 }

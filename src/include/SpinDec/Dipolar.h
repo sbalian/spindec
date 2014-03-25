@@ -28,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/SpinInteraction.h"
 
@@ -45,12 +45,13 @@ public:
   // If you don't wish to calculate
   Dipolar(const double strength);
   
-  virtual void calculate(const Spin & spin1, const Spin & spin2,
+  virtual void calculate(const SpinParameters & spin_parameters1,
+      const SpinParameters & spin_parameters2,
       const ThreeVector & position1, const ThreeVector & position2,
       const UniformMagneticField & field);
   
   virtual void fill(ComplexMatrix * hamiltonian,
-                   const SpinVector & spins,
+                   const SpinParametersVector & spin_parameters_vector,
                    const SpinBasis & basis,
                    const UInt spin_label1,
                    const UInt spin_label2) const;

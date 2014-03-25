@@ -1,5 +1,5 @@
 // See ElectronSpin.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 25, 2014
 
 #include "SpinDec/ElectronSpin.h"
 #include "SpinDec/constants.h"
@@ -7,12 +7,26 @@
 namespace SpinDec
 {
 
-ElectronSpin::ElectronSpin() :
-    Spin(0.5,kElectronGyromagneticRatio)
-{/**/}
+ElectronSpin::ElectronSpin() : SpinHalf(kElectronGyromagneticRatio,
+    ComplexVector::Zero(2),
+    ThreeVector::Zero())
+{
+}
 
-ElectronSpin::ElectronSpin(const double gyromagnetic_ratio) :
-        Spin(0.5,gyromagnetic_ratio)
-{/**/}
+ElectronSpin::ElectronSpin(const ComplexVector& state_vector,
+    const ThreeVector& position) : SpinHalf(kElectronGyromagneticRatio,
+    state_vector,
+    position)
+{
+}
+
+ElectronSpin::ElectronSpin(const double gyromagnetic_ratio,
+    const ComplexVector& state_vector,
+    const ThreeVector& position) : SpinHalf(gyromagnetic_ratio,
+    state_vector,
+    position)
+{
+}
+
 
 } // namespace SpinDec
