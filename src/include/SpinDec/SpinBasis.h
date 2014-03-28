@@ -14,14 +14,15 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
 
 #include "SpinDec/typedefs.h"
+
 #include "SpinDec/SpinParameters.h"
-#include "SpinDec/SpinParametersVector.h"
+#include "SpinDec/Spin"
 
 namespace SpinDec
 {
@@ -30,7 +31,7 @@ class SpinBasis
 {
 private:
   
-  Eigen::ArrayXXd build (const SpinParametersVector & spin_parameters_vector);
+  Eigen::ArrayXXd build (const SpinParametersVector& spin_parameters_vector);
                                            // automatically build
                                            // using spin multiplicities
   

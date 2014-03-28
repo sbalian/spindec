@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -61,18 +61,14 @@ SpinInteractionGraph::SpinInteractionGraph()
 { // TODO Is this OK with std::vector initialization?
 }
 
-void SpinInteractionGraph::add_vertex(const SpinParameters& spin,
+void SpinInteractionGraph::add_vertex(
+    const SpinParameters& spin_parameters,
+    const SpinState& state,
     const ThreeVector& position)
-{
-  vertices_.push_back(SpinInteractionVertex(num_vertices(),spin));
-  basis_ = basis_^spin.get_state().get_basis();
-}
-
-void SpinInteractionGraph::add_vertex(const Spin& spin)
-{
-  vertices_.push_back(SpinInteractionVertex(num_vertices(),spin));
-  basis_ = basis_^spin.get_state().get_basis();
-  return;
+{  
+  vertices_.push_back(SpinInteractionVertex(num_vertices(),
+      spin_parameters,state,position));
+  basis_ = basis_^state.get_basis();
 }
 
 void  SpinInteractionGraph::add_edge(unsigned int label1,

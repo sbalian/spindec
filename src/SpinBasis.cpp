@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 26, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/Errors.h"

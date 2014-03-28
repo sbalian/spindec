@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -23,6 +23,7 @@ class SpinInteractionGraph
 {
   
 private:
+  
   // Vertices
   vector<SpinInteractionVertex> vertices_;
   // Edges
@@ -39,7 +40,9 @@ private:
 public:
 
   SpinInteractionGraph();
-  void add_vertex(const SpinParameters & spin, const ThreeVector& position);
+  void add_vertex(const SpinParameters & spin_parameters,
+                  const SpinState& state,
+                  const ThreeVector& position);
   
   void add_edge(unsigned int label1,
                 unsigned int label2,
@@ -50,6 +53,7 @@ public:
   void clear();
   
   const SpinParameters& get_spin_parameters(const unsigned int label) const;
+  const SpinState& get_state(const unsigned int label) const;
   const ThreeVector& get_position(const unsigned int label) const;
 
   std::auto_ptr<SpinInteraction> get_interaction(const unsigned int index)const;
