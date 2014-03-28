@@ -1,5 +1,5 @@
 // See SpinParameters.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include <iomanip>
@@ -10,7 +10,8 @@ namespace SpinDec
 SpinParameters::SpinParameters() :
           quantum_number_(0.0),
           gyromagnetic_ratio_(0.0),
-          multiplicity_(0)
+          multiplicity_(0),
+          basis_(SpinBasis(0.0))
 {/**/}
 
 SpinParameters::SpinParameters(const double quantum_number,
