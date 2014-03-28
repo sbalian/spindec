@@ -1,7 +1,7 @@
 #ifndef HERMITIANEIGENSPECTRUM_H_
 #define HERMITIANEIGENSPECTRUM_H_
 
-// HermitianEigenspectrum
+// SpinDec::HermitianEigenspectrum
 //
 // Diagonalizes a Hermitian matrix.
 // Eigenvectors are orthonormal, eigenvalues are always real.
@@ -11,7 +11,7 @@
 // DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
 //         "Lapack" - Lapack zheev
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"

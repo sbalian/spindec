@@ -1,7 +1,7 @@
 #ifndef SPINDONOR_H_
 #define SPINDONOR_H_
 
-// SpinDonor
+// SpinDec::SpinDonor
 //
 // Electron coupled to a nucleus via a preset hyperfine interaction.
 // Analytical methods include energy levels and polarization
@@ -10,7 +10,7 @@
 // TODO Organise and clean up comments.
 // TODO Also, "level" and "label" may be confusing and/or not consistent ...
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/UniformMagneticField.h"

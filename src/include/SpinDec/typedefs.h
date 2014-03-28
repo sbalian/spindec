@@ -1,11 +1,13 @@
 #ifndef TYPEDEFS_H_
 #define TYPEDEFS_H_
 
+// SpinDec::typedefs
+//
 // Custom STL and Eigen typedefs for SpinDec.
 // Also includes some usings ...
 // All in the SpinDec namespace.
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <Eigen/Dense>
 

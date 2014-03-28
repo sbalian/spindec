@@ -1,12 +1,12 @@
 #ifndef TIMEEVOLUTION_H_
 #define TIMEEVOLUTION_H_
 
-// TimeEvolution
+// SpinDec::TimeEvolution
 //
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/typedefs.h"
 #include <iostream>

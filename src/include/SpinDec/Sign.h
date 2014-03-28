@@ -1,11 +1,11 @@
 #ifndef SIGN_H_
 #define SIGN_H_
 
-// Sign
+// SpinDec::Sign
 //
 // Sign: Plus (+) or Minus (-).
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <iostream>
 

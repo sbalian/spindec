@@ -27,20 +27,6 @@ void SpinInteractionGraph::quit_if_edge_index_out_of_bounds(
   return;
 }
 
-const SpinInteractionVertex& SpinInteractionGraph::get_vertex(
-    const unsigned int label) const
-{
-  quit_if_vertex_label_out_of_bounds(label);
-  return vertices_[label];
-}
-
-const SpinInteractionEdge& SpinInteractionGraph::get_edge(
-                                                const unsigned int index) const
-{
-  quit_if_edge_index_out_of_bounds(index);
-  return edges_[index];
-}
-
 void SpinInteractionGraph::set_vertex(const unsigned int label,
     const SpinInteractionVertex& vertex)
 {
@@ -57,18 +43,28 @@ void SpinInteractionGraph::set_edge(const unsigned int index,
   return;
 }
 
-SpinInteractionGraph::SpinInteractionGraph()
+
+SpinInteractionGraph::SpinInteractionGraph() : basis_(SpinBasis())
 { // TODO Is this OK with std::vector initialization?
 }
 
-void SpinInteractionGraph::add_vertex(
-    const SpinParameters& spin_parameters,
-    const SpinState& state,
-    const ThreeVector& position)
-{  
-  vertices_.push_back(SpinInteractionVertex(num_vertices(),
-      spin_parameters,state,position));
-  basis_ = basis_^state.get_basis();
+void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
+                const ThreeVector & position)
+{
+  SpinInteractionVertex vertex(SpinInteractionVertex(num_vertices(),
+      spin_parameters,position));
+  vertices_.push_back(vertex);
+  basis_ = basis_^vertex.get_basis();
+}
+
+void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
+                const SpinBasis& basis,
+                const ThreeVector & position)
+{
+  SpinInteractionVertex vertex(SpinInteractionVertex(num_vertices(),
+      spin_parameters,basis,position));
+  vertices_.push_back(vertex);
+  basis_ = basis_^vertex.get_basis();
 }
 
 void  SpinInteractionGraph::add_edge(unsigned int label1,
@@ -114,6 +110,16 @@ const SpinParameters&  SpinInteractionGraph::get_spin_parameters(
   return get_vertex(label).get_spin_parameters();
 }
 
+const SpinBasis& SpinInteractionGraph::get_basis(const UInt label) const
+{
+  return get_vertex(label).get_basis();
+}
+
+const ThreeVector& SpinInteractionGraph::get_position(const UInt label) const
+{
+  return get_vertex(label).get_position();
+}
+
 std::auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
     const unsigned int index) const
 {
@@ -129,22 +135,26 @@ SpinParametersVector SpinInteractionGraph::spin_parameters_vector() const
   return spin_parameters_vector;
 }
 
-SpinBasis  SpinInteractionGraph::build_basis() const
+const SpinInteractionVertex& SpinInteractionGraph::get_vertex(
+    const unsigned int label) const
 {
-  // Start with basis of first spin
-  SpinBasis basis = get_spin_parameters(0).get_state().get_basis();
-  // Loop over vertices combining bases from the rest of the vertices
-  for (unsigned int i = 1; i<num_vertices();i++) {
-        basis = basis^get_spin(i).get_state().get_basis();// like tensor product
-  }
-  return basis;
+  quit_if_vertex_label_out_of_bounds(label);
+  return vertices_[label];
+}
+
+const SpinInteractionEdge& SpinInteractionGraph::get_edge(
+                                                const unsigned int index) const
+{
+  quit_if_edge_index_out_of_bounds(index);
+  return edges_[index];
 }
 
 void SpinInteractionGraph::join_in_place(const SpinInteractionGraph& to_join)
 {
   // Add vertices
   for (unsigned int i=0;i<to_join.num_vertices();i++) {
-    add_vertex(to_join.get_vertex(i).get_spin());
+    add_vertex(to_join.get_vertex(i).get_spin_parameters(),
+        to_join.get_vertex(i).get_basis(),to_join.get_vertex(i).get_position());
   }
   // Add edges
   for (unsigned int i=0;i<to_join.num_edges();i++) {
@@ -183,14 +193,5 @@ SpinInteractionGraph SpinInteractionGraph::join(
   output.join_in_place(to_join,edges);
   return output;
 }
-
-
-const ThreeVector& SpinInteractionGraph::get_position(
-    const unsigned int label) const
-{
-}
-
-SpinInteractionGraph::~SpinInteractionGraph()
-{/**/}
 
 } // namespace SpinDec

@@ -1,11 +1,11 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
-// constants
+// SpinDec::constants
 //
 // Global constants for SpinDec.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 namespace SpinDec
 {

@@ -1,12 +1,11 @@
 #ifndef SPIN_H_
 #define SPIN_H_
 
-// Spin
+// SpinDec::Spin
 //
-// A single spin species.
-// Contains spin parameters, state and spatial position in Angstroms.
+// A single spin species. Contains a SpinParameters and a SpinState.
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/SpinState.h"

@@ -1,13 +1,15 @@
 #ifndef SPINPARAMETERSVECTOR_H_
 #define	SPINPARAMETERSVECTOR_H_
 
-// SpinParametersVector
+// SpinDec::SpinParametersVector
 //
 // Multiple SpinParameters container
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinParameters.h"
+#include "SpinDec/typedefs.h"
+
 #include <vector>
 
 namespace SpinDec

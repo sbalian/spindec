@@ -1,12 +1,12 @@
 #ifndef SPININTERACTIONEDGE_H_
 #define SPININTERACTIONEDGE_H_
 
-// SpinInteractionEdge
+// SpinDec::SpinInteractionEdge
 //
 // Edge for a spin interaction graph. Contains a pair of vertices and
 // a spin interaction.
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinInteractionVertex.h"
 #include "SpinDec/SpinInteraction.h"

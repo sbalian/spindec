@@ -1,11 +1,11 @@
 #ifndef SPINOPERATOR_H_
 #define SPINOPERATOR_H_
 
-// SpinOperator
+// SpinDec::SpinOperator
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <complex>
 #include <iostream>

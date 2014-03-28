@@ -1,7 +1,7 @@
 #ifndef SPINBASIS_H_
 #define SPINBASIS_H_
 
-// SpinBasis (Zeeman basis)
+// SpinDec::SpinBasis (Zeeman basis)
 //
 // Holds magnetic quantum numbers for in general multiple spins.
 // Includes build methods.
@@ -22,7 +22,8 @@
 #include "SpinDec/typedefs.h"
 
 #include "SpinDec/SpinParameters.h"
-#include "SpinDec/Spin"
+#include "SpinDec/SpinParametersVector.h"
+
 
 namespace SpinDec
 {

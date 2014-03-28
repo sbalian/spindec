@@ -1,7 +1,7 @@
 #ifndef SPININTERACTIONGRAPH_H_
 #define SPININTERACTIONGRAPH_H_
 
-// SpinInteractionGraph
+// SpinDec::SpinInteractionGraph
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
@@ -36,14 +36,19 @@ private:
   
   void set_vertex(const unsigned int label,const SpinInteractionVertex& vertex);
   void set_edge(const unsigned int index,const SpinInteractionEdge& edge);
-    
+  
 public:
 
   SpinInteractionGraph();
-  void add_vertex(const SpinParameters & spin_parameters,
-                  const SpinState& state,
-                  const ThreeVector& position);
   
+  // the vertex add methods build a combined (like tensor product) basis_
+  void add_vertex(const SpinParameters& spin_parameters,
+                  const ThreeVector & position); // basis built from spin
+                                                 // parameters
+  void add_vertex(const SpinParameters& spin_parameters,
+                  const SpinBasis& basis,
+                  const ThreeVector & position);
+
   void add_edge(unsigned int label1,
                 unsigned int label2,
                 const std::auto_ptr<SpinInteraction>& interaction);
@@ -53,7 +58,7 @@ public:
   void clear();
   
   const SpinParameters& get_spin_parameters(const unsigned int label) const;
-  const SpinState& get_state(const unsigned int label) const;
+  const SpinBasis& get_basis(const unsigned int label) const;
   const ThreeVector& get_position(const unsigned int label) const;
 
   std::auto_ptr<SpinInteraction> get_interaction(const unsigned int index)const;
@@ -62,10 +67,7 @@ public:
   
   const SpinInteractionVertex& get_vertex(const unsigned int label) const;
   const SpinInteractionEdge& get_edge(const unsigned int index) const;
-    
-  // build a combined (like tensor product) SpinBasis and return it
-  virtual SpinBasis build_basis() const;
-
+  
   // Adds input graph to current graph, preserving all vertices and edges.
   // Vertex labels of given graph 0,1,2 ... become n, n+1, n+2
   // where n is the number of vertices of the original graph.
@@ -80,9 +82,7 @@ public:
   SpinInteractionGraph join(const SpinInteractionGraph & to_join) const;
   SpinInteractionGraph join(const SpinInteractionGraph & to_join,
             const std::vector<SpinInteractionEdge> & edges) const;
-  
-  virtual ~SpinInteractionGraph();
-  
+    
 };
 
 } // namespace SpinDec

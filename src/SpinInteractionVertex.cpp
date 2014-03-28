@@ -9,18 +9,28 @@ namespace SpinDec
 SpinInteractionVertex::SpinInteractionVertex() :
     label_(0),
     spin_parameters_(SpinParameters()),
-    state_(SpinState(SpinBasis(SpinParameters()))),
+    basis_(SpinBasis(SpinParameters())),
     position_(ThreeVector::Zero())
 {/**/}
 
 SpinInteractionVertex::SpinInteractionVertex(
     UInt label, const SpinParameters& spin_parameters,
-    const SpinState& state,
     const ThreeVector& position) :
         label_(label),
         spin_parameters_(spin_parameters),
-        state_(SpinState(SpinBasis(spin_parameters))),
+        basis_(SpinBasis(spin_parameters)),
         position_(position)
+{
+}
+
+SpinInteractionVertex::SpinInteractionVertex(const UInt label,
+                      const SpinParameters& spin_parameters,
+                      const SpinBasis& basis,
+                      const ThreeVector & position) :
+label_(label),
+spin_parameters_(spin_parameters),
+basis_(basis),
+position_(position)
 {
 }
 
@@ -34,11 +44,10 @@ const SpinParameters& SpinInteractionVertex::get_spin_parameters() const
   return spin_parameters_;
 }
 
-const SpinState& SpinInteractionVertex::get_state() const
+const SpinBasis& SpinInteractionVertex::get_basis() const
 {
-  return state_;
+  return basis_;
 }
-
 
 const ThreeVector& SpinInteractionVertex::get_position() const
 {
