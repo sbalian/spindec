@@ -10,8 +10,7 @@ namespace SpinDec
 SpinParameters::SpinParameters() :
           quantum_number_(0.0),
           gyromagnetic_ratio_(0.0),
-          multiplicity_(0),
-          basis_(SpinBasis(0.0))
+          multiplicity_(0)
 {/**/}
 
 SpinParameters::SpinParameters(const double quantum_number,

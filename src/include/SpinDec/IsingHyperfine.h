@@ -1,12 +1,12 @@
 #ifndef ISINGHYPERFINE_H_
 #define ISINGHYPERFINE_H_
 
-// IsingHyperfine
+// SpinDec::IsingHyperfine
 //
 // Like Hyperfine but fill method ignores (1/2) A [S+I- + S-I+]
 // in H_A = A Sz Iz + (1/2) A [S+I- + S-I+].
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/Hyperfine.h"
 

@@ -1,14 +1,14 @@
 #ifndef SPINHAMILTONIAN_H_
 #define SPINHAMILTONIAN_H_
 
-// SpinHamiltonian
+// SpinDec::SpinHamiltonian
 //
 // Effective spin Hamiltonian built from a spin interaction graph.
 // Can diagonalize and get unitary time evolution matrix.
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <string>
 

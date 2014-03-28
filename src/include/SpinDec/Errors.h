@@ -1,11 +1,11 @@
 #ifndef ERRORS_H_
 #define ERRORS_H_
 
-// Errors
+// SpinDec::Errors
 //
 // Error and warning handling.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/typedefs.h"
 

@@ -1,12 +1,12 @@
 #ifndef SPININTERACTION_H_
 #define SPININTERACTION_H_
 
-// SpinInteraction
+// SpinDec::SpinInteraction
 //
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <Eigen/Dense>
 

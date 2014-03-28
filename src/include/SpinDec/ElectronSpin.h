@@ -1,11 +1,11 @@
 #ifndef ELECTRONSPIN_H_
 #define ELECTRONSPIN_H_
 
-// Electron spin
+// SpinDec::Electron spin
 //
 // Spin-1/2 with the gyromagnetic ratio for the free electron by default.
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinHalf.h"
 

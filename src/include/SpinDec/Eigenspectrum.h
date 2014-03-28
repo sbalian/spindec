@@ -1,7 +1,7 @@
 #ifndef EIGENSPECTRUM_H_
 #define EIGENSPECTRUM_H_
 
-// Eigenspectrum
+// SpinDec::Eigenspectrum
 //
 // Holds the eigenvectors and eigenvalues of a matrix and the diagonalizer
 // type (see below for list of diagonalizers).
@@ -10,7 +10,7 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include <Eigen/Dense>
 #include <complex>

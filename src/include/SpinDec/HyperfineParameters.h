@@ -1,12 +1,12 @@
 #ifndef HYPERFINEPARAMETERS_H_
 #define HYPERFINEPARAMETERS_H_
 
-// HyperfineParameters
+// SpinDec::HyperfineParameters
 //
 // Parameters to cacluate the hyperfine interaction between and electron
 // and a nucleus in a lattice.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/typedefs.h"
 

@@ -1,11 +1,11 @@
 #ifndef SPINHALF_H_
 #define SPINHALF_H_
 
-// SpinHalf
+// SpinDec::SpinHalf
 //
 // Spin-1/2.
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/Spin.h"
 #include "SpinDec/typedefs.h"

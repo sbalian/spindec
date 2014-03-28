@@ -1,11 +1,11 @@
 #ifndef SPINSTATE_H_
 #define SPINSTATE_H_
 
-// SpinState
+// SpinDec::SpinState
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"

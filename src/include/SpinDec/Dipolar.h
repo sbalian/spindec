@@ -1,7 +1,7 @@
 #ifndef DIPOLAR_H_
 #define	DIPOLAR_H_
 
-// Dipolar
+// SpinDec::Dipolar
 //
 // Dipolar interaction strength between a pair of spins (operators S_1, S_2)
 //
@@ -28,7 +28,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Mar 28, 2014
 
 #include "SpinDec/SpinInteraction.h"
 
