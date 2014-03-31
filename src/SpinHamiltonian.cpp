@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Mar 31, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -24,7 +24,8 @@ void SpinHamiltonian::fill_zeeman(const SpinInteractionGraph& graph)
       add_to_element(i,i,
           get_basis().get_element(i,j)*// magnetic quantum number
           get_field().get_magnitude()*// field strength [T]
-          graph.get_spin(j).get_gyromagnetic_ratio()); // gyromagnetic ratio
+          graph.get_spin_parameters(j).get_gyromagnetic_ratio());
+                                                       // gyromagnetic ratio
                                                        // [M rad s-1]
     }
   }
@@ -39,11 +40,14 @@ void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
     std::auto_ptr<SpinInteraction> interaction_ptr = graph.get_interaction(i);
     if (!interaction_ptr->strength_preset()) { // calculate only if strength
                                                // NOT preset
-      interaction_ptr -> calculate(graph.get_edge(i).get_vertex1().get_spin(),
-                                   graph.get_edge(i).get_vertex2().get_spin(),
-                                   get_field()); 
+      interaction_ptr -> calculate(
+          graph.get_edge(i).get_vertex1().get_spin_parameters(),
+          graph.get_edge(i).get_vertex2().get_spin_parameters(),
+          graph.get_edge(i).get_vertex1().get_position(),
+          graph.get_edge(i).get_vertex2().get_position(),
+                            get_field()); 
     }
-    interaction_ptr->fill(&matrix_,graph.get_spins(),
+    interaction_ptr->fill(&matrix_,graph.spin_parameters_vector(),
         get_basis(),
         graph.get_edge(i).get_vertex1().get_label(),
         graph.get_edge(i).get_vertex2().get_label());
@@ -66,7 +70,7 @@ SpinHamiltonian::SpinHamiltonian() : SpinOperator(),
 
 SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
     const UniformMagneticField & field) :
-    SpinOperator(graph.build_basis()),
+    SpinOperator(graph.get_basis()),
     field_(field)
 {
   fill_matrix(graph);

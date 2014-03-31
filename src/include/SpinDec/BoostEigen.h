@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDec.
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Mar 31, 2014
 
 #include <Eigen/Dense>
 

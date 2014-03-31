@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 31, 2014
 
 #include <iostream>
 
@@ -19,11 +19,11 @@ basis1 = basis2;
 
 std::cout << basis1.rows() << "\t" << basis1.cols() << std::endl;
 
-ElectronSpin electron;
-NuclearSpin nucleus(4.5,0.0);
+ElectronSpinParameters electron;
+SpinParameters nucleus(4.5,0.0);
 
-SpinBasis electron_basis = electron.get_state().get_basis();
-SpinBasis nucleus_basis = nucleus.get_state().get_basis();
+SpinBasis electron_basis (electron);
+SpinBasis nucleus_basis (nucleus);
 
 std::cout << "Electron basis\n" << electron_basis << std::endl;
 std::cout << "Nucleus basis\n" << nucleus_basis << std::endl;

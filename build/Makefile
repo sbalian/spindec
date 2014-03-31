@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Mar 10, 2014
+# Seto Balian, Mar 31, 2014
 
 # Basic user input
 #####################
@@ -63,7 +63,7 @@ ALL_SOURCE=$(wildcard $(SOURCE_PATH)*.cpp)
 
 TEST_EXCUTABLES=\
 test_boosteigen\
-test_spins\
+test_spinparameters\
 test_spinbasis\
 test_misc\
 test_evolution
@@ -79,37 +79,27 @@ test_boosteigen: $(TEST_BOOSTEIGEN_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_BOOSTEIGEN_OBJECTS) \
 -o test_boosteigen
 
-# test_spins
-TEST_SPINS_OBJECTS=\
-test_spins.o\
-Spin.o\
-ElectronSpin.o\
-NuclearSpin.o\
-SpinVector.o\
-MathPhysConstants.o\
-SpinState.o\
-MatrixRepresentation.o\
-SpinBasis.o\
-Errors.o\
-BoostEigen.o
+# test_spinparameters
+TEST_SPINPARAMETERS_OBJECTS=\
+test_spinparameters.o\
+ElectronSpinParameters.o\
+SpinParameters.o\
+SpinParametersVector.o\
+constants.o
 
-test_spins: $(TEST_SPINS_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINS_OBJECTS) \
--o test_spins
+test_spinparameters: $(TEST_SPINPARAMETERS_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
+$(TEST_SPINPARAMETERS_OBJECTS) -o test_spinparameters
 
 # test_spinbasis
 TEST_SPINBASIS_OBJECTS=\
 test_spinbasis.o\
 SpinBasis.o\
-Spin.o\
-ElectronSpin.o\
-NuclearSpin.o\
-SpinVector.o\
-MathPhysConstants.o\
-Errors.o\
-MatrixRepresentation.o\
-SpinState.o\
-BoostEigen.o
+SpinParameters.o\
+ElectronSpinParameters.o\
+SpinParametersVector.o\
+constants.o\
+Errors.o
 
 test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINBASIS_OBJECTS) \
@@ -118,7 +108,7 @@ test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
 # test_misc
 TEST_MISC_OBJECTS=\
 test_misc.o\
-MathPhysConstants.o
+constants.o
 
 test_misc: $(TEST_MISC_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_MISC_OBJECTS) \
@@ -128,28 +118,26 @@ test_misc: $(TEST_MISC_OBJECTS)
 TEST_EVOLUTION_OBJECTS=\
 test_evolution.o\
 UniformMagneticField.o\
-Spin.o\
-ElectronSpin.o\
-NuclearSpin.o\
+ElectronSpinParameters.o\
+SpinParameters.o\
+MatrixRepresentation.o\
+SpinOperator.o\
 SpinInteraction.o\
 Dipolar.o\
-MathPhysConstants.o\
-SpinBasis.o\
-SpinState.o\
-SpinOperator.o\
-SpinHamiltonian.o\
-SpinInteractionGraph.o\
-MatrixRepresentation.o\
-SpinVector.o\
-BoostEigen.o\
-Errors.o\
+Hyperfine.o\
+constants.o\
+HyperfineParameters.o\
 Eigenspectrum.o\
 HermitianEigenspectrum.o\
-Hyperfine.o\
-IsingHyperfine.o\
-HyperfineParameters.o\
+Errors.o\
+SpinHamiltonian.o\
+SpinInteractionEdge.o\
 SpinInteractionVertex.o\
-SpinInteractionEdge.o
+SpinInteractionGraph.o\
+SpinParametersVector.o\
+SpinBasis.o\
+BoostEigen.o\
+IsingHyperfine.o
 
 test_evolution: $(TEST_EVOLUTION_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_EVOLUTION_OBJECTS) \
