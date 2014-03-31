@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Mar 31, 2014
 
 #include <iostream>
 #include <complex>
@@ -16,10 +16,10 @@ std::complex<double> test_exp(const std::complex<double> & z)
 }
 
 int main() {
-  
-std::cout << "pi " << MathPhysConstants::pi() << std::endl;
-std::cout << "h " << MathPhysConstants::planck() << std::endl;
-std::cout << "hbar " << MathPhysConstants::reduced_planck() << std::endl;
+
+std::cout << "pi " << kPi << std::endl;
+std::cout << "h " << kPlanck << std::endl;
+std::cout << "hbar " << kReducedPlanck << std::endl;
 std::cout << std::endl;
 
 
@@ -31,11 +31,11 @@ bVec << 1.2, -0.2, 0.8;
 std::cout << "a" << aVec << std::endl;
 std::cout << "b" << bVec << std::endl;
 
-std::cout << "Eigen exp(a)" << aVec.array().exp() << std::endl;
+std::cout << "Eigen exp(a)" << aVec.array().exp() << "\n";
 
-Eigen::Vector3d testv = (aVec.array().exp()).matrix();
-
-std::cout << "test " << testv << std::endl;
+// Works, but (rare) Eclipse problem for .matrix()
+//Eigen::Vector3d testv = (aVec.array().exp()).matrix();
+//std::cout << "test " << testv << std::endl;
 
 Eigen::Array3cd complexvector(std::complex<double>(1.0,-1.0),
                              std::complex<double>(-1.0,-1.0),

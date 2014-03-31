@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Mar 31, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -54,7 +54,12 @@ void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
   SpinInteractionVertex vertex(SpinInteractionVertex(num_vertices(),
       spin_parameters,position));
   vertices_.push_back(vertex);
-  basis_ = basis_^vertex.get_basis();
+  if (num_vertices() == 1) {
+    basis_ = vertex.get_basis();
+  } else {
+    basis_ = basis_^vertex.get_basis();
+  }
+  return;
 }
 
 void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
@@ -64,7 +69,13 @@ void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
   SpinInteractionVertex vertex(SpinInteractionVertex(num_vertices(),
       spin_parameters,basis,position));
   vertices_.push_back(vertex);
+  if (num_vertices() == 1) {
+    basis_ = vertex.get_basis();
+  } else {
+    basis_ = basis_^vertex.get_basis();
+  }
   basis_ = basis_^vertex.get_basis();
+  return;
 }
 
 void  SpinInteractionGraph::add_edge(unsigned int label1,
@@ -80,10 +91,11 @@ void  SpinInteractionGraph::add_edge(unsigned int label1,
   if (label1 > label2) {
     std::swap(label1,label2);
   }
-  
+      
   edges_.push_back(
       SpinInteractionEdge(get_vertex(label1),get_vertex(label2),
           interaction->clone()));
+
   return;
 }
 
@@ -110,9 +122,9 @@ const SpinParameters&  SpinInteractionGraph::get_spin_parameters(
   return get_vertex(label).get_spin_parameters();
 }
 
-const SpinBasis& SpinInteractionGraph::get_basis(const UInt label) const
+const SpinBasis& SpinInteractionGraph::get_basis() const
 {
-  return get_vertex(label).get_basis();
+  return basis_;
 }
 
 const ThreeVector& SpinInteractionGraph::get_position(const UInt label) const

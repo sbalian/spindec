@@ -10,7 +10,7 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Mar 31, 2014
 
 #include <Eigen/Dense>
 #include <complex>

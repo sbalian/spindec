@@ -6,7 +6,7 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Mar 31, 2014
 
 #include <Eigen/Dense>
 

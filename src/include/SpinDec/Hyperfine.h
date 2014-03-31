@@ -3,6 +3,8 @@
 
 // SpinDec::Hyperfine
 //
+// TODO Force between electron and nucleus.
+//
 // Calculates the hyperfine interaction between an electron and a nucleus in
 // a lattice. Note that this is a magnetic dipole interaction, but is not
 // to be confused with the 1/r^3 dipole-dipole interaction in Dipolar.h.
