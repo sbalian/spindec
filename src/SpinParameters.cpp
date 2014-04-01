@@ -1,11 +1,17 @@
 // See SpinParameters.h for description.
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include <iomanip>
 
 namespace SpinDec
 {
+
+UInt SpinParameters::calc_multiplicity(const double quantum_number) const
+{
+  return static_cast<UInt>(2.0*quantum_number + 1.0);
+}
+
 
 SpinParameters::SpinParameters() :
           quantum_number_(0.0),
@@ -33,11 +39,6 @@ double SpinParameters::get_gyromagnetic_ratio() const
 UInt SpinParameters::get_multiplicity() const
 {
   return multiplicity_;
-}
-
-UInt SpinParameters::calc_multiplicity(const double quantum_number) const
-{
-  return static_cast<UInt>(2.0*quantum_number + 1.0);
 }
 
 std::ostream& operator<<(std::ostream& os,

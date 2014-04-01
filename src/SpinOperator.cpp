@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/SpinOperator.h"
 #include "SpinDec/BoostEigen.h"
@@ -71,6 +71,13 @@ void SpinOperator::set_element(const UInt i, const UInt j,
     const CDouble& element)
 {
   matrix_(i,j) = element;
+  return;
+}
+
+void SpinOperator::set_element(const UInt i, const UInt j,
+    const double element)
+{
+  matrix_(i,j) = CDouble(element,0.0);
   return;
 }
 

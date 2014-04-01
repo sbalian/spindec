@@ -7,11 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDec.
 //
-// Seto Balian, Mar 31, 2014
-
-#include <Eigen/Dense>
-
-#include <complex>
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -72,43 +68,3 @@ public:
 } // namespace SpinDec
 
 #endif // BOOSTEIGEN_H_
-
-// TEMPLATE GRAVEYARD
-// ------------------
-
-//// OK, but does not work on Eigen expressions in the arguments! ...
-//// Exponentiate (element-wise complex exponentiation) for vectors
-//template<typename ScalarType, int rows>
-//static Eigen::Matrix<ScalarType, rows, 1>
-//  exp(const Eigen::Matrix<ScalarType, rows, 1> & a)
-//{
-//  return (a.array().exp()).matrix();
-//}
-
-//// play ...
-//template<typename ScalarType, int rows, int cols>
-//static Eigen::Matrix<ScalarType,rows,cols> tensorProduct(
-//    const Eigen::Matrix<ScalarType, rows, cols> & A,
-//    const Eigen::Matrix<ScalarType, rows, cols> & B)
-//{
-//  unsigned int dimension_A    = A.rows();
-//  unsigned int dimension_B    = B.rows();
-////    rowsA= A.rows();
-////    rowsB= B.rows();
-////    rowsOut = rowsA*rowsB;
-//  
-//  //unsigned int dimension_AB    = dimension_A*dimension_B;
-//  
-//  //output
-//  Eigen::Matrix<ScalarType, rows*rows, rows*rows> product;
-//  
-//  // consistently with the definition of the partial trace
-//  for (unsigned int i=0;i<dimension_A;i++) {
-//    for (unsigned int j=0;j<dimension_A;j++) {
-//      product.block(i*dimension_B,j*dimension_B,dimension_B,dimension_B)
-//                                                             = A(i,j)*B;
-//    }
-//  }
-//  return product;
-//
-//}

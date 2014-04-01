@@ -6,7 +6,7 @@
 // Parameters for an electron spin. Gyromagnetic ratio of the free electron
 // by default.
 //
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinParameters.h"
@@ -17,7 +17,10 @@ namespace SpinDec
 class ElectronSpinParameters : public SpinParameters
 {
 public:
-  ElectronSpinParameters(); // free electron gyromagnetic ratio
+  
+  // Free electron gyromagnetic ratio
+  ElectronSpinParameters();
+  
   ElectronSpinParameters(const double gyromagnetic_ratio);
 
 };

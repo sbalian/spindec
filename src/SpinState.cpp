@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/SpinState.h"
 #include "SpinDec/BoostEigen.h"
@@ -50,6 +50,29 @@ void SpinState::quit_if_dimension_mismatch() const
     Errors::quit(
         "SpinState: State-vector and basis must have the same dimension!");
   }
+  return;
+}
+
+void SpinState::time_evolve(const ComplexMatrix& unitary_evolution_matrix)
+{
+  state_vector_ = unitary_evolution_matrix*state_vector_;
+  return;
+}
+
+const CDouble& SpinState::get_element(const UInt index) const
+{
+  return state_vector_(index);
+}
+
+void SpinState::set_element(const UInt index, const CDouble& element)
+{
+  state_vector_(index) = element;
+  return;
+}
+
+void SpinState::set_element(const UInt index, const double element)
+{
+  state_vector_(index) = CDouble(element,0.0);
   return;
 }
 

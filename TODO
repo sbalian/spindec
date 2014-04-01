@@ -1,7 +1,10 @@
-Seto Balian, Mar 31, 2014
+Seto Balian, Apr 1, 2014
 
 - Make sure all default constructors lead to well defined behaviour!!!
 - Have put auto_ptr in vector ... it works, but is it safe? (as dm though)
+
+- Comments with headings like Constructors, Data members, etc.
+- Also, consistency with comments - use doxygen
 
 - BoostEigen -> proper extension of Eigen? See Eigen documentation
 - Make BoostEigen methods to work on Eigen base types

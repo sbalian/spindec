@@ -1,5 +1,5 @@
 // See ElectronSpinParameters.h for description.
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/ElectronSpinParameters.h"
 #include "SpinDec/constants.h"
@@ -19,4 +19,3 @@ ElectronSpinParameters::ElectronSpinParameters(
 }
 
 } // namespace SpinDec
-
