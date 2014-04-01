@@ -1,8 +1,7 @@
 // See BoostEigen.h for description.
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/BoostEigen.h"
-#include <Eigen/Dense>
 
 namespace SpinDec
 {

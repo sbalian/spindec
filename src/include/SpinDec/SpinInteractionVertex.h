@@ -37,7 +37,7 @@ public:
                         const SpinParameters& spin_parameters,
                         const SpinBasis& basis,
                         const ThreeVector & position);
-  
+
   UInt get_label() const;
  
   const SpinParameters& get_spin_parameters() const;

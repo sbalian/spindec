@@ -5,12 +5,10 @@
 //
 // Multiple SpinParameters container
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/typedefs.h"
-
-#include <vector>
 
 namespace SpinDec
 {
@@ -21,20 +19,27 @@ private:
   std::vector<SpinParameters> spin_parameters_vector_;
   
 public:
+  
   SpinParametersVector();
+  
+  // First element set
   explicit SpinParametersVector(const SpinParameters & spin_parameters);
-  // single SpinParameters object
-  
-  void push_back(const SpinParameters & spin_parameters); // add element
-  
+    
   // Get and set like std::vector
   SpinParameters& operator[](const UInt index);
   const SpinParameters& operator[](const UInt index) const;
   
-  UInt size() const; // number of spin parameter objects
+  // Add element
+  void push_back(const SpinParameters & spin_parameters);
+  
+  // number of SpinParameter objects
+  UInt size() const;
+  
+  // clear the std::vector data member
   void clear();
   
-  UInt multiplicity() const; // total spin multiplicity
+  // Total spin multiplicity = product of individual multiplicities
+  UInt multiplicity() const;
   
 };
 

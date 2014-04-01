@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -57,7 +57,7 @@ void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
   if (num_vertices() == 1) {
     basis_ = vertex.get_basis();
   } else {
-    basis_ = basis_^vertex.get_basis();
+      basis_ = basis_^vertex.get_basis();
   }
   return;
 }
@@ -72,9 +72,39 @@ void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
   if (num_vertices() == 1) {
     basis_ = vertex.get_basis();
   } else {
-    basis_ = basis_^vertex.get_basis();
+      basis_ = basis_^vertex.get_basis();
   }
-  basis_ = basis_^vertex.get_basis();
+  return;
+}
+
+void SpinInteractionGraph::add_vertex_joining_bases(
+    const SpinParameters& spin_parameters,
+    const ThreeVector & position)
+{
+  SpinInteractionVertex vertex(SpinInteractionVertex(num_vertices(),
+      spin_parameters,position));
+  vertices_.push_back(vertex);
+  if (num_vertices() == 1) {
+    basis_ = vertex.get_basis();
+  } else {
+      basis_ = basis_+vertex.get_basis();
+  }
+  return;
+}
+
+void SpinInteractionGraph::add_vertex_joining_bases(
+    const SpinParameters& spin_parameters,
+                const SpinBasis& basis,
+                const ThreeVector & position)
+{
+  SpinInteractionVertex vertex(SpinInteractionVertex(num_vertices(),
+      spin_parameters,basis,position));
+  vertices_.push_back(vertex);
+  if (num_vertices() == 1) {
+    basis_ = vertex.get_basis();
+  } else {
+      basis_ = basis_+vertex.get_basis();
+  }
   return;
 }
 

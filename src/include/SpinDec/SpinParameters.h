@@ -10,9 +10,7 @@
 //
 // Gyromagnetic ratio = <Larmor frequency> [M rad s-1] / <magnetic field> [T]
 //
-// Seto Balian, Mar 28, 2014
-
-#include <iostream>
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -21,23 +19,28 @@ namespace SpinDec
 
 class SpinParameters
 {
-private:
+protected:
 
+  // Data members
   double quantum_number_;
-  double gyromagnetic_ratio_; // in M rad s-1
+  double gyromagnetic_ratio_;
   UInt multiplicity_;
 
+  // Protected methods
   UInt calc_multiplicity(const double quantum_number) const;
 
 public:
 
+  // Constructors
+  
   SpinParameters();
   SpinParameters(const double quantum_number,
                  const double gyromagnetic_ratio);
 
+  // Access methods
+  
   double get_quantum_number() const;
   double get_gyromagnetic_ratio() const;
-
   UInt get_multiplicity() const;
   
   // Print with cout

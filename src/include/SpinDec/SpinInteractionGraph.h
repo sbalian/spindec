@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -41,11 +41,20 @@ public:
 
   SpinInteractionGraph();
   
-  // the vertex add methods build a combined (like tensor product) basis_
+  // these vertex add methods combine the new basis to basis_
+  // (like tensor product)
   void add_vertex(const SpinParameters& spin_parameters,
                   const ThreeVector & position); // basis built from spin
                                                  // parameters
   void add_vertex(const SpinParameters& spin_parameters,
+                  const SpinBasis& basis,
+                  const ThreeVector & position);
+  
+  // these vertex add methods join the new basis to basis_
+  void add_vertex_joining_bases(const SpinParameters& spin_parameters,
+      const ThreeVector & position);
+  
+  void add_vertex_joining_bases(const SpinParameters& spin_parameters,
                   const SpinBasis& basis,
                   const ThreeVector & position);
 

@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 1, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -28,11 +28,8 @@ int main ()
   // Spatial positions (A)
   ThreeVector si29_position1(3.0,-2.0,1.0);
   ThreeVector si29_position2(1.0,1.5,0.0);
-//  SpinParameters si29_1 = si29;
-//  SpinParameters si29_2 = si29;
-
-  SpinInteractionGraph twocluster_graph;
   
+  SpinInteractionGraph twocluster_graph;
   
   // Central electron and nucleus
   twocluster_graph.add_vertex(electron,origin);// takes label 0
@@ -68,10 +65,15 @@ int main ()
   // Diagonalize
   HermitianEigenspectrum eigenspectrum(H.get_matrix(),"Lapack");
     
+  // Print eigenvalues
   std::cout << std::setprecision(10) << std::left;
   std::cout << std::scientific << std::endl;
   std::cout << eigenspectrum.get_eigenvalues().real() << std::endl << std::endl;
-                                               // Feb 24, 2014 matches with
+                                               // Mar 31, 2014 matches with
                                                // legacyspindecoherence
+  
+  // Now set up initial states
+  SpinState electron_state();
+  
   return 0;
 }

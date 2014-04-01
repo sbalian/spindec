@@ -1,5 +1,5 @@
 // See SpinParametersVector.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Apr 1, 2014
 
 #include "SpinDec/SpinParametersVector.h"
 
