@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Apr 2, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/Errors.h"
@@ -126,14 +126,15 @@ double SpinBasis::get_element(const UInt index,
   return basis_as_array_(index,slot);
 }
 
-SpinBasis SpinBasis::operator+(const SpinBasis & to_join) const
+SpinBasis SpinBasis::operator+(const SpinBasis & to_append) const
 {
-  if (num_basis_states() != to_join.num_basis_states()) {
+  if (num_basis_states() != to_append.num_basis_states()) {
     Errors::quit("Number of basis states mismatch when joining bases.");
   }
-  Eigen::ArrayXXd joined(num_basis_states(),num_spins() + to_join.num_spins());
-  joined << basis_as_array_, to_join.basis_as_array_;
-  return SpinBasis(joined);
+  Eigen::ArrayXXd appended(num_basis_states(),
+      num_spins() +to_append.num_spins());
+  appended << basis_as_array_, to_append.basis_as_array_;
+  return SpinBasis(appended);
 }
 
 SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const

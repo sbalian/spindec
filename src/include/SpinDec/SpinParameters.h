@@ -10,7 +10,7 @@
 //
 // Gyromagnetic ratio = <Larmor frequency> [M rad s-1] / <magnetic field> [T]
 //
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Apr 2, 2014
 
 #include "SpinDec/typedefs.h"
 

@@ -1,8 +1,9 @@
 // See SpinParameters.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Apr 2, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include <iomanip>
+#include "SpinDec/Errors.h"
 
 namespace SpinDec
 {
@@ -24,7 +25,11 @@ SpinParameters::SpinParameters(const double quantum_number,
       quantum_number_(quantum_number),
       gyromagnetic_ratio_(gyromagnetic_ratio),
       multiplicity_(calc_multiplicity(quantum_number))
-{/**/}
+{
+  if (quantum_number < 0.0) {
+    Errors::quit("Forced convention: spin quantum number must be positive.");
+  }
+}
 
 double SpinParameters::get_quantum_number() const
 {
