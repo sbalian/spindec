@@ -14,7 +14,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Apr 2, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
@@ -65,7 +65,7 @@ public:
   //                              -4.5
   // basis1 + basis2     gives 0.5  4.5
   //                          -0.5 -4.5
-  SpinBasis operator+(const SpinBasis & to_join) const;
+  SpinBasis operator+(const SpinBasis & to_append) const;
   
   // like tensor product,
   // for example, a^(b)

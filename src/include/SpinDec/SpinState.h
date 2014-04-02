@@ -5,7 +5,7 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Apr 2, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
@@ -15,7 +15,7 @@ namespace SpinDec
 
 class SpinState : public MatrixRepresentation
 {
-private:
+protected:
   
   ComplexVector state_vector_;
   virtual void quit_if_dimension_mismatch() const;
@@ -26,17 +26,15 @@ public:
   SpinState(const ComplexVector & state_vector,
       const SpinBasis & basis);
   explicit SpinState(const SpinBasis & basis); // zero state vector
-  explicit SpinState(const SpinInteractionGraph& graph,
-                     const UInt vertex_label); // zero state vector
 
   const ComplexVector& get_state_vector() const;
-  void set_state_vector(const ComplexVector & state_vector);
+  virtual void set_state_vector(const ComplexVector & state_vector);
   
   const CDouble& get_element(const UInt index) const;
   
-  void set_element(const UInt index,
+  virtual void set_element(const UInt index,
       const CDouble& element);
-  void set_element(const UInt index,
+  virtual void set_element(const UInt index,
         const double element); // stored as complex
   
   // States: tensor product ^, Bases: combine ^ (like tensor product)

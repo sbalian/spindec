@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Apr 2, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -77,7 +77,7 @@ void SpinInteractionGraph::add_vertex(const SpinParameters& spin_parameters,
   return;
 }
 
-void SpinInteractionGraph::add_vertex_joining_bases(
+void SpinInteractionGraph::add_vertex_appending_basis(
     const SpinParameters& spin_parameters,
     const ThreeVector & position)
 {
@@ -92,7 +92,7 @@ void SpinInteractionGraph::add_vertex_joining_bases(
   return;
 }
 
-void SpinInteractionGraph::add_vertex_joining_bases(
+void SpinInteractionGraph::add_vertex_appending_basis(
     const SpinParameters& spin_parameters,
                 const SpinBasis& basis,
                 const ThreeVector & position)
