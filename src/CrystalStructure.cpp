@@ -1,5 +1,5 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Apr 3, 2014
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"
@@ -14,19 +14,6 @@
 namespace SpinDec
 {
 
-void CrystalStructure::add_site_vectors(
-    const CrystalLattice& lattice, const CrystalBasis& basis)
-{
-  ThreeVector site_vector;
-  for (UInt i=0;i < lattice.num_lattice_vectors();i++) {
-    for (UInt j=0;j<basis.num_basis_vectors();j++) {
-      site_vector = lattice.get_lattice_vector(i) + basis.get_basis_vector(j);
-      site_vectors_.push_back(site_vector);
-    }
-  }
-  return;
-}
-
 void CrystalStructure::add_site_vector(const ThreeVector & site_vector)
 {
   site_vectors_.push_back(site_vector);
@@ -39,6 +26,21 @@ void CrystalStructure::scale_site_vectors(const double scale_factor)
     site_vectors_[i]*= scale_factor;
   }
   return;
+}
+
+std::vector<ThreeVector> CrystalStructure::cartesian_basis_vectors(
+    const LatticeVectors& lattice_vectors, const CrystalBasis& basis) const
+{
+  std::vector<ThreeVector> cartesian_vectors;
+  
+  for (UInt i =0; i< basis.num_basis_vectors();i++) {
+    ThreeVector cartesian_vector =
+        basis.get_basis_vector(i)(0)*lattice_vectors.get_a1() +
+        basis.get_basis_vector(i)(1)*lattice_vectors.get_a2() +
+        basis.get_basis_vector(i)(2)*lattice_vectors.get_a3();
+    cartesian_vectors.push_back(cartesian_vector);
+  }
+  return cartesian_vectors;
 }
 
 void CrystalStructure::read_site_vectors(const string& file_name)
@@ -56,10 +58,7 @@ void CrystalStructure::read_site_vectors(const string& file_name)
   
   // start stream
   std::ifstream input_file(file_name.c_str());
-  
-  // clear site, lattice and basis vectors
-  clear_site_vectors();
-  
+    
   // read the file as saved by the write method
   ThreeVector site_vector;
   
@@ -83,21 +82,46 @@ void CrystalStructure::read_site_vectors(const string& file_name)
   
 }
 
-void CrystalStructure::clear_site_vectors()
-{
-  site_vectors_.clear();
-  return;
-}
-
 CrystalStructure::CrystalStructure()
 {
 }
 
 CrystalStructure::CrystalStructure(
-    const CrystalLattice& lattice, const CrystalBasis& basis)
+    const LatticeVectors& lattice_vectors, const CrystalBasis& basis,
+    const int min_i, const int max_i,
+          const int min_j, const int max_j,
+          const int min_k, const int max_k)
 {
-  add_site_vectors(lattice,basis);
+    
+  std::vector<ThreeVector> basis_vectors = cartesian_basis_vectors(
+      lattice_vectors,basis);
+  
+  ThreeVector site_vector;
+  ThreeVector a_i, a_j, a_k;
+  
+  for (int i=min_i;i<=max_i;i++) {
+    a_i = static_cast<double>(i)*lattice_vectors.get_a1();
+    for (int j=min_j;j<=max_j;j++) {
+      a_j = static_cast<double>(j)*lattice_vectors.get_a2();
+      for (int k=min_k;k<=max_k;k++) {
+        a_k = static_cast<double>(k)*lattice_vectors.get_a3();
+        
+        for (UInt l =0;l<basis_vectors.size();l++) {
+          site_vector = a_i + a_j + a_k + basis_vectors[l];
+          add_site_vector(site_vector);
+        }
+        
+      }
+    }
+  }
+  
 }
+
+CrystalStructure::CrystalStructure(const string & file_name)
+{
+  read_site_vectors(file_name);
+}
+
 
 const std::vector<ThreeVector>& CrystalStructure::get_site_vectors() const
 {

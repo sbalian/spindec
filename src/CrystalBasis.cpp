@@ -1,5 +1,5 @@
 // See CrystalBasis.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Apr 3, 2014
 
 #include "SpinDec/CrystalBasis.h"
 
@@ -31,13 +31,6 @@ UInt CrystalBasis::num_basis_vectors() const
 {
   return basis_vectors_.size();
 }
-
-void CrystalBasis::clear_basis_vectors()
-{
-  basis_vectors_.clear();
-  return;
-}
-
 
 } // namespace SpinDec
 
