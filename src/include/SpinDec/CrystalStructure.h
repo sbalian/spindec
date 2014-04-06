@@ -10,7 +10,7 @@
 //
 // The length units are Angstroms. Using Cartesian coordinates.
 //
-// Seto Balian, Apr 3, 2014
+// Seto Balian, Apr 6, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -24,7 +24,29 @@ namespace SpinDec
 
 class CrystalStructure
 {
+private:
+  void read_site_vectors(const string & file_name);
+  
 protected:
+  
+  // Here, the integer arguments are the i,j,k defined above.
+  // The double arguments define the ranges for all the x,y, and z
+  // components for shaping the final structure.
+  // The fractional abundance (converted to parts per million) is the
+  // fraction of site vectors added using a uniform distribution (using
+  // c rand() see RandomNumberGenerator.h - negative seed calls clock seed).
+  // If the fractional abundance is 1.0, then all site vectors are included.
+  void fill_site_vectors(const LatticeVectors& lattice_vectors,
+      const CrystalBasis& basis,
+      const int min_i, const int max_i,
+      const int min_j, const int max_j,
+      const int min_k, const int max_k,
+      const double min_x, const double max_x,
+      const double min_y, const double max_y,
+      const double min_z, const double max_z,
+      const bool exclude_000,  // exclude the x,y,z = 0,0,0
+      const double fractional_abundance,
+      const int seed_uniform_c_rand);
   
   std::vector<ThreeVector> site_vectors_;
 
@@ -35,17 +57,25 @@ protected:
   std::vector<ThreeVector> cartesian_basis_vectors(
       const LatticeVectors& lattice_vectors, const CrystalBasis& basis) const;
 
-  void read_site_vectors(const string & file_name);
 
 public:
   CrystalStructure();
+  
+  // calls fill_site_vectors
   CrystalStructure(const LatticeVectors& lattice_vectors,
       const CrystalBasis& basis,
       const int min_i, const int max_i,
       const int min_j, const int max_j,
-      const int min_k, const int max_k);
+      const int min_k, const int max_k,
+      const double min_x, const double max_x,
+      const double min_y, const double max_y,
+      const double min_z, const double max_z,
+      const bool exclude_000,
+      const double fractional_abundance,
+      const int seed_uniform_c_rand);
   
-  explicit CrystalStructure(const string & file_name); // read from file
+  explicit CrystalStructure(const string & file_name); // reads from file
+                                                       // 3 columns: x, y, z
   
   const std::vector<ThreeVector>& get_site_vectors() const;
   const ThreeVector& get_site_vector(const UInt index) const;
@@ -58,8 +88,12 @@ public:
   double max_abs_component() const;
   
   double average_site_vector_separation() const;
-    
+  
   void write_site_vectors(const string & file_name) const;
+  
+  // Print with cout (x, y, z)
+  friend std::ostream& operator<<(std::ostream& os,
+      CrystalStructure const & crystal_structure);
 
 };
 

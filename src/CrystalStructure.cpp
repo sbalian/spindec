@@ -1,18 +1,98 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Apr 3, 2014
+// Seto Balian, Apr 6, 2014
+
+// TODO Be careful with double conditionals. Test properly.
+// TODO Comment the long methods.
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"
 #include "SpinDec/Errors.h"
 #include "SpinDec/BoostEigen.h"
+#include "SpinDec/RandomNumberGenerator.h"
 
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 
 #include <algorithm>
 
 namespace SpinDec
 {
+
+void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
+    const CrystalBasis& basis,
+    const int min_i, const int max_i,
+    const int min_j, const int max_j,
+    const int min_k, const int max_k,
+    const double min_x, const double max_x,
+    const double min_y, const double max_y,
+    const double min_z, const double max_z,
+    const bool exclude_000,
+    const double fractional_abundance,
+    const int seed_uniform_c_rand)
+{
+  
+  RandomNumberGenerator::seed_uniform_c_rand(
+      seed_uniform_c_rand);
+  
+  std::vector<ThreeVector> basis_vectors = cartesian_basis_vectors(
+      lattice_vectors,basis);
+  
+  ThreeVector site_vector;
+  ThreeVector a_i, a_j, a_k;
+  
+  if (fractional_abundance <= 0.0) {
+    Errors::quit("Fractional abundance must be positive and non-zero.");
+  }
+  
+  const unsigned int abundance_ppm =
+      static_cast<unsigned int>(fractional_abundance)*1000000;
+  
+  for (int i=min_i;i<=max_i;i++) {
+    a_i = static_cast<double>(i)*lattice_vectors.get_a1();
+    for (int j=min_j;j<=max_j;j++) {
+      a_j = static_cast<double>(j)*lattice_vectors.get_a2();
+      for (int k=min_k;k<=max_k;k++) {
+        a_k = static_cast<double>(k)*lattice_vectors.get_a3();
+        
+        for (UInt l =0;l<basis_vectors.size();l++) {
+          
+          
+          site_vector = a_i + a_j + a_k + basis_vectors[l];
+          
+          if (exclude_000) {
+            if ( (site_vector(0) == 0.0)  &&
+                 (site_vector(1) == 0.0)  &&
+                 (site_vector(2) == 0.0)    ) {
+              continue;
+            }
+          }
+          
+          
+          if (!( RandomNumberGenerator::uniform_c_rand(1,1000000)
+                                      <= abundance_ppm)) {
+            continue;
+          }
+           
+          bool to_add
+                  = ((site_vector(0) >= min_x) && (site_vector(0) <= max_x));
+          to_add *= ((site_vector(1) >= min_y) && (site_vector(1) <= max_y));
+          to_add *= ((site_vector(2) >= min_z) && (site_vector(2) <= max_z));
+
+          if (to_add == true) {
+            add_site_vector(site_vector);
+          }
+          
+        }
+        
+      }
+    }
+  }
+
+  
+  return;
+}
+
 
 void CrystalStructure::add_site_vector(const ThreeVector & site_vector)
 {
@@ -90,31 +170,24 @@ CrystalStructure::CrystalStructure(
     const LatticeVectors& lattice_vectors, const CrystalBasis& basis,
     const int min_i, const int max_i,
           const int min_j, const int max_j,
-          const int min_k, const int max_k)
+          const int min_k, const int max_k,
+          const double min_x, const double max_x,
+          const double min_y, const double max_y,
+          const double min_z, const double max_z,
+          const bool exclude_000,
+          const double fractional_abundance,
+          const int seed_uniform_c_rand)
 {
-    
-  std::vector<ThreeVector> basis_vectors = cartesian_basis_vectors(
-      lattice_vectors,basis);
-  
-  ThreeVector site_vector;
-  ThreeVector a_i, a_j, a_k;
-  
-  for (int i=min_i;i<=max_i;i++) {
-    a_i = static_cast<double>(i)*lattice_vectors.get_a1();
-    for (int j=min_j;j<=max_j;j++) {
-      a_j = static_cast<double>(j)*lattice_vectors.get_a2();
-      for (int k=min_k;k<=max_k;k++) {
-        a_k = static_cast<double>(k)*lattice_vectors.get_a3();
-        
-        for (UInt l =0;l<basis_vectors.size();l++) {
-          site_vector = a_i + a_j + a_k + basis_vectors[l];
-          add_site_vector(site_vector);
-        }
-        
-      }
-    }
-  }
-  
+  fill_site_vectors(lattice_vectors, basis,
+             min_i, max_i,
+             min_j,  max_j,
+             min_k,  max_k,
+             min_x,  max_x,
+             min_y,  max_y,
+             min_z,  max_z,
+             exclude_000,
+             fractional_abundance,
+             seed_uniform_c_rand);
 }
 
 CrystalStructure::CrystalStructure(const string & file_name)
@@ -207,6 +280,27 @@ void CrystalStructure::write_site_vectors(
   return;
 }
 
+std::ostream& operator<<(std::ostream& os,
+    CrystalStructure const & crystal_structure)
+{
+
+  // To restore formatting later
+  std::ios::fmtflags f( std::cout.flags() );
+  
+  os << std::scientific << std::left << std::setprecision(6);
+  
+  for (UInt i = 0;i < crystal_structure.num_site_vectors(); i++) {
+    os << std::setw(12) << crystal_structure.get_site_vector(i)(0);
+    os << std::setw(12) << crystal_structure.get_site_vector(i)(1);
+    os << std::setw(12) << crystal_structure.get_site_vector(i)(2);
+    os << std::endl;
+  }
+  
+  // Restore formatting
+  std::cout.flags( f );
+  
+  return os;
+}
 
 } // namespace SpinDec
 
