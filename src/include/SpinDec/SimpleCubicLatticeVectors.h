@@ -5,8 +5,9 @@
 //
 // Simple cubic lattice vectors: |a1| = |a2| = |a3| = a0 and a1,a2,a3 mutually
 // orthogonal ( || to x,y,z respectively in Cartesian coordinates).
+// SOURCE: http://en.wikipedia.org/wiki/Cubic_crystal_system
 //
-// Seto Balian, Apr 6, 2014
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/LatticeVectors.h"

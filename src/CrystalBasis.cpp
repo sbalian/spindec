@@ -1,5 +1,5 @@
 // See CrystalBasis.h for description.
-// Seto Balian, Apr 3, 2014
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/CrystalBasis.h"
 

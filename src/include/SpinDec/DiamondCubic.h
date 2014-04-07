@@ -4,9 +4,10 @@
 // SpinDec::DiamondCubic
 //
 // Diamond cubic crystal structure.
-// TODO Comment
+// This is implemented as a simple cubic lattice with 8 basis vectors.
+// SOURCE: http://en.wikipedia.org/wiki/Diamond_cubic
 //
-// Seto Balian, Apr 6, 2014
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
@@ -20,24 +21,31 @@ class DiamondCubic : public CrystalStructure
 {
 
 private:
+  
+  // set up and return the lattice vectors
   SimpleCubicLatticeVectors construct_lattice_vectors(
       const double lattice_constant) const;
+  
+  // get up and return the basis vectors
   CrystalBasis construct_basis_vectors() const;
   
-  // get integer range for centred cube
+  // get integer range (for constructing crystal structure) in a centred cube
+  // given the side length
   int int_range_centred_cube(
       const double side_length, const double lattice_constant) const;
   
   
 public:
   DiamondCubic();
-  DiamondCubic(const double lattice_constant, // cubic lattice constant in
-               const double side_length);     // Angstroms
-
+  
+  // cubic lattice constant in Angstroms
+  // side length also in Angstroms
+  DiamondCubic(const double lattice_constant, 
+               const double side_length);
+  
   DiamondCubic(const double lattice_constant,
                const double side_length,
-               const double fractional_abundance,
-               const int seed_uniform_c_rand);
+               const double fractional_abundance);
 
 };
 

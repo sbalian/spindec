@@ -10,7 +10,7 @@
 //
 // The length units are Angstroms. Using Cartesian coordinates.
 //
-// Seto Balian, Apr 6, 2014
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -30,11 +30,11 @@ private:
 protected:
   
   // Here, the integer arguments are the i,j,k defined above.
-  // The double arguments define the ranges for all the x,y, and z
-  // components for shaping the final structure.
+  // The double arguments define the spatial ranges for all the x,y, and z
+  // components for shaping the final crystal structure.
   // The fractional abundance (converted to parts per million) is the
   // fraction of site vectors added using a uniform distribution (using
-  // c rand() see RandomNumberGenerator.h - negative seed calls clock seed).
+  // cstdlib rand(); see RandomNumberGenerator.h).
   // If the fractional abundance is 1.0, then all site vectors are included.
   void fill_site_vectors(const LatticeVectors& lattice_vectors,
       const CrystalBasis& basis,
@@ -44,9 +44,7 @@ protected:
       const double min_x, const double max_x,
       const double min_y, const double max_y,
       const double min_z, const double max_z,
-      const bool exclude_000,  // exclude the x,y,z = 0,0,0
-      const double fractional_abundance,
-      const int seed_uniform_c_rand);
+      const double fractional_abundance);
   
   std::vector<ThreeVector> site_vectors_;
 
@@ -56,7 +54,6 @@ protected:
   // get the basis vectors in Cartesian coordinates
   std::vector<ThreeVector> cartesian_basis_vectors(
       const LatticeVectors& lattice_vectors, const CrystalBasis& basis) const;
-
 
 public:
   CrystalStructure();
@@ -70,9 +67,7 @@ public:
       const double min_x, const double max_x,
       const double min_y, const double max_y,
       const double min_z, const double max_z,
-      const bool exclude_000,
-      const double fractional_abundance,
-      const int seed_uniform_c_rand);
+      const double fractional_abundance);
   
   explicit CrystalStructure(const string & file_name); // reads from file
                                                        // 3 columns: x, y, z
