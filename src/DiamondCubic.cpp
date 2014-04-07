@@ -1,6 +1,5 @@
 // See DiamondCubic.h for description.
-// Seto Balian, Apr 6, 2014
-// TODO Comment
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/DiamondCubic.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"
@@ -12,12 +11,16 @@ namespace SpinDec
 int DiamondCubic::int_range_centred_cube(
     const double side_length, const double lattice_constant) const
 {
-  return static_cast<int>(side_length / (lattice_constant*2.0) + 1);
+  // Given possible rounding of doubles, the final 1 is added to ensure
+  // the int range is big enough to always include the cube of side length.
+  // The fill method then excludes vectors based on their spatial lengths.
+  return static_cast<int>(side_length / (lattice_constant*2.0)) + 1;
 }
 
 SimpleCubicLatticeVectors DiamondCubic::construct_lattice_vectors(
     const double lattice_constant) const
 {
+  // a simple cubic lattice
   return SimpleCubicLatticeVectors(lattice_constant);
 }
 
@@ -27,8 +30,10 @@ CrystalBasis DiamondCubic::construct_basis_vectors() const
   
   ThreeVector basis_vector;
   
-  // SOURCE: Wiki TODO Comment + explain + cite properly
+  // (a simple cubic lattice) with 8 basis vectors
   
+  // SOURCE: http://en.wikipedia.org/wiki/Diamond_cubic
+
   basis_vector(0) = 0.0;
   basis_vector(1) = 0.0;
   basis_vector(2) = 0.0;
@@ -80,29 +85,37 @@ DiamondCubic::DiamondCubic()
 DiamondCubic::DiamondCubic(const double lattice_constant,
     const double side_length)
 {
-  
+  // get the int range
   const int int_range = int_range_centred_cube(side_length, lattice_constant);
-  
+    
+  // add all site vectors of the crystal structure
   fill_site_vectors(construct_lattice_vectors(lattice_constant),
-      construct_basis_vectors(),-int_range,int_range,-int_range,int_range,
-      -int_range,int_range,-lattice_constant/2.0,lattice_constant/2.0,
-      -lattice_constant/2.0,lattice_constant/2.0,-lattice_constant/2.0,
-      lattice_constant/2.0,true,1.0,-1);
+      construct_basis_vectors(),
+      -int_range,int_range,
+      -int_range,int_range,
+      -int_range,int_range,
+      -side_length/2.0,side_length/2.0,
+      -side_length/2.0,side_length/2.0,
+      -side_length/2.0,side_length/2.0,1.0);
   
 }
 
 DiamondCubic::DiamondCubic(const double lattice_constant,
-    const double side_length, const double fractional_abundance,
-    const int seed_uniform_c_rand)
+    const double side_length, const double fractional_abundance)
 {
   
+  // get the int range
   const int int_range = int_range_centred_cube(side_length, lattice_constant);
   
+  // add site vectors of the crystal structure with a given fractional abundance
   fill_site_vectors(construct_lattice_vectors(lattice_constant),
-      construct_basis_vectors(),-int_range,int_range,-int_range,int_range,
-      -int_range,int_range,-lattice_constant/2.0,lattice_constant/2.0,
-      -lattice_constant/2.0,lattice_constant/2.0,-lattice_constant/2.0,
-      lattice_constant/2.0,true,fractional_abundance,seed_uniform_c_rand);
+      construct_basis_vectors(),
+      -int_range,int_range,
+      -int_range,int_range,
+      -int_range,int_range,
+      -side_length/2.0,side_length/2.0,
+      -side_length/2.0,side_length/2.0,
+      -side_length/2.0,side_length/2.0,fractional_abundance);
   
 }
 

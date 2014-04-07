@@ -1,5 +1,5 @@
 // See SimpleCubicLatticeVectors.h for description.
-// Seto Balian, Apr 3, 2014
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/SimpleCubicLatticeVectors.h"
 
@@ -13,6 +13,8 @@ SimpleCubicLatticeVectors::SimpleCubicLatticeVectors()
 SimpleCubicLatticeVectors::SimpleCubicLatticeVectors(
     const double lattice_constant)
 {
+  
+  // SOURCE: http://en.wikipedia.org/wiki/Cubic_crystal_system
   
   ThreeVector a1;
   a1(0) = lattice_constant;

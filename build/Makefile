@@ -1,6 +1,7 @@
 # SpinDec Makefile
-# Seto Balian, Mar 31, 2014
+# Seto Balian, Apr 7, 2014
 
+#####################
 # Basic user input
 #####################
 
@@ -14,12 +15,12 @@ SOURCE_PATH=../src/
 
 # Download and extract Eigen from http://eigen.tuxfamily.org
 EIGEN_PATH=/home/sbalian/eigen/
-# Download and extract boost from http://www.boost.org/
-# BOOSTPATH=../boost/ 
 
-# Lapack flag (TODO make lapack optional ...)
+# Lapack flag (TODO make lapack optional)
 LAPACK_FLAGS=-llapack
 
+#####################
+# Initialise
 #####################
 
 # Debug mode
@@ -30,93 +31,82 @@ COMPILER_FLAGS=-O3 -Wall
 endif
 
 # Other variables
-# Header path
+
+# Header path (as seen by compiler)
 HEADER_PATH=$(SOURCE_PATH)include/
 
-#####################
+# For this makefile
+HEADER_DIR=$(SOURCE_PATH)include/SpinDec/
 
 # List of executables
 EXECUTABLES=
 
-#####################
-
-all: $(EXECUTABLES)
-
-# TODO Are the two %.o's OK?
-
-ALL_SOURCE=$(wildcard $(SOURCE_PATH)*.cpp)
-
-%.o: $(SOURCE_PATH)%.cpp $(HEADER_PATH)%.h
-	$(COMPILER) -c $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) $<
-
-%.o: $(SOURCE_PATH)%.cpp
-	$(COMPILER) -c $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) $<
-
-#objects:
-#	$(COMPILER) -c $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH)\
-#  $(wildcard $(SOURCE_PATH)*.cpp)
-
-#####################
-
-# Tests
-#####################
-
+# List of test executables
 TEST_EXCUTABLES=\
 test_boosteigen\
 test_spinparameters\
 test_spinbasis\
 test_misc\
-test_evolution
+test_evolution\
+test_crystalstructure
 
+#####################
+# Targets
+#####################
+
+# All
+all: $(EXECUTABLES)
+
+# Individual source files
+%.o: $(SOURCE_PATH)%.cpp $(HEADER_DIR)%.h
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c $<
+
+# Individual main source files
+%.o: $(SOURCE_PATH)%.cpp
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c $<
+
+# All tests
 tests: $(TEST_EXCUTABLES)
 
 # test_boosteigen
-TEST_BOOSTEIGEN_OBJECTS=\
-test_boosteigen.o\
+test_boosteigen_OBJECTS=test_boosteigen.o\
 BoostEigen.o
-
-test_boosteigen: $(TEST_BOOSTEIGEN_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_BOOSTEIGEN_OBJECTS) \
--o test_boosteigen
+test_boosteigen: $(test_boosteigen_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
+$(test_boosteigen_OBJECTS) -o $@
 
 # test_spinparameters
-TEST_SPINPARAMETERS_OBJECTS=\
-test_spinparameters.o\
+test_spinparameters_OBJECTS=test_spinparameters.o\
 ElectronSpinParameters.o\
 SpinParameters.o\
 SpinParametersVector.o\
-constants.o
-
-test_spinparameters: $(TEST_SPINPARAMETERS_OBJECTS)
+constants.o\
+Errors.o
+test_spinparameters: $(test_spinparameters_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
-$(TEST_SPINPARAMETERS_OBJECTS) -o test_spinparameters
+$(test_spinparameters_OBJECTS) -o $@
 
 # test_spinbasis
-TEST_SPINBASIS_OBJECTS=\
-test_spinbasis.o\
+test_spinbasis_OBJECTS=test_spinbasis.o\
 SpinBasis.o\
 SpinParameters.o\
 ElectronSpinParameters.o\
 SpinParametersVector.o\
 constants.o\
 Errors.o
-
-test_spinbasis: $(TEST_SPINBASIS_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_SPINBASIS_OBJECTS) \
--o test_spinbasis
+test_spinbasis: $(test_spinbasis_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
+$(test_spinbasis_OBJECTS) -o $@
 
 # test_misc
-TEST_MISC_OBJECTS=\
-test_misc.o\
+test_misc_OBJECTS=test_misc.o\
 constants.o
-
-test_misc: $(TEST_MISC_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_MISC_OBJECTS) \
--o test_misc
+test_misc: $(test_misc_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
+$(test_misc_OBJECTS) -o $@
 
 # test_evolution
-TEST_EVOLUTION_OBJECTS=\
-test_evolution.o\
+test_evolution_OBJECTS=test_evolution.o\
 UniformMagneticField.o\
 ElectronSpinParameters.o\
 SpinParameters.o\
@@ -138,18 +128,28 @@ SpinParametersVector.o\
 SpinBasis.o\
 BoostEigen.o\
 IsingHyperfine.o
+test_evolution: $(test_evolution_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
+$(test_evolution_OBJECTS) -o $@
 
-test_evolution: $(TEST_EVOLUTION_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(TEST_EVOLUTION_OBJECTS) \
-$(LAPACK_FLAGS)\
-  -o test_evolution
+# test_crystalstructure
+test_crystalstructure_OBJECTS=test_crystalstructure.o\
+DiamondCubic.o\
+CrystalStructure.o\
+LatticeVectors.o\
+CrystalBasis.o\
+BoostEigen.o\
+FileProperties.o\
+Errors.o\
+RandomNumberGenerator.o\
+SimpleCubicLatticeVectors.o
+test_crystalstructure: $(test_crystalstructure_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
+$(test_crystalstructure_OBJECTS) -o $@
 
 #####################
-
 # Clean up
 #####################
-
-# Make sure this is all safe!!!
 
 clean: tidy
 	rm -f $(EXECUTABLES) && rm -f test_*
@@ -157,5 +157,13 @@ clean: tidy
 tidy:
 	rm -f *.o
 
-
 #####################
+# Graveyard
+#####################
+
+#ALL_SOURCE=$(wildcard $(SOURCE_PATH)*.cpp)
+#ALL_HEADER=$(wildcard $(HEADER_DIR)*.h)
+#try: $(ALL_SOURCE) $(ALL_HEADER)
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c \
+#$(ALL_SOURCE)
+

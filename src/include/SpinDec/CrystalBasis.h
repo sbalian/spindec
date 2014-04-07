@@ -6,7 +6,7 @@
 // Basis vectors for crystal structures in 3D. Length units are Angstroms.
 // They are in the basis of lattice vectors (a1,a2,a3) NOT (x,y,z)!
 //
-// Seto Balian, Apr 3, 2014
+// Seto Balian, Apr 7, 2014
 
 #include "SpinDec/typedefs.h"
 
