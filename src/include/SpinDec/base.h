@@ -4,11 +4,13 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, Apr 07, 2014
+// Seto Balian, May 16, 2014
 
 #include <Eigen/Dense>
 
+#include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
+#include "SpinDec/CentralSpinSystem.h"
 #include "SpinDec/CrystalBasis.h"
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/DiamondCubic.h"
@@ -23,10 +25,13 @@
 #include "SpinDec/IsingHyperfine.h"
 #include "SpinDec/LatticeVectors.h"
 #include "SpinDec/MatrixRepresentation.h"
+#include "SpinDec/NuclearSpinParameters.h"
 #include "SpinDec/RandomNumberGenerator.h"
 #include "SpinDec/Sign.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"
 #include "SpinDec/SpinBasis.h"
+#include "SpinDec/SpinBath.h"
+#include "SpinDec/SpinDonor.h"
 #include "SpinDec/SpinDown.h"
 #include "SpinDec/SpinHalf.h"
 #include "SpinDec/SpinHalfParameters.h"

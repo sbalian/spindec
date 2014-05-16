@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Apr 7, 2014
+# Seto Balian, May 16, 2014
 
 #####################
 # Basic user input
@@ -48,7 +48,8 @@ test_spinparameters\
 test_spinbasis\
 test_misc\
 test_evolution\
-test_crystalstructure
+test_crystalstructure\
+test_spindonor
 
 #####################
 # Targets
@@ -146,6 +147,33 @@ SimpleCubicLatticeVectors.o
 test_crystalstructure: $(test_crystalstructure_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
 $(test_crystalstructure_OBJECTS) -o $@
+
+# test_spindonor
+test_spindonor_OBJECTS=test_spindonor.o\
+UniformMagneticField.o\
+ElectronSpinParameters.o\
+NuclearSpinParameters.o\
+SpinParameters.o\
+SpinInteraction.o\
+Hyperfine.o\
+constants.o\
+Errors.o\
+SpinInteractionEdge.o\
+SpinInteractionVertex.o\
+SpinInteractionGraph.o\
+SpinBasis.o\
+BoostEigen.o\
+SpinParametersVector.o\
+HyperfineParameters.o\
+Dipolar.o\
+SpinDonor.o\
+Sign.o\
+AdiabaticLabel.o
+
+test_spindonor: $(test_spindonor_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
+$(test_spindonor_OBJECTS) -o $@
+
 
 #####################
 # Clean up
