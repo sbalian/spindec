@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Mar 31, 2014
+// Seto Balian, May 16, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -106,7 +106,6 @@ Hyperfine::Hyperfine(const HyperfineParameters & parameters) :
     parameters_(parameters)
 {
 }
-
 
 Hyperfine::Hyperfine(const double strength)
     : SpinInteraction(strength),

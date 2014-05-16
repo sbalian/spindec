@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 16, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -42,6 +42,13 @@ void SpinInteractionGraph::set_edge(const unsigned int index,
   edges_[index] = edge;
   return;
 }
+
+void SpinInteractionGraph::set_basis(const SpinBasis & basis)
+{
+  basis_ = basis;
+  return;
+}
+
 
 
 SpinInteractionGraph::SpinInteractionGraph() : basis_(SpinBasis())
