@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 21, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/Errors.h"
@@ -217,7 +217,24 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
   // To restore formatting later
   std::ios::fmtflags f( std::cout.flags() );
   
-  os << basis.get_basis_as_array() << std::endl;
+  Eigen::ArrayXXd basis_array = basis.get_basis_as_array();
+  
+  for (UInt i = 0; i < basis_array.rows(); i ++) {
+    os << "|";
+    for (UInt j = 0; j < basis_array.cols(); j ++) {
+      string white_space = "";
+      if (basis_array(i,j) > 0) {
+        white_space = " ";
+      }
+      if (j == basis_array.cols()-1) {
+        os << white_space << basis_array(i,j) << ">\n";
+      } else {
+          os << white_space << basis_array(i,j) << ",";
+      }
+    }
+  }
+  
+//  os << basis.get_basis_as_array() << std::endl;
   
   // Restore formatting
   std::cout.flags( f );

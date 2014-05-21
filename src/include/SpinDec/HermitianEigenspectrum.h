@@ -11,7 +11,7 @@
 // DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
 //         "Lapack" - Lapack zheev
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, May 21, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"

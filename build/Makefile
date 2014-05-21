@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, May 16, 2014
+# Seto Balian, May 21, 2014
 
 #####################
 # Basic user input
@@ -128,7 +128,10 @@ SpinInteractionGraph.o\
 SpinParametersVector.o\
 SpinBasis.o\
 BoostEigen.o\
-IsingHyperfine.o
+IsingHyperfine.o\
+SpinSystem.o\
+SpinState.o\
+StringOptions.o
 test_evolution: $(test_evolution_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
 $(test_evolution_OBJECTS) -o $@
@@ -173,7 +176,6 @@ AdiabaticLabel.o
 test_spindonor: $(test_spindonor_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
 $(test_spindonor_OBJECTS) -o $@
-
 
 #####################
 # Clean up

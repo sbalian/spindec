@@ -1,5 +1,7 @@
-Seto Balian, Apr 1, 2014
+Seto Balian, May 21, 2014
 
+- TEST EIGENVALUE PRECISION CAREFULLY (~ 0.1 Hz limit? numerical junk after?
+  compare different codes to see?)
 - Make sure all default constructors lead to well defined behaviour!!!
 - Have put auto_ptr in vector ... it works, but is it safe? (as dm though)
 
@@ -57,6 +59,9 @@ Seto Balian, Apr 1, 2014
   properly. Also, rule of three? Do I really need a destructor for
   edge class? Also, use = in copy constructor?
 - Make sure you're using auto_ptr properly
+
+- Are the restore formatting codes OK in print methods?
+
 
 
 GRAVEYARD

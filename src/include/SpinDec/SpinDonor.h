@@ -9,7 +9,7 @@
 // Analytical methods include energy levels and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, May 16, 2014
+// Seto Balian, May 21, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/UniformMagneticField.h"
@@ -57,6 +57,8 @@ private:
   UInt orthogonal_upper_energy_level_;
   UInt orthogonal_lower_energy_level_;
   
+  void check_level(const UInt level) const;
+  
   // In order of increasing energy, these are
   // |-,M-1> , |-,M-2> , ... , |-,-M>, |-,-M+1>, ... |+,+M>
   // where M = I + S
@@ -87,6 +89,8 @@ private:
   
   // convert |+/-,m> levels to -> 1,2,3,...,dim(donor)
   UInt adiabatic_label_to_int_label(const AdiabaticLabel & level) const;
+  // other way
+  AdiabaticLabel int_label_to_adiabatic_label(const UInt level) const;
   
   // Given |+/-,m>, returns |-/+,m>.
   // If |-/+,m> does not exist (m = |M|), returns the input

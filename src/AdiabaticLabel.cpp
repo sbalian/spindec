@@ -1,7 +1,9 @@
 // See AdiabaticLabel.h for description.
-// Seto Balian, May 15, 2014
+// Seto Balian, May 21, 2014
 
 #include "SpinDec/AdiabaticLabel.h"
+
+#include <iomanip>
 
 namespace SpinDec
 {
@@ -21,6 +23,16 @@ int AdiabaticLabel::get_quantum_number() const
 {
   return quantum_number_;
 }
+
+std::ostream& operator<<(std::ostream& os, AdiabaticLabel const & label)
+{
+
+  os << "|" << label.get_sign() << "," << label.get_quantum_number() << ">";
+  
+  return os;
+  
+}
+
 
 
 } // namespace SpinDec
