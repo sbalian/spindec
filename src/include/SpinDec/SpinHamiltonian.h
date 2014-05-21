@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Mar 31, 2014
+// Seto Balian, May 21, 2014
 
 #include <string>
 
@@ -56,7 +56,7 @@ public:
   // |E_n>: eigenvectors
   // t: time (real double) units: microseconds (energies in M rad s-1)
   // (for time independent spin Hamiltonians ...)
-  Eigen::MatrixXcd evolution_matrix(const HermitianEigenspectrum & spectrum,
+  ComplexMatrix evolution_matrix(const HermitianEigenspectrum & spectrum,
       const double time) const;
 
 };

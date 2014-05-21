@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Apr 1, 2014
+// Seto Balian, May 21, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -58,18 +58,11 @@ int main ()
   // Dipolar interaction between the two 29Si
   Dipolar interaction_C12;
   twocluster_graph.add_edge(2,3,interaction_C12.clone());
-    
-  // Construct the spin Hamiltonian
-  SpinHamiltonian H(twocluster_graph,field);
   
-  // Diagonalize
-  HermitianEigenspectrum eigenspectrum(H.get_matrix(),"Lapack");
-    
+  SpinSystem spin_system(twocluster_graph,field);
   // Print eigenvalues
-  std::cout << std::setprecision(10) << std::left;
-  std::cout << std::scientific << std::endl;
-  std::cout << eigenspectrum.get_eigenvalues().real() << std::endl << std::endl;
-                                               // Mar 31, 2014 matches with
+  spin_system.print('e');
+                                               // May 21, 2014 matches with
                                                // legacyspindecoherence
   
   // Now set up initial states

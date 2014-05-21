@@ -4,12 +4,13 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, May 16, 2014
+// Seto Balian, May 21, 2014
 
 #include <Eigen/Dense>
 
 #include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
+#include "SpinDec/CCE.h"
 #include "SpinDec/CentralSpinSystem.h"
 #include "SpinDec/CrystalBasis.h"
 #include "SpinDec/CrystalStructure.h"
@@ -44,7 +45,9 @@
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/SpinParametersVector.h"
 #include "SpinDec/SpinState.h"
+#include "SpinDec/SpinSystem.h"
 #include "SpinDec/SpinUp.h"
+#include "SpinDec/StringOptions.h"
 #include "SpinDec/TimeArray.h"
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/UniformMagneticField.h"

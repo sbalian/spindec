@@ -10,7 +10,7 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, Mar 31, 2014
+// Seto Balian, May 21, 2014
 
 #include <Eigen/Dense>
 #include <complex>
@@ -27,7 +27,7 @@ protected:
   ComplexMatrix eigenvectors_;
   ComplexVector eigenvalues_;
   
-  const string diagonalizer_; // string (see above)
+  string diagonalizer_; // string (see above)
 
   explicit Eigenspectrum(const string & diagonalizer);
   
