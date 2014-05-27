@@ -7,7 +7,7 @@
 // Also includes some usings ...
 // All in the SpinDec namespace.
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, May 27, 2014
 
 #include <Eigen/Dense>
 
@@ -36,6 +36,9 @@ typedef Eigen::MatrixXcd ComplexMatrix;
 
 // Vector of complex doubles
 typedef Eigen::VectorXcd ComplexVector;
+
+// Vector of doubles
+typedef Eigen::VectorXd RealVector;
 
 // std vector of doubles
 typedef std::vector<double> DoubleArray;

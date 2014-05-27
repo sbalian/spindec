@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, May 23, 2014
 
 #include "SpinDec/BoostEigen.h"
 

@@ -3,16 +3,15 @@
 
 // SpinDec::SpinDonor
 //
-// Special spin interaction graph for electron-nuclear donors:
+// Special spin system - electron-nuclear donors:
 // Electron coupled to a nucleus via a preset hyperfine interaction.
 //
 // Analytical methods include energy levels and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, May 27, 2014
 
-#include "SpinDec/SpinInteractionGraph.h"
-#include "SpinDec/UniformMagneticField.h"
+#include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Hyperfine.h"
 #include "SpinDec/ElectronSpinParameters.h"
 #include "SpinDec/NuclearSpinParameters.h"
@@ -34,11 +33,18 @@ namespace SpinDec
 // Or labeled according to increasing energy: 1,.., (2*S+1)*(2*I+1)
 // TODO Starts from 1. Make sure implementation is safe!
 
-class SpinDonor : public SpinInteractionGraph
+class SpinDonor : public SpinSystemBase
 {
 private:
   
-  UniformMagneticField field_;
+  // if set to true, the full Zeeman basis
+  // is used (computationally intensive
+  // for CCE - 20D for Si:Bi.). Otherwise,
+  // the truncated basis is used -
+  // SpinBasis build_truncated_basis() const
+  // is called
+  bool complete_basis_;
+  
   ElectronSpinParameters electron_parameters_;
   NuclearSpinParameters nuclear_parameters_;
   Hyperfine hyperfine_;
@@ -46,6 +52,8 @@ private:
   // Energy levels labeled 0,1,2 ... (2S+1)*(2I+1) 
   UInt upper_energy_level_; // upper energy level label for a transition
   UInt lower_energy_level_; // lower energy level label for a transition
+  
+  IntArray int_energy_levels_;
   
   // If the donor interacts via the electron z-component spin operator (with
   // the field along z), Hamiltonian matrix elements involving the orthogonal
@@ -64,7 +72,7 @@ private:
   // where M = I + S
   std::vector<AdiabaticLabel> energy_levels_;
   void calc_energy_levels(); // calculates and sets energy_levels_
-    
+  
   // Private methods to calculate energies, polarization, etc. analytically
   
   // - nucleus_gyromagnetic_ratio / electron_gyromagnetic_ratio
@@ -85,7 +93,10 @@ private:
   
   // (A/2)*(-0.5*(1 + 4*scaled_omega*m*delta) + pm*R(m))
   // for level |+/-,m>, A = hyperfine strength. Units M rad s-1
-  double eigenvalue(const AdiabaticLabel & level) const;
+  double energy(const AdiabaticLabel & level) const;
+  
+  Eigen::VectorXd energies() const;
+  ComplexMatrix eigenstates() const;
   
   // convert |+/-,m> levels to -> 1,2,3,...,dim(donor)
   UInt adiabatic_label_to_int_label(const AdiabaticLabel & level) const;
@@ -156,29 +167,19 @@ public:
             const unsigned int lower_energy_level,
             const ThreeVector& electron_position, // Angstroms
             const ThreeVector& nuclear_position,  // Angstroms
-            const bool complete_basis); // if set to true, the full Zeeman basis
-                                        // is built (computationally intensive
-                                        // for CCE - 20D for Si:Bi.). Otherwise,
-                                        // the truncated basis is built -
-                                 //   SpinBasis build_truncated_basis() const
-                                 //   is called
+            const bool complete_basis); 
   
-  const UniformMagneticField& get_field() const;
   const ElectronSpinParameters& get_electron_parameters() const;
   const NuclearSpinParameters& get_nuclear_parameters() const;
   const Hyperfine& get_hyperfine() const;
   
   int max_quantum_number() const;    // I + S, S = 1/2,
                                      // I = nucleus quantum number
-
-  // energy eigenvalue in M rad s-1
-  CDouble eigenvalue(const UInt level) const;
-  // always real but return complex type
-  // energy levels labeled
-  // 1,2 ... (2S+1)*(2I+1)
   
-  UInt dimension() const; // The complete spin basis dimension.
-                          // This is donor(dim) = (2S+1)*(2I+1)
+  virtual UInt dimension() const; // This is dim(Hamiltonian)
+  
+  UInt total_multiplicity() const; // The complete spin basis dimension.
+                                // This is (2S+1)*(2I+1)
   
   // See double polarization(const AdiabaticLabel& label) const
   // This takes an integer energy level label.
@@ -191,6 +192,7 @@ public:
   // This method takes and outputs integer energy level inputs
   // 1,2,...,donor(dim)
   unsigned int orthogonal_level(const UInt level) const;
+  
   
 };
 

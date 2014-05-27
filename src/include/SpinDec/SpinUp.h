@@ -6,15 +6,15 @@
 // Spin up state. For a positive (or zero) gyromagnetic ratio (and positive spin
 // quantum number) this is (1,0) in the (0.5,-0.5) basis. See also SpinDown.
 //
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 22, 2014
 
 #include "SpinDec/typedefs.h"
-#include "SpinDec/SpinHalf.h"
+#include "SpinDec/SpinHalfStates.h"
 
 namespace SpinDec
 {
 
-class SpinUp : public SpinHalf
+class SpinUp : public SpinHalfStates
 {
 public:
   SpinUp(); // default for positive gyromagnetic ratio

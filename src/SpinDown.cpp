@@ -1,5 +1,5 @@
 // See SpinDown.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 22, 2014
 
 #include "SpinDec/SpinDown.h"
 
@@ -11,7 +11,8 @@ SpinDown::SpinDown()
   init(0.0);
 }
 
-SpinDown::SpinDown(const SpinHalfParameters& spin_half_parameters) : SpinHalf()
+SpinDown::SpinDown(const SpinHalfParameters& spin_half_parameters) :
+    SpinHalfStates()
 {
   init(spin_half_parameters.get_gyromagnetic_ratio());
 }

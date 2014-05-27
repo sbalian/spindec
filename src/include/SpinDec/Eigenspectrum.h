@@ -10,7 +10,7 @@
 // General complex diagonalizers:
 // DEFAULT "Eigen"  - ComplexEigenSolver in Eigen
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, May 27, 2014
 
 #include <Eigen/Dense>
 #include <complex>
@@ -42,16 +42,16 @@ protected:
 public:
   
   Eigenspectrum();
-  Eigenspectrum(const ComplexMatrix & matrix);
+  explicit Eigenspectrum(const ComplexMatrix & matrix);
   Eigenspectrum(const ComplexMatrix & matrix,
       const string & diagonalizer);
 
-  
+
   const ComplexVector& get_eigenvalues() const;
   const ComplexMatrix& get_eigenvectors() const;
 
   CDouble get_eigenvalue(const UInt index) const;
-  ComplexVector get_eigenvector(const UInt index)    const;
+  ComplexVector get_eigenvector(const UInt index)  const;
     
   const string& get_diagonalizer() const;
 
@@ -59,6 +59,10 @@ public:
   
   // Note the Eigen naming convention here
   virtual ComplexMatrix spectralDecomposition() const;
+  
+  // NOTE: use with care
+  void set_spectrum(const ComplexMatrix & eigenvectors,
+      const ComplexVector& eigenvalues);
   
 };
 

@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, May 21, 2014
+// Seto Balian, May 27, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -20,7 +20,7 @@ void SpinDonor::check_level(const UInt level) const
     Errors::quit("Donor level must be 1,2,...,dimension(donor).");
     return;
   }
-  if (level > dimension()) {
+  if (level > total_multiplicity()) {
     Errors::quit("Donor level must be 1,2,...,dimension(donor).");
   }
   return;
@@ -49,7 +49,6 @@ void SpinDonor::calc_energy_levels()
   }
   return;
 }
-
 
 double SpinDonor::delta() const
 {
@@ -88,7 +87,7 @@ double SpinDonor::R(const int quantum_number) const
 }
 
 // M rad s-1
-double SpinDonor::eigenvalue(const AdiabaticLabel& label) const
+double SpinDonor::energy(const AdiabaticLabel& label) const
 {
   const double A = hyperfine_.get_strength();
   const double pm = static_cast<double>(label.get_sign().as_int());
@@ -97,12 +96,30 @@ double SpinDonor::eigenvalue(const AdiabaticLabel& label) const
     *static_cast<double>(m)*delta()) + pm*R(m));
 }
 
+Eigen::VectorXd SpinDonor::energies() const
+{
+  Eigen::VectorXd eigenvalues(dimension());
+  
+  if (complete_basis_ == true) {
+    for (UInt i=1 ; i<=total_multiplicity(); i++ ) {
+      eigenvalues(i-1) = energy(int_label_to_adiabatic_label(i));
+    }
+  } else {
+      eigenvalues
+  }
+}
+
+ComplexMatrix SpinDonor::eigenstates() const
+{
+  
+}
+
 unsigned int SpinDonor::adiabatic_label_to_int_label(
     const AdiabaticLabel& label) const
 {
   const int pm = label.get_sign().as_int();
   const int m = label.get_quantum_number();
-  UInt max_n = dimension();
+  UInt max_n = total_multiplicity();
   
   // deal with the m = |M| cases
   if (std::abs(m) == max_quantum_number()) {
@@ -135,6 +152,7 @@ unsigned int SpinDonor::adiabatic_label_to_int_label(
 
 AdiabaticLabel SpinDonor::int_label_to_adiabatic_label(const UInt level) const
 {
+  
   check_level(level);
   
   if (energy_levels_.size() == 0) {
@@ -352,7 +370,8 @@ void SpinDonor::set_transition(const UInt upper_energy_level,
 }
 
 SpinDonor::SpinDonor() : upper_energy_level_(0),lower_energy_level_(0),
-    orthogonal_upper_energy_level_(0),orthogonal_lower_energy_level_(0)
+    orthogonal_upper_energy_level_(0),orthogonal_lower_energy_level_(0),
+    complete_basis_(true)
 {/**/}
 
 SpinDonor::SpinDonor(const double field_strength,
@@ -369,9 +388,9 @@ SpinDonor::SpinDonor(const double field_strength,
         upper_energy_level_(upper_energy_level),
         lower_energy_level_(lower_energy_level),
         orthogonal_upper_energy_level_(0),
-        orthogonal_lower_energy_level_(0)
+        orthogonal_lower_energy_level_(0),
+        complete_basis_(complete_basis)
 {
-  
   
   // set the rest of the data members and build spin interaction graph
 
@@ -385,19 +404,17 @@ SpinDonor::SpinDonor(const double field_strength,
   
   set_transition(upper_energy_level,lower_energy_level);
   
-  add_vertex(electron_parameters_,electron_position);
-  add_vertex(nuclear_parameters_,nuclear_position);
-  add_edge(0,1,hyperfine_.clone());
+  graph_.add_vertex(electron_parameters_,electron_position);
+  graph_.add_vertex(nuclear_parameters_,nuclear_position);
+  graph_.add_edge(0,1,hyperfine_.clone());
   
-  if (complete_basis == false) {
-    set_basis(build_truncated_basis());
+  if (complete_basis_ == false) {
+    graph_.set_basis(build_truncated_basis());
   }
   
-}
-
-const UniformMagneticField& SpinDonor::get_field() const
-{
-  return field_;
+  hamiltonian_ = SpinHamiltonian(graph_,field_);
+  eigenspectrum_ = HermitianEigenspectrum(eigenstates(),energies());
+  
 }
 
 const ElectronSpinParameters& SpinDonor::get_electron_parameters() const
@@ -419,18 +436,20 @@ const Hyperfine& SpinDonor::get_hyperfine() const
 // TODO Is this safe? Checked ... OK for 0.5 + 4.5 = 5
 int SpinDonor::max_quantum_number() const
 {
-  
   return static_cast<int>(electron_parameters_.get_quantum_number() +
       nuclear_parameters_.get_quantum_number());
   
 }
 
-CDouble SpinDonor::eigenvalue(const UInt level) const
+UInt SpinDonor::dimension() const
 {
-  return static_cast<CDouble>(eigenvalue(int_label_to_adiabatic_label(level)));
+  if (complete_basis_ == false) {
+    return hamiltonian_.get_dimension();
+  }
+  return total_multiplicity();
 }
 
-UInt SpinDonor::dimension() const
+UInt SpinDonor::total_multiplicity() const
 {
   return electron_parameters_.get_multiplicity()
          *nuclear_parameters_.get_multiplicity();

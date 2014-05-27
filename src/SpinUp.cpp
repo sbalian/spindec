@@ -1,5 +1,5 @@
 // See SpinUp.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 22, 2014
 
 #include "SpinDec/SpinUp.h"
 
@@ -11,7 +11,8 @@ SpinUp::SpinUp()
   init(0.0);
 }
 
-SpinUp::SpinUp(const SpinHalfParameters& spin_half_parameters) : SpinHalf()
+SpinUp::SpinUp(const SpinHalfParameters& spin_half_parameters) :
+    SpinHalfStates()
 {
   init(spin_half_parameters.get_gyromagnetic_ratio());
 }

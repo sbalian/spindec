@@ -1,38 +1,96 @@
 // See SpinHalf.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 27, 2014
 
 #include "SpinDec/SpinHalf.h"
+#include "SpinDec/SpinHalfStates.h"
+#include "SpinDec/SpinUp.h"
+#include "SpinDec/SpinDown.h"
+#include "SpinDec/SpinHalfParameters.h"
 #include "SpinDec/Errors.h"
 
 namespace SpinDec
 {
 
-SpinHalf::SpinHalf() : SpinState(SpinBasis(SpinHalfParameters()))
+void SpinHalf::set_energies()
 {
-/**/
-}
-
-void SpinHalf::set_state_vector(const ComplexVector& state_vector)
-{
-  Errors::quit("Can't change spin half state vector.");
+  RealVector eigenvalues(2);
+  const double mod_energy = 
+      std::abs(gyromagnetic_ratio_)*field_.get_magnitude()/2.0;
+  eigenvalues(0) = -mod_energy;
+  eigenvalues(1) =  mod_energy;
+  energies_ = eigenvalues;
   return;
 }
 
-void SpinHalf::set_element(const UInt index, const CDouble& element)
+void SpinHalf::set_eigenstates()
 {
-  Errors::quit("Can't change spin half state vector.");
+  
+  SpinState spin_up = SpinUp(SpinHalfParameters(gyromagnetic_ratio_));
+  SpinState spin_down = SpinDown(SpinHalfParameters(gyromagnetic_ratio_));
+
+  ComplexMatrix eigenvectors(2,2);  
+
+  eigenvectors.col(0) = spin_up.get_state_vector();
+  eigenvectors.col(1) = spin_down.get_state_vector();
+
+  eigenstates_ = eigenvectors;
+  return;
+  
+}
+
+void SpinHalf::check_level(const UInt level) const
+{
+  if (level == 1) {
+    return;
+  }
+  if (level == 2) {
+    return;
+  }
+  Errors::quit("A spin-1/2 has two levels, 1 and 2 (NOT 0 and 1!).");
   return;
 }
 
-void SpinHalf::set_element(const UInt index, const double element)
+
+SpinHalf::SpinHalf(const double gyromagnetic_ratio,
+    const double field_strength,
+    const ThreeVector& position) : SpinSystemBase()
 {
-  Errors::quit("Can't change spin half state vector.");
-  return;
+  gyromagnetic_ratio_ = gyromagnetic_ratio;
+    
+  field_ = UniformMagneticField(field_strength);
+  graph_.add_vertex(SpinHalfParameters(gyromagnetic_ratio),position);
+  hamiltonian_ = SpinHamiltonian(graph_, field_);
+  
+  set_energies();
+  set_eigenstates();
+  
 }
 
-SpinHalf::~SpinHalf()
+SpinHalf::SpinHalf()
 {
-/**/
+  gyromagnetic_ratio_ = 0.0;
+  set_energies();
+  set_eigenstates();
+}
+
+UInt SpinHalf::dimension() const
+{
+  return 2;
+}
+
+// TODO these two are duplicated in SpinSystem.cpp ...
+SpinState SpinHalf::eigenstate(const UInt level) const
+{
+  check_level(level);
+  return SpinState(eigenstates_.col(level-1),
+      hamiltonian_.get_basis());
+}
+
+double SpinHalf::energy(const UInt level) const
+{
+  check_level(level);
+  return energies_(level-1);
 }
 
 } // namespace SpinDec
+

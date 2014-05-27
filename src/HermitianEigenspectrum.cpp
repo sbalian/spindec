@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Apr 7, 2014
+// Seto Balian, May 27, 2014
 
 #include "SpinDec/HermitianEigenspectrum.h"
 #include "SpinDec/BoostEigen.h"

@@ -7,15 +7,15 @@
 // (and positive spin quantum number) this is (0,1) in the (0.5,-0.5) basis.
 // See also SpinUp.
 //
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 22, 2014
 
 #include "SpinDec/typedefs.h"
-#include "SpinDec/SpinHalf.h"
+#include "SpinDec/SpinHalfStates.h"
 
 namespace SpinDec
 {
 
-class SpinDown : public SpinHalf
+class SpinDown : public SpinHalfStates
 {
 public:
   SpinDown(); // default for positive gyromagnetic ratio

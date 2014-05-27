@@ -3,60 +3,46 @@
 
 // SpinDec::SpinSystem
 //
-// This has a spin interaction graph together with it's spin Hamiltonian.
-// Energy levels counted in increasing energy starting from 1!
+// Diagonalizable concrete spin system.
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, May 27, 2014
 
 #include "SpinDec/typedefs.h"
-
-#include "SpinDec/SpinInteractionGraph.h"
-#include "SpinDec/SpinHamiltonian.h"
+#include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/HermitianEigenspectrum.h"
 
-#include "SpinDec/UniformMagneticField.h"
-
-#include "SpinState.h"
-#include "SpinOperator.h"
 
 namespace SpinDec
 {
 
-class SpinSystem
+class SpinSystem : public SpinSystemBase
 {
 private:
-  SpinInteractionGraph graph_;
-  SpinHamiltonian hamiltonian_;
+  void diagonalize(const string & diagonalizer);
+  
   HermitianEigenspectrum eigenspectrum_;
   
-  UniformMagneticField field_;
-
-  bool is_diagonalized_;
-  string diagonalizer_; // default is "Lapack"
+  virtual void set_eigenstates();
+  virtual void set_energies();
   
-  void diagonalize();
-
+  virtual void check_level(const UInt level) const;
+  
 public:
+  
   SpinSystem();
   SpinSystem(const SpinInteractionGraph & graph,
       const UniformMagneticField & field);
+  // default diagonalizer is "Lapack"
+  SpinSystem(const SpinInteractionGraph & graph,
+      const UniformMagneticField & field,
+      const string& diagonalizer);
   
-  SpinState eigenstate(const UInt level);
-  double energy(const UInt level);
+  // Levels 1,2,3, ... dimension(Hamiltonian)
+  virtual SpinState eigenstate(const UInt level) const;
+  // energy eigenvalue in M rad s-1
+  virtual double energy(const UInt level) const;
   
-  const UniformMagneticField& get_field() const;
-  
-  void set_diagonalizer(const string & diagonalizer);
-  
-  SpinOperator evolution_operator(const double time);
-  
-  UInt dimension() const; // Hamiltonian dimension
-  
-  // options:
-  // e - energies
-  // E - eigenstates
-  // H - Hamiltonian
-  void print(const char option);
+  virtual UInt dimension() const; // Hamiltonian dimension
   
 };
 
