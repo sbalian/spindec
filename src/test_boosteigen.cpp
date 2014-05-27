@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Apr 7, 2014
+// Seto Balian, May 27, 2014
 
 #include <iostream>
 
@@ -78,6 +78,16 @@ std::cout << vector2 << std::endl;
 
 std::cout << "vector1 X(tensor) vector2\n";
 std::cout << BoostEigen::tensorProduct(vector1,vector2) << std::endl;
+
+std::cout << "A real vector" << std::endl;
+Eigen::VectorXd real_vector(8);
+real_vector.setRandom();
+std::cout << real_vector << std::endl;
+
+std::cout << "Cast as complex" << std::endl;
+Eigen::VectorXcd real_vector_complex_cast = real_vector.cast< CDouble >();
+std::cout << real_vector_complex_cast << std::endl;
+
 
 return 0;
 

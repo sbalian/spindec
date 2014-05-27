@@ -3,35 +3,39 @@
 
 // SpinDec::SpinHalf
 //
-// Spin-1/2 spin states.
+// A spin-1/2 spin system.
 //
-// Seto Balian, Apr 2, 2014
+// Seto Balian, May 27, 2014
 
 #include "SpinDec/typedefs.h"
-#include "SpinDec/SpinState.h"
-#include "SpinDec/SpinHalfParameters.h"
+#include "SpinDec/SpinSystemBase.h"
 
 namespace SpinDec
 {
 
-class SpinHalf : public SpinState
+class SpinHalf : public SpinSystemBase
 {
-protected:
-  SpinHalf(); // basis (0.5,-0.5)
   
-  // depending on sign of gyromagnetic_ratio, spin up or spin down
-  // see derived classes SpinUp and SpinDown
-  virtual void init(const double gyromagnetic_ratio) = 0;
-  
-  // All these not allowed TODO any other way of doing this?
-  virtual void set_state_vector(const ComplexVector & state_vector);
-  virtual void set_element(const UInt index,
-      const CDouble& element);
-  virtual void set_element(const UInt index,
-        const double element);
-  
-  virtual ~SpinHalf();
+private:
 
+  double gyromagnetic_ratio_;
+  
+  virtual void set_energies();
+  virtual void set_eigenstates();
+  
+  virtual void check_level(const UInt level) const;
+
+public:
+  SpinHalf();
+  SpinHalf(const double gyromagnetic_ratio,
+      const double field_strength,
+      const ThreeVector & position);
+
+  virtual UInt dimension() const;
+  
+  virtual SpinState eigenstate(const UInt level) const;
+  virtual double energy(const UInt level) const; 
+  
 };
 
 } // namespace SpinDec

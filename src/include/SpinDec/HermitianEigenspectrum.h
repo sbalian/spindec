@@ -11,7 +11,7 @@
 // DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
 //         "Lapack" - Lapack zheev
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, May 27, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"
@@ -35,7 +35,7 @@ public:
   explicit HermitianEigenspectrum(const ComplexMatrix & matrix);
   HermitianEigenspectrum(const ComplexMatrix & matrix,
       const string & diagonalizer);
-  
+    
   // since eigenvectors orthonormal, V-1 = V^+,
   // so use faster (unitary) decomposition
   virtual ComplexMatrix spectralDecomposition() const;

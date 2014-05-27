@@ -1,5 +1,5 @@
 // See Eigenspectrum.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, May 27, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
@@ -11,7 +11,6 @@ namespace SpinDec
 Eigenspectrum::Eigenspectrum() : diagonalizer_("Eigen")
 {
 }
-
 
 Eigenspectrum::Eigenspectrum(const ComplexMatrix & matrix) :
     diagonalizer_("Eigen")
@@ -107,5 +106,14 @@ void Eigenspectrum::diagonalize(const ComplexMatrix& matrix)
   return;
 
 }
+
+void Eigenspectrum::set_spectrum(const ComplexMatrix & eigenvectors,
+    const ComplexVector& eigenvalues)
+{
+  eigenvectors_ = eigenvectors;
+  eigenvalues_ = eigenvalues;
+  return;
+}
+
 
 } // namespace SpinDec

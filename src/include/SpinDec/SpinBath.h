@@ -4,8 +4,8 @@
 // SpinDec::SpinBath
 //
 // Spin bath for the central spin decoherence problem in a crystal.
-// This is a spin bath of just a single spin interaction graph, e.g. a donor
-// or a single-spin graph like a nucleus. Also, intrabath interaction is
+// This is a spin bath of just a single spin system, e.g. a donor
+// or a single spin like a nucleus. Also, intrabath interaction is
 // confined to a single interaction type. Also, it is assumed that the
 // temperature of the bath is infinite such as for example for a spin-1/2 bath,
 // there is an equal probablity of the spin-up/spin-down states in the initial
@@ -13,7 +13,7 @@
 //
 // TODO generalize
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, May 22, 2014
 
 #include "SpinDec/typedefs.h"
 
