@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, May 27, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -22,11 +22,12 @@ namespace SpinDec
 class SpinSystemBase
 {
 protected:
+  
   SpinInteractionGraph graph_;
   SpinHamiltonian hamiltonian_;
 
   UniformMagneticField field_;
-  
+
   RealVector energies_;
   ComplexMatrix eigenstates_;
   
@@ -34,7 +35,7 @@ protected:
   virtual void set_eigenstates() = 0;
   virtual void set_energies() = 0;
   
-  virtual void check_level(const UInt level) const = 0;
+  virtual void check_level_label(const UInt level_label) const = 0;
   
 public:
   SpinSystemBase();
@@ -43,11 +44,11 @@ public:
   
   const UniformMagneticField& get_field() const;
 
-  // Levels 1,2,3, ... dimension(Hamiltonian)
+  // Levels 0,1,2, ... dimension(Hamiltonian)-1
   // some levels may be excluded!
-  virtual SpinState eigenstate(const UInt level) const = 0;
+  virtual SpinState eigenstate(const UInt level_label) const;
   // energy eigenvalue in M rad s-1
-  virtual double energy(const UInt level) const = 0; 
+  virtual double energy(const UInt level_label) const; 
 
   SpinOperator evolution_operator(const double time) const;
   

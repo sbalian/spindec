@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Apr 1, 2014
+// Seto Balian, May 29, 2014
 
 #include <complex>
 #include <iostream>
@@ -21,6 +21,7 @@ class SpinOperator : public MatrixRepresentation
 protected:
 
   ComplexMatrix matrix_;
+  
   virtual void quit_if_dimension_mismatch() const;
 
 public:
@@ -39,7 +40,6 @@ public:
   void set_element(const UInt i, const UInt j,
       const double element); // stored as complex
 
-  
   void add_to_element(const UInt i, const UInt j,
       const CDouble& to_add);
 

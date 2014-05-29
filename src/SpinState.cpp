@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/SpinState.h"
 #include "SpinDec/BoostEigen.h"

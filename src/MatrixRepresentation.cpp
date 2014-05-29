@@ -1,5 +1,5 @@
 // See MatrixRepresentation.h for description.
-// Seto Balian, Mar 28, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/Errors.h"

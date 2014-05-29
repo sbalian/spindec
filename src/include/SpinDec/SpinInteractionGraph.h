@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, May 16, 2014
+// Seto Balian, May 28, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -22,7 +22,7 @@ namespace SpinDec
 class SpinInteractionGraph
 {
   
-protected:
+private:
   
   // Vertices
   vector<SpinInteractionVertex> vertices_;
@@ -37,11 +37,12 @@ protected:
   void set_vertex(const unsigned int label,const SpinInteractionVertex& vertex);
   void set_edge(const unsigned int index,const SpinInteractionEdge& edge);
   
-  void set_basis(const SpinBasis & basis);
   
 public:
 
   SpinInteractionGraph();
+  
+  void set_basis(const SpinBasis & basis);
   
   // these vertex add methods combine the new basis to basis_
   // (like tensor product)
