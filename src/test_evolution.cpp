@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, May 22, 2014
+// Seto Balian, May 29, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -62,7 +62,7 @@ int main ()
   SpinSystem spin_system(twocluster_graph,field);
   // Print eigenvalues
   spin_system.print('e');
-                                               // May 21, 2014 matches with
+                                               // May 29, 2014 matches with
                                                // legacyspindecoherence
   
   // Now set up initial states

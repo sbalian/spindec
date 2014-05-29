@@ -5,7 +5,7 @@
 //
 // A spin-1/2 spin system.
 //
-// Seto Balian, May 27, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -23,7 +23,7 @@ private:
   virtual void set_energies();
   virtual void set_eigenstates();
   
-  virtual void check_level(const UInt level) const;
+  virtual void check_level_label(const UInt level_label) const;
 
 public:
   SpinHalf();
@@ -32,9 +32,6 @@ public:
       const ThreeVector & position);
 
   virtual UInt dimension() const;
-  
-  virtual SpinState eigenstate(const UInt level) const;
-  virtual double energy(const UInt level) const; 
   
 };
 

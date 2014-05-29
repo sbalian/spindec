@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, May 21, 2014
+# Seto Balian, May 29, 2014
 
 #####################
 # Basic user input
@@ -72,6 +72,7 @@ tests: $(TEST_EXCUTABLES)
 # test_boosteigen
 test_boosteigen_OBJECTS=test_boosteigen.o\
 BoostEigen.o
+
 test_boosteigen: $(test_boosteigen_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
 $(test_boosteigen_OBJECTS) -o $@
@@ -83,6 +84,7 @@ SpinParameters.o\
 SpinParametersVector.o\
 constants.o\
 Errors.o
+
 test_spinparameters: $(test_spinparameters_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
 $(test_spinparameters_OBJECTS) -o $@
@@ -95,6 +97,7 @@ ElectronSpinParameters.o\
 SpinParametersVector.o\
 constants.o\
 Errors.o
+
 test_spinbasis: $(test_spinbasis_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
 $(test_spinbasis_OBJECTS) -o $@
@@ -102,6 +105,7 @@ $(test_spinbasis_OBJECTS) -o $@
 # test_misc
 test_misc_OBJECTS=test_misc.o\
 constants.o
+
 test_misc: $(test_misc_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
 $(test_misc_OBJECTS) -o $@
@@ -131,7 +135,9 @@ BoostEigen.o\
 IsingHyperfine.o\
 SpinSystem.o\
 SpinState.o\
-StringOptions.o
+StringOptions.o\
+SpinSystemBase.o
+
 test_evolution: $(test_evolution_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
 $(test_evolution_OBJECTS) -o $@
@@ -147,6 +153,7 @@ FileProperties.o\
 Errors.o\
 RandomNumberGenerator.o\
 SimpleCubicLatticeVectors.o
+
 test_crystalstructure: $(test_crystalstructure_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
 $(test_crystalstructure_OBJECTS) -o $@
@@ -171,7 +178,12 @@ HyperfineParameters.o\
 Dipolar.o\
 SpinDonor.o\
 Sign.o\
-AdiabaticLabel.o
+AdiabaticLabel.o\
+MatrixRepresentation.o\
+SpinSystemBase.o\
+SpinHamiltonian.o\
+SpinOperator.o\
+SpinState.o
 
 test_spindonor: $(test_spindonor_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \

@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, May 27, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
@@ -32,12 +32,13 @@ SpinSystem::SpinSystem() : SpinSystemBase()
 {
 }
 
-void SpinSystem::check_level(const UInt level) const
+void SpinSystem::check_level_label(const UInt level_label) const
 {
-  if ((level > dimension()) || (level == 0)) {
-    Errors::quit("Energy levels: 1,2,...,dim(Hamiltonian)");
-  }
-  return;
+  if (level_label < dimension()) {
+    return; // all ok
+  } // else
+    Errors::quit("Energy levels: 0,1,2,...,dim(Hamiltonian)");
+    return;
 }
 
 SpinSystem::SpinSystem(const SpinInteractionGraph & graph,
@@ -56,19 +57,6 @@ SpinSystem::SpinSystem(const SpinInteractionGraph & graph,
   diagonalize("Lapack");
   set_energies();
   set_eigenstates();
-}
-
-SpinState SpinSystem::eigenstate(const UInt level) const
-{
-  check_level(level);
-  return SpinState(eigenstates_.col(level-1),
-      hamiltonian_.get_basis());
-}
-
-double SpinSystem::energy(const UInt level) const
-{
-  check_level(level);
-  return energies_(level-1);
 }
 
 UInt SpinSystem::dimension() const

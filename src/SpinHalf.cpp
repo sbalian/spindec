@@ -1,5 +1,5 @@
 // See SpinHalf.h for description.
-// Seto Balian, May 27, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/SpinHalf.h"
 #include "SpinDec/SpinHalfStates.h"
@@ -38,18 +38,15 @@ void SpinHalf::set_eigenstates()
   
 }
 
-void SpinHalf::check_level(const UInt level) const
+void SpinHalf::check_level_label(const UInt level_label) const
 {
-  if (level == 1) {
-    return;
+  
+  if (level_label < dimension()) {
+    return; // ok
   }
-  if (level == 2) {
-    return;
-  }
-  Errors::quit("A spin-1/2 has two levels, 1 and 2 (NOT 0 and 1!).");
+  Errors::quit("A spin-1/2 has two levels, labeled 0 and 1.");
   return;
 }
-
 
 SpinHalf::SpinHalf(const double gyromagnetic_ratio,
     const double field_strength,
@@ -76,20 +73,6 @@ SpinHalf::SpinHalf()
 UInt SpinHalf::dimension() const
 {
   return 2;
-}
-
-// TODO these two are duplicated in SpinSystem.cpp ...
-SpinState SpinHalf::eigenstate(const UInt level) const
-{
-  check_level(level);
-  return SpinState(eigenstates_.col(level-1),
-      hamiltonian_.get_basis());
-}
-
-double SpinHalf::energy(const UInt level) const
-{
-  check_level(level);
-  return energies_(level-1);
 }
 
 } // namespace SpinDec

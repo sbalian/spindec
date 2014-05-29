@@ -4,7 +4,7 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, May 21, 2014
+// Seto Balian, May 29, 2014
 
 #include <Eigen/Dense>
 
@@ -36,6 +36,7 @@
 #include "SpinDec/SpinDown.h"
 #include "SpinDec/SpinHalf.h"
 #include "SpinDec/SpinHalfParameters.h"
+#include "SpinDec/SpinHalfStates.h"
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/SpinInteraction.h"
 #include "SpinDec/SpinInteractionEdge.h"
@@ -46,6 +47,7 @@
 #include "SpinDec/SpinParametersVector.h"
 #include "SpinDec/SpinState.h"
 #include "SpinDec/SpinSystem.h"
+#include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/SpinUp.h"
 #include "SpinDec/StringOptions.h"
 #include "SpinDec/TimeArray.h"

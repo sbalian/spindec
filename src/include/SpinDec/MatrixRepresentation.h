@@ -6,7 +6,7 @@
 // Abstract base class for spin states and operators in the matrix
 // representation. Has a SpinBasis (Zeeman basis) and a dimension.
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, May 29, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/typedefs.h"
