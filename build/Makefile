@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, May 29, 2014
+# Seto Balian, May 30, 2014
 
 #####################
 # Basic user input
@@ -183,7 +183,10 @@ MatrixRepresentation.o\
 SpinSystemBase.o\
 SpinHamiltonian.o\
 SpinOperator.o\
-SpinState.o
+SpinState.o\
+SpinSystem.o\
+Eigenspectrum.o\
+HermitianEigenspectrum.o
 
 test_spindonor: $(test_spindonor_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \

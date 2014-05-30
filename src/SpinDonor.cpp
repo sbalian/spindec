@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, May 29, 2014
+// Seto Balian, May 30, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -16,22 +16,64 @@ namespace SpinDec
 
 void SpinDonor::sort_level_labels()
 {
-  std::sort (level_labels_.begin(),
-      level_labels_.end()); // TODO is this working OK?
+  
+  if (complete_basis_ == false) {
+    sorted_level_labels_.push_back(transition_level_labels_[0]);
+    sorted_level_labels_.push_back(transition_level_labels_[1]);
+    for (UInt i = 0; i < orthogonal_level_labels_.size() ;i++) {
+      sorted_level_labels_.push_back(orthogonal_level_labels_[i]);
+    }
+    std::sort (sorted_level_labels_.begin(),
+        sorted_level_labels_.end()); // TODO is this working OK?
+    return;
+  } // else
+  
+  for (UInt i=0;i<dimension();i++) {
+    sorted_level_labels_.push_back(i);
+  }
   return;
 }
 
+UInt SpinDonor::level_label_index(const UInt level_label) const
+{
+  for (UInt i =0;i < dimension();i++) {
+    if (level_label == sorted_level_labels_[i]) {
+      return i;
+    }
+  }
+  Errors::quit("Invalid label for donor level.");
+  return 0;
+}
+
+
 void SpinDonor::check_level_label(const UInt level_label) const
 {
-  // check if input level exists in level_labels_.
-  for (UInt i = 0; i < level_labels_.size();i++) {
-    if (level_label == level_labels_[i]) {
-      // found, all ok
+  
+  if (complete_basis_ == true) {
+    if (level_label < dimension()) {
+      return; // ok
+    }
+  } // else
+  
+  // lower transition level
+  if (level_label == transition_level_labels_[0]) {
+    return;
+  }
+  // upper transition level
+  if (level_label == transition_level_labels_[1]) {
+      return;
+  }
+  
+  // orthogonal levels
+  for (UInt i = 0; i < orthogonal_level_labels_.size();i++) {
+    if (level_label == orthogonal_level_labels_[i]) {
       return;
     }
   }
-  Errors::quit("Invalid donor level. Try using the complete basis.");
+
+  Errors::quit("Invalid label for donor level.");
   return;
+  
 }
 
 void SpinDonor::calc_adiabatic_level_labels()
@@ -104,66 +146,29 @@ double SpinDonor::energy(const AdiabaticLabel& adiabatic_level_label) const
     *static_cast<double>(m)*delta()) + pm*R(m));
 }
 
-// TODO check if this is producing the correct states ... does the same basis
-// row appear for different levels?
-// TODO comment this
-// TODO can make this + build_basis() faster as here, there is a repeat
-// of the states involved in build_basis() ...
-void SpinDonor::set_eigenstates()
-{
-  
-  const UInt dim = dimension();
-  ComplexMatrix states(dim,dim);
-  
-  UInt state_index = 0;
-  for (UInt i=0;i<dimension();i++) {
+//void SpinDonor::set_eigenstates()
+//{
+//  return;
+//    
+//}
 
-    AdiabaticLabel adiabatic_level = int_label_to_adiabatic_label(
-        level_labels_[i]);
-    
-    ComplexVector state(dim);
-    state.setZero();
-    
-    // get the basis
-    SpinBasis basis = build_basis(adiabatic_level);
-    
-    Eigen::ArrayXXd basis_as_array = basis.get_basis_as_array();
-    
-    state(state_index) = static_cast< CDouble >(
-        a(adiabatic_level.get_quantum_number()));
-    state_index += 1;
-
-    // deal with the m != |M| case
-    if (basis_as_array.rows() == 2) {
-        if (adiabatic_level.get_sign().isPlus()) {
-          state(state_index) = static_cast< CDouble >(
-              b(adiabatic_level.get_quantum_number()));
-        } else {
-            state(state_index) = static_cast< CDouble >(
-                -b(adiabatic_level.get_quantum_number()));
-        }
-        state_index += 1;
-    }
-    
-    states.col(i) = state;
-    
-  }
-  
-  eigenstates_ = states;
-  return;
-    
-}
-void SpinDonor::set_energies()
-{
-  RealVector energies(dimension());
-  
-  for (UInt i=0;i<dimension();i++) {
-    energies(i) = energy(
-        int_label_to_adiabatic_label(level_labels_[i]));
-  }
-  energies_ = energies;
-  return;
-}
+//void SpinDonor::set_energies()
+//{
+//
+//  // calculate and set all the energies
+//  // TODO can be more efficient here ...
+//  // but the calculation is analytical and this is done once in the constructor
+//  
+//  RealVector energies(total_multiplicity());
+//
+//  for (UInt i=0;i<total_multiplicity();i++) {
+//    energies(i) = energy(adiabatic_level_labels_[i]);
+//  }
+//  
+//  energies_ = energies;
+//  return;
+//  
+//}
 
 unsigned int SpinDonor::adiabatic_label_to_int_label(
     const AdiabaticLabel& adiabatic_level_label) const
@@ -355,11 +360,14 @@ SpinBasis SpinDonor::build_basis(const UIntArray& level_labels) const
   
 }
 
-SpinBasis SpinDonor::build_basis() const
+SpinBasis SpinDonor::build_truncated_basis() const
 {
   
-  return build_basis(level_labels_);
-  
+  UIntArray levels;
+  levels.push_back(transition_level_labels_[0]);
+  levels.push_back(transition_level_labels_[1]);
+  return build_basis(levels);
+
 }
 
 void SpinDonor::set_transition(const UInt lower_level_label,
@@ -384,8 +392,8 @@ void SpinDonor::set_transition(const UInt lower_level_label,
     return;
   }
   
-  lower_level_label_ = lower_level_label;
-  upper_level_label_ = upper_level_label;
+  transition_level_labels_[0] = lower_level_label;
+  transition_level_labels_[1] = upper_level_label;
     
   UInt orthogonal_level_to_set = orthogonal_level_label(lower_level_label);
   if (orthogonal_level_to_set != lower_level_label) {
@@ -401,17 +409,6 @@ void SpinDonor::set_transition(const UInt lower_level_label,
   
 }
 
-UInt SpinDonor::level_label_index(const UInt level_label) const
-{
-  for (UInt i = 0; i < level_labels_.size();i++) {
-    if (level_label == level_labels_[i]) {
-      return i;
-    }
-  }
-  Errors::quit("Invalid level label.");
-  return 0;
-}
-
 UInt SpinDonor::orthogonal_level_label(const UInt level_label) const
 {
   AdiabaticLabel adiabatic_label = int_label_to_adiabatic_label(level_label);
@@ -421,12 +418,11 @@ UInt SpinDonor::orthogonal_level_label(const UInt level_label) const
 }
 
 
-SpinDonor::SpinDonor() : SpinSystemBase(),
-    complete_basis_(true),lower_level_label_(0),
-    upper_level_label_(0)
+SpinDonor::SpinDonor() : SpinSystem(),
+    complete_basis_(true)
 {/**/}
 
-SpinDonor::SpinDonor(const double field_strength,
+void SpinDonor::init(const double field_strength,
     const double nuclear_quantum_number,
     const double electron_gyromagnetic_ratio,
     const double nuclear_gyromagnetic_ratio,
@@ -435,13 +431,14 @@ SpinDonor::SpinDonor(const double field_strength,
     const unsigned int upper_level_label,
     const ThreeVector & electron_position,
     const ThreeVector & nuclear_position,
-    const bool complete_basis) : SpinSystemBase(),
-        complete_basis_(complete_basis),
-        hyperfine_(Hyperfine(hyperfine_strength))
+    const bool complete_basis, const string& diagonalizer)
 {
   
+  complete_basis_ = complete_basis;
+  hyperfine_ = Hyperfine(hyperfine_strength);
+  
   // set the rest of the data members and build spin interaction graph
-
+  
   field_ = UniformMagneticField(field_strength);
   
   electron_parameters_ = ElectronSpinParameters(electron_gyromagnetic_ratio);
@@ -452,33 +449,74 @@ SpinDonor::SpinDonor(const double field_strength,
   
   set_transition(lower_level_label,upper_level_label);
   
-  if (complete_basis_ == false) {
-    level_labels_.push_back(lower_level_label);
-    level_labels_.push_back(upper_level_label);
-    for (UInt i=0;i<orthogonal_level_labels_.size();i++) {
-      level_labels_.push_back(orthogonal_level_labels_[i]);
-    }
-    sort_level_labels();
-  } else {
-      for (UInt i = 0; i < total_multiplicity();i++) {
-        level_labels_.push_back(i);
-      }
-  }
-  
   graph_.add_vertex(electron_parameters_,electron_position);
   graph_.add_vertex(nuclear_parameters_,nuclear_position);
   graph_.add_edge(0,1,hyperfine_.clone());
   
   if (complete_basis_ == false) {
-    graph_.set_basis(build_basis());
+    graph_.set_basis(build_truncated_basis());
   }
   
   hamiltonian_ = SpinHamiltonian(graph_,field_);
-    
+  
+  diagonalize(diagonalizer);
+  
   set_energies();
   set_eigenstates();
   
+  sort_level_labels();
+  
+  return;
+
 }
+
+
+SpinDonor::SpinDonor(const double field_strength,
+    const double nuclear_quantum_number,
+    const double electron_gyromagnetic_ratio,
+    const double nuclear_gyromagnetic_ratio,
+    const double hyperfine_strength,
+    const unsigned int lower_level_label,
+    const unsigned int upper_level_label,
+    const ThreeVector & electron_position,
+    const ThreeVector & nuclear_position,
+    const bool complete_basis, const string& diagonalizer) : SpinSystem()
+{
+  init( field_strength,
+       nuclear_quantum_number,
+       electron_gyromagnetic_ratio,
+       nuclear_gyromagnetic_ratio,
+       hyperfine_strength,
+       lower_level_label,
+       upper_level_label,
+       electron_position,
+       nuclear_position,
+       complete_basis,diagonalizer);
+}
+
+SpinDonor::SpinDonor(const double field_strength,
+    const double nuclear_quantum_number,
+    const double electron_gyromagnetic_ratio,
+    const double nuclear_gyromagnetic_ratio,
+    const double hyperfine_strength,
+    const unsigned int lower_level_label,
+    const unsigned int upper_level_label,
+    const ThreeVector & electron_position,
+    const ThreeVector & nuclear_position,
+    const bool complete_basis) : SpinSystem()
+{
+  init( field_strength,
+       nuclear_quantum_number,
+       electron_gyromagnetic_ratio,
+       nuclear_gyromagnetic_ratio,
+       hyperfine_strength,
+       lower_level_label,
+       upper_level_label,
+       electron_position,
+       nuclear_position,
+       complete_basis,"Lapack");
+}
+
 
 const ElectronSpinParameters& SpinDonor::get_electron_parameters() const
 {
@@ -512,12 +550,6 @@ UInt SpinDonor::dimension() const
   return total_multiplicity();
 }
 
-UInt SpinDonor::total_multiplicity() const
-{
-  return electron_parameters_.get_multiplicity()
-         *nuclear_parameters_.get_multiplicity();
-}
-
 SpinState SpinDonor::eigenstate(const UInt level_label) const
 {
   check_level_label(level_label);
@@ -529,6 +561,12 @@ double SpinDonor::energy(const UInt level_label) const
 {
   check_level_label(level_label);
   return energies_(level_label_index(level_label));
+}
+
+UInt SpinDonor::total_multiplicity() const
+{
+  return electron_parameters_.get_multiplicity()
+         *nuclear_parameters_.get_multiplicity();
 }
 
 double SpinDonor::polarization(const UInt level_label) const

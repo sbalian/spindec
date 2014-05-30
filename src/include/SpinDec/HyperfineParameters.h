@@ -6,7 +6,7 @@
 // Parameters to cacluate the hyperfine interaction between and electron
 // and a nucleus in a lattice.
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, May 30, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -17,13 +17,13 @@ class HyperfineParameters
 {
 private:
   
-  const double lattice_constant_;     // Lattice constant in Angstroms
-  const double lattice_parameter_a_;  // Lattice parameter in Angstroms
-  const double lattice_parameter_b_;  // Lattice parameter in Angstroms
-  const double electron_ionization_energy_; 
+   double lattice_constant_;     // Lattice constant in Angstroms
+   double lattice_parameter_a_;  // Lattice parameter in Angstroms
+   double lattice_parameter_b_;  // Lattice parameter in Angstroms
+   double electron_ionization_energy_; 
                         // Donor electron ionization energy in eV
-  const double charge_density_; // charge density (dimensionless)
-  const string form_; // "Isotropic" (only), "Anisotropic" (only)
+   double charge_density_; // charge density (dimensionless)
+   string form_; // "Isotropic" (only), "Anisotropic" (only)
                            // "Full" (both of the above) (default)
   void check_form();
   

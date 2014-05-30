@@ -9,9 +9,9 @@
 // Analytical methods include energy levels, eigenstates and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, May 30, 2014
 
-#include "SpinDec/SpinSystemBase.h"
+#include "SpinDec/SpinSystem.h"
 
 #include "SpinDec/Hyperfine.h"
 #include "SpinDec/ElectronSpinParameters.h"
@@ -34,7 +34,7 @@ namespace SpinDec
 //
 // Or labeled according to increasing energy: 0,1,..., (2*S+1)*(2*I+1) - 1
 
-class SpinDonor : public SpinSystemBase
+class SpinDonor : public SpinSystem
 {
 private:
   
@@ -53,8 +53,8 @@ private:
   // Energy levels labeled 0,1,2,... (2S+1)*(2I+1) - 1
   // - lower energy level label for a transition
   // - upper energy level label for a transition
-  UInt lower_level_label_;
-  UInt upper_level_label_;
+  UInt transition_level_labels_[2];
+
   // If the donor interacts via the electron z-component spin operator (with
   // the field along z), Hamiltonian matrix elements involving the orthogonal
   // levels must be included in the Hilbert space for completeness.
@@ -65,13 +65,16 @@ private:
   // - orthogonal upper energy level
   UIntArray orthogonal_level_labels_; // at most of size 2
   
-  // For a non-truncated, full Zeeman basis these are 0,1,2...,(2S+1)*(2I+1)-1.
-  // For the truncated basis: lower, upper, orthogonal lower, orthogonal upper
-  UIntArray level_labels_; // (if the last two exist)
-  
-  // sorts level_labels_ in increasing energy
+  // These are the upper, lower and orthogonal levels for a non-complete
+  // basis and all the energy levels for the complete basis, sorted
+  // in order of increasing energy
+  UIntArray sorted_level_labels_;
+  // sets and sorts sorted_level_labels_ in increasing energy
   void sort_level_labels();
-
+  UInt level_label_index(const UInt level_label) const;
+                            // given level label, returns the index in
+                            // sorted_level_labels_
+  
   virtual void check_level_label(const UInt level_label) const;
   
   // In order of increasing energy, these are
@@ -104,8 +107,8 @@ private:
   // for level |+/-,m>, A = hyperfine strength. Units M rad s-1
   double energy(const AdiabaticLabel & adiabatic_level_label) const;
   
-  virtual void set_eigenstates();
-  virtual void set_energies(); // sets all the energies
+//  virtual void set_eigenstates();
+//  virtual void set_energies();
   
   // convert |+/-,m> levels to -> 0,1,2,...,dim(donor)-1
   UInt adiabatic_label_to_int_label(const AdiabaticLabel&
@@ -150,17 +153,18 @@ private:
       adiabatic_level_labels) const;
   
   // Same as above but with integer labels for energy levels as the arguments
-  SpinBasis build_basis(const UIntArray & level_label) const;
+  SpinBasis build_basis(const UIntArray & level_labels) const;
   
   // This calls
   // SpinBasis build_basis(const UIntArray & level_label) const
-  // for UIntArray containing the levels in level_labels_;
-  // Output basis has the Zeeman basis states in which all the levels can
-  // be completely represented (can be truncated).
-  // This is good for interactions of the donor via the z-component of the
-  // electron spin involve these levels.
-  SpinBasis build_basis() const;
-
+  // for UIntArray containing the upper and lower levels only.
+  // Output basis has the Zeeman basis states in which the upper and lower
+  // levels as well as the levels orthogonal to these (if they exist) can
+  // be completely represented.
+  // This is a complete basis for interactions of the donor via the z-component
+  // of the electron spin.
+  SpinBasis build_truncated_basis() const;
+  
   void set_transition(const UInt lower_level_label,
       const UInt upper_level_label);
   // Also sets orthogonal levels if they exist
@@ -171,8 +175,17 @@ private:
   // 0,1,...,donor(dim)-1
   UInt orthogonal_level_label(const UInt level_label) const;
   
-  // looks for level label in level_labels_
-  UInt level_label_index(const UInt level_label) const;
+  // see constructors below
+  void init(const double field_strength,
+      const double nuclear_quantum_number,
+      const double electron_gyromagnetic_ratio,
+      const double nuclear_gyromagnetic_ratio,
+      const double hyperfine_strength,
+      const unsigned int lower_level_label,
+      const unsigned int upper_level_label,
+      const ThreeVector & electron_position,
+      const ThreeVector & nuclear_position,
+      const bool complete_basis, const string& diagonalizer);
     
 public:
   
@@ -186,7 +199,18 @@ public:
             const unsigned int upper_level_label,
             const ThreeVector& electron_position, // Angstroms
             const ThreeVector& nuclear_position,  // Angstroms
-            const bool complete_basis); 
+            const bool complete_basis); // default diagonalizer "Lapack"
+  
+  SpinDonor(const double field_strength, // Tesla
+            const double nuclear_quantum_number,
+            const double electron_gyromagnetic_ratio, // M rad s-1 T-1
+            const double nuclear_gyromagnetic_ratio, // M rad s-1 T-1
+            const double hyperfine_strength,        // M rad s-1
+            const unsigned int lower_level_label,
+            const unsigned int upper_level_label,
+            const ThreeVector& electron_position, // Angstroms
+            const ThreeVector& nuclear_position,  // Angstroms
+            const bool complete_basis, const string& diagonalizer); 
   
   const ElectronSpinParameters& get_electron_parameters() const;
   const NuclearSpinParameters& get_nuclear_parameters() const;
@@ -200,10 +224,7 @@ public:
   UInt total_multiplicity() const; // The complete spin basis dimension.
                                    // This is (2S+1)*(2I+1)
   
-  // Levels 0,1,2, ... dimension(Hamiltonian)-1
-  // some levels may be excluded!
   virtual SpinState eigenstate(const UInt level_label) const;
-  // energy eigenvalue in M rad s-1
   virtual double energy(const UInt level_label) const;
   
   // See double polarization(const AdiabaticLabel& label) const
