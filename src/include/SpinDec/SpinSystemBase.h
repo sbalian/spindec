@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, May 30, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -43,18 +43,20 @@ public:
       const UniformMagneticField & field);
   
   const UniformMagneticField& get_field() const;
+  const SpinInteractionGraph& get_graph() const;
+  const SpinHamiltonian& get_hamiltonian() const;
 
   // Levels 0,1,2, ... dimension(Hamiltonian)-1
   // some levels may be excluded!
   virtual SpinState eigenstate(const UInt level_label) const;
   // energy eigenvalue in M rad s-1
-  virtual double energy(const UInt level_label) const; 
+  virtual double energy(const UInt level_label) const;
 
   SpinOperator evolution_operator(const double time) const;
   
   virtual UInt dimension() const = 0; // Hamiltonian dimension
   
-  //SpinSystemBase join( const SpinSystem & t_join);
+//  SpinSystemBase join(const SpinSystem & t_join);
   
   // options:
   // e - energies

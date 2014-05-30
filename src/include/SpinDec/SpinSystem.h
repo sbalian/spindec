@@ -5,7 +5,7 @@
 //
 // Diagonalizable concrete spin system.
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, May 30, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -16,7 +16,7 @@ namespace SpinDec
 
 class SpinSystem : public SpinSystemBase
 {
-private:
+protected:
   void diagonalize(const string & diagonalizer);
   
   HermitianEigenspectrum eigenspectrum_;

@@ -1,5 +1,6 @@
-Seto Balian, May 21, 2014
+Seto Balian, May 30, 2014
 
+- Do const data members properly
 - TEST EIGENVALUE PRECISION CAREFULLY (~ 0.1 Hz limit? numerical junk after?
   compare different codes to see?)
 - Make sure all default constructors lead to well defined behaviour!!!

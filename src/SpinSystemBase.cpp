@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, May 29, 2014
+// Seto Balian, May 30, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -97,4 +97,16 @@ SpinSystemBase::~SpinSystemBase()
 {
 }
 
+const SpinInteractionGraph& SpinSystemBase::get_graph() const
+{
+  return graph_;
+}
+
+const SpinHamiltonian& SpinSystemBase::get_hamiltonian() const
+{
+  return hamiltonian_;
+}
+
+
 } // namespace SpinDec
+

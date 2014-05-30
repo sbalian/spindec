@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, May 29, 2014
+// Seto Balian, May 30, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
