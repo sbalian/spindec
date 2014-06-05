@@ -1,5 +1,5 @@
 // See SpinHalf.h for description.
-// Seto Balian, May 29, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/SpinHalf.h"
 #include "SpinDec/SpinHalfStates.h"
@@ -73,6 +73,11 @@ SpinHalf::SpinHalf()
 UInt SpinHalf::dimension() const
 {
   return 2;
+}
+
+std::auto_ptr<SpinSystemBase> SpinHalf::clone() const
+{
+  return std::auto_ptr<SpinSystemBase>( new SpinHalf(*this) );
 }
 
 } // namespace SpinDec

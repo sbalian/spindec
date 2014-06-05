@@ -5,7 +5,7 @@
 //
 // Diagonalizable concrete spin system.
 //
-// Seto Balian, May 30, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -35,8 +35,10 @@ public:
   SpinSystem(const SpinInteractionGraph & graph,
       const UniformMagneticField & field,
       const string& diagonalizer);
-  
+
   virtual UInt dimension() const;
+  
+  virtual std::auto_ptr<SpinSystemBase> clone() const;
   
 };
 

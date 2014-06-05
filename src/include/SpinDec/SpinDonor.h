@@ -9,7 +9,7 @@
 // Analytical methods include energy levels, eigenstates and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, May 30, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/SpinSystem.h"
 
@@ -232,6 +232,9 @@ public:
   // Gives expectation value of the electron z-component of spin
   // (for field along z) for input level
   double polarization(const UInt level_label) const;
+  
+  const SpinInteractionVertex& electron_vertex() const;
+  const SpinInteractionVertex& nuclear_vertex() const;
   
 };
 

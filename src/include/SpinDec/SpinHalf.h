@@ -5,7 +5,7 @@
 //
 // A spin-1/2 spin system.
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -32,6 +32,8 @@ public:
       const ThreeVector & position);
 
   virtual UInt dimension() const;
+  
+  virtual std::auto_ptr<SpinSystemBase> clone() const;
   
 };
 
