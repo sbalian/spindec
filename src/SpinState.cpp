@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, May 29, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/SpinState.h"
 #include "SpinDec/BoostEigen.h"
@@ -82,4 +82,16 @@ void SpinState::set_zero()
   return;
 }
 
+void SpinState::normalize()
+{
+  state_vector_.normalize();
+  return;
+}
+
+SpinState SpinState::normalized() const
+{
+  return SpinState(get_state_vector().normalized(),get_basis());
+}
+
 } // namespace SpinDec
+

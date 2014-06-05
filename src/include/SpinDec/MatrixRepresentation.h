@@ -6,7 +6,7 @@
 // Abstract base class for spin states and operators in the matrix
 // representation. Has a SpinBasis (Zeeman basis) and a dimension.
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, Jun 5, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/typedefs.h"
@@ -28,7 +28,7 @@ protected:
   // TODO Can you avoid using this? Eigen allows = between different sized
   // vectors/matrices ...
   virtual void quit_if_dimension_mismatch() const = 0;
-
+  
 public:
 
   UInt get_dimension() const;

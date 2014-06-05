@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, May 30, 2014
+// Seto Balian, Jun 2, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -573,6 +573,16 @@ double SpinDonor::polarization(const UInt level_label) const
 {
   check_level_label(level_label);
   return polarization(int_label_to_adiabatic_label(level_label));
+}
+
+const SpinInteractionVertex& SpinDonor::electron_vertex() const
+{
+  return get_graph().get_vertex(0);
+}
+
+const SpinInteractionVertex& SpinDonor::nuclear_vertex() const
+{
+  return get_graph().get_vertex(1);
 }
 
 } // namespace SpinDec

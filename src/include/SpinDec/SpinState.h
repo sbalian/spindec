@@ -5,7 +5,7 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
@@ -44,6 +44,9 @@ public:
   void time_evolve(const ComplexMatrix& unitary_evolution_matrix);
   
   virtual void set_zero(); // set all elements to zero
+  
+  void normalize();
+  SpinState normalized() const;
 
 };
 

@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, May 30, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -34,10 +34,6 @@ SpinOperator SpinSystemBase::evolution_operator(const double time) const
                        hamiltonian_.get_basis());
 }
 
-//SpinSystemBase SpinSystemBase::join( const SpinSystemBase & t_join)
-//{
-//  
-//}
 
 // options:
 // e - energies

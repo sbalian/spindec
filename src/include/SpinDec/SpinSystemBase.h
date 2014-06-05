@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, May 30, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -15,6 +15,8 @@
 #include "SpinDec/UniformMagneticField.h"
 
 #include "SpinDec/SpinState.h"
+
+#include <memory>
 
 namespace SpinDec
 {
@@ -55,14 +57,14 @@ public:
   SpinOperator evolution_operator(const double time) const;
   
   virtual UInt dimension() const = 0; // Hamiltonian dimension
-  
-//  SpinSystemBase join(const SpinSystem & t_join);
-  
+    
   // options:
   // e - energies
   // E - eigenstates
   // H - Hamiltonian
   void print(const char option);
+  
+  virtual std::auto_ptr<SpinSystemBase> clone() const = 0;
   
   virtual ~SpinSystemBase();
   

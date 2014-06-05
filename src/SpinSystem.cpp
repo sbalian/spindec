@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, May 30, 2014
+// Seto Balian, Jun 2, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
@@ -63,6 +63,12 @@ UInt SpinSystem::dimension() const
 {
   return hamiltonian_.get_dimension();
 }
+
+std::auto_ptr<SpinSystemBase> SpinSystem::clone() const
+{
+  return std::auto_ptr<SpinSystemBase> (new SpinSystem(*this));
+}
+
 
 } // namespace SpinDec
 
