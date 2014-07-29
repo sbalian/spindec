@@ -1,4 +1,7 @@
-Seto Balian, May 30, 2014
+Seto Balian, Jul 29, 2014
+
+- BE VERY CAREFUL ABOUT EIGEN'S LAZY EVALUATION. NOALIAS AND EVAL METHODS ...
+  EG. MAT MULT, a = a.transpose()
 
 - Do const data members properly
 - TEST EIGENVALUE PRECISION CAREFULLY (~ 0.1 Hz limit? numerical junk after?

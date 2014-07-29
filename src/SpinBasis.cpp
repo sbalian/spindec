@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, May 21, 2014
+// Seto Balian, Jul 29, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/Errors.h"
@@ -240,6 +240,27 @@ std::ostream& operator<<(std::ostream& os, SpinBasis const & basis)
   std::cout.flags( f );
   
   return os;
+}
+
+bool SpinBasis::is_equal(const SpinBasis& basis) const
+{
+  if (basis_as_array_.rows() != basis.get_basis_as_array().rows()) {
+    return false;
+  }
+  if (basis_as_array_.cols() != basis.get_basis_as_array().cols()) {
+    return false;
+  }
+  
+  for (unsigned int i=0;i<basis_as_array_.rows();i++) {
+    for (unsigned int j=0;j<basis_as_array_.cols();j++) {
+      if (basis_as_array_(i,j) != basis.get_basis_as_array()(i,j)) {
+        return false;
+      }
+    }
+  }
+  
+  return true;
+  
 }
 
 } // namespace SpinDec

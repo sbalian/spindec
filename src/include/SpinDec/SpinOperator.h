@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, May 29, 2014
+// Seto Balian, Jul 29, 2014
 
 #include <complex>
 #include <iostream>
@@ -53,6 +53,8 @@ public:
   // and also implement in SpinState
   friend std::ostream& operator<<(std::ostream& os,
       SpinOperator const & spin_operator);
+  
+  //virtual std::auto_ptr<MatrixRepresentation> clone() const;
 
 };
 
