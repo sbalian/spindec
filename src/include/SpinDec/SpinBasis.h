@@ -14,7 +14,7 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, Jul 29, 2014
 
 #include <Eigen/Dense>
 #include <iostream>
@@ -85,6 +85,8 @@ public:
   
   // Print with cout
   friend std::ostream& operator<<(std::ostream& os, SpinBasis const & basis);
+  
+  bool is_equal(const SpinBasis& basis) const;
   
 };
 

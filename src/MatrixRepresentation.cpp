@@ -1,5 +1,5 @@
 // See MatrixRepresentation.h for description.
-// Seto Balian, Jun 5, 2014
+// Seto Balian, Jul 29, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/Errors.h"
@@ -30,3 +30,4 @@ const SpinBasis& MatrixRepresentation::get_basis() const
 MatrixRepresentation::~MatrixRepresentation() {/**/}
 
 } // namespace SpinDec
+

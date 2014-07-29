@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, May 29, 2014
+// Seto Balian, Jul 29, 2014
 
 #include "SpinDec/SpinOperator.h"
 #include "SpinDec/BoostEigen.h"
@@ -103,5 +103,9 @@ std::ostream& operator<<(std::ostream& os,
   return os;
 }
 
+//std::auto_ptr<MatrixRepresentation> SpinOperator::clone() const
+//{
+//  return std::auto_ptr<MatrixRepresentation>( new SpinOperator(*this) );
+//}
 
 } // namespace SpinDec

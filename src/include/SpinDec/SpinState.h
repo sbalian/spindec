@@ -5,7 +5,7 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Jul 29, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
@@ -47,6 +47,8 @@ public:
   
   void normalize();
   SpinState normalized() const;
+  
+//  virtual std::auto_ptr<MatrixRepresentation> clone() const;
 
 };
 
