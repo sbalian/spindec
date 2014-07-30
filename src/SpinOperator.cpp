@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/SpinOperator.h"
 #include "SpinDec/BoostEigen.h"
@@ -38,12 +38,20 @@ void SpinOperator::set_matrix(const ComplexMatrix & matrix)
   return;
 }
 
-SpinOperator SpinOperator::operator^(const SpinOperator & rhs)
+SpinOperator SpinOperator::operator^(const SpinOperator & rhs) const
 {
+  quit_if_basis_mismatch(rhs.clone());
   return SpinOperator( BoostEigen::tensorProduct(get_matrix(),
       rhs.get_matrix()) ,
       get_basis()^(rhs.get_basis()) );
 }
+
+SpinState SpinOperator::operator*(const SpinState & operand) const
+{
+  quit_if_basis_mismatch(operand.clone());
+  return SpinState(get_matrix()*operand.get_state_vector(),get_basis());
+}
+
 
 // TODO Very similar to SpinState method, put in MatrixRepresentation?
 void SpinOperator::quit_if_dimension_mismatch() const
@@ -103,9 +111,9 @@ std::ostream& operator<<(std::ostream& os,
   return os;
 }
 
-//std::auto_ptr<MatrixRepresentation> SpinOperator::clone() const
-//{
-//  return std::auto_ptr<MatrixRepresentation>( new SpinOperator(*this) );
-//}
+std::auto_ptr<MatrixRepresentation> SpinOperator::clone() const
+{
+  return std::auto_ptr<MatrixRepresentation>( new SpinOperator(*this) );
+}
 
 } // namespace SpinDec

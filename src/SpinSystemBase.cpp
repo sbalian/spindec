@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -102,6 +102,13 @@ const SpinHamiltonian& SpinSystemBase::get_hamiltonian() const
 {
   return hamiltonian_;
 }
+
+void SpinSystemBase::set_state(const UInt level_label)
+{
+  state_ = eigenstate(level_label);
+  return;
+}
+
 
 
 } // namespace SpinDec

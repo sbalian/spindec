@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/SpinState.h"
 #include "SpinDec/BoostEigen.h"
@@ -37,11 +37,25 @@ void SpinState::set_state_vector(const ComplexVector & state_vector)
   return;
 }
 
-SpinState SpinState::operator^(const SpinState & rhs)
+SpinState SpinState::operator^(const SpinState & rhs) const
 {
+  quit_if_basis_mismatch(rhs.clone());
   return SpinState( BoostEigen::tensorProduct(get_state_vector(),
                                               rhs.get_state_vector()) ,
       get_basis()^(rhs.get_basis()) );
+}
+
+CDouble SpinState::operator*(const SpinState & rhs) const
+{
+  quit_if_basis_mismatch(rhs.clone());
+  return get_state_vector().adjoint()*rhs.get_state_vector();
+}
+
+SpinOperator SpinState::operator%(const SpinState & rhs) const
+{
+  quit_if_basis_mismatch(rhs.clone());
+  return SpinOperator(get_state_vector()*(rhs.get_state_vector().adjoint()),
+      get_basis());
 }
 
 void SpinState::quit_if_dimension_mismatch() const
@@ -93,10 +107,10 @@ SpinState SpinState::normalized() const
   return SpinState(get_state_vector().normalized(),get_basis());
 }
 
-//std::auto_ptr<MatrixRepresentation> SpinState::clone() const
-//{
-//  return std::auto_ptr<MatrixRepresentation>( new SpinState(*this) );
-//}
+std::auto_ptr<MatrixRepresentation> SpinState::clone() const
+{
+  return std::auto_ptr<MatrixRepresentation>( new SpinState(*this) );
+}
 
 }
  // namespace SpinDec

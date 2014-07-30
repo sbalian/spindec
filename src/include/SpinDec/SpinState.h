@@ -5,13 +5,16 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
+#include "SpinDec/SpinOperator.h"
 
 namespace SpinDec
 {
+
+class SpinOperator;
 
 class SpinState : public MatrixRepresentation
 {
@@ -38,7 +41,10 @@ public:
         const double element); // stored as complex
   
   // States: tensor product ^, Bases: combine ^ (like tensor product)
-  SpinState operator^(const SpinState & rhs);
+  SpinState operator^(const SpinState & rhs) const;
+  CDouble operator*(const SpinState & rhs) const;
+  // outer product
+  SpinOperator operator%(const SpinState & rhs) const;
   
   // Multiplies state_vector_ with unitary_evolution_matrix
   void time_evolve(const ComplexMatrix& unitary_evolution_matrix);
@@ -48,7 +54,7 @@ public:
   void normalize();
   SpinState normalized() const;
   
-//  virtual std::auto_ptr<MatrixRepresentation> clone() const;
+  virtual std::auto_ptr<MatrixRepresentation> clone() const;
 
 };
 

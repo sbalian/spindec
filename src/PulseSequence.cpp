@@ -1,18 +1,21 @@
 // See PulseSequence.h for description.
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/PulseSequence.h"
 
 namespace SpinDec
 {
 
-PulseSequence::PulseSequence()
+PulseSequence::PulseSequence() : duration_(0.0)
 {
 }
 
-PulseSequence::PulseSequence(const SpinState& initial_state)
+PulseSequence::PulseSequence(const SpinState& initial_state,
+    const double duration)
 {
   initial_state_ = initial_state;
+  final_state_ = SpinState(initial_state_.get_basis());
+  duration_ = duration;
 }
 
 const SpinState& PulseSequence::get_initial_state() const

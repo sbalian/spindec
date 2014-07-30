@@ -1,8 +1,9 @@
 // See PiPulse.h for description.
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/PiPulse.h"
 #include "SpinDec/Errors.h"
+#include "SpinDec/BoostEigen.h"
 
 namespace SpinDec
 {
@@ -14,9 +15,18 @@ PiPulse::PiPulse()
 void PiPulse::construct_pulse_operator()
 {
   
-  pulse_operator_ = SpinOperator(state0_.get_basis());
+  // construct basis and get identity dimension
+  UInt identity_dimension = 1;
+  SpinBasis operator_basis = state0_.get_basis();
+  for (UInt i=0;i<unaffected_states_.size();i++) {
+    identity_dimension *= unaffected_states_[i].get_dimension();
+    operator_basis = operator_basis^unaffected_states_[i].get_basis();
+  }
   
-  ComplexMatrix pulse_matrix(state0_.get_dimension(),state0_.get_dimension());
+  pulse_operator_ = SpinOperator(operator_basis);
+  
+  ComplexMatrix pulse_matrix(pulse_operator_.get_dimension(),
+      pulse_operator_.get_dimension());
   
   // |0X1|
   pulse_matrix = state0_.get_state_vector()*
@@ -32,14 +42,25 @@ void PiPulse::construct_pulse_operator()
         (other_states_[i].get_state_vector().adjoint());
   }
   
-  pulse_operator_.set_matrix(pulse_matrix);
+  // Now do the identities
+  ComplexMatrix identity(identity_dimension,identity_dimension);
+  identity=Eigen::MatrixXcd::Identity(identity_dimension,identity_dimension);
+  
+  if (identity_dimension <= 1) { // TODO Improve this ...
+    pulse_operator_.set_matrix(pulse_matrix);
+  } else {
+      pulse_operator_.set_matrix(
+          BoostEigen::tensorProduct(pulse_matrix,identity));
+  }
   
   return;
+  
 }
 
 PiPulse::PiPulse(const SpinState& state0, const SpinState& state1,
-    const vector<SpinState>& other_states) :
-      Pulse(state0,state1,0.0)
+    const vector<SpinState>& other_states,
+    const vector<SpinState>& unaffected_states) :
+      Pulse(state0,state1,0.0,unaffected_states)
 {
   other_states_ = other_states;
   
