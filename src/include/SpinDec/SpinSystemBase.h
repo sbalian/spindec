@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -39,6 +39,8 @@ protected:
   
   virtual void check_level_label(const UInt level_label) const = 0;
   
+  SpinState state_;
+  
 public:
   SpinSystemBase();
   SpinSystemBase(const SpinInteractionGraph & graph,
@@ -53,6 +55,9 @@ public:
   virtual SpinState eigenstate(const UInt level_label) const;
   // energy eigenvalue in M rad s-1
   virtual double energy(const UInt level_label) const;
+  
+  // sets state to the level_label'th eigenstate
+  void set_state(const UInt level_label);
 
   SpinOperator evolution_operator(const double time) const;
   

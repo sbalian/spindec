@@ -5,7 +5,7 @@
 //
 // Diagonalizable concrete spin system.
 //
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -37,6 +37,9 @@ public:
       const string& diagonalizer);
 
   virtual UInt dimension() const;
+  
+//  // composite spin system
+//  SpinSystem 
   
   virtual std::auto_ptr<SpinSystemBase> clone() const;
   

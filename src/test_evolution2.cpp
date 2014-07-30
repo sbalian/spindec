@@ -11,35 +11,22 @@ using namespace SpinDec;
 
 int main ()
 {
-  ThreeVector field_direction(1.0,1.0,0.0);
   
-  // Set up magnetic field (T)
-  UniformMagneticField field(0.480,field_direction);
+  // Calculates the coherence of a Si:Bi donor coupled to two 29Si nuclei
   
-  // Set up spins (state vectors all zero)
-  ElectronSpinParameters electron(1.75e5); // position origin
-  SpinParameters bismuth(4.5,-44.0); // postition origin
-  SpinParameters si29(0.5,53.0); // position origin
+//  // Set up magnetic field (T)
+//  UniformMagneticField field(0.480,ThreeVector(0.0,1.0,1.0));
   
-  ThreeVector origin; // 0 0 0 cartesian x y z
+  // donor at origin
+  SpinDonor donor(0.480,4.5,1.7591e5,-43.775,9.2702e3,9-1,12-1,ThreeVector(),
+      ThreeVector(),true);
   
-  // Set up spin interaction graph
-
-  // Spatial positions (A)
-  ThreeVector si29_position1(3.0,-2.0,1.0);
-  ThreeVector si29_position2(1.0,1.5,0.0);
+  // 29Si
+  SpinHalf si29(53.1903, 0.480,ThreeVector(1.0,0.5,3.0));
+  SpinHalf si29(53.1903, 0.480,ThreeVector(-4.0,1.0,-2.0));
   
-  SpinInteractionGraph twocluster_graph;
   
-  // Central electron and nucleus
-  twocluster_graph.add_vertex(electron,origin);// takes label 0
-  twocluster_graph.add_vertex(bismuth,origin);
-                                        // takes label 1 and so on with add
-                                        // vertex
-
-  // Interacting with a preset hyperfine interaction (9e3 M rad s-1) 
-  Hyperfine interaction_A(9.0e3);
-  twocluster_graph.add_edge(0,1,interaction_A.clone());
+  SpinSystem
   
   // A pair of bath 29Si nuclei at different positions
   twocluster_graph.add_vertex(si29,si29_position1);

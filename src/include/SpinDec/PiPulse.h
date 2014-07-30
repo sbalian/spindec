@@ -4,9 +4,9 @@
 // SpinDec::PiPulse
 //
 // Pi (refocusing) pulse.
-// |0X1| + |1X0| + SUM_i ( |iXi| )
+// [ |0X1| + |1X0| + SUM_i ( |iXi| ) ] ^(tensor) identity
 //
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Pulse.h"
@@ -23,7 +23,8 @@ private:
 public:
   PiPulse();
   PiPulse(const SpinState & state0, const SpinState & state1,
-      const vector<SpinState> & other_states);
+      const vector<SpinState> & other_states,
+      const vector<SpinState>& unaffected_states);
   
 };
 

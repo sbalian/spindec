@@ -5,16 +5,19 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include <complex>
 #include <iostream>
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
+#include "SpinDec/SpinState.h"
 
 namespace SpinDec
 {
+
+class SpinState;
 
 class SpinOperator : public MatrixRepresentation
 {
@@ -44,7 +47,8 @@ public:
       const CDouble& to_add);
 
   // Operators: tensor product ^, Bases: combine ^ (like tensor product)
-  SpinOperator operator^(const SpinOperator & rhs);
+  SpinOperator operator^(const SpinOperator & rhs) const;
+  SpinState operator*(const SpinState & operand) const;
   
   virtual void set_zero(); // set all elements to zero
   
@@ -54,7 +58,7 @@ public:
   friend std::ostream& operator<<(std::ostream& os,
       SpinOperator const & spin_operator);
   
-  //virtual std::auto_ptr<MatrixRepresentation> clone() const;
+  virtual std::auto_ptr<MatrixRepresentation> clone() const;
 
 };
 

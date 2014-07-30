@@ -5,7 +5,7 @@
 //
 // Abstract base class for pulses in a pulse sequence.
 //
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Jul 30, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"
@@ -20,6 +20,8 @@ protected:
   SpinState state0_;
   SpinState state1_;
   
+  vector<SpinState> unaffected_states_;
+  
   double duration_;
   
   SpinOperator pulse_operator_;
@@ -30,7 +32,7 @@ protected:
 public:
   Pulse();
   Pulse(const SpinState & state0, const SpinState & state1,
-      const double duration);
+      const double duration, const vector<SpinState>& unaffected_states);
   
   const SpinOperator& get_pulse_operator() const;
   
