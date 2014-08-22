@@ -1,5 +1,7 @@
 Seto Balian, Aug 22, 2014
 
+- Multiprecision support? Do checks for numerical errors ...
+
 - BE CAREFUL WITH AUTO POINTERS!!!
 
 - Make sure one B-field throughout? or if not, make sure set fields in classes
