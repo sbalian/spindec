@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, May 28, 2014
+// Seto Balian, Jul 31, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -244,3 +244,4 @@ SpinInteractionGraph SpinInteractionGraph::join(
 }
 
 } // namespace SpinDec
+

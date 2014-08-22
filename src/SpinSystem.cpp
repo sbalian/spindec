@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
@@ -7,10 +7,9 @@
 namespace SpinDec
 {
 
-void SpinSystem::diagonalize(const string & diagonalizer)
+void SpinSystem::diagonalize()
 {
-  eigenspectrum_ = HermitianEigenspectrum(hamiltonian_.get_matrix(),
-      diagonalizer);
+  eigenspectrum_ = HermitianEigenspectrum(hamiltonian_.get_matrix());
   return;
 }
 
@@ -42,19 +41,10 @@ void SpinSystem::check_level_label(const UInt level_label) const
 }
 
 SpinSystem::SpinSystem(const SpinInteractionGraph & graph,
-    const UniformMagneticField & field, const string & diagonalizer) :
-    SpinSystemBase(graph,field)
-{
-  diagonalize(diagonalizer);
-  set_energies();
-  set_eigenstates();
-}
-
-SpinSystem::SpinSystem(const SpinInteractionGraph & graph,
     const UniformMagneticField & field) :
     SpinSystemBase(graph,field)
 {
-  diagonalize("Lapack");
+  diagonalize();
   set_energies();
   set_eigenstates();
 }

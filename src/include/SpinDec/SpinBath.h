@@ -3,22 +3,19 @@
 
 // SpinDec::SpinBath
 //
-// Spin bath for the central spin decoherence problem in a crystal.
-// This is a spin bath of just a single spin system, e.g. a donor
-// or a single spin like a nucleus. Also, intrabath interaction is
-// confined to a single interaction type. Also, it is assumed that the
-// temperature of the bath is infinite such as for example for a spin-1/2 bath,
-// there is an equal probablity of the spin-up/spin-down states in the initial
-// state unentangled with the central spin system.
+// Spin bath (of a single spin species) for the central spin decoherence
+// problem in a crystal. Infinite temperature, so that all states are equally
+// likely.
+// TODO Generalize to finite temperature; Generalize for multiple spin species?
+//      or use combinations of single-spin-species baths?
 //
-// TODO generalize
-//
-// Seto Balian, May 22, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/typedefs.h"
-
-#include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/CrystalStructure.h"
+#include "SpinDec/SpinSystemBase.h"
+#include "SpinDec/SpinState.h"
+#include "SpinDec/SpinInteraction.h"
 
 namespace SpinDec
 {
@@ -26,25 +23,26 @@ namespace SpinDec
 class SpinBath
 {
 private:
-  
-  // this is the bath spin system
+  vector<SpinState> states_;
   SpinInteractionGraph graph_;
-  // this is the interaction between bath spin systems
-  SpinInteractionEdge itrabath_interaction_;
-  // this is the crystal structure
-  CrystalStructure crystal_structure_;
-
+  
 public:
   SpinBath();
-  // Constructs a spin bath with spins on all the crystal sites (usually with
-  // some fractional abundance - see CrystalStructure) and the interaction
-  // among all bath spin systems, forming joined graphs: e.g. for two bath spin
-  // systems: joined graph - intrabath_interaction - graph
-
-  SpinBath(const SpinInteractionGraph & graph,
-      const SpinInteractionEdge & intrabath_interaction,
-      const CrystalStructure & crystal_structure);
-
+  SpinBath(const CrystalStructure& crystal_structure,
+      const auto_ptr<SpinSystemBase>& spin_system_base,
+      const UInt interaction_label1,
+      const UInt interaction_label2,
+      const  auto_ptr<SpinInteraction> & interaction);
+  
+  void add_intrabath_interaction(const UInt interaction_label1,
+      const UInt interaction_label2,
+      const auto_ptr<SpinInteraction> & interaction);
+  
+  const SpinState& get_state(const UInt index) const;
+  UInt num_spins() const;
+  
+  const SpinInteractionGraph& get_graph() const;
+  
 };
 
 } // namespace SpinDec

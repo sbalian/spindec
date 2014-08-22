@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Aug 1, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -89,6 +89,21 @@ double SpinSystemBase::energy(const UInt level_label) const
   return energies_(level_label);
 }
 
+const SpinState& SpinSystemBase::get_state() const
+{
+  return state_;
+}
+
+const ComplexMatrix SpinSystemBase::get_eigenvector_matrix() const
+{
+  return eigenstates_;
+}
+
+const RealVector SpinSystemBase::get_eigenvalue_vector() const
+{
+  return energies_;
+}
+
 SpinSystemBase::~SpinSystemBase()
 {
 }
@@ -110,6 +125,12 @@ void SpinSystemBase::set_state(const UInt level_label)
 }
 
 
+void SpinSystemBase::set_state(const SpinState& state)
+{
+  if (!(graph_.get_basis().is_equal(state.get_basis()))) {
+    Errors::quit("Basis mismatch in setting state.");
+  }
+  return;
+}
 
 } // namespace SpinDec
-

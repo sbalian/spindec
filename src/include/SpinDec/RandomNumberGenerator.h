@@ -5,7 +5,7 @@
 //
 // Static methods for generating random numbers.
 //
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Aug 4, 2014
 
 #include "SpinDec/typedefs.h"
 

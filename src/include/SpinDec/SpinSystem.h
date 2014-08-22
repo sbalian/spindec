@@ -5,7 +5,7 @@
 //
 // Diagonalizable concrete spin system.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -17,8 +17,7 @@ namespace SpinDec
 class SpinSystem : public SpinSystemBase
 {
 protected:
-  void diagonalize(const string & diagonalizer);
-  
+  void diagonalize();
   HermitianEigenspectrum eigenspectrum_;
   
   virtual void set_eigenstates();
@@ -31,15 +30,8 @@ public:
   SpinSystem();
   SpinSystem(const SpinInteractionGraph & graph,
       const UniformMagneticField & field);
-  // default diagonalizer is "Lapack"
-  SpinSystem(const SpinInteractionGraph & graph,
-      const UniformMagneticField & field,
-      const string& diagonalizer);
 
   virtual UInt dimension() const;
-  
-//  // composite spin system
-//  SpinSystem 
   
   virtual std::auto_ptr<SpinSystemBase> clone() const;
   

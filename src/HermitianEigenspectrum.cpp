@@ -1,9 +1,10 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, May 27, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/HermitianEigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
 #include "SpinDec/Errors.h"
+#include "SpinDec/options.h"
 
 // For Lapack zheev diagonalizer (Intel example TODO link)
 // ---------------------------------------------
@@ -107,27 +108,13 @@ HermitianEigenspectrum::HermitianEigenspectrum(
   diagonalize(matrix);
 }
 
-HermitianEigenspectrum::HermitianEigenspectrum(const ComplexMatrix & matrix,
-    const string & diagonalizer) : 
-        Eigenspectrum(diagonalizer)
-{
-  diagonalize(matrix);
-}
-
 void HermitianEigenspectrum::diagonalize(const ComplexMatrix & matrix)
 {
-  if (diagonalizer_ == "Eigen") {
-    diagonalize_eigen(matrix);
-    return;
-  }
-  
-  if (diagonalizer_ == "Lapack") {
+  if (SpinDec::kUseLapackForHermitianDiagonalization == true) {
     diagonalize_lapack(matrix);
-    return;
+  } else {
+      diagonalize_eigen(matrix);
   }
-  
-  // else
-  quit_if_diagonalizer_not_supported();
   return;
   
 }

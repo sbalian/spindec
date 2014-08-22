@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Aug 1, 2014
 
 #include <complex>
 #include <iostream>
@@ -49,6 +49,8 @@ public:
   // Operators: tensor product ^, Bases: combine ^ (like tensor product)
   SpinOperator operator^(const SpinOperator & rhs) const;
   SpinState operator*(const SpinState & operand) const;
+  SpinOperator operator+(const SpinOperator & rhs) const;
+  SpinOperator operator-(const SpinOperator & rhs) const;
   
   virtual void set_zero(); // set all elements to zero
   

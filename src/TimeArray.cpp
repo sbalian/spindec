@@ -1,5 +1,5 @@
 // See TimeArray.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Aug 1, 2014
 
 #include "SpinDec/TimeArray.h"
 #include "SpinDec/Errors.h"
@@ -19,6 +19,11 @@ void TimeArray::clear()
 
 TimeArray::TimeArray() : dimension_(0)
 {
+}
+
+TimeArray::TimeArray(const double single_time)
+{
+  initialize(single_time,single_time,0);
 }
 
 TimeArray::TimeArray(const double initial_time,
@@ -49,11 +54,11 @@ void TimeArray::initialize(const double initial_time,
   const double time_step = (final_time - initial_time) /
                       static_cast<double>(num_steps);
   
-  double time = initial_time;
-  time_vector_.push_back(time);
+  double time_var = initial_time;
+  time_vector_.push_back(time_var);
   for (UInt i=0;i<num_steps;i++) {
-    time += time_step;
-    time_vector_.push_back(time);
+    time_var += time_step;
+    time_vector_.push_back(time_var);
   }
     
   return;
@@ -79,7 +84,7 @@ void TimeArray::initialize_logarithmic(const double initial_exponent,
   return;
 }
 
-double TimeArray::time(const UInt index) const
+double TimeArray::get_time(const UInt index) const
 {
   if (index >= get_dimension()) {
     Errors::quit("Invalid index to retrieve time.");
@@ -113,7 +118,7 @@ std::ostream& operator<<(std::ostream& os, TimeArray const & time_array)
 
   os << "Time evolution (time units: microseconds)" << std::endl;
   for (UInt i=0;i<time_array.get_dimension();i++) {
-    os << std::setw(12) << time_array.time(i) << std::endl;
+    os << std::setw(12) << time_array.get_time(i) << std::endl;
   }
   os << endl;
   
