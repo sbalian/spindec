@@ -1,5 +1,5 @@
 // See PulseSequence.h for description.
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Aug 1, 2014
 
 #include "SpinDec/PulseSequence.h"
 

@@ -1,5 +1,5 @@
 // See Eigenspectrum.h for description.
-// Seto Balian, May 27, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
@@ -8,20 +8,11 @@
 namespace SpinDec
 {
 
-Eigenspectrum::Eigenspectrum() : diagonalizer_("Eigen")
+Eigenspectrum::Eigenspectrum()
 {
 }
 
-Eigenspectrum::Eigenspectrum(const ComplexMatrix & matrix) :
-    diagonalizer_("Eigen")
-{
-  diagonalize(matrix);
-  return;
-}
-
-Eigenspectrum::Eigenspectrum(const ComplexMatrix & matrix,
-    const string & diagonalizer) :
-        diagonalizer_()
+Eigenspectrum::Eigenspectrum(const ComplexMatrix & matrix)
 {
   diagonalize(matrix);
   return;
@@ -48,44 +39,9 @@ ComplexVector Eigenspectrum::get_eigenvector(const UInt index) const
   return eigenvectors_.col(index);
 }
 
-const string& Eigenspectrum::get_diagonalizer() const
-{
-  return diagonalizer_;
-}
 
 Eigenspectrum::~Eigenspectrum()
 {/**/
-}
-
-void Eigenspectrum::diagonalize_eigen(const ComplexMatrix& matrix)
-{
-  Eigen::ComplexEigenSolver<ComplexMatrix> eigensolver(matrix.rows());
-  eigensolver.compute(matrix);
-
-  eigenvectors_ = eigensolver.eigenvectors();
-  eigenvalues_  = eigensolver.eigenvalues();
-  return;
-
-}
-
-void Eigenspectrum::diagonalize_lapack(const ComplexMatrix& matrix)
-{
-  quit_if_diagonalizer_not_supported();
-  return;
-}
-
-void Eigenspectrum::quit_if_diagonalizer_not_supported() const
-{
-  string message = "Diagonalizer \"";
-  message += diagonalizer_;
-  message += "\" not supported.";
-  Errors::quit(message);
-  return;
-}
-
-Eigenspectrum::Eigenspectrum(const string& diagonalizer) :
-    diagonalizer_(diagonalizer)
-{
 }
 
 ComplexMatrix Eigenspectrum::spectralDecomposition() const
@@ -96,13 +52,12 @@ ComplexMatrix Eigenspectrum::spectralDecomposition() const
 void Eigenspectrum::diagonalize(const ComplexMatrix& matrix)
 {
   
-  if (diagonalizer_ == "Eigen") {
-    diagonalize_eigen(matrix);
-    return;
-  }
+  Eigen::ComplexEigenSolver<ComplexMatrix> eigensolver(matrix.rows());
+  eigensolver.compute(matrix);
+
+  eigenvectors_ = eigensolver.eigenvectors();
+  eigenvalues_  = eigensolver.eigenvalues();
   
-  // else
-  quit_if_diagonalizer_not_supported();
   return;
 
 }

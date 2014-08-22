@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Aug 22, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -431,7 +431,7 @@ void SpinDonor::init(const double field_strength,
     const unsigned int upper_level_label,
     const ThreeVector & electron_position,
     const ThreeVector & nuclear_position,
-    const bool complete_basis, const string& diagonalizer)
+    const bool complete_basis)
 {
   
   complete_basis_ = complete_basis;
@@ -459,7 +459,7 @@ void SpinDonor::init(const double field_strength,
   
   hamiltonian_ = SpinHamiltonian(graph_,field_);
   
-  diagonalize(diagonalizer);
+  diagonalize();
   
   set_energies();
   set_eigenstates();
@@ -468,30 +468,6 @@ void SpinDonor::init(const double field_strength,
   
   return;
 
-}
-
-
-SpinDonor::SpinDonor(const double field_strength,
-    const double nuclear_quantum_number,
-    const double electron_gyromagnetic_ratio,
-    const double nuclear_gyromagnetic_ratio,
-    const double hyperfine_strength,
-    const unsigned int lower_level_label,
-    const unsigned int upper_level_label,
-    const ThreeVector & electron_position,
-    const ThreeVector & nuclear_position,
-    const bool complete_basis, const string& diagonalizer) : SpinSystem()
-{
-  init( field_strength,
-       nuclear_quantum_number,
-       electron_gyromagnetic_ratio,
-       nuclear_gyromagnetic_ratio,
-       hyperfine_strength,
-       lower_level_label,
-       upper_level_label,
-       electron_position,
-       nuclear_position,
-       complete_basis,diagonalizer);
 }
 
 SpinDonor::SpinDonor(const double field_strength,
@@ -514,7 +490,7 @@ SpinDonor::SpinDonor(const double field_strength,
        upper_level_label,
        electron_position,
        nuclear_position,
-       complete_basis,"Lapack");
+       complete_basis);
 }
 
 
@@ -583,6 +559,11 @@ const SpinInteractionVertex& SpinDonor::electron_vertex() const
 const SpinInteractionVertex& SpinDonor::nuclear_vertex() const
 {
   return get_graph().get_vertex(1);
+}
+
+const UIntArray SpinDonor::get_orthogonal_level_labels() const
+{
+  return orthogonal_level_labels_;
 }
 
 } // namespace SpinDec

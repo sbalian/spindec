@@ -7,11 +7,10 @@
 // Eigenvectors are orthonormal, eigenvalues are always real.
 // TODO ensure these conditions?
 //
-// Hermitian diagonalizers:
-// DEFAULT "Eigen"  - SelfAdjointEigenSolver in Eigen
-//         "Lapack" - Lapack zheev
+// Optional Lapack diagonalizer:
+// set options::kUseLapackForHermitianDiagonalization to true
 //
-// Seto Balian, May 27, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"
@@ -24,8 +23,8 @@ class HermitianEigenspectrum : public Eigenspectrum
 private:
   
   // Diagonalizers
-  virtual void diagonalize_eigen (const ComplexMatrix & matrix);
-  virtual void diagonalize_lapack(const ComplexMatrix & matrix);
+  void diagonalize_eigen (const ComplexMatrix & matrix);
+  void diagonalize_lapack(const ComplexMatrix & matrix);
   
   virtual void diagonalize(const ComplexMatrix & matrix);
 
@@ -33,8 +32,6 @@ public:
   
   HermitianEigenspectrum();
   explicit HermitianEigenspectrum(const ComplexMatrix & matrix);
-  HermitianEigenspectrum(const ComplexMatrix & matrix,
-      const string & diagonalizer);
     
   // since eigenvectors orthonormal, V-1 = V^+,
   // so use faster (unitary) decomposition

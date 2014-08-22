@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Aug 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -58,10 +58,15 @@ public:
   
   // sets state to the level_label'th eigenstate
   void set_state(const UInt level_label);
-
+  void set_state(const SpinState& state);
+  const SpinState& get_state() const;
+  
   SpinOperator evolution_operator(const double time) const;
   
   virtual UInt dimension() const = 0; // Hamiltonian dimension
+  
+  const ComplexMatrix get_eigenvector_matrix() const;
+  const RealVector get_eigenvalue_vector() const;
     
   // options:
   // e - energies

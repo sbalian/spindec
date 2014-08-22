@@ -9,7 +9,7 @@
 // Analytical methods include energy levels, eigenstates and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/SpinSystem.h"
 
@@ -185,7 +185,7 @@ private:
       const unsigned int upper_level_label,
       const ThreeVector & electron_position,
       const ThreeVector & nuclear_position,
-      const bool complete_basis, const string& diagonalizer);
+      const bool complete_basis);
     
 public:
   
@@ -199,18 +199,7 @@ public:
             const unsigned int upper_level_label,
             const ThreeVector& electron_position, // Angstroms
             const ThreeVector& nuclear_position,  // Angstroms
-            const bool complete_basis); // default diagonalizer "Lapack"
-  
-  SpinDonor(const double field_strength, // Tesla
-            const double nuclear_quantum_number,
-            const double electron_gyromagnetic_ratio, // M rad s-1 T-1
-            const double nuclear_gyromagnetic_ratio, // M rad s-1 T-1
-            const double hyperfine_strength,        // M rad s-1
-            const unsigned int lower_level_label,
-            const unsigned int upper_level_label,
-            const ThreeVector& electron_position, // Angstroms
-            const ThreeVector& nuclear_position,  // Angstroms
-            const bool complete_basis, const string& diagonalizer); 
+            const bool complete_basis);
   
   const ElectronSpinParameters& get_electron_parameters() const;
   const NuclearSpinParameters& get_nuclear_parameters() const;
@@ -235,6 +224,8 @@ public:
   
   const SpinInteractionVertex& electron_vertex() const;
   const SpinInteractionVertex& nuclear_vertex() const;
+  
+  const UIntArray get_orthogonal_level_labels() const;
   
 };
 

@@ -1,5 +1,5 @@
 // See constants.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Aug 22, 2014
 
 #include "SpinDec/constants.h"
 

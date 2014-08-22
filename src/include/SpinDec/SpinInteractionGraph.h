@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Jul 31, 2014
 
 #include "SpinDec/typedefs.h"
 

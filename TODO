@@ -1,7 +1,16 @@
-Seto Balian, Jul 29, 2014
+Seto Balian, Aug 22, 2014
+
+- BE CAREFUL WITH AUTO POINTERS!!!
+
+- Make sure one B-field throughout? or if not, make sure set fields in classes
+  make physical sense ...
+- Improve diagonalizer options?
 
 - BE VERY CAREFUL ABOUT EIGEN'S LAZY EVALUATION. NOALIAS AND EVAL METHODS ...
   EG. MAT MULT, a = a.transpose()
+  
+- make sure everything is being used properly and safely with auto ptrs
+  e.g. clone methods
 
 - Do const data members properly
 - TEST EIGENVALUE PRECISION CAREFULLY (~ 0.1 Hz limit? numerical junk after?

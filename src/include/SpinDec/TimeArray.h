@@ -5,7 +5,7 @@
 //
 // Time array in microseconds.
 //
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Aug 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -27,6 +27,8 @@ public:
             const double final_time,
             const UInt num_steps); // calls initialize()
   
+  explicit TimeArray(const double single_time);
+  
   bool operator==(const TimeArray& time_array) const;
                                           // is time_vector == time_vector_ ?
                                           // element by element
@@ -42,7 +44,7 @@ public:
                               const double final_exponent,
                               const UInt num_steps);
   
-  double time(const UInt index) const;
+  double get_time(const UInt index) const;
   const DoubleArray& get_time_vector() const;
   
   UInt num_steps() const; // dimension - 1

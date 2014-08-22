@@ -5,7 +5,7 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Aug 1, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
@@ -45,6 +45,8 @@ public:
   CDouble operator*(const SpinState & rhs) const;
   // outer product
   SpinOperator operator%(const SpinState & rhs) const;
+  SpinState operator+(const SpinState & rhs) const;
+  SpinState operator-(const SpinState & rhs) const;
   
   // Multiplies state_vector_ with unitary_evolution_matrix
   void time_evolve(const ComplexMatrix& unitary_evolution_matrix);
