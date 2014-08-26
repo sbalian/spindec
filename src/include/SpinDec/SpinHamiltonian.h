@@ -8,7 +8,7 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, May 27, 2014
+// Seto Balian, Aug 26, 2014
 
 #include <string>
 
@@ -26,7 +26,6 @@ namespace SpinDec
 class SpinHamiltonian : public SpinOperator
 {
 private:
-
   UniformMagneticField field_;
   
   // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
@@ -44,8 +43,6 @@ public:
   SpinHamiltonian();
   SpinHamiltonian(const SpinInteractionGraph & graph,
       const UniformMagneticField & field);
-
-  void update(const SpinInteractionGraph & graph);
   
   UniformMagneticField get_field() const;
   

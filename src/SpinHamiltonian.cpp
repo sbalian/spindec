@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, May 27, 2014
+// Seto Balian, Aug 26, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -34,7 +34,7 @@ void SpinHamiltonian::fill_zeeman(const SpinInteractionGraph& graph)
 
 // fill elements for all spin interaction
 void SpinHamiltonian::fill_interactions(const SpinInteractionGraph & graph)
-{  
+{
   // Loop over edges
   for (unsigned int i=0;i<graph.num_edges();i++) {
     std::auto_ptr<SpinInteraction> interaction_ptr = graph.get_interaction(i);
@@ -74,12 +74,6 @@ SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
     field_(field)
 {
   fill_matrix(graph);
-}
-
-void SpinHamiltonian::update(const SpinInteractionGraph& graph)
-{
-  // TODO
-  return;
 }
 
 UniformMagneticField SpinHamiltonian::get_field() const

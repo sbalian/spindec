@@ -9,11 +9,12 @@
 // TODO Generalize to finite temperature; Generalize for multiple spin species?
 //      or use combinations of single-spin-species baths?
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Aug 26, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/SpinSystemBase.h"
+#include "SpinDec/SpinSystem.h"
 #include "SpinDec/SpinState.h"
 #include "SpinDec/SpinInteraction.h"
 
@@ -23,8 +24,12 @@ namespace SpinDec
 class SpinBath
 {
 private:
+  
   vector<SpinState> states_;
-  SpinInteractionGraph graph_;
+  SpinSystem spin_system_;
+  
+  // Intrabath interaction graph
+  
   
 public:
   SpinBath();
