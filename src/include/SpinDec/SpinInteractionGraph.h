@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Jul 31, 2014
+// Seto Balian, Aug 26, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -96,6 +96,7 @@ public:
   SpinInteractionGraph join(const SpinInteractionGraph & to_join) const;
   SpinInteractionGraph join(const SpinInteractionGraph & to_join,
             const std::vector<SpinInteractionEdge> & edges) const;
+  
     
 };
 

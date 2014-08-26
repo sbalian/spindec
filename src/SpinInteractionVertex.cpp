@@ -1,5 +1,5 @@
 // See SpinInteractionVertex.h for description.
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Aug 26, 2014
 
 #include "SpinDec/SpinInteractionVertex.h"
 
