@@ -8,7 +8,9 @@
 // No time dependence in Hamiltonian. TODO generalize
 // Units: M rad s-1.
 //
-// Seto Balian, Aug 26, 2014
+// TODO explain changes for "update position" method
+//
+// Seto Balian, Aug 27, 2014
 
 #include <string>
 
@@ -27,16 +29,31 @@ class SpinHamiltonian : public SpinOperator
 {
 private:
   UniformMagneticField field_;
+  SpinInteractionGraph graph_;
   
   // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
   // field_strength for all spins in the graph
-  void fill_zeeman(const SpinInteractionGraph & graph);
+  void fill_zeeman();
   
   // fill elements for all spin interaction
-  void fill_interactions(const SpinInteractionGraph & graph);
+  void fill_interactions();
+    
+  // For each vertex, there is a Zeeman Hamiltonian. Store these.
+  vector<ComplexMatrix> zeeman_terms_;
+  // For each edge, there is an interaction Hamiltonian. Store these.
+  vector<ComplexMatrix> interaction_terms_;
+  void init_terms(); // sets to zero
   
-  // fill all matrix elements using interaction graph
-  void fill_matrix(const SpinInteractionGraph & graph);
+  // summed zeeman and interaction Hamiltonians
+  ComplexMatrix zeeman_hamiltonian_;
+  ComplexMatrix interaction_hamiltonian_;
+
+  void sum_zeeman_terms();
+  void sum_interaction_terms();
+  
+  void fill_zeeman(const UInt vertex_label);
+  void fill_interaction(const UInt edge_index);
+
   
 public:
 
@@ -55,6 +72,9 @@ public:
   ComplexMatrix evolution_matrix(const ComplexMatrix & eigenvectors,
       const RealVector & eigenvalues,
       const double time) const;
+  
+  void update_positions(const UIntArray& vertex_labels,
+      const vector<ThreeVector>& positions);
   
 };
 

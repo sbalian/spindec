@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
@@ -59,6 +59,28 @@ std::auto_ptr<SpinSystemBase> SpinSystem::clone() const
   return std::auto_ptr<SpinSystemBase> (new SpinSystem(*this));
 }
 
+void SpinSystem::update_positions(const UIntArray& vertex_labels,
+    const vector<ThreeVector>& positions)
+{
+  
+  if (vertex_labels.size() != positions.size()) {
+    Errors::quit("Vertex label and position arrays must be of the same size.");
+    return;
+  }
+  
+  hamiltonian_.update_positions(vertex_labels,positions);
+  
+  for (UInt l=0;l<vertex_labels.size();l++) {
+    graph_.set_position(l,positions[l]);
+  }
+  
+  diagonalize();
+  set_energies();
+  set_eigenstates();
+  
+  return;
+  
+}
 
 } // namespace SpinDec
 

@@ -6,7 +6,7 @@
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"
@@ -20,10 +20,12 @@ private:
   TimeArray time_array_; // in microseconds
   CDoubleArray evolution_;
   
-  TimeEvolution(const TimeArray& time_array, const CDoubleArray& evolution);
+  void print(const char option) const;
   
 public:
   TimeEvolution();
+  TimeEvolution(const TimeArray& time_array, const CDoubleArray& evolution);
+
   explicit TimeEvolution(const TimeArray& time_array); // evolution set to zeros
   
   const CDouble& evolution(const UInt index) const;
@@ -44,10 +46,11 @@ public:
   // divides evolutions element by element
   TimeEvolution operator/(const TimeEvolution& to_divide) const;
   
-  // Print with cout
-  friend std::ostream& operator<<(std::ostream& os,
-      TimeEvolution const & time_evolution);
-
+  void print() const;
+  void print_real() const;
+  void print_imag() const;
+  void print_abs() const;
+  
 };
 
 } // namespace SpinDec

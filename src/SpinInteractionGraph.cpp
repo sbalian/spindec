@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Aug 26, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -48,8 +48,6 @@ void SpinInteractionGraph::set_basis(const SpinBasis & basis)
   basis_ = basis;
   return;
 }
-
-
 
 SpinInteractionGraph::SpinInteractionGraph() : basis_(SpinBasis())
 { // TODO Is this OK with std::vector initialization?
@@ -130,7 +128,7 @@ void  SpinInteractionGraph::add_edge(unsigned int label1,
   }
       
   edges_.push_back(
-      SpinInteractionEdge(get_vertex(label1),get_vertex(label2),
+      SpinInteractionEdge(label1,label2,
           interaction->clone()));
 
   return;
@@ -207,8 +205,8 @@ void SpinInteractionGraph::join_in_place(const SpinInteractionGraph& to_join)
   }
   // Add edges
   for (unsigned int i=0;i<to_join.num_edges();i++) {
-    add_edge(to_join.get_edge(i).get_vertex1().get_label() + num_vertices(),
-             to_join.get_edge(i).get_vertex2().get_label() + num_vertices(),
+    add_edge(to_join.get_edge(i).get_label1() + num_vertices(),
+             to_join.get_edge(i).get_label2() + num_vertices(),
              to_join.get_interaction(i));
   }
   return;
@@ -219,8 +217,8 @@ void SpinInteractionGraph::join_in_place(const SpinInteractionGraph& to_join,
 {
   join(to_join);
   for (unsigned int i=0;i<edges.size();i++) {
-    add_edge( edges[i].get_vertex1().get_label(),
-              edges[i].get_vertex2().get_label(),
+    add_edge( edges[i].get_label1(),
+              edges[i].get_label2(),
               edges[i].get_interaction());
   }
   return;
@@ -243,6 +241,27 @@ SpinInteractionGraph SpinInteractionGraph::join(
   return output;
 }
 
+void SpinInteractionGraph::set_position(const UInt label,
+    const ThreeVector& position)
+{
+  quit_if_vertex_label_out_of_bounds(label);
+  vertices_[label].set_position(position);
+  return;
+}
+
+const SpinInteractionVertex& SpinInteractionGraph::get_vertex1(
+    const UInt index) const
+{
+  quit_if_edge_index_out_of_bounds(index);
+  return  get_vertex( get_edge(index).get_label1() );
+}
+
+const SpinInteractionVertex& SpinInteractionGraph::get_vertex2(
+    const UInt index) const
+{
+  quit_if_edge_index_out_of_bounds(index);
+  return  get_vertex( get_edge(index).get_label2() );
+}
 
 } // namespace SpinDec
 

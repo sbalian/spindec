@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/typedefs.h"
 

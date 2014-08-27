@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Aug 27, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -93,10 +93,14 @@ int main ()
   TimeArray time_array(0.0,1.0e3,10);
   CDoubleArray L = pulse_sequence.decay_experiment(combined_state,time_array);
   
+  TimeEvolution echo_vs_t(time_array,L);
+  
   // print to screen
-  for (UInt i=0;i<L.size();i++) {
-    cout << std::abs(L[i]) << endl;
-  }
+  echo_vs_t.print_abs();
+  
+//  for (UInt i=0;i<L.size();i++) {
+//    cout << std::abs(L[i]) << endl;
+//  }
   
   // Aug 1, 2014 matches legacyspindecoherence (old code)
   // TODO ... but for a noise not-so-much decay!

@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Aug 22, 2014
+# Seto Balian, Aug 27, 2014
 
 #####################
 # Basic user input
@@ -236,7 +236,8 @@ CPMG.o\
 Pulse.o\
 DensityOperator.o\
 TimeArray.o\
-options.o
+options.o\
+TimeEvolution.o
 
 test_evolution2: $(test_evolution2_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
