@@ -1,5 +1,11 @@
-Seto Balian, Aug 22, 2014
+Seto Balian, Aug 27, 2014
 
+- In old code, look for constructor of one class being called in a constructor
+  in the same class ... did not find so far, should not work!
+
+- Make sure analytical methods in SpinSystemBase derived objects produce
+  the same results as when calculated using SpinSystem.
+  
 - Multiprecision support? Do checks for numerical errors ...
 
 - BE CAREFUL WITH AUTO POINTERS!!!

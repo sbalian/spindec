@@ -1,5 +1,5 @@
 // See SpinInteractionEdge.h for description.
-// Seto Balian, Mar 31, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/SpinInteractionEdge.h"
 
@@ -7,30 +7,27 @@ namespace SpinDec
 {
 
 SpinInteractionEdge::SpinInteractionEdge() :
-    vertices_(pair<SpinInteractionVertex,SpinInteractionVertex>(
-        SpinInteractionVertex(),SpinInteractionVertex()))
+    labels_(pair<UInt,UInt>(0,0))
 {
 }
 
 SpinInteractionEdge::SpinInteractionEdge(
-    const SpinInteractionVertex& vertex1, const SpinInteractionVertex& vertex2,
+    const UInt label1, const UInt label2,
     const auto_ptr<SpinInteraction>&  interaction) :
-    vertices_(pair<SpinInteractionVertex,SpinInteractionVertex>(
-        vertex1,vertex2))
+    labels_(pair<UInt,UInt>(
+        label1,label2))
 {
   interaction_ = interaction->clone();
 }
 
-const SpinInteractionVertex& SpinInteractionEdge::get_vertex1()
-const
+UInt SpinInteractionEdge::get_label1() const
 {
-  return vertices_.first;
+  return labels_.first;
 }
 
-const SpinInteractionVertex& SpinInteractionEdge::get_vertex2()
-const
+UInt SpinInteractionEdge::get_label2() const
 {
-  return vertices_.second;
+  return labels_.second;
 }
 
 auto_ptr<SpinInteraction> SpinInteractionEdge::get_interaction() const
@@ -40,15 +37,13 @@ auto_ptr<SpinInteraction> SpinInteractionEdge::get_interaction() const
 
 SpinInteractionEdge::SpinInteractionEdge(const SpinInteractionEdge& other)
 {
-  // TODO repeat code, use = here?
-  vertices_ = other.vertices_;
-  interaction_ = other.interaction_->clone();
+  *this = other;
 }
 
 SpinInteractionEdge& SpinInteractionEdge::operator =(
   const SpinInteractionEdge& other)
 {
-  vertices_ = other.vertices_;
+  labels_ = other.labels_;
   interaction_ = other.interaction_->clone();
   return *this;
 }

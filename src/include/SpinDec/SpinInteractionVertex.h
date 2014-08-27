@@ -6,7 +6,7 @@
 // Vertex for a spin interaction graph. Contains a label, spin parameters, a
 // spin basis and a position in real space.
 //
-// Seto Balian, Aug 26, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/typedefs.h"
@@ -43,6 +43,8 @@ public:
   const SpinParameters& get_spin_parameters() const;
   const SpinBasis& get_basis() const;
   const ThreeVector& get_position() const;
+  
+  void set_position(const ThreeVector& position);
 
 };
 

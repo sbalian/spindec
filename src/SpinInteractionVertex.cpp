@@ -1,5 +1,5 @@
 // See SpinInteractionVertex.h for description.
-// Seto Balian, Aug 26, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/SpinInteractionVertex.h"
 
@@ -53,6 +53,13 @@ const ThreeVector& SpinInteractionVertex::get_position() const
 {
   return position_;
 }
+
+void SpinInteractionVertex::set_position(const ThreeVector& position)
+{
+  position_ = position;
+  return;
+}
+
 
 } // namespace SpinDec
 

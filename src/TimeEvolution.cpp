@@ -1,5 +1,5 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Apr 1, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/Errors.h"
@@ -114,28 +114,69 @@ TimeEvolution TimeEvolution::operator /(
 
 }
 
-std::ostream& operator<<(std::ostream& os, TimeEvolution const & time_evolution)
+void TimeEvolution::print(const char option)  const
 {
-
+  
   // To restore formatting later
   std::ios::fmtflags f( std::cout.flags() );
   
-  os << std::scientific << std::setprecision(4);
-  os << std::left;
+  cout << std::scientific;
+  cout << std::left;
 
-  os << "Time evolution (time units: microseconds)" << std::endl;
-  for (UInt i=0;i<time_evolution.dimension();i++) {
-    os << std::setw(12) << time_evolution.get_time_array().time(i);
-    os << std::setw(12) << time_evolution.evolution(i) << std::endl;
+  cout << "Time evolution (time units: microseconds)" << std::endl;
+  for (UInt i=0;i<dimension();i++) {
+    cout << std::setprecision(4);
+    cout << std::setw(15) << get_time_array().get_time(i);
+    cout << std::setprecision(10);
+    
+    if (option == 'r') {
+      cout << std::setw(30) << std::real(evolution(i)) << std::endl;
+      continue;
+    }
+    if (option == 'i') {
+      cout << std::setw(30) << std::imag(evolution(i)) << std::endl;
+      continue;
+    }
+    if (option == 'a') {
+      cout << std::setw(30) << std::abs(evolution(i)) << std::endl;
+      continue;
+    } // else ...
+    cout << std::setw(30) << evolution(i) << std::endl;
   }
-  os << endl;
+  cout << endl;
   
   // Restore formatting
   std::cout.flags( f );
+
   
-  return os;
+  return;
 }
 
+
+
+void TimeEvolution::print() const
+{
+  print('c');
+  return;
+}
+
+void TimeEvolution::print_real() const
+{
+  print('r');
+  return;
+}
+
+void TimeEvolution::print_imag() const
+{
+  print('i');
+  return;
+}
+
+void TimeEvolution::print_abs() const
+{
+  print('a');
+  return;
+}
 
 
 } // namespace SpinDec

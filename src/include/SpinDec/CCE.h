@@ -4,7 +4,7 @@
 // SpinDec::CCE
 //
 // Solves for the central spin decoherence problem using the cluster correlation
-// expansion (CCE).
+// expansion (CCE). Currently supports a single spin bath. TODO Generalize.
 //
 // CCE References:
 // - Phys. Rev. B 74, 035322 (2006)
@@ -13,7 +13,7 @@
 // - Phys. Rev. B 79, 115320 (2009)
 // - Phys. Rev. B 86, 035452 (2012)
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Aug 27, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -21,7 +21,7 @@
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/UniformMagneticField.h"
-
+#include "SpinDec/SpinInteractionEdge.h"
 
 namespace SpinDec
 {
@@ -34,10 +34,21 @@ private:
   
   SpinSystem central_spin_system_;
   SpinBath spin_bath_;
+  
   UniformMagneticField field_;
   
-  // deal with this properly
-  SpinSystem combined_spin_system_;
+  // Edges should comply as in the join methods for SpinInteractionGraph,
+  // with the first graph being the central spin graph and the second being
+  // the graph for a single bath system.
+  vector<SpinInteractionEdge> system_bath_edges_;
+  
+  vector<SpinSystem> reduced_problems_;
+  
+  void init(const UInt truncation_order,
+      const auto_ptr<SpinSystemBase>& central_spin_system_base,
+      const SpinBath& spin_bath,
+      const vector<SpinInteractionEdge>& system_bath_edges,
+      const UniformMagneticField& field);
   
 public:
   
@@ -45,16 +56,14 @@ public:
   CCE(const UInt truncation_order,
       const auto_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
-      const UInt interaction_label1,
-      const UInt interaction_label2,
-      const auto_ptr<SpinInteraction> & interaction,
+      const vector<SpinInteractionEdge>& system_bath_edges,
       const UniformMagneticField& field);
-  
-  void add_system_bath_interaction(const UInt interaction_label1,
-      const UInt interaction_label2,
-      const  auto_ptr<SpinInteraction> & interaction);
-  
-  void solve();
+  CCE(const UInt truncation_order,
+      const auto_ptr<SpinSystemBase>& central_spin_system_base,
+      const SpinBath& spin_bath,
+      const SpinInteractionEdge& system_bath_edge,
+      const UniformMagneticField& field);
+
   
 };
 
