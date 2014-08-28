@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -262,6 +262,19 @@ const SpinInteractionVertex& SpinInteractionGraph::get_vertex2(
   quit_if_edge_index_out_of_bounds(index);
   return  get_vertex( get_edge(index).get_label2() );
 }
+
+void SpinInteractionGraph::add_edges(
+    const vector<SpinInteractionEdge>& edges)
+{
+  
+  for (UInt i=0;i<edges.size();i++) {
+    add_edge( edges[i].get_label1(),edges[i].get_label2(),
+        edges[i].get_interaction());
+  }
+  
+  return;
+}
+
 
 } // namespace SpinDec
 

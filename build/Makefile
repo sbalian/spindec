@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Aug 27, 2014
+# Seto Balian, Aug 28, 2014
 
 #####################
 # Basic user input
@@ -242,6 +242,55 @@ TimeEvolution.o
 test_evolution2: $(test_evolution2_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
 $(test_evolution2_OBJECTS) -o $@
+
+# test_cce
+test_cce_OBJECTS=test_cce.o\
+UniformMagneticField.o\
+ElectronSpinParameters.o\
+SpinParameters.o\
+MatrixRepresentation.o\
+SpinOperator.o\
+SpinInteraction.o\
+Dipolar.o\
+Hyperfine.o\
+constants.o\
+HyperfineParameters.o\
+Eigenspectrum.o\
+HermitianEigenspectrum.o\
+Errors.o\
+SpinHamiltonian.o\
+SpinInteractionEdge.o\
+SpinInteractionVertex.o\
+SpinInteractionGraph.o\
+SpinParametersVector.o\
+SpinBasis.o\
+BoostEigen.o\
+IsingHyperfine.o\
+SpinSystem.o\
+SpinState.o\
+StringOptions.o\
+SpinSystemBase.o\
+SpinHalf.o\
+SpinDonor.o\
+AdiabaticLabel.o\
+Sign.o\
+NuclearSpinParameters.o\
+SpinHalfStates.o\
+SpinHalfParameters.o\
+SpinUp.o\
+SpinDown.o\
+PulseSequence.o\
+PiPulse.o\
+CPMG.o\
+Pulse.o\
+DensityOperator.o\
+TimeArray.o\
+options.o\
+TimeEvolution.o
+
+test_cce: $(test_cce_OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
+$(test_cce_OBJECTS) -o $@
 
 #####################
 # Clean up

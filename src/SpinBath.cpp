@@ -1,9 +1,11 @@
 // See SpinBath.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
 #include "SpinDec/Errors.h"
+
+#include <algorithm>
 
 namespace SpinDec
 {
@@ -68,7 +70,7 @@ const SpinState& SpinBath::get_state(const UInt index) const
   return states_[index];
 }
 
-UInt SpinBath::num_spins() const
+UInt SpinBath::num_spin_systems() const
 {
   return states_.size();
 }
@@ -99,6 +101,7 @@ const SpinSystem& SpinBath::get_spin_system() const
   return spin_system_;
 }
 
+
 ThreeVector SpinDec::SpinBath::get_position(const UInt vertex_label,
     const UInt index) const
 {
@@ -107,27 +110,105 @@ ThreeVector SpinDec::SpinBath::get_position(const UInt vertex_label,
       spin_system_.get_graph().get_position(vertex_label);
 }
 
-vector<SpinInteractionEdge> SpinBath::intrabath_edges(
+vector<SpinInteractionEdge> SpinBath::get_intrabath_edges(
     const UInt order,
-    const SpinInteractionEdge& intrabath_edge,
-    const UInt num_vertices) const
+    const SpinInteractionEdge& intrabath_edge) const
 {
   
   if (order == 0) {
     Errors::quit("Order must be +ve non-zero integer.");
   }
   
-  if (num_vertices <= 1) {
-    Errors::quit("Need at least two vertices for an edge.");
+  
+  const UInt a = intrabath_edge.get_label1();
+  const UInt b = intrabath_edge.get_label2();
+  
+  vector<SpinInteractionEdge> edges;
+  
+  // order = 1, return an empty edge vector
+  if (order == 1) {
+    return edges;
   }
   
-  // TODO you are here
+  // otherwise
+  UIntArray labels;
+  
+  // order 2
+  labels.push_back(a);
+  labels.push_back(b);
+  
+  // order above 2
+  const UInt num_vertices = spin_system_.get_graph().num_vertices();
+
+  for (UInt i=3;i<=order;i++) {
+    labels.push_back(a+(i-2)*num_vertices);
+    if (i!=order) {
+      labels.push_back(b+(i-2)*num_vertices);
+    }
+  }
+  
+  
+  for (UInt i=0;i<labels.size();i++) {
+    UInt j = 0;
+    while (j<i) {
+      UIntArray pair;
+      pair.push_back(labels[i]);
+      pair.push_back(labels[j]);
+      std::sort (pair.begin(), pair.end());
+      
+      edges.push_back( SpinInteractionEdge(
+          pair[0],pair[1],intrabath_edge.get_interaction()) );
+
+    }
+  }
+
+  return edges;
+  
+}
+
+vector<SpinInteractionEdge> SpinBath::get_intrabath_edges(const UInt order)
+const
+{
+  
   vector<SpinInteractionEdge> edges;
-  for (UInt i=0;i<order-1;i++) {
+  
+  for (UInt i=0;i<intrabath_edges_.size();i++) {
+    vector<SpinInteractionEdge> edges_i = get_intrabath_edges(order,
+        intrabath_edges_[i]);
+    
+    for (UInt j=0;j<edges_i.size();j++) {
+      edges.push_back(edges_i[j]);
+    }
     
   }
   
+  return edges;
   
+}
+
+SpinInteractionGraph SpinBath::reduced_problem_graph(
+    const UInt order) const
+{
+  if (order == 0) {
+    Errors::quit("Order must be +ve non-zero integer.");
+  }
+  
+  SpinInteractionGraph single_system_graph = spin_system_.get_graph();
+  SpinInteractionGraph graph;
+  
+  graph = single_system_graph;
+  
+  if (order == 1) {
+    return graph;
+  }
+  
+  for (UInt i=2; i<=order;i++) {
+    graph.join_in_place(single_system_graph);
+  }
+  
+  graph.add_edges(get_intrabath_edges(order));
+  
+  return graph;
   
 }
 

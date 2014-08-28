@@ -6,12 +6,15 @@
 // Stores clusters and associated complex time evolutions.
 // For use with SpinDec::CCE (cluster correlation expansion).
 //
-// Seto Balian, Aug 26, 2014
+// TODO comment more
+//
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/typedefs.h"
 
 #include "SpinDec/Cluster.h"
 #include "SpinDec/TimeEvolution.h"
+#include "SpinDec/SpinBath.h"
 
 namespace SpinDec
 {
@@ -30,16 +33,25 @@ private:
   vector < vector<TimeEvolution> > time_evolutions_;
   vector < vector<bool> > is_solved_; // is the cluster solved for?
   
+  void add_cluster(const UInt order, const Cluster& cluster);
+  
+  // is |r|<= distance ?
+  bool is_within_distance(const ThreeVector& r, const double distance) const;
+  
+  void init(const SpinBath& spin_bath,
+      const double pairing_cutoff, const UInt max_order);
+  
 public:
   
   ClusterDatabase();
+  ClusterDatabase(const SpinBath& spin_bath,
+      const double pairing_cutoff, const UInt max_order);
   
   const Cluster& get_cluster(const UInt order, const UInt index) const;
   const TimeEvolution& get_time_evolution(const UInt order,
       const UInt index) const;
   const bool is_solved(const UInt order, const UInt index) const;
   
-  void add_cluster(const UInt order, const Cluster& cluster);
   void set_time_evolution(const UInt order, const UInt index,
       const TimeEvolution& time_evolution);
   void solved(const UInt order, const UInt index);

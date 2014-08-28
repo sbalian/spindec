@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -38,45 +38,27 @@ void CCE::init(const UInt truncation_order,
   
   // Prepare the reduced problems ...
   
-  // truncation order 3
-  // bath graph = 1-cluster graph
-  // 1-cluster
-  // graph = 1c
-  // 2-cluster
-  // edge indices intact
-  // graph = 1c+1c
-  // 3-cluster
-  // edge indices + 
-  // graph = 1c+1c+1c
-  
-  // Start with bath graphs
-//  for (UInt i=1;i<=truncation_order_;i++) {
-//    SpinInteractionGraph bath_graph =
-//        spin_bath_.get_spin_system().get_graph();
-//    
-//    
-//    
-//    for (UInt j=0;j<i;j++) {
-//      graph.join_in_place(spin_bath_.get_spin_system().get_graph(),
-//              system_bath_edges_);
-//    }
-//  }
-//  
-//  for (UInt i=1;i<=truncation_order_;i++) {
-//    
-//    SpinInteractionGraph graph =
-//        central_spin_system_.get_graph();
-//    
-//    for (UInt j=0;j<i;j++) {
-//      graph.join_in_place(spin_bath_.get_spin_system().get_graph(),
-//              system_bath_edges_);
-//    }
-//    
-//    reduced_problems_.pus
-//    
-//  }
-//  
-//
+    
+  for (UInt i=1;i<=truncation_order_;i++) {
+    
+    // graphs
+    
+    SpinInteractionGraph bath_graph =
+        spin_bath_.reduced_problem_graph(i);
+    
+    SpinInteractionGraph system_graph =
+        central_spin_system_.get_graph();
+    
+    SpinInteractionGraph system_bath_graph =
+        system_graph.join(bath_graph);
+    
+    system_bath_graph.add_edges(get_system_bath_edges(i));
+    
+    // spin systems
+    
+    reduced_problems_.push_back(SpinSystem(system_bath_graph,field_));
+    
+  }
   
   return;
   
@@ -101,6 +83,56 @@ CCE::CCE(const UInt truncation_order,
     field);
 }
 
+vector<SpinInteractionEdge> CCE::get_system_bath_edges(const UInt order,
+  const SpinInteractionEdge& edge) const
+{
+  
+  if (order == 0) {
+    Errors::quit("Order must be +ve non-zero integer.");
+  }
+  
+  const UInt a = edge.get_label1();
+  const UInt b = edge.get_label2();
+  
+  vector<SpinInteractionEdge> edges;
+  
+  vector< std::pair<UInt,UInt> > pairs;
+  
+  const UInt num_vertices =
+      spin_bath_.get_spin_system().get_graph().num_vertices();
+  
+  for (UInt i=1;i<=order;i++) {
+    pairs.push_back(std::pair<UInt,UInt>( a , b + (i-1)*num_vertices ));
+  }
+  
+  for (UInt i=0;i<pairs.size();i++) {
+    edges.push_back( SpinInteractionEdge(
+        pairs[i].first ,pairs[i].second ,edge.get_interaction()) );
+  }
+  
+  return edges;
+  
+}
+
+vector<SpinInteractionEdge> CCE::get_system_bath_edges(const UInt order) const
+{
+  
+    vector<SpinInteractionEdge> edges;
+    
+    for (UInt i=0;i<system_bath_edges_.size();i++) {
+      vector<SpinInteractionEdge> edges_i = get_system_bath_edges(order,
+          system_bath_edges_[i]);
+      
+      for (UInt j=0;j<edges_i.size();j++) {
+        edges.push_back(edges_i[j]);
+      }
+      
+    }
+    
+    return edges;
+  
+}
+
 CCE::CCE(const UInt truncation_order,
     const auto_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath, const SpinInteractionEdge& system_bath_edge,
@@ -113,6 +145,21 @@ CCE::CCE(const UInt truncation_order,
     spin_bath,
     system_bath_edges,
     field);
+}
+
+const SpinSystem& CCE::get_reduced_problem(const UInt order) const
+{
+  
+  if (order == 0) {
+    Errors::quit("Order must be +ve non-zero integer.");
+  }
+  
+  if (order > truncation_order_) {
+    Errors::quit("Order must be less than or equal to truncation order");
+  }
+  
+  return reduced_problems_[order-1];
+
 }
 
 } // namespace SpinDec
