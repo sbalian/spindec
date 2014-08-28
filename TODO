@@ -1,4 +1,8 @@
-Seto Balian, Aug 27, 2014
+Seto Balian, Aug 28, 2014
+
+
+- make sure there are no sorting inefficiencies throughout SpinDec, with
+  regards to ::Cluster
 
 - In old code, look for constructor of one class being called in a constructor
   in the same class ... did not find so far, should not work!

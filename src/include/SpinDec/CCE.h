@@ -13,7 +13,9 @@
 // - Phys. Rev. B 79, 115320 (2009)
 // - Phys. Rev. B 86, 035452 (2012)
 //
-// Seto Balian, Aug 27, 2014
+// TODO Comment more
+//
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -50,6 +52,11 @@ private:
       const vector<SpinInteractionEdge>& system_bath_edges,
       const UniformMagneticField& field);
   
+  vector<SpinInteractionEdge> get_system_bath_edges(const UInt order,
+      const SpinInteractionEdge& edge) const;
+  
+  vector<SpinInteractionEdge> get_system_bath_edges(const UInt order) const;
+  
 public:
   
   CCE();
@@ -64,6 +71,7 @@ public:
       const SpinInteractionEdge& system_bath_edge,
       const UniformMagneticField& field);
 
+  const SpinSystem& get_reduced_problem(const UInt order) const;
   
 };
 

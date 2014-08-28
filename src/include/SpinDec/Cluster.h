@@ -6,7 +6,7 @@
 // Contains labels for a cluster of spins.
 // Labels are always sorted in increasing order.
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -21,7 +21,6 @@ class Cluster
 private:
   
   UIntArray labels_;
-  explicit Cluster(const UIntArray& labels);
   
   vector< UIntArray > subsets(const UIntArray& v, const UInt size) const;
   vector< UIntArray > subsets(const UIntArray& v) const;
@@ -29,6 +28,7 @@ private:
 public:
   
   Cluster();
+  explicit Cluster(const UIntArray& labels);
   
   void add(const UInt label);
   bool operator==( const Cluster& rhs) const;
@@ -37,6 +37,8 @@ public:
   UInt num_spins() const;
   
   UInt get_label(const UInt index) const;
+  
+  const UIntArray& get_labels() const;
   
   // Print with cout
   friend std::ostream& operator<<(std::ostream& os,

@@ -9,7 +9,7 @@
 // TODO Generalize to finite temperature; Generalize for multiple spin species?
 //      or use combinations of single-spin-species baths?
 // TODO comment more
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Aug 28, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
@@ -46,8 +46,11 @@ private:
       const auto_ptr<SpinSystemBase>& spin_system_base,
       const vector<SpinInteractionEdge>& intrabath_edges);
   
-  vector<SpinInteractionEdge> intrabath_edges(const UInt order,
-      const SpinInteractionEdge& intrabath_edge,const UInt num_vertices) const;
+  // TODO changes these confusing names
+  vector<SpinInteractionEdge> get_intrabath_edges(const UInt order,
+      const SpinInteractionEdge& intrabath_edge) const;
+  
+  vector<SpinInteractionEdge> get_intrabath_edges(const UInt order) const;
   
 public:
   SpinBath();
@@ -63,7 +66,7 @@ public:
   // Infinite temperature ensemble ...
   const SpinState& get_state(const UInt index) const;
   
-  UInt num_spins() const;
+  UInt num_spin_systems() const;
   
   // tensor product state for multiple populated sites
   SpinState get_state(const UIntArray& indices) const;
@@ -73,6 +76,8 @@ public:
   const vector<SpinInteractionEdge>& get_intrabath_edges() const;
   
   const SpinSystem& get_spin_system() const;
+  
+  SpinInteractionGraph reduced_problem_graph(const UInt order) const;
   
   ThreeVector get_position(const UInt vertex_label,
       const UInt index) const;
