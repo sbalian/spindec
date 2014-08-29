@@ -4,7 +4,7 @@
 // SpinDec::CCE
 //
 // Solves for the central spin decoherence problem using the cluster correlation
-// expansion (CCE). Currently supports a single spin bath. TODO Generalize.
+// expansion (CCE).
 //
 // CCE References:
 // - Phys. Rev. B 74, 035322 (2006)
@@ -15,15 +15,11 @@
 //
 // TODO Comment more
 //
-// Seto Balian, Aug 28, 2014
+// Seto Balian, Aug 29, 2014
 
 #include "SpinDec/typedefs.h"
-
-#include "SpinDec/SpinSystemBase.h"
-#include "SpinDec/SpinSystem.h"
-#include "SpinDec/SpinBath.h"
-#include "SpinDec/UniformMagneticField.h"
-#include "SpinDec/SpinInteractionEdge.h"
+#include "SpinDec/CSDProblem.h"
+#include "SpinDec/ClusterDatabase.h"
 
 namespace SpinDec
 {
@@ -33,45 +29,19 @@ class CCE
 private:
   
   UInt truncation_order_;
+  CSDProblem csd_problem_;
   
-  SpinSystem central_spin_system_;
-  SpinBath spin_bath_;
-  
-  UniformMagneticField field_;
-  
-  // Edges should comply as in the join methods for SpinInteractionGraph,
-  // with the first graph being the central spin graph and the second being
-  // the graph for a single bath system.
-  vector<SpinInteractionEdge> system_bath_edges_;
-  
-  vector<SpinSystem> reduced_problems_;
-  
-  void init(const UInt truncation_order,
-      const auto_ptr<SpinSystemBase>& central_spin_system_base,
-      const SpinBath& spin_bath,
-      const vector<SpinInteractionEdge>& system_bath_edges,
-      const UniformMagneticField& field);
-  
-  vector<SpinInteractionEdge> get_system_bath_edges(const UInt order,
-      const SpinInteractionEdge& edge) const;
-  
-  vector<SpinInteractionEdge> get_system_bath_edges(const UInt order) const;
+  ClusterDatabase database_;
   
 public:
   
   CCE();
   CCE(const UInt truncation_order,
-      const auto_ptr<SpinSystemBase>& central_spin_system_base,
-      const SpinBath& spin_bath,
-      const vector<SpinInteractionEdge>& system_bath_edges,
-      const UniformMagneticField& field);
-  CCE(const UInt truncation_order,
-      const auto_ptr<SpinSystemBase>& central_spin_system_base,
-      const SpinBath& spin_bath,
-      const SpinInteractionEdge& system_bath_edge,
-      const UniformMagneticField& field);
-
-  const SpinSystem& get_reduced_problem(const UInt order) const;
+      const CSDProblem& csd_problem,
+      const double pairing_cutoff);
+  
+  UInt get_truncation_order() const;
+  
   
 };
 
