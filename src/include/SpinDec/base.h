@@ -4,7 +4,7 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, Aug 28, 2014
+// Seto Balian, Aug 29, 2014
 
 #include <Eigen/Dense>
 
@@ -12,6 +12,7 @@
 #include "SpinDec/BoostEigen.h"
 #include "SpinDec/CCE.h"
 #include "SpinDec/CPMG.h"
+#include "SpinDec/CSDProblem.h"
 #include "SpinDec/Cluster.h"
 #include "SpinDec/ClusterDatabase.h"
 #include "SpinDec/CrystalBasis.h"
