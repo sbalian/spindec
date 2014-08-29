@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Aug 28, 2014
+// Seto Balian, Aug 29, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -9,7 +9,6 @@
 
 namespace SpinDec
 {
-
 
 void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
     const auto_ptr<SpinSystemBase>& spin_system_base,
@@ -110,7 +109,7 @@ ThreeVector SpinDec::SpinBath::get_position(const UInt vertex_label,
       spin_system_.get_graph().get_position(vertex_label);
 }
 
-vector<SpinInteractionEdge> SpinBath::get_intrabath_edges(
+vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
     const UInt order,
     const SpinInteractionEdge& intrabath_edge) const
 {
@@ -166,14 +165,15 @@ vector<SpinInteractionEdge> SpinBath::get_intrabath_edges(
   
 }
 
-vector<SpinInteractionEdge> SpinBath::get_intrabath_edges(const UInt order)
+vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
+    const UInt order)
 const
 {
   
   vector<SpinInteractionEdge> edges;
   
   for (UInt i=0;i<intrabath_edges_.size();i++) {
-    vector<SpinInteractionEdge> edges_i = get_intrabath_edges(order,
+    vector<SpinInteractionEdge> edges_i = make_intrabath_edges(order,
         intrabath_edges_[i]);
     
     for (UInt j=0;j<edges_i.size();j++) {
@@ -206,7 +206,7 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
     graph.join_in_place(single_system_graph);
   }
   
-  graph.add_edges(get_intrabath_edges(order));
+  graph.add_edges(make_intrabath_edges(order));
   
   return graph;
   
