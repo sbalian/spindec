@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -27,11 +27,10 @@ const UniformMagneticField& SpinSystemBase::get_field() const
   return field_;
 }
 
-SpinOperator SpinSystemBase::evolution_operator(const double time) const
+EvolutionOperator SpinSystemBase::evolution_operator(const double time) const
 {
-  return SpinOperator( hamiltonian_.evolution_matrix(
-      eigenstates_,energies_,time),
-                       hamiltonian_.get_basis());
+  return EvolutionOperator(hamiltonian_.get_basis(),
+      eigenstates_,energies_,time);
 }
 
 

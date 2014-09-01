@@ -5,7 +5,7 @@
 //
 // Abstract base class for pulse sequences.
 //
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"
@@ -16,23 +16,26 @@ namespace SpinDec
 class PulseSequence
 {
 protected:
-  SpinState initial_state_; // TODO decide if this should be a member,
-                            // store just the basis perhaps ...
-  SpinState final_state_;
   
+  SpinState initial_state_;
+  SpinState final_state_; 
   double duration_;
   
 public:
   
   PulseSequence();
-  PulseSequence(const SpinState& initial_state,
-      const double duration);
-  
+  PulseSequence(const SpinState& initial_state);
+    
   const SpinState& get_initial_state() const;
-  const SpinState& get_final_state() const;
   
-  virtual void calculate(const SpinState& initial_state,
-               const double duration) = 0;
+  void add_pulse(const std::auto_ptr<Pulse> )
+  
+  void set_initial_state(const SpinState& initial_state) const;
+  void set_initial_state(const SpinState& initial_state) const;
+  
+  virtual const SpinState& get_final_state() const = 0;
+  
+  virtual std::auto_ptr<PulseSequence> clone() const = 0;
   
   virtual ~PulseSequence();
 

@@ -1,5 +1,5 @@
 // See CPMG.h for description.
-// Seto Balian, Aug 4, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/CPMG.h"
 #include "SpinDec/Errors.h"
@@ -14,18 +14,15 @@ CPMG::CPMG() : order_(0),time_gap_(0.0),is_pi_pulse_constructed_(false)
 
 CPMG::CPMG(const UInt order, const SpinState& state0, const SpinState& state1,
     const std::auto_ptr<SpinSystemBase> & spin_system_base) :
-      PulseSequence()
+      PulseSequence(state0.get_basis(),0.0),order_(order),
+      time_gap_(0.0),state0_(state0),state1_(state1),
+      is_pi_pulse_constructed_(false)
 {
   
-  is_pi_pulse_constructed_ = false;
-  order_ = order;
-  
-  time_gap_ = 0.0;
-  duration_ = 0.0;
-  
-  state0_ = state0;
-  state1_ = state1;
-  
+  // check basis
+  if (!state0_.get_basis().is_equal(state1_.get_basis())) {
+    Errors::quit("Bases for states |1> and |0> must be the same.");
+  }
   
   hamiltonian_ = spin_system_base->get_hamiltonian();
   eigenvectors_ = spin_system_base->get_eigenvector_matrix();
@@ -36,13 +33,9 @@ CPMG::CPMG(const UInt order, const SpinState& state0, const SpinState& state1,
 CPMG::CPMG(const UInt order, const UInt lower_donor_level,
     const UInt upper_donor_level, const SpinDonor& spin_donor,
     const SpinSystem& combined_spin_system) :
-        PulseSequence()
+        PulseSequence(spin_donor.get_hamiltonian().get_basis(),0.0),
+        order_(order),time_gap_(0.0),is_pi_pulse_constructed_(false)
 {
-  is_pi_pulse_constructed_ = false;
-  order_ = order;
-  
-  time_gap_ = 0.0;
-  duration_ = 0.0;
   
   state0_ = spin_donor.eigenstate(lower_donor_level);
   state1_ = spin_donor.eigenstate(upper_donor_level);
@@ -59,9 +52,12 @@ CPMG::CPMG(const UInt order, const UInt lower_donor_level,
 
 }
 
-
 void CPMG::add_other_state(const SpinState& other_state)
 {
+  if (!state0_.get_basis().is_equal(other_state.get_basis())) {
+    Errors::quit("Basis mismatch for \"other state\".");
+  }
+
   if (is_pi_pulse_constructed_ == true) {
     Errors::quit("Can't add other state if pi pulse already constructed");
   }
@@ -96,12 +92,10 @@ void CPMG::calculate(const SpinState& initial_state,
   } else { // Hahn (CPMG-1), CPMG-2, CPMG-3, ...
     time_gap_ = duration_/(2.0*static_cast<double>(order_));
   }
-
-  initial_state_ = initial_state;
     
-  // check if initial state and pi pulse have the same bases
-  if (!(initial_state_.get_basis().is_equal(hamiltonian_.get_basis()))) {
-    Errors::quit("Initial state and Hamiltonian do not have the same basis.");
+  // check basis
+  if (!(initial_state.get_basis().is_equal(get_basis()))) {
+    Errors::quit("Initial state not in the correct basis.");
   }
   
   ComplexMatrix evolution_matrix =
@@ -113,10 +107,10 @@ void CPMG::calculate(const SpinState& initial_state,
   
   //FID
   if (order_ == 0) {
-    final_state_ = evolution_operator*initial_state_;
+    final_state_ = evolution_operator*initial_state;
   } else {
     // Hahn (CPMG-1), CPMG-2, CPMG-3, ...
-    final_state_ = initial_state_;
+    final_state_ = initial_state;
     
     for (UInt i=0;i<order_;i++) {
 
@@ -168,6 +162,17 @@ CDoubleArray CPMG::decay_experiment(const SpinState& initial_state,
   
   return L;
 
+}
+
+void CPMG::reset()
+{
+  is_pi_pulse_constructed_ = false;
+  states_to_trace_out_.clear();
+}
+
+std::auto_ptr<PulseSequence> CPMG::clone() const
+{
+  return auto_ptr<PulseSequence>(new CPMG(*this));
 }
 
 } // namespace SpinDec

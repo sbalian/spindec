@@ -1,5 +1,5 @@
 // See Pulse.h for description.
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/Pulse.h"
 #include "SpinDec/Errors.h"
@@ -11,20 +11,8 @@ Pulse::Pulse() : duration_(0.0)
 {
 }
 
-Pulse::Pulse(const SpinState& state0, const SpinState& state1,
-    const double duration, const vector<SpinState>& unaffected_states)
+Pulse::Pulse(const double duration) : duration_(duration)
 {
-  state0_ = state0;
-  state1_ = state1;
-  
-  if (!state0_.get_basis().is_equal(state1_.get_basis())) {
-    Errors::quit("Bases for states |0> and |1> in pulse are not the same.");
-  }
-  
-  duration_ = duration;
-  
-  unaffected_states_ = unaffected_states;
-  
 }
 
 const SpinOperator& Pulse::get_pulse_operator() const

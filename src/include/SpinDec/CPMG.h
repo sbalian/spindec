@@ -12,7 +12,7 @@
 //   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
 //   > evolve, t/2n >pi-pulse, evolve, t/2n> measure
 //
-// Seto Balian, Aug 4, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequence.h"
@@ -36,7 +36,6 @@ private:
   SpinState state0_;
   SpinState state1_;
   vector<SpinState> other_states_;
-  vector<SpinState> states_to_trace_out_;
   
   SpinHamiltonian hamiltonian_;
   ComplexMatrix eigenvectors_;
@@ -58,7 +57,7 @@ public:
        const SpinDonor & spin_donor,
        const SpinSystem & combined_spin_system);
   
-  void add_state_to_trace_out(const SpinState& state_to_trace_out);
+  virtual void add_state_to_trace_out(const SpinState& state_to_trace_out);
   void add_other_state(const SpinState& other_state);
   
   virtual void calculate(const SpinState& initial_state,
@@ -69,6 +68,10 @@ public:
        const double duration);
   CDoubleArray decay_experiment(
       const SpinState& initial_state, const TimeArray& time_array);
+  
+  virtual void reset();
+  
+  virtual std::auto_ptr<PulseSequence> clone() const;
   
 };
 

@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Aug 29, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -44,20 +44,22 @@ void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
 }
 
 
-SpinBath::SpinBath()
+SpinBath::SpinBath() : pairing_cutoff_(0.0)
 {
 }
 
 SpinBath::SpinBath(const CrystalStructure& crystal_structure,
     const auto_ptr<SpinSystemBase>& spin_system_base,
-    const vector<SpinInteractionEdge>& intrabath_edges)
+    const vector<SpinInteractionEdge>& intrabath_edges,
+    const double pairing_cutoff) : pairing_cutoff_(pairing_cutoff)
 {
   init(crystal_structure,spin_system_base,intrabath_edges);
 }
 
 SpinBath::SpinBath(const CrystalStructure& crystal_structure,
     const auto_ptr<SpinSystemBase>& spin_system_base,
-    const SpinInteractionEdge& intrabath_edge)
+    const SpinInteractionEdge& intrabath_edge,
+    const double pairing_cutoff) : pairing_cutoff_(pairing_cutoff)
 {
   vector<SpinInteractionEdge> intrabath_edges;
   intrabath_edges.push_back(intrabath_edge);
@@ -82,7 +84,6 @@ SpinState SpinBath::get_state(const UIntArray& indices) const
   }
   return out;
 }
-
 
 const CrystalStructure& SpinBath::get_crystal_structure() const
 {
@@ -210,6 +211,11 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
   
   return graph;
   
+}
+
+double SpinBath::get_pairing_cutoff() const
+{
+  return pairing_cutoff_;
 }
 
 

@@ -10,7 +10,7 @@
 //
 // TODO explain changes for "update position" method
 //
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Sep 1, 2014
 
 #include <string>
 
@@ -62,16 +62,6 @@ public:
       const UniformMagneticField & field);
   
   UniformMagneticField get_field() const;
-  
-  // Unitary matrix
-  // U = \sum{n} ( |E_n> exp(- i E_n t) <E_n| )
-  // E_n: eigenvalues (real)
-  // |E_n>: eigenvectors
-  // t: time (real double) units: microseconds (energies in M rad s-1)
-  // (for time independent spin Hamiltonians ...)
-  ComplexMatrix evolution_matrix(const ComplexMatrix & eigenvectors,
-      const RealVector & eigenvalues,
-      const double time) const;
   
   void update_positions(const UIntArray& vertex_labels,
       const vector<ThreeVector>& positions);

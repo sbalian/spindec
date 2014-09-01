@@ -1,5 +1,5 @@
 // See CSDProblem.h for description.
-// Seto Balian, Aug 29, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"
@@ -153,6 +153,24 @@ const SpinSystem& CSDProblem::get_central_spin_system() const
 {
   return central_spin_system_;
 }
+
+UIntArray CSDProblem::get_bath_vertex_labels(const UInt order) const
+{
+  
+  UIntArray labels;
+  const UInt n_b = 
+      spin_bath_.get_spin_system().get_graph().num_vertices();
+  const UInt n_c = 
+      central_spin_system_.get_graph().num_vertices();
+  
+  for (UInt i=n_c;i<=(n_c + order*n_b - 1);i++) {
+    labels.push_back(i);
+  }
+  
+  return labels;
+  
+}
+
 
 } // namespace SpinDec
 
