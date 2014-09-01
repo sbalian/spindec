@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -146,18 +146,6 @@ SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
 UniformMagneticField SpinHamiltonian::get_field() const
 {
   return field_;
-}
-
-ComplexMatrix SpinHamiltonian::evolution_matrix(
-    const ComplexMatrix & eigenvectors,
-    const RealVector & eigenvalues,
-    const double time) const
-{
-  return BoostEigen::unitarySpectralDecomposition(
-                       eigenvectors,
-                       BoostEigen::exp( eigenvalues.cast< CDouble >() * 
-                                        std::complex<double>(0.0,-time) ) 
-                                                 );
 }
 
 void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,

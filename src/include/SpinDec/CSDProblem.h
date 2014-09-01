@@ -8,7 +8,7 @@
 //
 // TODO Comment more
 //
-// Seto Balian, Aug 29, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -61,6 +61,8 @@ public:
   
   const SpinBath& get_spin_bath() const;
   const SpinSystem& get_central_spin_system() const;
+  
+  UIntArray get_bath_vertex_labels(const UInt order) const;
 
 };
 

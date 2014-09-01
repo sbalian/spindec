@@ -8,7 +8,7 @@
 //
 // TODO comment more
 //
-// Seto Balian, Aug 29, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -33,34 +33,41 @@ private:
   vector < vector<TimeEvolution> > time_evolutions_;
   vector < vector<bool> > is_solved_; // is the cluster solved for?
   
-  void add_cluster(const UInt order, const Cluster& cluster);
+  void add_cluster(const Cluster& cluster);
   
   // is |r|<= distance ?
   bool is_within_distance(const ThreeVector& r, const double distance) const;
   
-  void init(const SpinBath& spin_bath,
-      const double pairing_cutoff, const UInt max_order);
-  
-public:
-  
-  ClusterDatabase();
-  ClusterDatabase(const SpinBath& spin_bath,
-      const double pairing_cutoff, const UInt max_order);
+  void init(const SpinBath& spin_bath, const UInt max_order);
   
   const Cluster& get_cluster(const UInt order, const UInt index) const;
   const TimeEvolution& get_time_evolution(const UInt order,
       const UInt index) const;
-  const bool is_solved(const UInt order, const UInt index) const;
+  bool is_solved(const UInt order, const UInt index) const;
   
   void set_time_evolution(const UInt order, const UInt index,
       const TimeEvolution& time_evolution);
   void solved(const UInt order, const UInt index);
   
-  bool exists(const UInt order, const Cluster& cluster) const;
-  UInt get_index(const UInt order, const Cluster& cluster) const;
+  UInt get_index(const Cluster& cluster) const;
+
+  
+public:
+  
+  ClusterDatabase();
+  ClusterDatabase(const SpinBath& spin_bath, const UInt max_order);
+  
+  bool exists(const Cluster& cluster) const;
+  
+  const Cluster& get_cluster(const Cluster& cluster) const;
+  const TimeEvolution& get_time_evolution(const Cluster& cluster) const;
+  bool is_solved(const Cluster& cluster) const;
+  
+  void set_time_evolution(const Cluster& cluster,
+      const TimeEvolution& time_evolution);
+  void solved(const Cluster& cluster);
   
   UInt max_order() const;
-  
   UInt num_clusters(const UInt order) const;
   
   void print() const;

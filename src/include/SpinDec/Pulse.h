@@ -4,8 +4,9 @@
 // SpinDec::Pulse
 //
 // Abstract base class for pulses in a pulse sequence.
+// Includes the no-pulse free evolution.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"
@@ -17,13 +18,8 @@ namespace SpinDec
 class Pulse
 {
 protected:
-  SpinState state0_;
-  SpinState state1_;
-  
-  vector<SpinState> unaffected_states_;
   
   double duration_;
-  
   SpinOperator pulse_operator_;
   
   // sets
@@ -31,10 +27,11 @@ protected:
   
 public:
   Pulse();
-  Pulse(const SpinState & state0, const SpinState & state1,
-      const double duration, const vector<SpinState>& unaffected_states);
+  explicit Pulse(const double duration);
   
   const SpinOperator& get_pulse_operator() const;
+  
+  virtual std::auto_ptr<Pulse> clone() const = 0;
   
   virtual ~Pulse();
   

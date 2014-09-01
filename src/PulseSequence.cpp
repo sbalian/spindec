@@ -1,5 +1,5 @@
 // See PulseSequence.h for description.
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/PulseSequence.h"
 
@@ -10,17 +10,17 @@ PulseSequence::PulseSequence() : duration_(0.0)
 {
 }
 
-PulseSequence::PulseSequence(const SpinState& initial_state,
+PulseSequence::PulseSequence(const SpinBasis& basis,
     const double duration)
 {
-  initial_state_ = initial_state;
-  final_state_ = SpinState(initial_state_.get_basis());
+  basis_ = basis;
+  final_state_ = SpinState(basis_);
   duration_ = duration;
 }
 
-const SpinState& PulseSequence::get_initial_state() const
+const SpinBasis& PulseSequence::get_basis() const
 {
-  return initial_state_;
+  return basis_;
 }
 
 const SpinState& PulseSequence::get_final_state() const

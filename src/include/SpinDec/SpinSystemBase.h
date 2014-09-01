@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -15,6 +15,8 @@
 #include "SpinDec/UniformMagneticField.h"
 
 #include "SpinDec/SpinState.h"
+#include "SpinDec/EvolutionOperator.h"
+
 
 #include <memory>
 
@@ -61,7 +63,7 @@ public:
   void set_state(const SpinState& state);
   const SpinState& get_state() const;
   
-  SpinOperator evolution_operator(const double time) const;
+  EvolutionOperator evolution_operator(const double time) const;
   
   virtual UInt dimension() const = 0; // Hamiltonian dimension
   

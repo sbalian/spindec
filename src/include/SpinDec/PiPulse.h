@@ -4,9 +4,9 @@
 // SpinDec::PiPulse
 //
 // Pi (refocusing) pulse.
-// [ |0X1| + |1X0| + SUM_i ( |iXi| ) ] ^(tensor) identity
+// [ |0X1| + |1X0| ]
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Sep 1, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Pulse.h"
@@ -17,14 +17,18 @@ namespace SpinDec
 class PiPulse : public Pulse
 {
 private:
-  vector<SpinState> other_states_;
+  
+  SpinState state0_;
+  SpinState state1_;
+  
   virtual void construct_pulse_operator();
   
 public:
   PiPulse();
-  PiPulse(const SpinState & state0, const SpinState & state1,
-      const vector<SpinState> & other_states,
-      const vector<SpinState>& unaffected_states);
+  // instantaneous
+  PiPulse(const SpinState & state0, const SpinState & state1);
+  
+  virtual std::auto_ptr<Pulse> clone() const;
   
 };
 
