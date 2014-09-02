@@ -1,7 +1,8 @@
 // See PulseSequence.h for description.
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/PulseSequence.h"
+#include "SpinDec/Errors.h"
 
 namespace SpinDec
 {
@@ -10,25 +11,63 @@ PulseSequence::PulseSequence() : duration_(0.0)
 {
 }
 
-PulseSequence::PulseSequence(const SpinBasis& basis,
-    const double duration)
+PulseSequence::PulseSequence(const SpinState& initial_state) : duration_(0.0)
 {
-  basis_ = basis;
-  final_state_ = SpinState(basis_);
-  duration_ = duration;
+  initial_state_ = initial_state;
 }
 
-const SpinBasis& PulseSequence::get_basis() const
+void PulseSequence::add_pulse(const Pulse& pulse)
 {
-  return basis_;
+  
+  if (!pulse.get_pulse_operator().get_basis().is_equal(
+      initial_state_.get_basis())) {
+    Errors::quit("Invalid pulse operator basis.");
+  }
+  
+  pulses_.push_back(pulse);
+  
+  duration_+=pulse.get_duration();
+  
+  return;
 }
 
-const SpinState& PulseSequence::get_final_state() const
+
+void PulseSequence::set_initial_state(const SpinState& initial_state)
 {
-  return final_state_;
+  if (!initial_state.is_basis_equal(initial_state_.clone())) {
+    Errors::quit("Invalid initial state basis.");
+  }
+  initial_state_ = initial_state;
+  return;
 }
 
-PulseSequence::~PulseSequence()
+const SpinState& PulseSequence::get_initial_state() const
+{
+  return initial_state_;
+}
+
+SpinState PulseSequence::final_state() const
+{
+  SpinState final_state = initial_state_;
+  for (UInt i=pulses_.size()-1;i>=0;i--) {
+    final_state = pulses_[i].get_pulse_operator()*final_state;
+  }
+  return final_state;
+}
+
+double PulseSequence::get_duration() const
+{
+  return duration_;
+}
+
+SpinState PulseSequence::final_state(
+    const SpinState& initial_state)
+{
+  set_initial_state(initial_state);
+  return final_state();
+}
+
+SpinDec::PulseSequence::~PulseSequence()
 {
 }
 

@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/CCE.h"
 
@@ -11,14 +11,12 @@ CCE::CCE() : truncation_order_(0)
 }
 
 CCE::CCE(const TimeArray& time_array,
-    const UInt truncation_order, const CSDProblem& csd_problem,
-    const std::auto_ptr<PulseSequence>& pulse_sequence) :
+    const UInt truncation_order, const CSDProblem& csd_problem) :
     time_evolution_(time_array),
     truncation_order_(truncation_order),
     csd_problem_(csd_problem)
 {
   database_ = ClusterDatabase(csd_problem_.get_spin_bath(),truncation_order_);
-  pulse_sequence_ = pulse_sequence->clone();
   
   // set up the reduced problems
   for (UInt i=1;i<=truncation_order_;i++) {
@@ -75,19 +73,17 @@ TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
   reduced_problem.set_state(csd_problem_.get_central_spin_system().get_state()
       ^csd_problem_.get_spin_bath().get_state(cluster.get_labels()));
   
-  // TODO inefficient here ...
-  pulse_sequence_->reset();
   
-  for (UInt i=0;i<order;i++) {
-    pulse_sequence_->add_state_to_trace_out(reduced_problem.get_state());
-  }
+  // TODO you are here
+  // make pulse experiment member of csd problem
   
-  pulse_sequence_->calculate()
+  return TimeEvolution();
   
 }
 
 TimeEvolution CCE::true_correlation(const Cluster& cluster)
 {
+  return TimeEvolution();
 }
 
 const SpinSystem& CCE::get_reduced_problem(const UInt order) const

@@ -9,7 +9,7 @@
 // Analytical methods include energy levels, eigenstates and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/SpinSystem.h"
 

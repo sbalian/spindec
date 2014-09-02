@@ -1,5 +1,5 @@
 // See MatrixRepresentation.h for description.
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/Errors.h"
@@ -35,6 +35,14 @@ void MatrixRepresentation::quit_if_basis_mismatch(
   }
   return;
 }
+
+bool MatrixRepresentation::is_basis_equal(
+    const std::auto_ptr<MatrixRepresentation>&
+    to_check) const
+{
+  return get_basis().is_equal( to_check->get_basis() );
+}
+
 
 MatrixRepresentation::~MatrixRepresentation() {/**/}
 

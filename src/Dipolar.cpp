@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/Dipolar.h"
 #include "SpinDec/constants.h"
