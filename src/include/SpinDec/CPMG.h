@@ -12,16 +12,14 @@
 //   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
 //   > evolve, t/2n >pi-pulse, evolve, t/2n> measure
 //
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequence.h"
+#include "SpinDec/EvolutionOperator.h"
+#include "SpinDec/SpinState.h"
 #include "SpinDec/PiPulse.h"
-#include "SpinDec/SpinHamiltonian.h"
-#include "SpinDec/SpinSystemBase.h"
-#include "SpinDec/TimeArray.h"
-#include "SpinDec/SpinDonor.h"
-#include "SpinDec/SpinSystem.h"
+#include "SpinDec/FreeEvolution.h"
 
 namespace SpinDec
 {
@@ -29,48 +27,35 @@ namespace SpinDec
 class CPMG : public PulseSequence
 {
 private:
-  PiPulse pi_pulse_;
-  UInt order_;
-  double time_gap_;
+  void init(const PiPulse& pi_pulse);
   
+  UInt order_;
   SpinState state0_;
   SpinState state1_;
-  vector<SpinState> other_states_;
-  
-  SpinHamiltonian hamiltonian_;
-  ComplexMatrix eigenvectors_;
-  RealVector eigenvalues_;
-  
-  bool is_pi_pulse_constructed_;
+  vector<SpinState> states2_plus_;
+  SpinState unaffected_state_;
+  EvolutionOperator evolution_operator_;
   
 public:
   
   CPMG();
-  CPMG(const UInt order,
-       const SpinState & state0,
-       const SpinState & state1,
-       const std::auto_ptr<SpinSystemBase> & spin_system_base);
+  CPMG(const UInt order,const SpinState& state0, const SpinState& state1,
+      const SpinState& initial_state,
+      const EvolutionOperator& evolution_operator);
+  CPMG(const UInt order,const SpinState& state0, const SpinState& state1,
+      const SpinState& initial_state,
+      const SpinState& unaffected_state,
+      const EvolutionOperator& evolution_operator);
+  CPMG(const UInt order,const SpinState& state0, const SpinState& state1,
+      const vector<SpinState>& states2_plus,
+      const SpinState& initial_state,
+      const SpinState& unaffected_state,
+      const EvolutionOperator& evolution_operator);
   
-  CPMG(const UInt order,
-       const UInt lower_donor_level,
-       const UInt upper_donor_level,
-       const SpinDonor & spin_donor,
-       const SpinSystem & combined_spin_system);
-  
-  virtual void add_state_to_trace_out(const SpinState& state_to_trace_out);
-  void add_other_state(const SpinState& other_state);
-  
-  virtual void calculate(const SpinState& initial_state,
-       const double duration);
-  
-  // TODO Comment this
-  CDouble decay_experiment(const SpinState& initial_state,
-       const double duration);
-  CDoubleArray decay_experiment(
-      const SpinState& initial_state, const TimeArray& time_array);
-  
-  virtual void reset();
-  
+  const SpinState& get_state0() const;
+  const SpinState& get_state1() const;
+
+  virtual void update(const double time);
   virtual std::auto_ptr<PulseSequence> clone() const;
   
 };

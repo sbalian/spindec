@@ -5,7 +5,7 @@
 //
 // Identity.
 //
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinOperator.h"
@@ -13,11 +13,11 @@
 namespace SpinDec
 {
 
-class IdentityOperator : SpinOperator
+class IdentityOperator : public SpinOperator
 {
 public:
   IdentityOperator();
-  IdentityOperator(const UInt dimension,const SpinBasis& basis);
+  explicit IdentityOperator(const SpinBasis& basis);
   
 };
 

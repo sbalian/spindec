@@ -1,5 +1,5 @@
 // See IdentityOperator.h for description.
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/IdentityOperator.h"
 
@@ -10,9 +10,9 @@ IdentityOperator::IdentityOperator()
 {
 }
 
-IdentityOperator::IdentityOperator(const UInt dimension,
-    const SpinBasis& basis)
-: SpinOperator(ComplexMatrix::Identity(dimension,dimension),basis)
+IdentityOperator::IdentityOperator(const SpinBasis& basis)
+: SpinOperator(ComplexMatrix::Identity(
+    basis.num_basis_states(),basis.num_basis_states()),basis)
 {
 }
 

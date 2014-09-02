@@ -1,5 +1,11 @@
-Seto Balian, Aug 28, 2014
+Seto Balian, Sep 2, 2014
 
+- IMPORTANT: UNDERSTAND ITERATORS
+- IMPORTANT: WHEN USING FIND, WHAT HAPPENS WHEN YOU SEARCH AND EMPTY VECTOR?!
+
+- Better basis checks etc... also where to put eigenvalues and eigenvectors
+  associated with operators? see EvolutionOperator, the eigenvalues and
+  eigenvectors are for the Hamiltonian!
 
 - make sure there are no sorting inefficiencies throughout SpinDec, with
   regards to ::Cluster

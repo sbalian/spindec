@@ -6,7 +6,7 @@
 // Abstract base class for spin states and operators in the matrix
 // representation. Has a SpinBasis (Zeeman basis) and a dimension.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/typedefs.h"
@@ -37,6 +37,9 @@ public:
   UInt get_dimension() const;
   
   const SpinBasis& get_basis() const;
+  
+  bool is_basis_equal(const std::auto_ptr<MatrixRepresentation>&
+      to_check) const;
   
   virtual void set_zero() = 0; // set all elements to zero
   

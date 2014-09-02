@@ -1,5 +1,5 @@
 // See Pulse.h for description.
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/Pulse.h"
 #include "SpinDec/Errors.h"
@@ -11,8 +11,10 @@ Pulse::Pulse() : duration_(0.0)
 {
 }
 
-Pulse::Pulse(const double duration) : duration_(duration)
+SpinDec::Pulse::Pulse(const double duration, const SpinOperator& pulse_operator)
 {
+  duration_ = duration;
+  pulse_operator_ = pulse_operator;
 }
 
 const SpinOperator& Pulse::get_pulse_operator() const
@@ -20,8 +22,9 @@ const SpinOperator& Pulse::get_pulse_operator() const
   return pulse_operator_;
 }
 
-Pulse::~Pulse()
+double Pulse::get_duration() const
 {
+  return duration_;
 }
 
 } // namespace SpinDec

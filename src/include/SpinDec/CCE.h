@@ -15,12 +15,12 @@
 //
 // TODO Comment more
 //
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 2, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/ClusterDatabase.h"
-#include "SpinDec/PulseSequence.h"
+#include "SpinDec/PulseExperiment.h"
 #include "SpinDec/TimeEvolution.h"
 
 namespace SpinDec
@@ -38,8 +38,6 @@ private:
   
   ClusterDatabase database_;
   
-  std::auto_ptr<PulseSequence> pulse_sequence_;
-  
   TimeEvolution reducible_correlation(const Cluster& cluster);
   TimeEvolution true_correlation(const Cluster& cluster);
   
@@ -52,8 +50,7 @@ public:
   CCE();
   CCE(const TimeArray& time_array,
       const UInt truncation_order,
-      const CSDProblem& csd_problem,
-      const std::auto_ptr<PulseSequence>& pulse_sequence);
+      const CSDProblem& csd_problem);
   
   UInt get_truncation_order() const;
   
