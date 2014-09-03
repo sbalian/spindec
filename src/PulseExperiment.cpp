@@ -1,5 +1,5 @@
 // See PulseExperiment.h for description.
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/PulseExperiment.h"
 
@@ -32,6 +32,12 @@ PulseExperiment& PulseExperiment::operator =(
   time_array_ = other.time_array_;
   return *this;
 }
+
+const TimeArray& SpinDec::PulseExperiment::get_time_array() const
+{
+  return time_array_;
+}
+
 
 } // namespace SpinDec
 

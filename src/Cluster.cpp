@@ -1,5 +1,5 @@
 // See Cluster.h for description.
-// Seto Balian, Aug 28, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/Cluster.h"
 #include <algorithm>

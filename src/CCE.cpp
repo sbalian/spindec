@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/CCE.h"
 
@@ -10,19 +10,11 @@ CCE::CCE() : truncation_order_(0)
 {
 }
 
-CCE::CCE(const TimeArray& time_array,
-    const UInt truncation_order, const CSDProblem& csd_problem) :
-    time_evolution_(time_array),
+CCE::CCE(const UInt truncation_order, const CSDProblem& csd_problem) :
     truncation_order_(truncation_order),
     csd_problem_(csd_problem)
 {
   database_ = ClusterDatabase(csd_problem_.get_spin_bath(),truncation_order_);
-  
-  // set up the reduced problems
-  for (UInt i=1;i<=truncation_order_;i++) {
-    reduced_problems_(csd_problem.reduced_problem(i));
-  }
-  
 }
 
 TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
@@ -34,66 +26,68 @@ TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
   }
   
   // otherwise, calculate the reduced problem
-  
+    
   // get the reduced problem
-  const UInt order = cluster.num_spins();
-  SpinSystem reduced_problem = get_reduced_problem(order);
+  SpinSystem reduced_problem = csd_problem_.get_reduced_problem(
+      cluster.get_labels());
   
-  // now set the initial bath positions
+  // calculate the experiment
+  TimeEvolution evolution = csd_problem_.get_pulse_experiment()
+          ->time_evolution(reduced_problem.get_state());
   
-  // get the site vectors
-  vector<ThreeVector> sites;
-  for (UInt i=0;i<order;i++) {
-    sites.push_back(
-     csd_problem_.get_spin_bath().get_crystal_structure().get_site_vector(i));
-  }
+  // store result in database
+  database_.set_time_evolution(cluster,evolution);
+  database_.solved(cluster);
   
-  // get the bath vertex labels
-  UIntArray bath_vertex_labels =
-      csd_problem_.get_bath_vertex_labels(order);
-  // get the number of bath vertices
-  UInt num_bath_vertices =
-      csd_problem_.get_spin_bath().get_spin_system().get_graph().num_vertices();
-  
-  // new positions
-  vector<ThreeVector> positions;
-  for (UInt i=0;i<order;i++) {
-    for (UInt j=0;j<num_bath_vertices;j++) {
-      positions.push_back(sites[i]);
-    }
-  }
-  for (UInt i=0;i<bath_vertex_labels.size();i++) {
-    positions[i]+=
-     csd_problem_.get_spin_bath().get_spin_system().get_graph().get_position(i);
-  }
-  reduced_problem.update_positions(bath_vertex_labels,positions);
-
-  // set the initial state
-  // TODO this needs checking ...
-  reduced_problem.set_state(csd_problem_.get_central_spin_system().get_state()
-      ^csd_problem_.get_spin_bath().get_state(cluster.get_labels()));
-  
-  
-  // TODO you are here
-  // make pulse experiment member of csd problem
-  
-  return TimeEvolution();
+  return evolution;
   
 }
 
 TimeEvolution CCE::true_correlation(const Cluster& cluster)
 {
-  return TimeEvolution();
-}
+  
+  const UInt current_order = cluster.num_spins();
+  
+  if (current_order == 1) {
+    return reducible_correlation(cluster);
+  }
+  
+  // get the next orders down
+  vector< Cluster > current_subclusters = cluster.proper_subsets();
 
-const SpinSystem& CCE::get_reduced_problem(const UInt order) const
-{
-  return reduced_problems_[order-1];
+  vector< TimeEvolution > divisors;
+  for (UInt i=0;i<current_subclusters.size();i++) {
+    divisors.push_back(
+        reducible_correlation(current_subclusters[i]) );
+  }
+  
+  TimeEvolution denominator = divisors[0];
+  for (UInt i=1;i<divisors.size();i++) {
+    denominator = denominator*divisors[i];
+  }
+  
+  
+  return reducible_correlation(cluster)/denominator;
+  
 }
 
 UInt CCE::get_truncation_order() const
 {
   return truncation_order_;
+}
+
+TimeEvolution CCE::calculate()
+{
+  TimeEvolution result(
+      csd_problem_.get_pulse_experiment()->get_time_array());
+  result.set_evolution_ones();
+  
+  for (UInt i=1; i<=truncation_order_;i++) {
+    for (UInt j=0;j<database_.num_clusters(i);j++) {
+      result = result*true_correlation(database_.get_cluster(j,i));
+    }
+  }
+  return result;
 }
 
 } // namespace SpinDec

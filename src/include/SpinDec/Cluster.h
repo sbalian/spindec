@@ -6,7 +6,7 @@
 // Contains labels for a cluster of spins.
 // Labels are always sorted in increasing order.
 //
-// Seto Balian, Aug 28, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/typedefs.h"
 

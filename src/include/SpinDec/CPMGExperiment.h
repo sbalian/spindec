@@ -5,7 +5,7 @@
 //
 // CPMG Pulse experiment. TODO Comment
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseExperiment.h"
@@ -26,8 +26,7 @@ public:
   CPMGExperiment();
   CPMGExperiment(const CPMG& cpmg,const TimeArray& time_array);
   
-  virtual TimeEvolution time_evolution(const double time,
-                                       const SpinState& initial_state);
+  virtual TimeEvolution time_evolution(const SpinState& initial_state);
   
   virtual std::auto_ptr<PulseExperiment> clone() const;
   

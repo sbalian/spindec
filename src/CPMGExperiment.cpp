@@ -1,5 +1,5 @@
 // See CPMGExperiment.h for description.
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/CPMGExperiment.h"
 #include "SpinDec/DensityOperator.h"
@@ -20,9 +20,7 @@ CPMGExperiment::CPMGExperiment(const CPMG& cpmg,
 
 }
 
-
-TimeEvolution CPMGExperiment::time_evolution(const double time,
-    const SpinState& initial_state)
+TimeEvolution CPMGExperiment::time_evolution(const SpinState& initial_state)
 {
   pulse_sequence_->set_initial_state(initial_state);
   

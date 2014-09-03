@@ -4,7 +4,7 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, Sep 02, 2014
+// Seto Balian, Sep 03, 2014
 
 #include <Eigen/Dense>
 

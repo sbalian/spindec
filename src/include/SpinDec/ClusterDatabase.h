@@ -8,7 +8,7 @@
 //
 // TODO comment more
 //
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -40,10 +40,6 @@ private:
   
   void init(const SpinBath& spin_bath, const UInt max_order);
   
-  const Cluster& get_cluster(const UInt order, const UInt index) const;
-  const TimeEvolution& get_time_evolution(const UInt order,
-      const UInt index) const;
-  bool is_solved(const UInt order, const UInt index) const;
   
   void set_time_evolution(const UInt order, const UInt index,
       const TimeEvolution& time_evolution);
@@ -73,6 +69,11 @@ public:
   void print() const;
   void print(const UInt order) const;
   void print(const UInt order, const UInt index) const;
+  
+  const Cluster& get_cluster(const UInt order, const UInt index) const;
+  const TimeEvolution& get_time_evolution(const UInt order,
+      const UInt index) const;
+  bool is_solved(const UInt order, const UInt index) const;
   
 };
 
