@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Aug 28, 2014
+# Seto Balian, Sep 3, 2014
 
 #####################
 # Basic user input
@@ -49,7 +49,9 @@ test_spinbasis\
 test_misc\
 test_evolution\
 test_crystalstructure\
-test_spindonor
+test_spindonor\
+test_evolution2\
+test_cce
 
 #####################
 # Targets
@@ -137,7 +139,8 @@ SpinSystem.o\
 SpinState.o\
 StringOptions.o\
 SpinSystemBase.o\
-options.o
+options.o\
+EvolutionOperator.o
 
 test_evolution: $(test_evolution_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
@@ -188,7 +191,8 @@ SpinState.o\
 SpinSystem.o\
 Eigenspectrum.o\
 HermitianEigenspectrum.o\
-options.o
+options.o\
+EvolutionOperator.o
 
 test_spindonor: $(test_spindonor_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
@@ -311,4 +315,5 @@ tidy:
 #try: $(ALL_SOURCE) $(ALL_HEADER)
 #	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c \
 #$(ALL_SOURCE)
+
 

@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Sep 3, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -84,13 +84,18 @@ int main ()
   combined_spin_system.set_state(combined_state);
   
   // Now set up the CPMG pulse sequence
+  
+  // Hahn spin echo decay
+  TimeArray time_array(0.0,1.0e3,10);
+
+  // TODO YOU ARE HERE
+  CPMGExperiment() 
+  
   CPMG pulse_sequence(1,lower_donor_level,upper_donor_level,donor,
       combined_spin_system);
   pulse_sequence.add_state_to_trace_out(si29_1.get_state());
   pulse_sequence.add_state_to_trace_out(si29_2.get_state());
   
-  // Hahn spin echo decay
-  TimeArray time_array(0.0,1.0e3,10);
   CDoubleArray L = pulse_sequence.decay_experiment(combined_state,time_array);
   
   TimeEvolution echo_vs_t(time_array,L);

@@ -5,7 +5,7 @@
 //
 // Abstract base class for general pulse sequence.
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"

@@ -12,7 +12,7 @@
 //   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
 //   > evolve, t/2n >pi-pulse, evolve, t/2n> measure
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequence.h"

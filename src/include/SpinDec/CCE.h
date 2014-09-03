@@ -15,7 +15,7 @@
 //
 // TODO Comment more
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 3, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CSDProblem.h"
@@ -40,20 +40,16 @@ private:
   
   TimeEvolution reducible_correlation(const Cluster& cluster);
   TimeEvolution true_correlation(const Cluster& cluster);
-  
-  vector<SpinSystem> reduced_problems_;
-  
-  const SpinSystem& get_reduced_problem(const UInt order) const;
 
 public:
   
   CCE();
-  CCE(const TimeArray& time_array,
-      const UInt truncation_order,
+  CCE(const UInt truncation_order,
       const CSDProblem& csd_problem);
   
   UInt get_truncation_order() const;
   
+  TimeEvolution calculate();
   
 };
 
