@@ -9,7 +9,7 @@
 // Analytical methods include energy levels, eigenstates and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 4, 2014
 
 #include "SpinDec/SpinSystem.h"
 
@@ -226,6 +226,10 @@ public:
   const SpinInteractionVertex& nuclear_vertex() const;
   
   const UIntArray get_orthogonal_level_labels() const;
+  
+  SpinState get_lower_level() const;
+  SpinState get_upper_level() const;
+  vector<SpinState> get_orthogonal_levels() const;
   
 };
 

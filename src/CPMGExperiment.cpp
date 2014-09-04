@@ -1,5 +1,5 @@
 // See CPMGExperiment.h for description.
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 4, 2014
 
 #include "SpinDec/CPMGExperiment.h"
 #include "SpinDec/DensityOperator.h"
@@ -35,11 +35,11 @@ TimeEvolution CPMGExperiment::time_evolution(const SpinState& initial_state)
     pulse_sequence_->update( time_array_.get_time(i) );
 
     SpinState final_state = pulse_sequence_->final_state();
-    
+
     DensityOperator density_operator(final_state,
         state0_,
         state1_);
-    
+        
     // off diagonal of reduced density matrix
     if (i==0) { // norm
       norm = density_operator.off_diagonal_reduced();
@@ -50,6 +50,8 @@ TimeEvolution CPMGExperiment::time_evolution(const SpinState& initial_state)
     
     
   }
+  
+  
   return TimeEvolution(time_array_,L);
   
 }

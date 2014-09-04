@@ -1,5 +1,5 @@
 // See PulseSequence.h for description.
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 4, 2014
 
 #include "SpinDec/PulseSequence.h"
 #include "SpinDec/Errors.h"
@@ -18,7 +18,7 @@ PulseSequence::PulseSequence(const SpinState& initial_state) : duration_(0.0)
 
 void PulseSequence::add_pulse(const Pulse& pulse)
 {
-  
+
   if (!pulse.get_pulse_operator().get_basis().is_equal(
       initial_state_.get_basis())) {
     Errors::quit("Invalid pulse operator basis.");
@@ -49,9 +49,10 @@ const SpinState& PulseSequence::get_initial_state() const
 SpinState PulseSequence::final_state() const
 {
   SpinState final_state = initial_state_;
-  for (UInt i=pulses_.size()-1;i>=0;i--) {
+  for (int i=pulses_.size()-1;i>=0;i--) {
     final_state = pulses_[i].get_pulse_operator()*final_state;
   }
+
   return final_state;
 }
 

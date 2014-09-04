@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Sep 4, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -62,8 +62,6 @@ int main ()
   SpinSystem spin_system(twocluster_graph,field);
   // Print eigenvalues
   spin_system.print('e');
-                                               // May 29, 2014 matches with
-                                               // legacyspindecoherence
   
   // Now set up initial states
   SpinState electron_state();
