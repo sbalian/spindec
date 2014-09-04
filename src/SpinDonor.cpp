@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Sep 4, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -565,6 +565,31 @@ const UIntArray SpinDonor::get_orthogonal_level_labels() const
 {
   return orthogonal_level_labels_;
 }
+
+SpinState SpinDonor::get_lower_level() const
+{
+  return eigenstate(transition_level_labels_[0]);
+}
+
+SpinState SpinDonor::get_upper_level() const
+{
+  return eigenstate(transition_level_labels_[0]);
+}
+
+vector<SpinState> SpinDonor::get_orthogonal_levels() const
+{
+  
+  vector<SpinState> orthogonal_levels;
+  
+  UIntArray orthogonal_level_labels = get_orthogonal_level_labels();
+  for (UInt i=0;i<orthogonal_level_labels.size();i++) {
+    orthogonal_levels.push_back(eigenstate(orthogonal_level_labels[i]));
+  }
+  
+  return orthogonal_levels;
+  
+}
+
 
 } // namespace SpinDec
 

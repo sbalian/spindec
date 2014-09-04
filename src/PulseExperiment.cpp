@@ -1,5 +1,5 @@
 // See PulseExperiment.h for description.
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 4, 2014
 
 #include "SpinDec/PulseExperiment.h"
 
@@ -13,6 +13,7 @@ PulseExperiment::PulseExperiment()
 PulseExperiment::PulseExperiment(
     const auto_ptr<PulseSequence>& pulse_sequence, const TimeArray& time_array)
 {
+  time_array_ = time_array;
   pulse_sequence_ = pulse_sequence->clone();
 }
 

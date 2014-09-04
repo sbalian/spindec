@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 4, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -61,9 +61,8 @@ int main ()
   SpinSystem combined_spin_system(graph,field);
   
   // Print the eigenvalues of the combined system
-  // Aug 1, 2014 matches with legacyspindecoherence (old code)
-  // combined_spin_system.print('e');
-  // exit(1);
+//   combined_spin_system.print('e');
+//   exit(1);
   
   // Now set the initial states
   
@@ -88,27 +87,18 @@ int main ()
   // Hahn spin echo decay
   TimeArray time_array(0.0,1.0e3,10);
 
-  // TODO YOU ARE HERE
-  CPMGExperiment() 
+  SpinState bath_state = si29_1.get_state()^si29_2.get_state();
+
+  CPMG cpmg(1,donor.get_lower_level(),donor.get_upper_level(),
+      donor.get_orthogonal_levels(),combined_state,bath_state,
+      combined_spin_system.evolution_operator(0.0));
   
-  CPMG pulse_sequence(1,lower_donor_level,upper_donor_level,donor,
-      combined_spin_system);
-  pulse_sequence.add_state_to_trace_out(si29_1.get_state());
-  pulse_sequence.add_state_to_trace_out(si29_2.get_state());
+  CPMGExperiment cpmg_experiment(cpmg,time_array);
   
-  CDoubleArray L = pulse_sequence.decay_experiment(combined_state,time_array);
-  
-  TimeEvolution echo_vs_t(time_array,L);
+  TimeEvolution echo_vs_t = cpmg_experiment.time_evolution(combined_state);
   
   // print to screen
   echo_vs_t.print_abs();
-  
-//  for (UInt i=0;i<L.size();i++) {
-//    cout << std::abs(L[i]) << endl;
-//  }
-  
-  // Aug 1, 2014 matches legacyspindecoherence (old code)
-  // TODO ... but for a noise not-so-much decay!
   
   return 0;
   
