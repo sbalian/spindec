@@ -1,7 +1,9 @@
-Seto Balian, Sep 2, 2014
+Seto Balian, Sep 5, 2014
 
 - IMPORTANT: UNDERSTAND ITERATORS
 - IMPORTANT: WHEN USING FIND, WHAT HAPPENS WHEN YOU SEARCH AND EMPTY VECTOR?!
+
+- Maybe use asserts etc try catch etc instead of Errors::
 
 - Better basis checks etc... also where to put eigenvalues and eigenvectors
   associated with operators? see EvolutionOperator, the eigenvalues and
