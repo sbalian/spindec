@@ -3,36 +3,31 @@
 
 // SpinDec::PulseExperiment
 //
-// Experiment with a pulse sequence. TODO Comment
+// Abstract base class for a pulse sequence experiment.
 //
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
-#include "SpinDec/PulseSequence.h"
-#include "SpinDec/TimeEvolution.h"
 #include "SpinDec/TimeArray.h"
+#include "SpinDec/CSDProblem.h"
+#include "SpinDec/TimeEvolution.h"
 
 namespace SpinDec
 {
 
 class PulseExperiment
 {
-  
 protected:
   
-  std::auto_ptr<PulseSequence> pulse_sequence_;
+  CSDProblem csd_problem_;
   TimeArray time_array_;
   
 public:
   PulseExperiment();
-
-  PulseExperiment(const PulseExperiment& other);
-  PulseExperiment& operator=( const PulseExperiment& other);
-
-  PulseExperiment(const auto_ptr<PulseSequence>& pulse_sequence,
+  PulseExperiment(const CSDProblem& csd_problem,
       const TimeArray& time_array);
   
-  virtual TimeEvolution time_evolution(const SpinState& initial_state) = 0;
+  virtual TimeEvolution time_evolution(const UIntArray bath_indices) = 0;
   
   virtual std::auto_ptr<PulseExperiment> clone() const = 0;
   

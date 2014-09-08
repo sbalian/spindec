@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -17,8 +17,9 @@
 #include "SpinDec/SpinState.h"
 #include "SpinDec/EvolutionOperator.h"
 
+#include "SpinDec/PiPulse.h"
 
-#include <memory>
+#include "SpinDec/TwoStateSuperposition.h"
 
 namespace SpinDec
 {
@@ -77,6 +78,12 @@ public:
   void print(const char option);
   
   virtual std::auto_ptr<SpinSystemBase> clone() const = 0;
+  
+  virtual PiPulse pi_pulse(const UInt level_label1,
+      const UInt level_label2) const;
+  
+  TwoStateSuperposition superposition(const CDouble& c0,
+      const UInt level_label0,const CDouble& c1, const UInt level_label1) const;
   
   virtual ~SpinSystemBase();
   

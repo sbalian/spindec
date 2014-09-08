@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Sep 4, 2014
+// Seto Balian, Sep 8, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -395,15 +395,8 @@ void SpinDonor::set_transition(const UInt lower_level_label,
   transition_level_labels_[0] = lower_level_label;
   transition_level_labels_[1] = upper_level_label;
     
-  UInt orthogonal_level_to_set = orthogonal_level_label(lower_level_label);
-  if (orthogonal_level_to_set != lower_level_label) {
-    orthogonal_level_labels_.push_back(orthogonal_level_to_set);
-  }
   
-  orthogonal_level_to_set = orthogonal_level_label(upper_level_label);
-  if (orthogonal_level_to_set != upper_level_label) {
-    orthogonal_level_labels_.push_back(orthogonal_level_to_set);
-  }
+  set_orthogonal_level_labels(lower_level_label,upper_level_label);
   
   return;
   
@@ -576,6 +569,42 @@ SpinState SpinDonor::get_upper_level() const
   return eigenstate(transition_level_labels_[0]);
 }
 
+UIntArray SpinDonor::get_orthogonal_level_labels(const UInt lower_level_label,
+    const UInt upper_level_label) const
+{
+  
+  UIntArray out;
+  
+  UInt to_set = orthogonal_level_label(lower_level_label);
+  if (to_set != lower_level_label) {
+    out.push_back(to_set);
+  }
+  
+  to_set = orthogonal_level_label(upper_level_label);
+  
+  if (out.size() == 1) {
+    if (to_set == out[0]) {
+      return out;
+    }
+  }
+  
+  if (to_set != upper_level_label) {
+    out.push_back(to_set);
+  }
+  
+  // TODO How about the empty case if any? Check ...
+  
+  return out;
+  
+}
+
+void SpinDonor::set_orthogonal_level_labels(
+    const UInt lower_level_label, const UInt upper_level_label)
+{
+  orthogonal_level_labels_ = get_orthogonal_level_labels(lower_level_label,
+      upper_level_label);
+}
+
 vector<SpinState> SpinDonor::get_orthogonal_levels() const
 {
   
@@ -590,6 +619,22 @@ vector<SpinState> SpinDonor::get_orthogonal_levels() const
   
 }
 
+PiPulse SpinDonor::pi_pulse(const UInt level_label1,
+    const UInt level_label2) const
+{
+  SpinState level1 = eigenstate(level_label1);
+  SpinState level2 = eigenstate(level_label2);
+  
+  UIntArray other_labels;
+  other_labels = get_orthogonal_level_labels(level_label1,level_label2);
+  
+  vector<SpinState> other_levels;
+  for (UInt i=0;i<other_labels.size();i++) {
+    other_levels.push_back(eigenstate(other_labels[i]));
+  }
+  
+  return PiPulse(level1,level2,other_levels);
+  
+}
 
 } // namespace SpinDec
-

@@ -8,7 +8,7 @@
 //
 // TODO Comment more
 //
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -16,7 +16,6 @@
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/UniformMagneticField.h"
 #include "SpinDec/SpinInteractionEdge.h"
-#include "SpinDec/PulseExperiment.h"
 
 namespace SpinDec
 {
@@ -29,9 +28,7 @@ private:
   SpinBath spin_bath_;
   
   UniformMagneticField field_;
-  
-  auto_ptr<PulseExperiment> pulse_experiment_;
-  
+    
   // Edges should comply as in the join methods for SpinInteractionGraph,
   // with the first graph being the central spin graph and the second being
   // the graph for a single bath system.
@@ -40,8 +37,7 @@ private:
   void init(const auto_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const vector<SpinInteractionEdge>& system_bath_edges,
-      const UniformMagneticField& field,
-      const auto_ptr<PulseExperiment> & pulse_experiment);
+      const UniformMagneticField& field);
   
   vector<SpinInteractionEdge> make_system_bath_edges(const UInt order,
       const SpinInteractionEdge& edge) const;
@@ -55,31 +51,21 @@ private:
 
 public:
   
-  
   CSDProblem();
   CSDProblem(const auto_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const vector<SpinInteractionEdge>& system_bath_edges,
-      const UniformMagneticField& field,
-      const auto_ptr<PulseExperiment> & pulse_experiment);
+      const UniformMagneticField& field);
   CSDProblem(const auto_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const SpinInteractionEdge& system_bath_edge,
-      const UniformMagneticField& field,
-      const auto_ptr<PulseExperiment> & pulse_experiment);
+      const UniformMagneticField& field);
   
-  CSDProblem(const CSDProblem& other);
-  CSDProblem& operator=( const CSDProblem& other);
-
   SpinSystem get_reduced_problem(const UIntArray bath_indices);
 
   const SpinBath& get_spin_bath() const;
   const SpinSystem& get_central_spin_system() const;
-  
-  TimeEvolution time_evolution(const SpinSystem& reduced_problem);
-  
-  auto_ptr<PulseExperiment> get_pulse_experiment() const;
-
+    
 };
 
 } // namespace SpinDec

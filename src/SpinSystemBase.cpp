@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -101,6 +101,37 @@ const ComplexMatrix SpinSystemBase::get_eigenvector_matrix() const
 const RealVector SpinSystemBase::get_eigenvalue_vector() const
 {
   return energies_;
+}
+
+PiPulse SpinSystemBase::pi_pulse(const UInt level_label1,
+    const UInt level_label2) const
+{
+  SpinState level1 = eigenstate(level_label1);
+  SpinState level2 = eigenstate(level_label2);
+  
+  vector<SpinState> other_states;
+  for (UInt i=0;i<dimension();i++) {
+    
+    if (i == level_label1) {
+      continue;
+    }
+    if (i == level_label2) {
+      continue;
+    }
+    
+    other_states.push_back(eigenstate(i));
+    
+  }
+  
+  return PiPulse(level1,level2,other_states);
+  
+}
+
+TwoStateSuperposition SpinSystemBase::superposition(const CDouble& c0,
+    const UInt level_label0, const CDouble& c1, const UInt level_label1) const
+{
+  return TwoStateSuperposition(c0,eigenstate(level_label0),
+                               c1,eigenstate(level_label1));
 }
 
 SpinSystemBase::~SpinSystemBase()

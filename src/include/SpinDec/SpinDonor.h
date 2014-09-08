@@ -9,7 +9,9 @@
 // Analytical methods include energy levels, eigenstates and polarization
 // obtained from Phys. Rev. Lett. 105, 067602 (2010).
 //
-// Seto Balian, Sep 4, 2014
+// TODO confusing names ...
+//
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/SpinSystem.h"
 
@@ -169,6 +171,11 @@ private:
       const UInt upper_level_label);
   // Also sets orthogonal levels if they exist
   
+  void set_orthogonal_level_labels(const UInt lower_level_label,
+      const UInt upper_level_label);
+  UIntArray get_orthogonal_level_labels(const UInt lower_level_label,
+      const UInt upper_level_label) const;
+  
   // Given |+/-,m>, returns |-/+,m>.
   // If |-/+,m> does not exist (m = |M|), returns the input.
   // This method takes and outputs integer energy level inputs
@@ -230,6 +237,9 @@ public:
   SpinState get_lower_level() const;
   SpinState get_upper_level() const;
   vector<SpinState> get_orthogonal_levels() const;
+  
+  virtual PiPulse pi_pulse(const UInt level_label1,
+      const UInt level_label2) const;
   
 };
 
