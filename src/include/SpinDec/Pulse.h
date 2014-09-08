@@ -6,7 +6,7 @@
 // Pulses in a pulse sequence.
 // Includes the no-pulse free evolution.
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"
@@ -29,6 +29,8 @@ public:
   
   const SpinOperator& get_pulse_operator() const;
   double get_duration() const;
+  
+  Pulse operator*(const Pulse& pulse) const;
   
 };
 

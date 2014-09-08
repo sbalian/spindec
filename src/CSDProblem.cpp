@@ -1,5 +1,5 @@
 // See CSDProblem.h for description.
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"
@@ -11,8 +11,7 @@ void CSDProblem::init(
     const auto_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath,
     const vector<SpinInteractionEdge>& system_bath_edges,
-    const UniformMagneticField& field,
-    const auto_ptr<PulseExperiment> & pulse_experiment)
+    const UniformMagneticField& field)
 {
   
   // Central spin system
@@ -30,8 +29,6 @@ void CSDProblem::init(
   // System-bath interaction
   system_bath_edges_ = system_bath_edges;
   
-  // Pulse experiment
-  pulse_experiment_ = pulse_experiment->clone();
   return;
   
 }
@@ -95,21 +92,19 @@ CSDProblem::CSDProblem(
     const auto_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath,
     const vector<SpinInteractionEdge>& system_bath_edges,
-    const UniformMagneticField& field,
-    const auto_ptr<PulseExperiment> & pulse_experiment)
+    const UniformMagneticField& field)
 {
   init(central_spin_system_base,
     spin_bath,
     system_bath_edges,
-    field,pulse_experiment);
+    field);
 
 }
 
 CSDProblem::CSDProblem(
     const auto_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath, const SpinInteractionEdge& system_bath_edge,
-    const UniformMagneticField& field,
-    const auto_ptr<PulseExperiment> & pulse_experiment)
+    const UniformMagneticField& field)
 {
   
   vector<SpinInteractionEdge> system_bath_edges;
@@ -117,7 +112,7 @@ CSDProblem::CSDProblem(
   init(central_spin_system_base,
     spin_bath,
     system_bath_edges,
-    field,pulse_experiment);
+    field);
   
 }
 
@@ -235,32 +230,6 @@ UIntArray CSDProblem::get_bath_vertex_labels(const UInt order) const
   
   return labels;
   
-}
-
-TimeEvolution CSDProblem::time_evolution(const SpinSystem& reduced_problem)
-{
-  return pulse_experiment_->time_evolution(reduced_problem.get_state());
-}
-
-CSDProblem& CSDProblem::operator =(const CSDProblem& other)
-{
-   central_spin_system_=other.central_spin_system_;
-   spin_bath_=other.spin_bath_;
-   field_=other.field_;
-   pulse_experiment_= other.pulse_experiment_->clone();
-   system_bath_edges_=other.system_bath_edges_;
-   reduced_problems_=other.reduced_problems_;
-   return *this;
-}
-
-SpinDec::CSDProblem::CSDProblem(const CSDProblem& other)
-{
-  *this = other;
-}
-
-auto_ptr<PulseExperiment> CSDProblem::get_pulse_experiment() const
-{
-  return pulse_experiment_->clone();
 }
 
 

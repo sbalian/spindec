@@ -3,46 +3,27 @@
 
 // SpinDec::PulseSequence
 //
-// Abstract base class for general pulse sequence.
+// Concrete general pulse sequence.
 //
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
-#include "SpinDec/SpinState.h"
-#include "SpinDec/Pulse.h"
+#include "SpinDec/PulseSequenceBase.h"
 
 namespace SpinDec
 {
 
-class PulseSequence
+class PulseSequence : public PulseSequenceBase
 {
-protected:
-  
-  SpinState initial_state_;
-
-  vector<Pulse> pulses_;
-  double duration_;
 
 public:
   
   PulseSequence();
   
-  explicit PulseSequence(const SpinState& initial_state);
-  
+  void clear();
   void add_pulse(const Pulse& pulse);
-  void set_initial_state(const SpinState& initial_state);
   
-  const SpinState& get_initial_state() const;
-  SpinState final_state() const;
-  SpinState final_state(const SpinState& initial_state);
-  
-  double get_duration() const;
-  
-  virtual void update(const double time) = 0;
-  
-  virtual std::auto_ptr<PulseSequence> clone() const = 0;
-  
-  virtual ~PulseSequence();
+  virtual auto_ptr<PulseSequenceBase> clone() const;
   
 };
 

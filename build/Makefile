@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Sep 4, 2014
+# Seto Balian, Sep 8, 2014
 
 #####################
 # Basic user input

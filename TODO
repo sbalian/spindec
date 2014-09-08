@@ -1,4 +1,14 @@
-Seto Balian, Sep 5, 2014
+Seto Balian, Sep 8, 2014
+
+- Comment all code properly ...
+- operator overloading arithmetic speedup eg spin operator multiply
+
+- pi_pulse methods with no arguments to spin system classes?
+- For SpinDonor, distinguish the transition orthogonal levels from
+  other orthogonal levels ...
+
+- Eclipse on Mac warnings and Xcode warning about "no viable constructor"
+- Eclipse ! mark about candidate constructor
 
 - IMPORTANT: UNDERSTAND ITERATORS
 - IMPORTANT: WHEN USING FIND, WHAT HAPPENS WHEN YOU SEARCH AND EMPTY VECTOR?!

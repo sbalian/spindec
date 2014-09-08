@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/SpinState.h"
 #include "SpinDec/BoostEigen.h"
@@ -124,6 +124,9 @@ std::auto_ptr<MatrixRepresentation> SpinState::clone() const
   return std::auto_ptr<MatrixRepresentation>( new SpinState(*this) );
 }
 
+SpinState SpinState::operator *(const CDouble& c) const
+{
+  return SpinState(get_state_vector()*c,get_basis());
 }
- // namespace SpinDec
 
+} // namespace SpinDec

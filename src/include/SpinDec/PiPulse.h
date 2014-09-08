@@ -6,7 +6,7 @@
 // Pi (refocusing) pulse.
 // [ |0X1| + |1X0| ]
 //
-// Seto Balian, Sep 2, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Pulse.h"
@@ -21,11 +21,8 @@ public:
   // instantaneous
   PiPulse(const SpinState & state0, const SpinState & state1);
   PiPulse(const SpinState & state0, const SpinState & state1,
-      const SpinState& unaffected_state);
-  PiPulse(const SpinState & state0, const SpinState & state1,
-      const vector<SpinState> states2_plus,
+      const vector<SpinState>& states2_plus);
       // these just add |nXn| for n=2,3,...
-      const SpinState& unaffected_state);
   
 };
 
