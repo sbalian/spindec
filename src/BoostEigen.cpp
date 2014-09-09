@@ -45,9 +45,10 @@ ComplexMatrix BoostEigen::tensorProduct(const ComplexMatrix & A,
 ComplexVector BoostEigen::tensorProduct(const ComplexVector & a,
                                                   const ComplexVector & b)
 {
+
   // output
   ComplexVector product(a.rows()*b.rows());
-  
+
   // consistently with other methods
   unsigned int k = 0;
   for (unsigned int i=0;i<a.rows();i++) {
@@ -56,6 +57,7 @@ ComplexVector BoostEigen::tensorProduct(const ComplexVector & a,
       k += 1;
     }
   }
+
   return product;
 }
 

@@ -2,8 +2,9 @@
 #
 # Updates SpinDec base.h
 # Has to be in path SpinDec:src/include/SpinDec/
+# Does not work on Mac
 #
-# Seto Balian 24/03/2014
+# Seto Balian 08/10/2014
 
 # Write part 1 of base.h
 echo "#ifndef BASE_H_" >> temp1

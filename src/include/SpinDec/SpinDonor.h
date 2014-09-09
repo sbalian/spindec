@@ -11,7 +11,7 @@
 //
 // TODO confusing names ...
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 9, 2014
 
 #include "SpinDec/SpinSystem.h"
 
@@ -240,6 +240,8 @@ public:
   
   virtual PiPulse pi_pulse(const UInt level_label1,
       const UInt level_label2) const;
+  
+  virtual auto_ptr<SpinSystemBase> clone() const;
   
 };
 

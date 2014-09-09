@@ -33,5 +33,14 @@ Pulse Pulse::operator *(const Pulse& pulse) const
       + pulse.get_pulse_operator()) ;
 }
 
+Pulse SpinDec::Pulse::operator ^(const Pulse& pulse) const
+{
+  if (!(get_duration() == pulse.get_duration())) {
+    Errors::quit("Pulse durations must be equal.");
+  }
+  return Pulse(get_duration(),get_pulse_operator()^pulse.get_pulse_operator());
+}
+
+
 } // namespace SpinDec
 

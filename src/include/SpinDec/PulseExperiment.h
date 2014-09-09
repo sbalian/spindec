@@ -32,6 +32,7 @@ public:
   virtual std::auto_ptr<PulseExperiment> clone() const = 0;
   
   const TimeArray& get_time_array() const;
+  const CSDProblem& get_csd_problem() const;
   
   virtual ~PulseExperiment();
   

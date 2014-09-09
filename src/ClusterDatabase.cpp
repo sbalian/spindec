@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 9, 2014
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -20,15 +20,15 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
   
   // make 1-clusters (clusters of order 1, ie 1 bath spin system)
   
-  vector<Cluster> one_clusters;
+  //vector<Cluster> one_clusters;
   
   for (UInt i=0;i<num_sites;i++) {
     Cluster cluster;
     cluster.add(i);
-    one_clusters.push_back(cluster);
+    add_cluster(cluster);
   }
   
-  clusters_.push_back(one_clusters);
+  //clusters_.push_back(one_clusters);
   
   if (max_order == 1) {
     return;
@@ -36,7 +36,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
   
   // make 2-clusters
   
-  vector<Cluster> two_clusters;
+  //vector<Cluster> two_clusters;
   vector < std::pair<UInt,UInt> > pair_labels;
   
   // pairs of sites
@@ -66,10 +66,10 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
     Cluster cluster;
     cluster.add(pair_labels[i].first);
     cluster.add(pair_labels[i].second); // inefficient add method sorting ...
-    two_clusters.push_back(cluster);
+    add_cluster(cluster);
   }
 
-  clusters_.push_back(two_clusters);
+  //clusters_.push_back(two_clusters);
   
   if (max_order == 2) {
     return;
@@ -84,7 +84,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
   // loop over cce orders (exclude 2-clusters - already added)
   for (UInt i=3;i<=max_order;i++) {
     // current order to add
-    vector<Cluster> n_clusters;
+    //vector<Cluster> n_clusters;
     
     UInt prev_order = i - 1;
     UInt num_prev_clusters = num_clusters(prev_order);
@@ -159,7 +159,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
 //            cout << i << endl;
             // TODO Warning, maybe sorting inefficiency here ...
             Cluster new_cluster(new_spin_labels);
-            n_clusters.push_back(new_cluster);
+            add_cluster(new_cluster);
             
             // now get the subsets of this current cluster
             
@@ -174,7 +174,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
               Cluster sub_cluster = sub_clusters[l];
 
               if  (!exists(sub_cluster)) {
-                clusters_[sub_order-1].push_back(sub_cluster);
+                add_cluster(sub_cluster);
               }
             }
           }
@@ -185,7 +185,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
         }
         
       }
-      clusters_.push_back(n_clusters);
+      //clusters_.push_back(n_clusters);
     }
   
   return;
@@ -223,12 +223,41 @@ bool ClusterDatabase::is_solved(const UInt order,
   return is_solved_[order-1][index];
 }
 
+// TODO may be slow, also comment and explain the order of filling ...
 void ClusterDatabase::add_cluster(const Cluster& cluster)
 {
+  
   const UInt order = cluster.num_spins();
-  clusters_[order-1].push_back(cluster);
-  time_evolutions_[order-1].push_back(TimeEvolution());
-  is_solved_[order-1].push_back(false);
+  
+  if (order == 0) {
+    Errors::quit("Can't have zero cluster order.");
+  }
+  
+  if (order > max_order() + 1) {
+    Errors::quit("Fill smaller clusters first.");
+  }
+  
+  if (order == max_order() + 1) {
+    vector<Cluster> clusters;
+    vector<TimeEvolution> time_evolutions;
+    vector<bool> bool_vec;
+    
+    clusters_.push_back(clusters);
+    time_evolutions_.push_back(time_evolutions);
+    is_solved_.push_back(bool_vec);
+    
+    clusters_[order-1].push_back(cluster);
+    time_evolutions_[order-1].push_back(TimeEvolution());
+    is_solved_[order-1].push_back(false);
+  
+  }
+
+  if (order <= max_order()) {
+    clusters_[order-1].push_back(cluster);
+    time_evolutions_[order-1].push_back(TimeEvolution());
+    is_solved_[order-1].push_back(false);
+  }
+  
   return;
 }
 

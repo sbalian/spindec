@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Sep 9, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/Errors.h"
@@ -184,7 +184,7 @@ SpinBasis SpinBasis::operator^(const SpinBasis & to_combine) const
         l+=1;
       }
   }
-    
+
   // return SpinBasis with new basis
   Eigen::ArrayXXd basis_out(num_basis_states_C,new_num_spins);
   basis_out << expanded_basis_A, new_columns_B; // join  

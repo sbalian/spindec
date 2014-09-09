@@ -17,8 +17,7 @@ void CSDProblem::init(
   // Central spin system
   
   // TODO again, rediagonalization ...
-  central_spin_system_ = SpinSystem(central_spin_system_base->get_graph(),
-      central_spin_system_base->get_field());
+  central_spin_system_ = central_spin_system_base->clone();
   
   // Spin bath
   spin_bath_ = spin_bath;
@@ -49,7 +48,7 @@ vector<SpinInteractionEdge> CSDProblem::make_system_bath_edges(
   vector< std::pair<UInt,UInt> > pairs;
   
   const UInt num_vertices =
-      spin_bath_.get_spin_system().get_graph().num_vertices();
+      spin_bath_.get_spin_system()->get_graph().num_vertices();
   
   for (UInt i=1;i<=order;i++) {
     pairs.push_back(std::pair<UInt,UInt>( a , b + (i-1)*num_vertices ));
@@ -126,7 +125,7 @@ SpinSystem CSDProblem::construct_reduced_problem(const UInt order) const
       spin_bath_.reduced_problem_graph(order);
   
   SpinInteractionGraph system_graph =
-      central_spin_system_.get_graph();
+      central_spin_system_->get_graph();
   
   SpinInteractionGraph system_bath_graph =
       system_graph.join(bath_graph);
@@ -144,15 +143,37 @@ const SpinBath& CSDProblem::get_spin_bath() const
   return spin_bath_;
 }
 
-const SpinSystem& CSDProblem::get_central_spin_system() const
+CSDProblem::CSDProblem(const CSDProblem& csd_problem)
 {
-  return central_spin_system_;
+  *this = csd_problem;
+}
+
+CSDProblem& CSDProblem::operator =(const CSDProblem& csd_problem)
+{
+
+  central_spin_system_ = csd_problem.central_spin_system_->clone();
+  spin_bath_ = csd_problem.spin_bath_;
+  field_ = csd_problem.field_;
+  system_bath_edges_ = csd_problem.system_bath_edges_;
+  reduced_problems_ = csd_problem.reduced_problems_;
+  return *this;
+
+}
+
+void CSDProblem::set_central_spin_state(const SpinState& spin_state) const
+{
+  central_spin_system_->set_state(spin_state);
+}
+
+auto_ptr<SpinSystemBase> CSDProblem::get_central_spin_system() const
+{
+  return central_spin_system_->clone();
 }
 
 SpinSystem CSDProblem::get_reduced_problem(
     const UIntArray bath_indices)
 {
-  
+
   const UInt order = bath_indices.size();
   if (order == 0) {
     Errors::quit("Order must be +ve non-zero integer.");
@@ -190,8 +211,8 @@ SpinSystem CSDProblem::get_reduced_problem(
       get_bath_vertex_labels(order);
   // get the number of bath vertices
   UInt num_bath_vertices =
-      get_spin_bath().get_spin_system().get_graph().num_vertices();
-  
+      get_spin_bath().get_spin_system()->get_graph().num_vertices();
+
   // new positions
   vector<ThreeVector> positions;
   for (UInt i=0;i<order;i++) {
@@ -201,15 +222,18 @@ SpinSystem CSDProblem::get_reduced_problem(
   }
   for (UInt i=0;i<bath_vertex_labels.size();i++) {
     positions[i]+=
-     get_spin_bath().get_spin_system().get_graph().get_position(i);
+     get_spin_bath().get_spin_system()->get_graph().get_position(i);
   }
-  spin_system.update_positions(bath_vertex_labels,positions);
 
+  spin_system.update_positions(bath_vertex_labels,positions);
+  
+  //cout << get_central_spin_system()->get_state().get_basis() << endl;
+  
   // set the initial state
   // TODO this needs checking ...
-  spin_system.set_state(get_central_spin_system().get_state()
+  spin_system.set_state(get_central_spin_system()->get_state()
       ^get_spin_bath().get_state(bath_indices));
-  
+
   // TODO all this needs thorough checking ...
   return spin_system;
   
@@ -220,9 +244,9 @@ UIntArray CSDProblem::get_bath_vertex_labels(const UInt order) const
   
   UIntArray labels;
   const UInt n_b = 
-      spin_bath_.get_spin_system().get_graph().num_vertices();
+      spin_bath_.get_spin_system()->get_graph().num_vertices();
   const UInt n_c = 
-      central_spin_system_.get_graph().num_vertices();
+      central_spin_system_->get_graph().num_vertices();
   
   for (UInt i=n_c;i<=(n_c + order*n_b - 1);i++) {
     labels.push_back(i);

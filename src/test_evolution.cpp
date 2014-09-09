@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 4, 2014
+// Seto Balian, Sep 9, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -62,9 +62,6 @@ int main ()
   SpinSystem spin_system(twocluster_graph,field);
   // Print eigenvalues
   spin_system.print('e');
-  
-  // Now set up initial states
-  SpinState electron_state();
   
   return 0;
 }

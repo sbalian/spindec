@@ -1,5 +1,5 @@
 // See SpinState.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 9, 2014
 
 #include "SpinDec/SpinState.h"
 #include "SpinDec/BoostEigen.h"
@@ -39,6 +39,7 @@ void SpinState::set_state_vector(const ComplexVector & state_vector)
 
 SpinState SpinState::operator^(const SpinState & rhs) const
 {
+  
   return SpinState( BoostEigen::tensorProduct(get_state_vector(),
                                               rhs.get_state_vector()) ,
       get_basis()^(rhs.get_basis()) );

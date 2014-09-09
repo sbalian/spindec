@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 9, 2014
 
 #include "SpinDec/CCE.h"
 
@@ -10,30 +10,29 @@ CCE::CCE() : truncation_order_(0)
 {
 }
 
-CCE::CCE(const UInt truncation_order, const CSDProblem& csd_problem) :
+CCE::CCE(const UInt truncation_order,
+    const auto_ptr<PulseExperiment>& pulse_experiment) :
     truncation_order_(truncation_order),
-    csd_problem_(csd_problem)
+    pulse_experiment_(pulse_experiment->clone())
 {
-  database_ = ClusterDatabase(csd_problem_.get_spin_bath(),truncation_order_);
+
+  database_ = ClusterDatabase(pulse_experiment->
+      get_csd_problem().get_spin_bath(),truncation_order_);
+
 }
 
 TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
 {
-  
+
   // if already calculated, return the calculated evolution
   if ( database_.is_solved(cluster) ) {
     return database_.get_time_evolution(cluster);
   }
-  
-  // otherwise, calculate the reduced problem
-    
-  // get the reduced problem
-  SpinSystem reduced_problem = csd_problem_.get_reduced_problem(
-      cluster.get_labels());
-  
-  // calculate the experiment
-  TimeEvolution evolution = csd_problem_.get_pulse_experiment()
-          ->time_evolution(reduced_problem.get_state());
+
+  // otherwise, calculate
+
+  TimeEvolution evolution =
+      pulse_experiment_->time_evolution(cluster.get_labels());
   
   // store result in database
   database_.set_time_evolution(cluster,evolution);
@@ -48,6 +47,7 @@ TimeEvolution CCE::true_correlation(const Cluster& cluster)
   
   const UInt current_order = cluster.num_spins();
   
+
   if (current_order == 1) {
     return reducible_correlation(cluster);
   }
@@ -60,7 +60,7 @@ TimeEvolution CCE::true_correlation(const Cluster& cluster)
     divisors.push_back(
         reducible_correlation(current_subclusters[i]) );
   }
-  
+
   TimeEvolution denominator = divisors[0];
   for (UInt i=1;i<divisors.size();i++) {
     denominator = denominator*divisors[i];
@@ -78,15 +78,21 @@ UInt CCE::get_truncation_order() const
 
 TimeEvolution CCE::calculate()
 {
+
   TimeEvolution result(
-      csd_problem_.get_pulse_experiment()->get_time_array());
+      pulse_experiment_->get_time_array());
   result.set_evolution_ones();
   
   for (UInt i=1; i<=truncation_order_;i++) {
+
     for (UInt j=0;j<database_.num_clusters(i);j++) {
-      result = result*true_correlation(database_.get_cluster(j,i));
+
+      result = result*true_correlation(database_.get_cluster(i,j));
+
     }
+    
   }
+
   return result;
 }
 

@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -16,19 +16,18 @@ void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
 {
   // Save spin system base as a spin system
   // TODO rediagonalization here ...
-  spin_system_ = SpinSystem(spin_system_base->get_graph(),
-      spin_system_base->get_field());
+  spin_system_ = spin_system_base->clone();
   
   // Prepare bath states
-  UInt dimension = spin_system_base->get_hamiltonian().get_dimension();
+  UInt dimension = spin_system_->get_hamiltonian().get_dimension();
   
   for (UInt i=0;i<crystal_structure.num_site_vectors();i++) {
     UInt random_number = 
         RandomNumberGenerator::uniform_c_rand(0,dimension-1);
     
     SpinState to_add(
-        spin_system_base->get_eigenvector_matrix().col(random_number),
-        spin_system_base->get_hamiltonian().get_basis());
+        spin_system_->get_eigenvector_matrix().col(random_number),
+        spin_system_->get_hamiltonian().get_basis());
     
     states_.push_back(to_add);
     
@@ -96,9 +95,9 @@ const vector<SpinInteractionEdge>& SpinBath::get_intrabath_edges() const
   return intrabath_edges_;
 }
 
-const SpinSystem& SpinBath::get_spin_system() const
+auto_ptr<SpinSystemBase> SpinBath::get_spin_system() const
 {
-  return spin_system_;
+  return spin_system_->clone();
 }
 
 
@@ -107,7 +106,7 @@ ThreeVector SpinDec::SpinBath::get_position(const UInt vertex_label,
 {
   // TODO make sure this does not involve bad inits/values for positions ...
   return crystal_structure_.get_site_vector(index) +
-      spin_system_.get_graph().get_position(vertex_label);
+      spin_system_->get_graph().get_position(vertex_label);
 }
 
 vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
@@ -138,7 +137,7 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
   labels.push_back(b);
   
   // order above 2
-  const UInt num_vertices = spin_system_.get_graph().num_vertices();
+  const UInt num_vertices = spin_system_->get_graph().num_vertices();
 
   for (UInt i=3;i<=order;i++) {
     labels.push_back(a+(i-2)*num_vertices);
@@ -194,7 +193,7 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
     Errors::quit("Order must be +ve non-zero integer.");
   }
   
-  SpinInteractionGraph single_system_graph = spin_system_.get_graph();
+  SpinInteractionGraph single_system_graph = spin_system_->get_graph();
   SpinInteractionGraph graph;
   
   graph = single_system_graph;
@@ -216,6 +215,24 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
 double SpinBath::get_pairing_cutoff() const
 {
   return pairing_cutoff_;
+}
+
+SpinBath::SpinBath(const SpinBath& spin_bath)
+{
+  *this = spin_bath;
+}
+
+SpinBath& SpinBath::operator =(const SpinBath& spin_bath)
+{
+
+  states_ = spin_bath.states_;
+  spin_system_ = spin_bath.spin_system_->clone();
+  intrabath_edges_ = spin_bath.intrabath_edges_;
+  crystal_structure_ = spin_bath.crystal_structure_;
+  pairing_cutoff_ = spin_bath.pairing_cutoff_;
+
+  return *this;
+
 }
 
 

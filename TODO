@@ -1,5 +1,21 @@
-Seto Balian, Sep 8, 2014
+Seto Balian, Sep 9, 2014
 
+- needs testing and polishing before release
+
+- namespace pollution
+- Better "make" system. CMake?
+- Also build into library and binaries
+
+- Don't do multiple clones for auto_ptrs
+
+- Change MatrixRepresentation name ... Hilbert space class?
+
+- See all Mac warnings
+- '!' logical brackets!!!, try to avoid '!'
+- Better error handling and error messages
+- Make sure using spin system base when meaning to!eg spin donor properties
+  may be lost!!! also rename spin system -> spin system bases where applicable,
+  have auto ptr convention? maybe typedefs? how about a smart pointer template?
 - Comment all code properly ...
 - operator overloading arithmetic speedup eg spin operator multiply
 

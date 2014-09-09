@@ -27,5 +27,10 @@ PulseExperiment::~PulseExperiment()
 }
 
 
-} // namespace SpinDec
+const CSDProblem& SpinDec::PulseExperiment::get_csd_problem() const
+{
+  return csd_problem_;
+}
 
+
+} // namespace SpinDec

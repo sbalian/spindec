@@ -1,5 +1,5 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Sep 9, 2014
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"
@@ -82,7 +82,7 @@ void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
   
   // convert fractional abundance to parts per million
   const unsigned int abundance_ppm =
-      static_cast<unsigned int>(fractional_abundance)*1000000;
+      static_cast<unsigned int>(fractional_abundance*1000000);
   
   // warn if no site vectors
   if (abundance_ppm == 0) {

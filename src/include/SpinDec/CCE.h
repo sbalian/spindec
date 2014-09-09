@@ -14,11 +14,11 @@
 // - Phys. Rev. B 86, 035452 (2012)
 //
 // TODO Comment more
+// TODO have experiment instead of pulse experiment?
 //
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
-#include "SpinDec/CSDProblem.h"
 #include "SpinDec/ClusterDatabase.h"
 #include "SpinDec/PulseExperiment.h"
 #include "SpinDec/TimeEvolution.h"
@@ -34,7 +34,7 @@ private:
   
   UInt truncation_order_;
 
-  CSDProblem csd_problem_;
+  auto_ptr<PulseExperiment> pulse_experiment_;
   
   ClusterDatabase database_;
   
@@ -45,7 +45,7 @@ public:
   
   CCE();
   CCE(const UInt truncation_order,
-      const CSDProblem& csd_problem);
+      const auto_ptr<PulseExperiment>& pulse_experiment);
   
   UInt get_truncation_order() const;
   
