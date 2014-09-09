@@ -4,7 +4,7 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, Sep 03, 2014
+// Seto Balian, Sep 09, 2014
 
 #include <Eigen/Dense>
 
@@ -12,7 +12,7 @@
 #include "SpinDec/BoostEigen.h"
 #include "SpinDec/CCE.h"
 #include "SpinDec/CPMG.h"
-#include "SpinDec/CPMGExperiment.h"
+#include "SpinDec/CPMGDephasing.h"
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Cluster.h"
 #include "SpinDec/ClusterDatabase.h"
@@ -31,6 +31,7 @@
 #include "SpinDec/Hyperfine.h"
 #include "SpinDec/HyperfineParameters.h"
 #include "SpinDec/IdentityOperator.h"
+#include "SpinDec/IdentityPulse.h"
 #include "SpinDec/IsingHyperfine.h"
 #include "SpinDec/LatticeVectors.h"
 #include "SpinDec/MatrixRepresentation.h"
@@ -39,6 +40,7 @@
 #include "SpinDec/Pulse.h"
 #include "SpinDec/PulseExperiment.h"
 #include "SpinDec/PulseSequence.h"
+#include "SpinDec/PulseSequenceBase.h"
 #include "SpinDec/RandomNumberGenerator.h"
 #include "SpinDec/Sign.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"

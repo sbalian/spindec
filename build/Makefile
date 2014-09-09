@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Sep 8, 2014
+# Seto Balian, Sep 9, 2014
 
 #####################
 # Basic user input
@@ -8,7 +8,7 @@
 # Compiler
 COMPILER=g++
 # Set to 1 for debug mode
-DEBUG=1
+DEBUG=0
 
 # Source path
 SOURCE_PATH=../src/
@@ -140,7 +140,10 @@ SpinState.o\
 StringOptions.o\
 SpinSystemBase.o\
 options.o\
-EvolutionOperator.o
+EvolutionOperator.o\
+TwoStateSuperposition.o\
+Pulse.o\
+PiPulse.o
 
 test_evolution: $(test_evolution_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
@@ -192,61 +195,17 @@ SpinSystem.o\
 Eigenspectrum.o\
 HermitianEigenspectrum.o\
 options.o\
-EvolutionOperator.o
+EvolutionOperator.o\
+TwoStateSuperposition.o\
+PiPulse.o\
+Pulse.o
 
 test_spindonor: $(test_spindonor_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
 $(test_spindonor_OBJECTS) -o $@
 
 # test_evolution2
-test_evolution2_OBJECTS=test_evolution2.o\
-UniformMagneticField.o\
-ElectronSpinParameters.o\
-SpinParameters.o\
-MatrixRepresentation.o\
-SpinOperator.o\
-SpinInteraction.o\
-Dipolar.o\
-Hyperfine.o\
-constants.o\
-HyperfineParameters.o\
-Eigenspectrum.o\
-HermitianEigenspectrum.o\
-Errors.o\
-SpinHamiltonian.o\
-SpinInteractionEdge.o\
-SpinInteractionVertex.o\
-SpinInteractionGraph.o\
-SpinParametersVector.o\
-SpinBasis.o\
-BoostEigen.o\
-IsingHyperfine.o\
-SpinSystem.o\
-SpinState.o\
-StringOptions.o\
-SpinSystemBase.o\
-SpinHalf.o\
-SpinDonor.o\
-AdiabaticLabel.o\
-Sign.o\
-NuclearSpinParameters.o\
-SpinHalfStates.o\
-SpinHalfParameters.o\
-SpinUp.o\
-SpinDown.o\
-PulseSequence.o\
-PiPulse.o\
-CPMG.o\
-Pulse.o\
-DensityOperator.o\
-TimeArray.o\
-options.o\
-TimeEvolution.o\
-CPMGExperiment.o\
-EvolutionOperator.o\
-FreeEvolution.o\
-IdentityOperator.o\
-PulseExperiment.o
+test_evolution2_OBJECTS=test_evolution2.o
 
 test_evolution2: $(test_evolution2_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
@@ -254,48 +213,68 @@ $(test_evolution2_OBJECTS) -o $@
 
 # test_cce
 test_cce_OBJECTS=test_cce.o\
-UniformMagneticField.o\
-ElectronSpinParameters.o\
-SpinParameters.o\
-MatrixRepresentation.o\
-SpinOperator.o\
-SpinInteraction.o\
-Dipolar.o\
-Hyperfine.o\
-constants.o\
-HyperfineParameters.o\
-Eigenspectrum.o\
-HermitianEigenspectrum.o\
-Errors.o\
-SpinHamiltonian.o\
-SpinInteractionEdge.o\
-SpinInteractionVertex.o\
-SpinInteractionGraph.o\
-SpinParametersVector.o\
-SpinBasis.o\
-BoostEigen.o\
-IsingHyperfine.o\
-SpinSystem.o\
-SpinState.o\
-StringOptions.o\
-SpinSystemBase.o\
-SpinHalf.o\
-SpinDonor.o\
 AdiabaticLabel.o\
-Sign.o\
-NuclearSpinParameters.o\
-SpinHalfStates.o\
-SpinHalfParameters.o\
-SpinUp.o\
-SpinDown.o\
-PulseSequence.o\
-PiPulse.o\
+BoostEigen.o\
+CCE.o\
 CPMG.o\
-Pulse.o\
+CPMGDephasing.o\
+CSDProblem.o\
+Cluster.o\
+ClusterDatabase.o\
+CrystalBasis.o\
+CrystalStructure.o\
 DensityOperator.o\
+DiamondCubic.o\
+Dipolar.o\
+Eigenspectrum.o\
+ElectronSpinParameters.o\
+Errors.o\
+EvolutionOperator.o\
+FileProperties.o\
+FreeEvolution.o\
+HermitianEigenspectrum.o\
+Hyperfine.o\
+HyperfineParameters.o\
+IdentityOperator.o\
+IdentityPulse.o\
+IsingHyperfine.o\
+LatticeVectors.o\
+MatrixRepresentation.o\
+NuclearSpinParameters.o\
+PiPulse.o\
+Pulse.o\
+PulseExperiment.o\
+PulseSequence.o\
+PulseSequenceBase.o\
+RandomNumberGenerator.o\
+Sign.o\
+SimpleCubicLatticeVectors.o\
+SpinBasis.o\
+SpinBath.o\
+SpinDonor.o\
+SpinDown.o\
+SpinHalf.o\
+SpinHalfParameters.o\
+SpinHalfStates.o\
+SpinHamiltonian.o\
+SpinInteraction.o\
+SpinInteractionEdge.o\
+SpinInteractionGraph.o\
+SpinInteractionVertex.o\
+SpinOperator.o\
+SpinParameters.o\
+SpinParametersVector.o\
+SpinState.o\
+SpinSystem.o\
+SpinSystemBase.o\
+SpinUp.o\
+StringOptions.o\
 TimeArray.o\
-options.o\
-TimeEvolution.o
+TimeEvolution.o\
+TwoStateSuperposition.o\
+UniformMagneticField.o\
+constants.o\
+options.o
 
 test_cce: $(test_cce_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \

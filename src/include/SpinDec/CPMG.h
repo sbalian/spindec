@@ -17,7 +17,7 @@
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequenceBase.h"
 #include "SpinDec/EvolutionOperator.h"
-#include "SpinDec/PiPulse.h"
+#include "SpinDec/Pulse.h"
 
 namespace SpinDec
 {
@@ -31,8 +31,10 @@ private:
 public:
   
   CPMG();
+
+  // TODO make this into a PiPulse, and put basis for identity?
   CPMG(const UInt order,
-      const PiPulse& pi_pulse,
+      const Pulse& pi_pulse,
       const EvolutionOperator& evolution_operator);
   
   virtual std::auto_ptr<PulseSequenceBase> clone() const;

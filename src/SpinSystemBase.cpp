@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 9, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -160,6 +160,7 @@ void SpinSystemBase::set_state(const SpinState& state)
   if (!(graph_.get_basis().is_equal(state.get_basis()))) {
     Errors::quit("Basis mismatch in setting state.");
   }
+  state_ = state;
   return;
 }
 

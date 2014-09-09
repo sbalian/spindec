@@ -31,6 +31,7 @@ public:
   double get_duration() const;
   
   Pulse operator*(const Pulse& pulse) const;
+  Pulse operator^(const Pulse& pulse) const;
   
 };
 

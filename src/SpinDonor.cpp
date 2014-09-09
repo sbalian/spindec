@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 9, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -635,6 +635,11 @@ PiPulse SpinDonor::pi_pulse(const UInt level_label1,
   
   return PiPulse(level1,level2,other_levels);
   
+}
+
+auto_ptr<SpinSystemBase> SpinDonor::clone() const
+{
+  return auto_ptr<SpinSystemBase> (new SpinDonor(*this));
 }
 
 } // namespace SpinDec

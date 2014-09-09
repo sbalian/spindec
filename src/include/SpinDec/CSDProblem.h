@@ -24,11 +24,11 @@ class CSDProblem
 {
 private:
 
-  SpinSystem central_spin_system_;
+  auto_ptr<SpinSystemBase> central_spin_system_;
   SpinBath spin_bath_;
   
   UniformMagneticField field_;
-    
+
   // Edges should comply as in the join methods for SpinInteractionGraph,
   // with the first graph being the central spin graph and the second being
   // the graph for a single bath system.
@@ -52,6 +52,9 @@ private:
 public:
   
   CSDProblem();
+  CSDProblem(const CSDProblem& csd_problem);
+  CSDProblem& operator=(const CSDProblem& csd_problem);
+
   CSDProblem(const auto_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const vector<SpinInteractionEdge>& system_bath_edges,
@@ -61,11 +64,13 @@ public:
       const SpinInteractionEdge& system_bath_edge,
       const UniformMagneticField& field);
   
+  void set_central_spin_state(const SpinState& spin_state) const;
+
   SpinSystem get_reduced_problem(const UIntArray bath_indices);
 
   const SpinBath& get_spin_bath() const;
-  const SpinSystem& get_central_spin_system() const;
-    
+  auto_ptr<SpinSystemBase> get_central_spin_system() const;
+
 };
 
 } // namespace SpinDec

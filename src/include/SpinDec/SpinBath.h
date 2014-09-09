@@ -9,7 +9,7 @@
 // TODO Generalize to finite temperature; Generalize for multiple spin species?
 //      or use combinations of single-spin-species baths?
 // TODO comment more
-// Seto Balian, Sep 3, 2014
+// Seto Balian, Sep 8, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
@@ -30,7 +30,7 @@ private:
   
   // Positions in graph denote relative positions of atoms at a site in the
   // crystal structure ...
-  SpinSystem spin_system_;
+  auto_ptr<SpinSystemBase> spin_system_;
   
   // Take the graph of the spin system.
   // Consider joining the graph to itself.
@@ -64,6 +64,10 @@ public:
       const SpinInteractionEdge& intrabath_edge,
       const double pairing_cutoff);
   
+  SpinBath(const SpinBath& spin_bath);
+
+  SpinBath& operator=(const SpinBath& spin_bath);
+
   // Gets the state of the spin system.
   // Index is for populated sites in the crystal structure
   // Infinite temperature ensemble ...
@@ -80,7 +84,7 @@ public:
   
   const vector<SpinInteractionEdge>& get_intrabath_edges() const;
   
-  const SpinSystem& get_spin_system() const;
+  auto_ptr<SpinSystemBase> get_spin_system() const;
   
   SpinInteractionGraph reduced_problem_graph(const UInt order) const;
   
