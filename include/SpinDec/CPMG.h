@@ -12,7 +12,7 @@
 //   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
 //   > evolve, t/2n >pi-pulse, evolve, t/2n
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequenceBase.h"
@@ -37,7 +37,7 @@ public:
       const Pulse& pi_pulse,
       const EvolutionOperator& evolution_operator);
   
-  virtual std::auto_ptr<PulseSequenceBase> clone() const;
+  virtual auto_ptr<PulseSequenceBase> clone() const;
   
 };
 

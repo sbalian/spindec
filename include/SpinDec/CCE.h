@@ -16,7 +16,7 @@
 // TODO Comment more
 // TODO have experiment instead of pulse experiment?
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/ClusterDatabase.h"
@@ -36,7 +36,7 @@ private:
 
   auto_ptr<PulseExperiment> pulse_experiment_;
   
-  ClusterDatabase database_;
+  ClusterDatabase cluster_database_;
   
   TimeEvolution reducible_correlation(const Cluster& cluster);
   TimeEvolution true_correlation(const Cluster& cluster);

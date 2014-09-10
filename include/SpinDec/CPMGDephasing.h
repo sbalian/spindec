@@ -5,7 +5,7 @@
 //
 // CPMG pulse sequence.
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseExperiment.h"
@@ -32,7 +32,7 @@ public:
 
   virtual TimeEvolution time_evolution(const UIntArray bath_indices);
 
-  virtual std::auto_ptr<PulseExperiment> clone() const;
+  virtual auto_ptr<PulseExperiment> clone() const;
 
 };
 

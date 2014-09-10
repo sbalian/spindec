@@ -5,7 +5,7 @@
 //
 // Abstract base class for spin systems.
 //
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -77,7 +77,7 @@ public:
   // H - Hamiltonian
   void print(const char option);
   
-  virtual std::auto_ptr<SpinSystemBase> clone() const = 0;
+  virtual auto_ptr<SpinSystemBase> clone() const = 0;
   
   virtual PiPulse pi_pulse(const UInt level_label1,
       const UInt level_label2) const;

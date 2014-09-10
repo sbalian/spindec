@@ -1,5 +1,5 @@
 // See CPMGDephasing.h for description.
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/CPMGDephasing.h"
 #include "SpinDec/Errors.h"
@@ -41,8 +41,8 @@ CPMGDephasing::CPMGDephasing(const CSDProblem& csd_problem,
 TimeEvolution CPMGDephasing::time_evolution(
     const UIntArray bath_indices)
 {
-  
   const UInt order = bath_indices.size();
+  
 
   if (order == 0) {
     Errors::quit("Order can't be zero.");
@@ -50,11 +50,11 @@ TimeEvolution CPMGDephasing::time_evolution(
 
   SpinState state0 = initial_system_state_.get_state0();
   SpinState state1 = initial_system_state_.get_state1();
-
-  // TODO repeat here ...
+  
+  // TODO repeat here ...  
   SpinBasis bath_basis =
       csd_problem_.get_spin_bath().reduced_problem_graph(order).get_basis();
-
+  
   // pulse sequence
   Pulse pi_pulse = system_pi_pulse_^IdentityPulse(bath_basis);
 
@@ -62,14 +62,13 @@ TimeEvolution CPMGDephasing::time_evolution(
   CDoubleArray L;
 
   CDouble norm = CDouble(1.0,0.0);
+  
 
   for (UInt i=0;i<time_array_.get_dimension();i++) {
-
+    
     CPMG cpmg = CPMG(cpmg_order_,pi_pulse,
         csd_problem_.get_reduced_problem(bath_indices)
         .evolution_operator(time_array_.get_time(i)));
-    
-
 
     SpinState final_state = cpmg.final_state(
         csd_problem_.get_reduced_problem(bath_indices).get_state());
@@ -87,14 +86,12 @@ TimeEvolution CPMGDephasing::time_evolution(
     }
 
   }
-  
-
 
   return TimeEvolution(time_array_,L);
 
 }
 
-std::auto_ptr<PulseExperiment> CPMGDephasing::clone() const
+auto_ptr<PulseExperiment> CPMGDephasing::clone() const
 {
   return auto_ptr<PulseExperiment> (new CPMGDephasing(*this));
 }

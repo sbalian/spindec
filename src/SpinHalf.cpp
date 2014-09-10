@@ -75,9 +75,9 @@ UInt SpinHalf::dimension() const
   return 2;
 }
 
-std::auto_ptr<SpinSystemBase> SpinHalf::clone() const
+auto_ptr<SpinSystemBase> SpinHalf::clone() const
 {
-  return std::auto_ptr<SpinSystemBase>( new SpinHalf(*this) );
+  return auto_ptr<SpinSystemBase>( new SpinHalf(*this) );
 }
 
 } // namespace SpinDec

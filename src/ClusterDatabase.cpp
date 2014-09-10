@@ -1,36 +1,114 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 10, 2014
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
+// TODO too much repeat code ... needs testing and polishing, optimize
 
 #include "SpinDec/ClusterDatabase.h"
 #include "SpinDec/Errors.h"
+#include "SpinDec/BoostEigen.h"
 
 namespace SpinDec
 {
 
-void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
+UInt ClusterDatabase::get_index(const Cluster& cluster) const
 {
-  if (max_order == 0) {
+  
+  const UInt order = cluster.num_spins();
+  if (!is_order_built(order)) {
+    Errors::quit("Clusters of given order not built.");
+  }
+  
+  for (UInt i=0;i<database_.find(order)->second.size();i++) {
+    
+    if (database_.find(order)->second[i].get_cluster() == cluster) {
+      return i;
+    }
+    
+  }
+  
+  Errors::quit("Cluster not found.");
+  return 0;
+  
+}
+
+
+void ClusterDatabase::add_unsolved_entry(const Cluster& cluster)
+{
+  
+  if ( cluster_exists(cluster) ) {
+    Errors::quit("Cluster database entry already exists.");
+    return;
+  }
+  
+  // get order
+  const UInt order = cluster.num_spins();
+  
+  vector<ClusterDatabaseEntry> empty_vector;
+  
+  if (!is_order_built(order)) {
+    database_.insert(
+        pair< UInt, vector<ClusterDatabaseEntry> >(order,empty_vector) );
+  }
+  
+  if (is_order_built(order)) {
+    database_.find(order)->second.push_back(ClusterDatabaseEntry(cluster));
+  }
+  
+  return;
+  
+}
+
+bool ClusterDatabase::cluster_exists(const Cluster& cluster) const
+{
+  
+  const UInt order = cluster.num_spins();
+  if (!is_order_built(order)) {
+    return false;
+  }
+  
+  // TODO repeat code
+  for (UInt i=0;i<database_.find(order)->second.size();i++) {
+    
+    if (database_.find(order)->second[i].get_cluster() == cluster) {
+      return true;
+    }
+    
+  }
+  
+  return false;
+  
+}
+
+ClusterDatabase::ClusterDatabase() : max_order_(0)
+{
+}
+
+ClusterDatabase::ClusterDatabase(const SpinBath& spin_bath,
+    const UInt max_order) : max_order_(max_order),spin_bath_(spin_bath)
+{
+  build();
+}
+
+void ClusterDatabase::build()
+{
+  if (max_order_ == 0) {
     Errors::quit("Max order cannot be zero.");
   }
   
-  const UInt num_sites = spin_bath.num_spin_systems();
+  const UInt num_sites = spin_bath_.num_spin_systems();
   
   // make 1-clusters (clusters of order 1, ie 1 bath spin system)
-  
-  //vector<Cluster> one_clusters;
+  vector<ClusterDatabaseEntry> one_clusters;
   
   for (UInt i=0;i<num_sites;i++) {
     Cluster cluster;
     cluster.add(i);
-    add_cluster(cluster);
+    add_unsolved_entry(cluster);
   }
   
-  //clusters_.push_back(one_clusters);
-  
-  if (max_order == 1) {
+  if (max_order_ == 1) {
     return;
   }
   
@@ -45,10 +123,11 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
     while (j<i) {
       
       ThreeVector separation =
-          spin_bath.get_crystal_structure().get_site_vector(i) -
-          spin_bath.get_crystal_structure().get_site_vector(j);
+          spin_bath_.get_crystal_structure().get_site_vector(i) -
+          spin_bath_.get_crystal_structure().get_site_vector(j);
       
-      if (!( is_within_distance(separation,spin_bath.get_pairing_cutoff()))) {
+      if (!( BoostEigen::isWithinDistance(separation,
+          spin_bath_.get_pairing_cutoff()))) {
        j+=1;
        continue;
       }
@@ -66,12 +145,10 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
     Cluster cluster;
     cluster.add(pair_labels[i].first);
     cluster.add(pair_labels[i].second); // inefficient add method sorting ...
-    add_cluster(cluster);
+    add_unsolved_entry(cluster);
   }
-
-  //clusters_.push_back(two_clusters);
   
-  if (max_order == 2) {
+  if (max_order_ == 2) {
     return;
   }
     
@@ -82,7 +159,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
   // then include the cluster
   
   // loop over cce orders (exclude 2-clusters - already added)
-  for (UInt i=3;i<=max_order;i++) {
+  for (UInt i=3;i<=max_order_;i++) {
     // current order to add
     //vector<Cluster> n_clusters;
     
@@ -93,8 +170,8 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
     for (UInt j=0;j<num_prev_clusters;j++) {
       
       // get the cluster
-      Cluster prev_cluster = get_cluster(prev_order,j);
-      UIntArray prev_spin_labels = prev_cluster.get_labels();
+      ClusterDatabaseEntry prev_entry = get_entry(prev_order,j);
+      UIntArray prev_spin_labels = prev_entry.get_cluster().get_labels();
       
       // for each cluster,
       // loop over sites in the lattice
@@ -102,10 +179,9 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
         
         // get the site to potentially add
         ThreeVector site_to_add =
-            spin_bath.get_crystal_structure().get_site_vector(k);
+            spin_bath_.get_crystal_structure().get_site_vector(k);
         
         // loop over labels of cluster checking the new site
-        
         
         // if the spin is already in the cluster, don't add
         bool found_duplicate = false;
@@ -131,12 +207,12 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
           
           UInt spin_label = prev_spin_labels[l];
           ThreeVector to_check =
-              spin_bath.get_crystal_structure().get_site_vector(spin_label);
+              spin_bath_.get_crystal_structure().get_site_vector(spin_label);
                     
           // found one distance smaller than threshold,
           // leave loop and add cluster
-          distance_check = is_within_distance(to_check-site_to_add,
-              spin_bath.get_pairing_cutoff());
+          distance_check = BoostEigen::isWithinDistance(to_check-site_to_add,
+              spin_bath_.get_pairing_cutoff());
           if (distance_check == true) {
             break;
           }
@@ -151,7 +227,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
           // if it does not then add
           Cluster to_add(new_spin_labels);
           //cout << n_clusters.exists(to_add) << endl;
-          if (!exists(to_add)) {
+          if (!cluster_exists(to_add)) {
 //            for (unsigned int r=0;r<new_spin_labels.size();r++) {
 //              cout << new_spin_labels[r] << "\t";
 //            }
@@ -159,7 +235,7 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
 //            cout << i << endl;
             // TODO Warning, maybe sorting inefficiency here ...
             Cluster new_cluster(new_spin_labels);
-            add_cluster(new_cluster);
+            add_unsolved_entry(new_cluster);
             
             // now get the subsets of this current cluster
             
@@ -173,8 +249,8 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
               }
               Cluster sub_cluster = sub_clusters[l];
 
-              if  (!exists(sub_cluster)) {
-                add_cluster(sub_cluster);
+              if  (!cluster_exists(sub_cluster)) {
+                add_unsolved_entry(sub_cluster);
               }
             }
           }
@@ -185,199 +261,110 @@ void ClusterDatabase::init(const SpinBath& spin_bath, const UInt max_order)
         }
         
       }
-      //clusters_.push_back(n_clusters);
+    
     }
-  
-  return;
+
 }
 
-
-ClusterDatabase::ClusterDatabase()
-{
-}
-
-ClusterDatabase::ClusterDatabase(const SpinBath& spin_bath,
-    const UInt max_order)
-{
-  
-  init(spin_bath,max_order);
-  
-}
-
-
-const Cluster& ClusterDatabase::get_cluster(const UInt order,
+const ClusterDatabaseEntry& ClusterDatabase::get_entry(
+    const UInt order,
     const UInt index) const
 {
-  return clusters_[order-1][index];
-}
-
-const TimeEvolution& ClusterDatabase::get_time_evolution(
-    const UInt order, const UInt index) const
-{
-  return time_evolutions_[order-1][index];
-}
-
-bool ClusterDatabase::is_solved(const UInt order,
-    const UInt index) const
-{
-  return is_solved_[order-1][index];
-}
-
-// TODO may be slow, also comment and explain the order of filling ...
-void ClusterDatabase::add_cluster(const Cluster& cluster)
-{
   
-  const UInt order = cluster.num_spins();
-  
-  if (order == 0) {
-    Errors::quit("Can't have zero cluster order.");
+  if (!is_order_built(order)) {
+    Errors::quit("Clusters of given order not built.");
   }
   
-  if (order > max_order() + 1) {
-    Errors::quit("Fill smaller clusters first.");
+  if (index >= database_.find(order)->second.size()) {
+    Errors::quit("Entry not found.");
   }
   
-  if (order == max_order() + 1) {
-    vector<Cluster> clusters;
-    vector<TimeEvolution> time_evolutions;
-    vector<bool> bool_vec;
-    
-    clusters_.push_back(clusters);
-    time_evolutions_.push_back(time_evolutions);
-    is_solved_.push_back(bool_vec);
-    
-    clusters_[order-1].push_back(cluster);
-    time_evolutions_[order-1].push_back(TimeEvolution());
-    is_solved_[order-1].push_back(false);
+  return database_.find(order)->second[index];
   
-  }
-
-  if (order <= max_order()) {
-    clusters_[order-1].push_back(cluster);
-    time_evolutions_[order-1].push_back(TimeEvolution());
-    is_solved_[order-1].push_back(false);
-  }
-  
-  return;
-}
-
-void ClusterDatabase::set_time_evolution(const UInt order,
-    const UInt index, const TimeEvolution& time_evolution)
-{
-  time_evolutions_[order-1][index] = time_evolution;
-  return;
-}
-
-void ClusterDatabase::solved(const UInt order, const UInt index)
-{
-  is_solved_[order-1][index] = true;
-  return;
-}
-
-bool ClusterDatabase::exists(const Cluster& cluster) const
-{
-  const UInt order = cluster.num_spins();
-  for (UInt i =0;i<num_clusters(order);i++) {
-    if (cluster == get_cluster(order,i)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-UInt ClusterDatabase::get_index(const Cluster& cluster) const
-{
-  
-  const UInt order = cluster.num_spins();
-  
-  for (UInt i =0;i<num_clusters(order);i++) {
-    if (cluster == get_cluster(order,i)) {
-      return i;
-    }
-  }
-  
-  Errors::quit("Cluster does not exist.");
-  return 0;
-  
-}
-
-const Cluster& ClusterDatabase::get_cluster(const Cluster& cluster) const
-{
-  return get_cluster(cluster.num_spins(),get_index(cluster));
-}
-
-const TimeEvolution& ClusterDatabase::get_time_evolution(
-    const Cluster& cluster) const
-{
-  return get_time_evolution(cluster.num_spins(),get_index(cluster));
-}
-
-bool ClusterDatabase::is_solved(const Cluster& cluster) const
-{
-  return is_solved(cluster.num_spins(),get_index(cluster));
 }
 
 void ClusterDatabase::set_time_evolution(const Cluster& cluster,
     const TimeEvolution& time_evolution)
 {
-  set_time_evolution(cluster.num_spins(),get_index(cluster),time_evolution);
+  
+  const UInt order = cluster.num_spins();
+  const UInt index = get_index(cluster);
+  
+  database_[order][index].set_time_evolution(time_evolution);
+  
   return;
+  
 }
 
-void ClusterDatabase::solved(const Cluster& cluster)
+bool ClusterDatabase::is_solved(const Cluster& cluster) const
 {
-  solved(cluster.num_spins(),get_index(cluster));
-  return;
+  const UInt order = cluster.num_spins();
+  const UInt index = get_index(cluster);
+  
+  return database_.find(order)->second[index].is_solved();
+
 }
 
-UInt ClusterDatabase::max_order() const
+UInt ClusterDatabase::get_max_order() const
 {
-  return clusters_.size();
+  return max_order_;
 }
 
 UInt ClusterDatabase::num_clusters(const UInt order) const
 {
-  if (order == 0) {
-    Errors::quit("Order cannot be zero.");
+  if (!is_order_built(order)) {
+    Errors::quit("Clusters of given order not built.");
   }
-  
-  return clusters_[order-1].size();
+  return database_.find(order)->second.size();
 }
+
+//const ClusterDatabaseEntry& ClusterDatabase::get_entry(
+//    const Cluster& cluster) const
+//{
+//}
 
 void ClusterDatabase::print() const
 {
   
-  for (UInt i=1;i<=max_order();i++) {
-    print(i);
-    cout << endl;
+  database_map::const_iterator it;
+  
+  for (it=database_.begin();it!=database_.end();it++) {
+    const UInt order = it->first;
+    cout << "Clusters of order " << order << ":\n";
+    
+    for (UInt i=0;i<num_clusters(order);i++) {
+      cout << it->second[i].get_cluster() << endl;
+    }
+    
   }
-  cout << endl;
+  
+  return;
   
 }
 
-void ClusterDatabase::print(const UInt order) const
+bool ClusterDatabase::is_order_built(const UInt order) const
 {
-  cout << "Clusters of order " << order << ":\n";
-  for (UInt i=0;i<num_clusters(order);i++) {
-    cout << get_cluster(order,i) << endl;
-  }
-  cout << endl;
+  database_map::const_iterator it =
+      database_.find(order);
+  return it!=database_.end();
 }
 
-bool ClusterDatabase::is_within_distance(const ThreeVector& r,
-    const double distance) const
+const TimeEvolution& ClusterDatabase::get_time_evolution(
+    const Cluster& cluster) const
 {
-  if ( r.norm() <= distance ) {
-    return 1;
-  } // else
-      return 0;
+  const UInt order = cluster.num_spins();
+  const UInt index = get_index(cluster);
+  
+  return database_.find(order)->second[index].get_time_evolution();
+
 }
 
-
-void ClusterDatabase::print(const UInt order, const UInt index) const
+const Cluster& ClusterDatabase::get_cluster(const UInt order,
+    const UInt index) const
 {
-  cout << get_cluster(order,index) << endl;
+  return get_entry(order,index).get_cluster();
 }
+
 
 } // namespace SpinDec
 

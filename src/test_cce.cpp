@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 10, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -39,7 +39,7 @@ int main ()
   Hyperfine interaction_J(hyperfine_parameters);
 
   // Crystal structure
-  DiamondCubic diamond_cubic(5.43,50.0,0.0467);
+  DiamondCubic diamond_cubic(5.43,30.0,0.0467);
   
   // Spin bath
   SpinBath spin_bath(diamond_cubic,si29.clone(),

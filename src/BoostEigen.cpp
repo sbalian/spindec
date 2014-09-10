@@ -1,5 +1,5 @@
 // See BoostEigen.h for description.
-// Seto Balian, May 23, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/BoostEigen.h"
 
@@ -95,6 +95,14 @@ ComplexMatrix BoostEigen::unitarySpectralDecomposition(
     const ComplexMatrix& eigenvectors, const ComplexVector& eigenvalues)
 {
   return eigenvectors*(eigenvalues.asDiagonal())*(eigenvectors.adjoint());
+}
+
+bool BoostEigen::isWithinDistance(const ThreeVector& r, const double distance)
+{
+  if ( r.norm() <= distance ) {
+    return 1;
+  } // else
+      return 0;
 }
 
 } // namespace SpinDec

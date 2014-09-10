@@ -33,7 +33,7 @@ public:
 
   virtual UInt dimension() const;
   
-  virtual std::auto_ptr<SpinSystemBase> clone() const;
+  virtual auto_ptr<SpinSystemBase> clone() const;
   
 };
 

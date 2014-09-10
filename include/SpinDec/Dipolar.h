@@ -56,7 +56,7 @@ public:
                    const UInt spin_label1,
                    const UInt spin_label2) const;
   
-  virtual std::auto_ptr<SpinInteraction> clone() const;
+  virtual auto_ptr<SpinInteraction> clone() const;
 
 };
 

@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -17,9 +17,10 @@ SpinSystemBase::SpinSystemBase()
 SpinSystemBase::SpinSystemBase(const SpinInteractionGraph& graph,
     const UniformMagneticField& field)
 {
+
   graph_ = graph;
   field_ = field;
-  hamiltonian_ = SpinHamiltonian(graph, field);
+  hamiltonian_ = SpinHamiltonian(graph_, field);
 }
 
 const UniformMagneticField& SpinSystemBase::get_field() const

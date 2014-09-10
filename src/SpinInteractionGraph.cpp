@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Aug 28, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -114,7 +114,7 @@ void SpinInteractionGraph::add_vertex_appending_basis(
 }
 
 void  SpinInteractionGraph::add_edge(unsigned int label1,
-    unsigned int label2, const std::auto_ptr<SpinInteraction>& interaction)
+    unsigned int label2, const auto_ptr<SpinInteraction>& interaction)
 {
   
   // First make sure label1 != label2
@@ -167,7 +167,7 @@ const ThreeVector& SpinInteractionGraph::get_position(const UInt label) const
   return get_vertex(label).get_position();
 }
 
-std::auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
+auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
     const unsigned int index) const
 {
   return get_edge(index).get_interaction()->clone();

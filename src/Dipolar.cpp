@@ -57,9 +57,9 @@ void Dipolar::fill(ComplexMatrix * hamiltonian,
   return;
 }
 
-std::auto_ptr<SpinInteraction> Dipolar::clone() const
+auto_ptr<SpinInteraction> Dipolar::clone() const
 {
-  return std::auto_ptr<SpinInteraction>( new Dipolar(*this) );
+  return auto_ptr<SpinInteraction>( new Dipolar(*this) );
 }
 
 } // namespace SpinDec
