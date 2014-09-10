@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
@@ -54,9 +54,9 @@ UInt SpinSystem::dimension() const
   return hamiltonian_.get_dimension();
 }
 
-std::auto_ptr<SpinSystemBase> SpinSystem::clone() const
+auto_ptr<SpinSystemBase> SpinSystem::clone() const
 {
-  return std::auto_ptr<SpinSystemBase> (new SpinSystem(*this));
+  return auto_ptr<SpinSystemBase> (new SpinSystem(*this));
 }
 
 void SpinSystem::update_positions(const UIntArray& vertex_labels,

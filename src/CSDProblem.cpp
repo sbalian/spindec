@@ -1,5 +1,5 @@
 // See CSDProblem.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"
@@ -133,7 +133,7 @@ SpinSystem CSDProblem::construct_reduced_problem(const UInt order) const
   system_bath_graph.add_edges(make_system_bath_edges(order));
   
   // spin systems
-  
+      
   return SpinSystem(system_bath_graph,field_);
   
 }
@@ -178,6 +178,7 @@ SpinSystem CSDProblem::get_reduced_problem(
   if (order == 0) {
     Errors::quit("Order must be +ve non-zero integer.");
   }
+
   
   SpinSystem spin_system;
   
@@ -189,13 +190,16 @@ SpinSystem CSDProblem::get_reduced_problem(
       found = true;
     }
   }
+
   
   if (found == true) {
     spin_system = reduced_problems_[index].second;
   } else {
     spin_system = construct_reduced_problem(order);
     reduced_problems_.push_back( pair< UInt,SpinSystem>(order,spin_system) );
+
   }
+  
   
   // now set the initial bath positions
   
@@ -212,6 +216,7 @@ SpinSystem CSDProblem::get_reduced_problem(
   // get the number of bath vertices
   UInt num_bath_vertices =
       get_spin_bath().get_spin_system()->get_graph().num_vertices();
+  
 
   // new positions
   vector<ThreeVector> positions;
@@ -220,13 +225,16 @@ SpinSystem CSDProblem::get_reduced_problem(
       positions.push_back(sites[i]);
     }
   }
+  
+
+  
   for (UInt i=0;i<bath_vertex_labels.size();i++) {
     positions[i]+=
      get_spin_bath().get_spin_system()->get_graph().get_position(i);
   }
-
-  spin_system.update_positions(bath_vertex_labels,positions);
   
+  spin_system.update_positions(bath_vertex_labels,positions);
+
   //cout << get_central_spin_system()->get_state().get_basis() << endl;
   
   // set the initial state

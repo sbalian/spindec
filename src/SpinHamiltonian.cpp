@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -76,21 +76,27 @@ void SpinHamiltonian::fill_zeeman(const UInt vertex_label)
 // fill elements for spin interaction at given edge
 void SpinHamiltonian::fill_interaction(const UInt edge_index)
 {
+  
   // Loop over edges
-    std::auto_ptr<SpinInteraction> interaction_ptr =
+    auto_ptr<SpinInteraction> interaction_ptr =
         graph_.get_interaction(edge_index);
     if (!interaction_ptr->strength_preset()) { // calculate only if strength
                                                // NOT preset
+      
+      
       interaction_ptr -> calculate(
           
-          
+          // TODO problem here with 2 clusters ...
           
           graph_.get_vertex1(edge_index).get_spin_parameters(),
           graph_.get_vertex2(edge_index).get_spin_parameters(),
           graph_.get_vertex1(edge_index).get_position(),
           graph_.get_vertex2(edge_index).get_position(),
-                            get_field()); 
+                            get_field());
+      
+      
     }
+    
     
     interaction_ptr->fill(&interaction_terms_[edge_index],
         graph_.spin_parameters_vector(),
@@ -116,10 +122,16 @@ void SpinHamiltonian::fill_zeeman()
 // fill elements for all spin interaction
 void SpinHamiltonian::fill_interactions()
 {
+  
   // Loop over edges
   for (unsigned int i=0;i<graph_.num_edges();i++) {
+    
     fill_interaction(i);
+        
   }
+  
+  
+  
   return;
 }
 
@@ -134,12 +146,15 @@ SpinHamiltonian::SpinHamiltonian(const SpinInteractionGraph& graph,
     SpinOperator(graph.get_basis()),
     field_(field),graph_(graph)
 {
-  init_terms();
+
+  init_terms();  
   fill_zeeman();
   fill_interactions();
   sum_interaction_terms();
   sum_zeeman_terms();
   matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
+  
+  
   return;
 }
 
@@ -151,7 +166,7 @@ UniformMagneticField SpinHamiltonian::get_field() const
 void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
     const vector<ThreeVector>& positions)
 {
-  
+    
   if (vertex_labels.size() != positions.size()) {
     Errors::quit("Vertex label and position arrays must be of the same size.");
     return;
@@ -159,7 +174,7 @@ void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
   
   for (UInt l=0;l<vertex_labels.size();l++) {
     
-    graph_.set_position(l,positions[l]);
+    graph_.set_position(vertex_labels[l],positions[l]);
     
     // Zeeman
     fill_zeeman(vertex_labels[l]);
@@ -183,7 +198,6 @@ void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
     for (UInt i=0;i<edge_indices.size();i++) {
       fill_interaction(edge_indices[i]);
     }
-
     
   }
   
@@ -191,7 +205,7 @@ void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
   
   sum_interaction_terms();
   sum_zeeman_terms();
-  
+
   // reset matrix
   matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
 

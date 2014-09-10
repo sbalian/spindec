@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 10, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -121,7 +121,7 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
   
   const UInt a = intrabath_edge.get_label1();
   const UInt b = intrabath_edge.get_label2();
-  
+    
   vector<SpinInteractionEdge> edges;
   
   // order = 1, return an empty edge vector
@@ -146,7 +146,6 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
     }
   }
   
-  
   for (UInt i=0;i<labels.size();i++) {
     UInt j = 0;
     while (j<i) {
@@ -154,13 +153,14 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
       pair.push_back(labels[i]);
       pair.push_back(labels[j]);
       std::sort (pair.begin(), pair.end());
-      
+            
       edges.push_back( SpinInteractionEdge(
           pair[0],pair[1],intrabath_edge.get_interaction()) );
-
+      j+=1;
     }
   }
-
+  
+  
   return edges;
   
 }
@@ -193,6 +193,7 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
     Errors::quit("Order must be +ve non-zero integer.");
   }
   
+  
   SpinInteractionGraph single_system_graph = spin_system_->get_graph();
   SpinInteractionGraph graph;
   
@@ -206,7 +207,9 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
     graph.join_in_place(single_system_graph);
   }
   
+  
   graph.add_edges(make_intrabath_edges(order));
+
   
   return graph;
   

@@ -1,5 +1,5 @@
 # SpinDec Makefile
-# Seto Balian, Sep 9, 2014
+# Seto Balian, Sep 10, 2014
 
 #####################
 # Basic user input
@@ -8,7 +8,7 @@
 # Compiler
 COMPILER=g++
 # Set to 1 for debug mode
-DEBUG=0
+DEBUG=1
 
 # Source path
 SOURCE_PATH=../src/
@@ -33,10 +33,10 @@ endif
 # Other variables
 
 # Header path (as seen by compiler)
-HEADER_PATH=$(SOURCE_PATH)include/
+HEADER_PATH=../include/
 
 # For this makefile
-HEADER_DIR=$(SOURCE_PATH)include/SpinDec/
+HEADER_DIR=$(HEADER_PATH)SpinDec/
 
 # List of executables
 EXECUTABLES=
@@ -274,7 +274,8 @@ TimeEvolution.o\
 TwoStateSuperposition.o\
 UniformMagneticField.o\
 constants.o\
-options.o
+options.o\
+ClusterDatabaseEntry.o
 
 test_cce: $(test_cce_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \

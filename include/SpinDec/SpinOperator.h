@@ -60,7 +60,7 @@ public:
   friend std::ostream& operator<<(std::ostream& os,
       SpinOperator const & spin_operator);
   
-  virtual std::auto_ptr<MatrixRepresentation> clone() const;
+  virtual auto_ptr<MatrixRepresentation> clone() const;
 
 };
 

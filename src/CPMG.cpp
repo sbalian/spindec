@@ -48,9 +48,9 @@ CPMG::CPMG(const UInt order,
 
 }
 
-std::auto_ptr<PulseSequenceBase> CPMG::clone() const
+auto_ptr<PulseSequenceBase> CPMG::clone() const
 {
-  return std::auto_ptr<PulseSequenceBase>(new CPMG(*this));
+  return auto_ptr<PulseSequenceBase>(new CPMG(*this));
 }
 
 } // namespace SpinDec

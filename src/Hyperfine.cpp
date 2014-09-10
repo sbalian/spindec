@@ -184,9 +184,9 @@ void Hyperfine::fill(ComplexMatrix * hamiltonian,
   return;
 }
 
-std::auto_ptr<SpinInteraction> Hyperfine::clone() const
+auto_ptr<SpinInteraction> Hyperfine::clone() const
 {
-  return std::auto_ptr<SpinInteraction>( new Hyperfine(*this) );
+  return auto_ptr<SpinInteraction>( new Hyperfine(*this) );
 }
 
 } // namespace SpinDec

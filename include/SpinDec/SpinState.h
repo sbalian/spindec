@@ -59,7 +59,7 @@ public:
   void normalize();
   SpinState normalized() const;
   
-  virtual std::auto_ptr<MatrixRepresentation> clone() const;
+  virtual auto_ptr<MatrixRepresentation> clone() const;
 
 };
 

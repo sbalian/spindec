@@ -7,7 +7,7 @@
 // Also includes some usings ...
 // All in the SpinDec namespace.
 //
-// Seto Balian, Aug 4, 2014
+// Seto Balian, Sep 10, 2014
 
 #include <Eigen/Dense>
 
@@ -19,6 +19,7 @@
 
 #include <memory>
 #include <utility>
+#include <map>
 
 namespace SpinDec {
 
@@ -68,6 +69,9 @@ using std::pair;
 
 // std vector
 using std::vector;
+
+// std map
+using std::map;
 
 }
 
