@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -24,12 +24,13 @@ int main ()
   
   SpinDonor donor(field.get_magnitude(),
       4.5,1.7591e5,-43.775,9.2702e3,
-      lower_donor_level,upper_donor_level,ThreeVector(),ThreeVector(),false);
+      lower_donor_level,upper_donor_level,ThreeVector::Zero(),
+      ThreeVector::Zero(),false);
   
   // Bath system
   // 29Si
   
-  SpinHalf si29(53.1903, field.get_magnitude(),ThreeVector());
+  SpinHalf si29(53.1903, field.get_magnitude(),ThreeVector::Zero());
   // Dipolar interaction between the two 29Si
   Dipolar interaction_C12;
   
@@ -39,7 +40,7 @@ int main ()
   Hyperfine interaction_J(hyperfine_parameters);
 
   // Crystal structure
-  DiamondCubic diamond_cubic(5.43,30.0,0.0467);
+  DiamondCubic diamond_cubic(5.43,150.0,0.0467);
   
   // Spin bath
   SpinBath spin_bath(diamond_cubic,si29.clone(),
@@ -48,7 +49,7 @@ int main ()
   // CSDProblem
 
   // TODO HACK
-  CDouble invsqrt2(1.0/std::sqrt(2.0));
+  CDouble invsqrt2(1.0/std::sqrt(2.0));  
   donor.set_state(donor.superposition(invsqrt2,lower_donor_level,invsqrt2,
       upper_donor_level));
   
@@ -57,15 +58,16 @@ int main ()
 
   // Hahn spin echo decay
   TimeArray time_array(0.0,1.0e3,10);
-  
+    
   CPMGDephasing cpmg_dephasing(
       csd_problem,time_array,1,invsqrt2,lower_donor_level,invsqrt2,
       upper_donor_level);
-
+  
   // Pair correlations
   CCE cce(2,cpmg_dephasing.clone());
-
+    
   TimeEvolution time_evolution = cce.calculate();
+  
   // print to screen
   time_evolution.print_abs();
   

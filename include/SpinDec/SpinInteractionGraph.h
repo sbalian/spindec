@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -105,6 +105,9 @@ public:
                                                               // edge index
   const SpinInteractionVertex& get_vertex2(const UInt index) const;
                                                               // edge index
+  
+  void set_positions(const UIntArray& vertex_labels,
+      const vector<ThreeVector>& positions);
     
 };
 

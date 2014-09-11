@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -181,7 +181,7 @@ const
     }
     
   }
-  
+    
   return edges;
   
 }

@@ -5,7 +5,7 @@
 //
 // Diagonalizable concrete spin system.
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -35,8 +35,8 @@ public:
   
   virtual auto_ptr<SpinSystemBase> clone() const;
   
-  void update_positions(const UIntArray& vertex_labels,
-      const vector<ThreeVector>& positions);
+//  void update_positions(const UIntArray& vertex_labels,
+//      const vector<ThreeVector>& positions);
   
 };
 

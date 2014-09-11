@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -76,7 +76,13 @@ void SpinHamiltonian::fill_zeeman(const UInt vertex_label)
 // fill elements for spin interaction at given edge
 void SpinHamiltonian::fill_interaction(const UInt edge_index)
 {
+//  cout << "Number of vertices: " << graph_.vertices_.size() << endl;
+//  cout << "Number of edges: " << graph_.edges_.size() << endl;
   
+//  for (UInt i=0;i<graph_.edges_.size();i++) {
+//    cout << graph_.edges_[i].get_label2() << endl;
+//  }
+
   // Loop over edges
     auto_ptr<SpinInteraction> interaction_ptr =
         graph_.get_interaction(edge_index);
@@ -163,54 +169,54 @@ UniformMagneticField SpinHamiltonian::get_field() const
   return field_;
 }
 
-void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
-    const vector<ThreeVector>& positions)
-{
-    
-  if (vertex_labels.size() != positions.size()) {
-    Errors::quit("Vertex label and position arrays must be of the same size.");
-    return;
-  }
-  
-  for (UInt l=0;l<vertex_labels.size();l++) {
-    
-    graph_.set_position(vertex_labels[l],positions[l]);
-    
-    // Zeeman
-    fill_zeeman(vertex_labels[l]);
-    
-    // interactions
-    
-    // get the affected edges
-    UIntArray edge_indices;
-    
-    for (UInt i=0;i<graph_.num_edges();i++) {
-      
-      // TODO make sure this is OK ... edge indices should not contain duplicates
-      if ( (graph_.get_edge(i).get_label1() == vertex_labels[l]) ||
-           (graph_.get_edge(i).get_label2() == vertex_labels[l])) {
-        edge_indices.push_back(i);
-      }
-      
-    }
-    
-    // fill the affected interactions
-    for (UInt i=0;i<edge_indices.size();i++) {
-      fill_interaction(edge_indices[i]);
-    }
-    
-  }
-  
-  // resum
-  
-  sum_interaction_terms();
-  sum_zeeman_terms();
-
-  // reset matrix
-  matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
-
-  return;
-  
-}
+//void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
+//    const vector<ThreeVector>& positions)
+//{
+//    
+//  if (vertex_labels.size() != positions.size()) {
+//    Errors::quit("Vertex label and position arrays must be of the same size.");
+//    return;
+//  }
+//  
+//  for (UInt l=0;l<vertex_labels.size();l++) {
+//    
+//    graph_.set_position(vertex_labels[l],positions[l]);
+//    
+//    // Zeeman
+//    fill_zeeman(vertex_labels[l]);
+//    
+//    // interactions
+//    
+//    // get the affected edges
+//    UIntArray edge_indices;
+//    
+//    for (UInt i=0;i<graph_.num_edges();i++) {
+//      
+//      // TODO make sure this is OK ... edge indices should not contain duplicates
+//      if ( (graph_.get_edge(i).get_label1() == vertex_labels[l]) ||
+//           (graph_.get_edge(i).get_label2() == vertex_labels[l])) {
+//        edge_indices.push_back(i);
+//      }
+//      
+//    }
+//    
+//    // fill the affected interactions
+//    for (UInt i=0;i<edge_indices.size();i++) {
+//      fill_interaction(edge_indices[i]);
+//    }
+//    
+//  }
+//  
+//  // resum
+//  
+//  sum_interaction_terms();
+//  sum_zeeman_terms();
+//
+//  // reset matrix
+//  matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
+//
+//  return;
+//  
+//}
 
 } // namespace SpinDec

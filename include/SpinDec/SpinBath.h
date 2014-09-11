@@ -9,7 +9,7 @@
 // TODO Generalize to finite temperature; Generalize for multiple spin species?
 //      or use combinations of single-spin-species baths?
 // TODO comment more
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
