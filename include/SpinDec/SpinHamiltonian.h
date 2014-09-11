@@ -63,8 +63,8 @@ public:
   
   UniformMagneticField get_field() const;
   
-  void update_positions(const UIntArray& vertex_labels,
-      const vector<ThreeVector>& positions);
+//  void update_positions(const UIntArray& vertex_labels,
+//      const vector<ThreeVector>& positions);
   
 };
 

@@ -8,7 +8,7 @@
 # Compiler
 COMPILER=g++
 # Set to 1 for debug mode
-DEBUG=1
+DEBUG=0
 
 # Source path
 SOURCE_PATH=../src/

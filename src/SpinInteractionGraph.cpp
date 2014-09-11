@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -12,6 +12,7 @@ namespace SpinDec
 void SpinInteractionGraph::quit_if_vertex_label_out_of_bounds(
     const unsigned int label) const
 {
+  
   if (label >= num_vertices()) {
     Errors::quit("Vertex label out of bounds.");
   }
@@ -198,15 +199,19 @@ const SpinInteractionEdge& SpinInteractionGraph::get_edge(
 
 void SpinInteractionGraph::join_in_place(const SpinInteractionGraph& to_join)
 {
+  
+  const UInt old_num_vertices = num_vertices();
+  
   // Add vertices
   for (unsigned int i=0;i<to_join.num_vertices();i++) {
     add_vertex(to_join.get_vertex(i).get_spin_parameters(),
         to_join.get_vertex(i).get_basis(),to_join.get_vertex(i).get_position());
   }
+    
   // Add edges
   for (unsigned int i=0;i<to_join.num_edges();i++) {
-    add_edge(to_join.get_edge(i).get_label1() + num_vertices(),
-             to_join.get_edge(i).get_label2() + num_vertices(),
+    add_edge(to_join.get_edge(i).get_label1() + old_num_vertices,
+             to_join.get_edge(i).get_label2() + old_num_vertices,
              to_join.get_interaction(i));
   }
   return;
@@ -274,6 +279,25 @@ void SpinInteractionGraph::add_edges(
   
   return;
 }
+
+void SpinInteractionGraph::set_positions(
+    const UIntArray& vertex_labels, const vector<ThreeVector>& positions)
+{
+  
+  if (vertex_labels.size() != positions.size()) {
+    Errors::quit("Vertex label and position arrays must be of the same size.");
+    return;
+  }
+  
+  for (UInt i=0;i<vertex_labels.size();i++) {
+    set_position(vertex_labels[i],positions[i]);
+  }
+  
+  return;
+  
+
+}
+
 
 
 } // namespace SpinDec

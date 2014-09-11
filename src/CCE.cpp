@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/CCE.h"
 
@@ -87,7 +87,7 @@ TimeEvolution CCE::calculate()
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
       
       result = result*true_correlation(cluster_database_.get_cluster(i,j));
-
+      
     }
     
   }

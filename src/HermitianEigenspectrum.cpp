@@ -1,10 +1,11 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/HermitianEigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
 #include "SpinDec/Errors.h"
 #include "SpinDec/options.h"
+
 
 // For Lapack zheev diagonalizer (Intel example TODO link)
 // ---------------------------------------------

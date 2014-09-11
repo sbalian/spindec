@@ -1,5 +1,5 @@
 // See CSDProblem.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 11, 2014
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"
@@ -115,14 +115,15 @@ CSDProblem::CSDProblem(
   
 }
 
-SpinSystem CSDProblem::construct_reduced_problem(const UInt order) const
+SpinInteractionGraph
+CSDProblem::construct_reduced_problem_graph(const UInt order) const
 {
-  
     
   // graphs
   
   SpinInteractionGraph bath_graph =
       spin_bath_.reduced_problem_graph(order);
+  
   
   SpinInteractionGraph system_graph =
       central_spin_system_->get_graph();
@@ -132,9 +133,8 @@ SpinSystem CSDProblem::construct_reduced_problem(const UInt order) const
   
   system_bath_graph.add_edges(make_system_bath_edges(order));
   
-  // spin systems
-      
-  return SpinSystem(system_bath_graph,field_);
+    
+  return system_bath_graph;
   
 }
 
@@ -155,7 +155,7 @@ CSDProblem& CSDProblem::operator =(const CSDProblem& csd_problem)
   spin_bath_ = csd_problem.spin_bath_;
   field_ = csd_problem.field_;
   system_bath_edges_ = csd_problem.system_bath_edges_;
-  reduced_problems_ = csd_problem.reduced_problems_;
+  reduced_problem_graphs_ = csd_problem.reduced_problem_graphs_;
   return *this;
 
 }
@@ -178,70 +178,82 @@ SpinSystem CSDProblem::get_reduced_problem(
   if (order == 0) {
     Errors::quit("Order must be +ve non-zero integer.");
   }
-
   
-  SpinSystem spin_system;
+  SpinInteractionGraph spin_system_graph;
   
   UInt index = 0;
   bool found = false;
   
-  for (UInt i =0;i<reduced_problems_.size();i++) {
-    if ( reduced_problems_[i].first == order ) {
+  for (UInt i =0;i<reduced_problem_graphs_.size();i++) {
+    if ( reduced_problem_graphs_[i].first == order ) {
       found = true;
+      index = i;
     }
   }
 
-  
   if (found == true) {
-    spin_system = reduced_problems_[index].second;
+    spin_system_graph = reduced_problem_graphs_[index].second;
   } else {
-    spin_system = construct_reduced_problem(order);
-    reduced_problems_.push_back( pair< UInt,SpinSystem>(order,spin_system) );
-
+    spin_system_graph = construct_reduced_problem_graph(order);
+    reduced_problem_graphs_.push_back(
+        pair< UInt,SpinInteractionGraph>(order,spin_system_graph) );
   }
   
-  
-  // now set the initial bath positions
+  // need to update the bath positions
   
   // get the site vectors
-  vector<ThreeVector> sites;
+  vector<ThreeVector> bath_positions;
   for (UInt i=0;i<order;i++) {
-    sites.push_back(
+    bath_positions.push_back(
      get_spin_bath().get_crystal_structure().get_site_vector(bath_indices[i]));
   }
-  
+    
   // get the bath vertex labels
   UIntArray bath_vertex_labels =
       get_bath_vertex_labels(order);
-  // get the number of bath vertices
-  UInt num_bath_vertices =
-      get_spin_bath().get_spin_system()->get_graph().num_vertices();
   
-
   // new positions
   vector<ThreeVector> positions;
   for (UInt i=0;i<order;i++) {
-    for (UInt j=0;j<num_bath_vertices;j++) {
-      positions.push_back(sites[i]);
-    }
+      for (UInt j=0;j<bath_vertex_labels.size()/order;j++) {
+        positions.push_back(bath_positions[i]);
+      }
   }
-  
-
+   
+  for (UInt i=0;i<bath_vertex_labels.size();i++) {
+    bath_vertex_labels[i] -= 
+        get_central_spin_system()->get_graph().num_vertices();
+  }
   
   for (UInt i=0;i<bath_vertex_labels.size();i++) {
     positions[i]+=
-     get_spin_bath().get_spin_system()->get_graph().get_position(i);
+     get_spin_bath().reduced_problem_graph(order).get_position(
+         bath_vertex_labels[i]);
   }
   
-  spin_system.update_positions(bath_vertex_labels,positions);
+  for (UInt i=0;i<bath_vertex_labels.size();i++) {
+    bath_vertex_labels[i] += 
+        get_central_spin_system()->get_graph().num_vertices();
+  }
+    
+  spin_system_graph.set_positions(bath_vertex_labels,positions);
 
   //cout << get_central_spin_system()->get_state().get_basis() << endl;
+  
+  
+//  if (order == 2) {
+//    cout << spin_system_graph.get_position(0) << endl;
+//  }
+  
+  
+  SpinSystem spin_system(spin_system_graph,field_);
   
   // set the initial state
   // TODO this needs checking ...
   spin_system.set_state(get_central_spin_system()->get_state()
       ^get_spin_bath().get_state(bath_indices));
-
+  
+  
   // TODO all this needs thorough checking ...
   return spin_system;
   
