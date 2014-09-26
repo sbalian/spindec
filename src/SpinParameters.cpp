@@ -1,5 +1,5 @@
 // See SpinParameters.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Sep 25, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include <iomanip>
@@ -8,26 +8,26 @@
 namespace SpinDec
 {
 
-UInt SpinParameters::calc_multiplicity(const double quantum_number) const
+UInt SpinParameters::multiplicity(const double quantum_number) const
 {
   return static_cast<UInt>(2.0*quantum_number + 1.0);
 }
 
 
 SpinParameters::SpinParameters() :
-          quantum_number_(0.0),
+          quantum_number_(0.5),
           gyromagnetic_ratio_(0.0),
-          multiplicity_(0)
+          multiplicity_(multiplicity(0.5))
 {/**/}
 
 SpinParameters::SpinParameters(const double quantum_number,
            const double gyromagnetic_ratio) :
       quantum_number_(quantum_number),
       gyromagnetic_ratio_(gyromagnetic_ratio),
-      multiplicity_(calc_multiplicity(quantum_number))
+      multiplicity_(multiplicity(quantum_number))
 {
-  if (quantum_number < 0.0) {
-    Errors::quit("Forced convention: spin quantum number must be positive.");
+  if (quantum_number < 0.5) {
+    Errors::quit("Spin quantum number must be >= 0.5.");
   }
 }
 

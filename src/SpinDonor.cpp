@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 24, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -108,7 +108,8 @@ double SpinDonor::delta() const
 
 double SpinDonor::omega() const
 {
-  return electron_parameters_.get_gyromagnetic_ratio()*field_.get_magnitude();
+  return electron_parameters_.get_gyromagnetic_ratio()*
+      get_hamiltonian().get_field().get_magnitude();
 }
 
 double SpinDonor::scaled_omega() const
@@ -432,7 +433,7 @@ void SpinDonor::init(const double field_strength,
   
   // set the rest of the data members and build spin interaction graph
   
-  field_ = UniformMagneticField(field_strength);
+  UniformMagneticField field(field_strength);
   
   electron_parameters_ = ElectronSpinParameters(electron_gyromagnetic_ratio);
   nuclear_parameters_ = NuclearSpinParameters(nuclear_quantum_number,
@@ -442,21 +443,17 @@ void SpinDonor::init(const double field_strength,
   
   set_transition(lower_level_label,upper_level_label);
   
-  graph_.add_vertex(electron_parameters_,electron_position);
-  graph_.add_vertex(nuclear_parameters_,nuclear_position);
-  graph_.add_edge(0,1,hyperfine_.clone());
+  SpinInteractionGraph graph;
+  graph.add_vertex(electron_parameters_,electron_position);
+  graph.add_vertex(nuclear_parameters_,nuclear_position);
+  graph.add_edge(0,1,hyperfine_.clone());
   
   if (complete_basis_ == false) {
-    graph_.set_basis(build_truncated_basis());
+    graph.set_basis(build_truncated_basis());
   }
   
-  hamiltonian_ = SpinHamiltonian(graph_,field_);
-  
-  diagonalize();
-  
-  set_energies();
-  set_eigenstates();
-  
+  hamiltonian_ = SpinHamiltonian(graph,field);
+    
   sort_level_labels();
   
   return;
@@ -519,15 +516,21 @@ UInt SpinDonor::dimension() const
   return total_multiplicity();
 }
 
-SpinState SpinDonor::eigenstate(const UInt level_label) const
+SpinState SpinDonor::eigenstate(const UInt level_label)
 {
+  
+  solve_once();
+  
   check_level_label(level_label);
   return SpinState(eigenstates_.col(level_label_index(level_label)),
       hamiltonian_.get_basis());
 }
 
-double SpinDonor::energy(const UInt level_label) const
+double SpinDonor::energy(const UInt level_label)
 {
+  
+  solve_once();
+  
   check_level_label(level_label);
   return energies_(level_label_index(level_label));
 }
@@ -546,12 +549,12 @@ double SpinDonor::polarization(const UInt level_label) const
 
 const SpinInteractionVertex& SpinDonor::electron_vertex() const
 {
-  return get_graph().get_vertex(0);
+  return get_hamiltonian().get_graph().get_vertex(0);
 }
 
 const SpinInteractionVertex& SpinDonor::nuclear_vertex() const
 {
-  return get_graph().get_vertex(1);
+  return get_hamiltonian().get_graph().get_vertex(1);
 }
 
 const UIntArray SpinDonor::get_orthogonal_level_labels() const
@@ -559,12 +562,12 @@ const UIntArray SpinDonor::get_orthogonal_level_labels() const
   return orthogonal_level_labels_;
 }
 
-SpinState SpinDonor::get_lower_level() const
+SpinState SpinDonor::get_lower_level()
 {
   return eigenstate(transition_level_labels_[0]);
 }
 
-SpinState SpinDonor::get_upper_level() const
+SpinState SpinDonor::get_upper_level()
 {
   return eigenstate(transition_level_labels_[0]);
 }
@@ -605,7 +608,7 @@ void SpinDonor::set_orthogonal_level_labels(
       upper_level_label);
 }
 
-vector<SpinState> SpinDonor::get_orthogonal_levels() const
+vector<SpinState> SpinDonor::get_orthogonal_levels()
 {
   
   vector<SpinState> orthogonal_levels;
@@ -620,7 +623,7 @@ vector<SpinState> SpinDonor::get_orthogonal_levels() const
 }
 
 PiPulse SpinDonor::pi_pulse(const UInt level_label1,
-    const UInt level_label2) const
+    const UInt level_label2)
 {
   SpinState level1 = eigenstate(level_label1);
   SpinState level2 = eigenstate(level_label2);

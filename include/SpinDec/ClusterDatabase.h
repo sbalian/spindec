@@ -8,7 +8,7 @@
 //
 // TODO comment more
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -45,12 +45,15 @@ private:
   bool is_order_built(const UInt order) const;
   bool cluster_exists(const Cluster& cluster) const;
   
+  double pairing_cutoff_;
+  
   //const ClusterDatabaseEntry& get_entry(const Cluster& cluster) const;
     
 public:
   
   ClusterDatabase();
-  ClusterDatabase(const SpinBath& spin_bath, const UInt max_order);
+  ClusterDatabase(const SpinBath& spin_bath, const UInt max_order,
+      const double pairing_cutoff);
   
   const ClusterDatabaseEntry& get_entry(const UInt order,
       const UInt index) const;

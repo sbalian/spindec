@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 26, 2014
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -81,12 +81,14 @@ bool ClusterDatabase::cluster_exists(const Cluster& cluster) const
   
 }
 
-ClusterDatabase::ClusterDatabase() : max_order_(0)
+ClusterDatabase::ClusterDatabase() : max_order_(0), pairing_cutoff_(0.0)
 {
 }
 
 ClusterDatabase::ClusterDatabase(const SpinBath& spin_bath,
-    const UInt max_order) : max_order_(max_order),spin_bath_(spin_bath)
+    const UInt max_order,const double pairing_cutoff) :
+        max_order_(max_order),spin_bath_(spin_bath),
+        pairing_cutoff_(pairing_cutoff)
 {
   build();
 }
@@ -97,7 +99,7 @@ void ClusterDatabase::build()
     Errors::quit("Max order cannot be zero.");
   }
   
-  const UInt num_sites = spin_bath_.num_spin_systems();
+  const UInt num_sites = spin_bath_.num_bath_states();
   
   // make 1-clusters (clusters of order 1, ie 1 bath spin system)
   vector<ClusterDatabaseEntry> one_clusters;
@@ -127,7 +129,7 @@ void ClusterDatabase::build()
           spin_bath_.get_crystal_structure().get_site_vector(j);
       
       if (!( BoostEigen::isWithinDistance(separation,
-          spin_bath_.get_pairing_cutoff()))) {
+          pairing_cutoff_))) {
        j+=1;
        continue;
       }
@@ -212,7 +214,7 @@ void ClusterDatabase::build()
           // found one distance smaller than threshold,
           // leave loop and add cluster
           distance_check = BoostEigen::isWithinDistance(to_check-site_to_add,
-              spin_bath_.get_pairing_cutoff());
+              pairing_cutoff_);
           if (distance_check == true) {
             break;
           }

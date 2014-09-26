@@ -5,7 +5,7 @@
 //
 // A spin-1/2 spin system.
 //
-// Seto Balian, Jun 2, 2014
+// Seto Balian, Sep 24, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -20,8 +20,7 @@ private:
 
   double gyromagnetic_ratio_;
   
-  virtual void set_energies();
-  virtual void set_eigenstates();
+  virtual void solve_once();
   
   virtual void check_level_label(const UInt level_label) const;
 

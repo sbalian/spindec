@@ -5,7 +5,7 @@
 //
 // CPMG pulse sequence.
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseExperiment.h"
@@ -21,6 +21,8 @@ private:
   UInt cpmg_order_;
   TwoStateSuperposition initial_system_state_;
   PiPulse system_pi_pulse_;
+  
+  vector< pair< UInt, Pulse > > pulses_;
 
 public:
 

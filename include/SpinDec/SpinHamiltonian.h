@@ -10,7 +10,7 @@
 //
 // TODO explain changes for "update position" method
 //
-// Seto Balian, Sep 1, 2014
+// Seto Balian, Sep 26, 2014
 
 #include <string>
 
@@ -62,9 +62,10 @@ public:
       const UniformMagneticField & field);
   
   UniformMagneticField get_field() const;
+  const SpinInteractionGraph& get_graph() const;
   
-//  void update_positions(const UIntArray& vertex_labels,
-//      const vector<ThreeVector>& positions);
+  void update_positions(const UIntArray& vertex_labels,
+      const vector<ThreeVector>& positions);
   
 };
 

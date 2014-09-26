@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -169,54 +169,54 @@ UniformMagneticField SpinHamiltonian::get_field() const
   return field_;
 }
 
-//void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
-//    const vector<ThreeVector>& positions)
-//{
-//    
-//  if (vertex_labels.size() != positions.size()) {
-//    Errors::quit("Vertex label and position arrays must be of the same size.");
-//    return;
-//  }
-//  
-//  for (UInt l=0;l<vertex_labels.size();l++) {
-//    
-//    graph_.set_position(vertex_labels[l],positions[l]);
-//    
-//    // Zeeman
-//    fill_zeeman(vertex_labels[l]);
-//    
-//    // interactions
-//    
-//    // get the affected edges
-//    UIntArray edge_indices;
-//    
-//    for (UInt i=0;i<graph_.num_edges();i++) {
-//      
-//      // TODO make sure this is OK ... edge indices should not contain duplicates
-//      if ( (graph_.get_edge(i).get_label1() == vertex_labels[l]) ||
-//           (graph_.get_edge(i).get_label2() == vertex_labels[l])) {
-//        edge_indices.push_back(i);
-//      }
-//      
-//    }
-//    
-//    // fill the affected interactions
-//    for (UInt i=0;i<edge_indices.size();i++) {
-//      fill_interaction(edge_indices[i]);
-//    }
-//    
-//  }
-//  
-//  // resum
-//  
-//  sum_interaction_terms();
-//  sum_zeeman_terms();
-//
-//  // reset matrix
-//  matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
-//
-//  return;
-//  
-//}
+const SpinInteractionGraph& SpinHamiltonian::get_graph() const
+{
+  return graph_;
+}
 
-} // namespace SpinDec
+
+void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
+    const vector<ThreeVector>& positions)
+{
+    
+  if (vertex_labels.size() != positions.size()) {
+    Errors::quit("Vertex label and position arrays must be of the same size.");
+    return;
+  }
+  
+  // set the new positions
+  for (UInt l=0;l<vertex_labels.size();l++) {
+    graph_.set_position(vertex_labels[l],positions[l]);
+  }
+  
+  for (UInt i=0;i<graph_.num_edges();i++) {
+    
+    bool to_change = false;
+    for (UInt j=0;j<vertex_labels.size();j++) {
+      if (graph_.get_edge(i).get_label1() == vertex_labels[j]) {
+        to_change = true;
+        break;
+      }
+      if (graph_.get_edge(i).get_label2() == vertex_labels[j]) {
+        to_change = true;
+        break;
+      }
+    }
+    
+    if (to_change == true) {
+      fill_interaction(i);
+    }
+    
+  }
+  
+  // resum
+  sum_interaction_terms();
+  // reset matrix
+  matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
+
+  return;
+  
+}
+
+}// namespace SpinDec
+

@@ -1,5 +1,5 @@
 // See SpinSystem.h for description.
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/SpinSystem.h"
 #include "SpinDec/Errors.h"
@@ -7,22 +7,18 @@
 namespace SpinDec
 {
 
-void SpinSystem::diagonalize()
+void SpinSystem::solve_once()
 {
+  
+  // solve only once
+  if (is_solved_ == true) {
+    return;
+  } else {
+      is_solved_ = true;
+  }
+  
   eigenspectrum_ = HermitianEigenspectrum(hamiltonian_.get_matrix());
-  return;
-}
-
-void SpinSystem::set_eigenstates()
-{
-  // just sets, already calculated in constructor
   eigenstates_ = eigenspectrum_.get_eigenvectors();
-  return;
-}
-
-void SpinSystem::set_energies()
-{
-  // just sets, already calculated in constructor
   energies_ = eigenspectrum_.get_eigenvalues().real();
   return;
 }
@@ -40,13 +36,10 @@ void SpinSystem::check_level_label(const UInt level_label) const
     return;
 }
 
-SpinSystem::SpinSystem(const SpinInteractionGraph & graph,
-    const UniformMagneticField & field) :
-    SpinSystemBase(graph,field)
+SpinSystem::SpinSystem(const SpinHamiltonian & hamiltonian) :
+    SpinSystemBase(hamiltonian)
 {
-  diagonalize();
-  set_energies();
-  set_eigenstates();
+  
 }
 
 UInt SpinSystem::dimension() const
@@ -59,28 +52,6 @@ auto_ptr<SpinSystemBase> SpinSystem::clone() const
   return auto_ptr<SpinSystemBase> (new SpinSystem(*this));
 }
 
-//void SpinSystem::update_positions(const UIntArray& vertex_labels,
-//    const vector<ThreeVector>& positions)
-//{
-//  
-//  if (vertex_labels.size() != positions.size()) {
-//    Errors::quit("Vertex label and position arrays must be of the same size.");
-//    return;
-//  }
-//  
-//  hamiltonian_.update_positions(vertex_labels,positions);
-//  
-//  for (UInt l=0;l<vertex_labels.size();l++) {
-//    graph_.set_position(l,positions[l]);
-//  }
-//  
-//  diagonalize();
-//  set_energies();
-//  set_eigenstates();
-//  
-//  return;
-//  
-//}
 
-} // namespace SpinDec
+}// namespace SpinDec
 

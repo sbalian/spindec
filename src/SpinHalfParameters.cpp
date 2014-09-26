@@ -1,5 +1,5 @@
 // See SpinHalfParameters.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Sep 25, 2014
 
 #include "SpinDec/SpinHalfParameters.h"
 

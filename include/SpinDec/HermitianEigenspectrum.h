@@ -10,7 +10,7 @@
 // Optional Lapack diagonalizer:
 // set options::kUseLapackForHermitianDiagonalization to true
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Sep 12, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"

@@ -1,4 +1,14 @@
-Seto Balian, Sep 10, 2014
+Seto Balian, Sep 24, 2014
+
+
+
+SpinBath
+// TODO Generalize to finite temperature; Generalize for multiple spin species?
+//      or use combinations of single-spin-species baths?
+
+- effective use of pointers, whatever the kind ...
+
+- Be careful when using maps, see doc, also with all other std methods
 
 - Martin auto_ptr, smart ptr discussion ...
 

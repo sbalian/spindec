@@ -11,7 +11,7 @@
 //
 // TODO confusing names ...
 //
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 24, 2014
 
 #include "SpinDec/SpinSystem.h"
 
@@ -220,8 +220,8 @@ public:
   UInt total_multiplicity() const; // The complete spin basis dimension.
                                    // This is (2S+1)*(2I+1)
   
-  virtual SpinState eigenstate(const UInt level_label) const;
-  virtual double energy(const UInt level_label) const;
+  virtual SpinState eigenstate(const UInt level_label);
+  virtual double energy(const UInt level_label);
   
   // See double polarization(const AdiabaticLabel& label) const
   // This takes an integer energy level label.
@@ -234,12 +234,12 @@ public:
   
   const UIntArray get_orthogonal_level_labels() const;
   
-  SpinState get_lower_level() const;
-  SpinState get_upper_level() const;
-  vector<SpinState> get_orthogonal_levels() const;
+  SpinState get_lower_level();
+  SpinState get_upper_level();
+  vector<SpinState> get_orthogonal_levels();
   
   virtual PiPulse pi_pulse(const UInt level_label1,
-      const UInt level_label2) const;
+      const UInt level_label2);
   
   virtual auto_ptr<SpinSystemBase> clone() const;
   

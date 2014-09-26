@@ -1,5 +1,5 @@
 // See CSDProblem.h for description.
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"
@@ -16,7 +16,6 @@ void CSDProblem::init(
   
   // Central spin system
   
-  // TODO again, rediagonalization ...
   central_spin_system_ = central_spin_system_base->clone();
   
   // Spin bath
@@ -48,7 +47,8 @@ vector<SpinInteractionEdge> CSDProblem::make_system_bath_edges(
   vector< std::pair<UInt,UInt> > pairs;
   
   const UInt num_vertices =
-      spin_bath_.get_spin_system()->get_graph().num_vertices();
+      spin_bath_.get_spin_system()->get_hamiltonian().
+      get_graph().num_vertices();
   
   for (UInt i=1;i<=order;i++) {
     pairs.push_back(std::pair<UInt,UInt>( a , b + (i-1)*num_vertices ));
@@ -115,8 +115,8 @@ CSDProblem::CSDProblem(
   
 }
 
-SpinInteractionGraph
-CSDProblem::construct_reduced_problem_graph(const UInt order) const
+SpinSystem
+CSDProblem::construct_reduced_problem(const UInt order) const
 {
     
   // graphs
@@ -124,17 +124,16 @@ CSDProblem::construct_reduced_problem_graph(const UInt order) const
   SpinInteractionGraph bath_graph =
       spin_bath_.reduced_problem_graph(order);
   
-  
   SpinInteractionGraph system_graph =
-      central_spin_system_->get_graph();
+      central_spin_system_->get_hamiltonian().get_graph();
   
   SpinInteractionGraph system_bath_graph =
       system_graph.join(bath_graph);
   
   system_bath_graph.add_edges(make_system_bath_edges(order));
   
-    
-  return system_bath_graph;
+  
+  return SpinSystem( SpinHamiltonian(system_bath_graph,field_) );
   
 }
 
@@ -155,7 +154,7 @@ CSDProblem& CSDProblem::operator =(const CSDProblem& csd_problem)
   spin_bath_ = csd_problem.spin_bath_;
   field_ = csd_problem.field_;
   system_bath_edges_ = csd_problem.system_bath_edges_;
-  reduced_problem_graphs_ = csd_problem.reduced_problem_graphs_;
+  reduced_problems_ = csd_problem.reduced_problems_;
   return *this;
 
 }
@@ -179,24 +178,24 @@ SpinSystem CSDProblem::get_reduced_problem(
     Errors::quit("Order must be +ve non-zero integer.");
   }
   
-  SpinInteractionGraph spin_system_graph;
+  SpinSystem spin_system;
   
   UInt index = 0;
   bool found = false;
   
-  for (UInt i =0;i<reduced_problem_graphs_.size();i++) {
-    if ( reduced_problem_graphs_[i].first == order ) {
+  for (UInt i =0;i<reduced_problems_.size();i++) {
+    if ( reduced_problems_[i].first == order ) {
       found = true;
       index = i;
     }
   }
 
   if (found == true) {
-    spin_system_graph = reduced_problem_graphs_[index].second;
+    spin_system = reduced_problems_[index].second;
   } else {
-    spin_system_graph = construct_reduced_problem_graph(order);
-    reduced_problem_graphs_.push_back(
-        pair< UInt,SpinInteractionGraph>(order,spin_system_graph) );
+    spin_system = construct_reduced_problem(order);
+    reduced_problems_.push_back(
+        pair< UInt,SpinSystem>(order,spin_system) );
   }
   
   // need to update the bath positions
@@ -222,7 +221,7 @@ SpinSystem CSDProblem::get_reduced_problem(
    
   for (UInt i=0;i<bath_vertex_labels.size();i++) {
     bath_vertex_labels[i] -= 
-        get_central_spin_system()->get_graph().num_vertices();
+        get_central_spin_system()->get_hamiltonian().get_graph().num_vertices();
   }
   
   for (UInt i=0;i<bath_vertex_labels.size();i++) {
@@ -233,26 +232,16 @@ SpinSystem CSDProblem::get_reduced_problem(
   
   for (UInt i=0;i<bath_vertex_labels.size();i++) {
     bath_vertex_labels[i] += 
-        get_central_spin_system()->get_graph().num_vertices();
+        get_central_spin_system()->get_hamiltonian().
+        get_graph().num_vertices();
   }
-    
-  spin_system_graph.set_positions(bath_vertex_labels,positions);
-
-  //cout << get_central_spin_system()->get_state().get_basis() << endl;
   
-  
-//  if (order == 2) {
-//    cout << spin_system_graph.get_position(0) << endl;
-//  }
-  
-  
-  SpinSystem spin_system(spin_system_graph,field_);
+  spin_system.update_positions(bath_vertex_labels,positions);
   
   // set the initial state
   // TODO this needs checking ...
   spin_system.set_state(get_central_spin_system()->get_state()
-      ^get_spin_bath().get_state(bath_indices));
-  
+      ^get_spin_bath().get_bath_product_state(bath_indices));
   
   // TODO all this needs thorough checking ...
   return spin_system;
@@ -264,9 +253,11 @@ UIntArray CSDProblem::get_bath_vertex_labels(const UInt order) const
   
   UIntArray labels;
   const UInt n_b = 
-      spin_bath_.get_spin_system()->get_graph().num_vertices();
+      spin_bath_.get_spin_system()->get_hamiltonian()
+      .get_graph().num_vertices();
   const UInt n_c = 
-      central_spin_system_->get_graph().num_vertices();
+      central_spin_system_->get_hamiltonian().
+      get_graph().num_vertices();
   
   for (UInt i=n_c;i<=(n_c + order*n_b - 1);i++) {
     labels.push_back(i);

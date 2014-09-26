@@ -1,8 +1,10 @@
 // For testing SpinDec
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Sep 26, 2014
 
 #include <iostream>
 #include <iomanip>
+
+#include <ctime>
 
 #include "SpinDec/base.h"
 
@@ -11,8 +13,8 @@ using namespace SpinDec;
 int main ()
 {
   
-  // output format
-  cout << std::left << std::scientific << std::setprecision(10);
+  std::time_t time_start = std::time(0);
+ 
   
   // Set up magnetic field (T)
   UniformMagneticField field(0.480,ThreeVector(0.0,1.0,1.0));
@@ -43,15 +45,16 @@ int main ()
   DiamondCubic diamond_cubic(5.43,150.0,0.0467);
   
   // Spin bath
+  
   SpinBath spin_bath(diamond_cubic,si29.clone(),
-      SpinInteractionEdge(0,1,interaction_C12.clone()),4.51);
+      SpinInteractionEdge(0,1,interaction_C12.clone()));
   
   // CSDProblem
 
   // TODO HACK
-  CDouble invsqrt2(1.0/std::sqrt(2.0));  
-  donor.set_state(donor.superposition(invsqrt2,lower_donor_level,invsqrt2,
-      upper_donor_level));
+  CDouble invsqrt2(1.0/std::sqrt(2.0));
+  donor.set_state(invsqrt2,lower_donor_level,invsqrt2,
+      upper_donor_level);
   
   CSDProblem csd_problem(donor.clone(),spin_bath,
       SpinInteractionEdge(0,2,interaction_J.clone()),field);
@@ -64,9 +67,13 @@ int main ()
       upper_donor_level);
   
   // Pair correlations
-  CCE cce(2,cpmg_dephasing.clone());
+  CCE cce(2,cpmg_dephasing.clone(),4.51);
     
   TimeEvolution time_evolution = cce.calculate();
+  
+  cout << "# Time taken: " <<
+      static_cast<UInt>(std::difftime(std::time(0), time_start));
+  cout << " seconds." << endl;
   
   // print to screen
   time_evolution.print_abs();

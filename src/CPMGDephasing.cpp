@@ -1,5 +1,5 @@
 // See CPMGDephasing.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/CPMGDephasing.h"
 #include "SpinDec/Errors.h"
@@ -22,9 +22,13 @@ CPMGDephasing::CPMGDephasing(const CSDProblem& csd_problem,
 {
 
   // Initial state pi/2 pulse superposition
-  initial_system_state_ =
-      csd_problem_.get_central_spin_system()->superposition(
-          c0,level_label0,c1,level_label1);
+  csd_problem_.get_central_spin_system()->set_state(
+      c0,level_label0,c1,level_label1);
+  
+  initial_system_state_ = TwoStateSuperposition(c0,
+      csd_problem_.get_central_spin_system()->eigenstate(level_label0),
+      c1,csd_problem_.get_central_spin_system()->eigenstate(level_label1));
+
   initial_system_state_.normalize();
 
   csd_problem_.set_central_spin_state(initial_system_state_);
@@ -43,21 +47,39 @@ TimeEvolution CPMGDephasing::time_evolution(
 {
   const UInt order = bath_indices.size();
   
-
   if (order == 0) {
     Errors::quit("Order can't be zero.");
+  }
+  
+    
+  Pulse pi_pulse;
+  
+  UInt index = 0;
+  bool found = false;
+  
+  for (UInt i =0;i<pulses_.size();i++) {
+    if ( pulses_[i].first == order ) {
+      found = true;
+      index = i;
+    }
+  }
+
+  if (found == true) {
+    pi_pulse = pulses_[index].second;
+  } else {
+    
+    SpinBasis bath_basis =
+        csd_problem_.get_spin_bath().reduced_problem_graph(order).get_basis();
+
+    pi_pulse = system_pi_pulse_^IdentityPulse(bath_basis);
+    pulses_.push_back(
+        pair< UInt,Pulse>(order,pi_pulse) );
+    
   }
 
   SpinState state0 = initial_system_state_.get_state0();
   SpinState state1 = initial_system_state_.get_state1();
   
-  // TODO repeat here ...  
-  SpinBasis bath_basis =
-      csd_problem_.get_spin_bath().reduced_problem_graph(order).get_basis();
-  
-  // pulse sequence
-  Pulse pi_pulse = system_pi_pulse_^IdentityPulse(bath_basis);
-
   // CPMG coherence
   CDoubleArray L;
 
