@@ -3,14 +3,14 @@
 
 // SpinDec::SpinParameters
 //
-// Contains basic parameters associated with a (quantum) spin.
+// Contains basic parameters associated with a spin.
 // - Quantum number S
 // - Gyromagnetic ratio [M rad s-1 T-1]
 // - Spin multiplicity = 2 S + 1.
 //
 // Gyromagnetic ratio = <Larmor frequency> [M rad s-1] / <magnetic field> [T]
 //
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Sep 25, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -27,12 +27,11 @@ protected:
   UInt multiplicity_;
 
   // Protected methods
-  UInt calc_multiplicity(const double quantum_number) const;
+  UInt multiplicity(const double quantum_number) const;
 
 public:
 
   // Constructors
-  
   SpinParameters();
   SpinParameters(const double quantum_number,
                  const double gyromagnetic_ratio);

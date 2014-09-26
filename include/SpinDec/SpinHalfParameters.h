@@ -5,7 +5,7 @@
 //
 // Spin-1/2 spin parameters.
 //
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Sep 25, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinParameters.h"
@@ -17,7 +17,7 @@ class SpinHalfParameters : public SpinParameters
 {
 public:
   SpinHalfParameters();
-  SpinHalfParameters(const double gyromagnetic_ratio);
+  explicit SpinHalfParameters(const double gyromagnetic_ratio);
   
 };
 

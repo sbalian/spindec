@@ -8,7 +8,7 @@
 //
 // TODO Comment more
 //
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -44,9 +44,10 @@ private:
   
   vector<SpinInteractionEdge> make_system_bath_edges(const UInt order) const;
   
-  vector< pair<UInt,SpinInteractionGraph> > reduced_problem_graphs_;
+  vector< pair< UInt, SpinSystem > > reduced_problems_;
   
-  SpinInteractionGraph construct_reduced_problem_graph(const UInt order) const;
+  SpinSystem construct_reduced_problem(const UInt order) const;
+  
   UIntArray get_bath_vertex_labels(const UInt order) const;
 
 public:

@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/CCE.h"
 
@@ -11,13 +11,14 @@ CCE::CCE() : truncation_order_(0)
 }
 
 CCE::CCE(const UInt truncation_order,
-    const auto_ptr<PulseExperiment>& pulse_experiment) :
+    const auto_ptr<PulseExperiment>& pulse_experiment,
+    const double pairing_cutoff) :
     truncation_order_(truncation_order),
     pulse_experiment_(pulse_experiment->clone())
 {
 
   cluster_database_ = ClusterDatabase(pulse_experiment->
-      get_csd_problem().get_spin_bath(),truncation_order_);
+      get_csd_problem().get_spin_bath(),truncation_order_,pairing_cutoff);
 
 }
 

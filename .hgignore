@@ -5,4 +5,5 @@ boost
 .cproject
 *.o
 Tests
+.settings
 

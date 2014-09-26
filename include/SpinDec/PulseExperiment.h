@@ -5,7 +5,7 @@
 //
 // Abstract base class for a pulse sequence experiment.
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Sep 26, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"
