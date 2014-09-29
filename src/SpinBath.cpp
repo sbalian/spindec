@@ -146,6 +146,7 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
   }
   
   // remove duplicates
+  // TODO check if this is working OK! Understand this piece of code
   std::sort( labels.begin(), labels.end() );
   labels.erase( std::unique( labels.begin(), labels.end() ), labels.end() );
   
