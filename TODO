@@ -1,5 +1,12 @@
-Seto Balian, Sep 24, 2014
+Seto Balian, Sep 29, 2014
 
+1-cluster tests!!!
+eg
+vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
+    const UInt order,
+    const SpinInteractionEdge& intrabath_edge) const
+  // order = 1, return an empty edge vector
+  // TODO is this chaotic with 1-clusters?!
 
 
 SpinBath

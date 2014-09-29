@@ -1,5 +1,5 @@
 // See CPMGDephasing.h for description.
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include "SpinDec/CPMGDephasing.h"
 #include "SpinDec/Errors.h"
@@ -45,13 +45,13 @@ CPMGDephasing::CPMGDephasing(const CSDProblem& csd_problem,
 TimeEvolution CPMGDephasing::time_evolution(
     const UIntArray bath_indices)
 {
+  
   const UInt order = bath_indices.size();
   
   if (order == 0) {
     Errors::quit("Order can't be zero.");
   }
   
-    
   Pulse pi_pulse;
   
   UInt index = 0;
@@ -63,10 +63,12 @@ TimeEvolution CPMGDephasing::time_evolution(
       index = i;
     }
   }
+  
 
   if (found == true) {
     pi_pulse = pulses_[index].second;
   } else {
+    
     
     SpinBasis bath_basis =
         csd_problem_.get_spin_bath().reduced_problem_graph(order).get_basis();
@@ -76,6 +78,7 @@ TimeEvolution CPMGDephasing::time_evolution(
         pair< UInt,Pulse>(order,pi_pulse) );
     
   }
+  
 
   SpinState state0 = initial_system_state_.get_state0();
   SpinState state1 = initial_system_state_.get_state1();
@@ -86,8 +89,9 @@ TimeEvolution CPMGDephasing::time_evolution(
   CDouble norm = CDouble(1.0,0.0);
   
 
-  for (UInt i=0;i<time_array_.get_dimension();i++) {
+  for (UInt i=0;i<time_array_.get_dimension();i++) {      
     
+
     CPMG cpmg = CPMG(cpmg_order_,pi_pulse,
         csd_problem_.get_reduced_problem(bath_indices)
         .evolution_operator(time_array_.get_time(i)));
@@ -108,7 +112,7 @@ TimeEvolution CPMGDephasing::time_evolution(
     }
 
   }
-
+  
   return TimeEvolution(time_array_,L);
 
 }

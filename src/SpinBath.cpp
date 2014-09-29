@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -124,6 +124,7 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
   vector<SpinInteractionEdge> edges;
   
   // order = 1, return an empty edge vector
+  // TODO is this chaotic with 1-clusters?!
   if (order == 1) {
     return edges;
   }
@@ -141,11 +142,14 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
 
   for (UInt i=3;i<=order;i++) {
     labels.push_back(a+(i-2)*num_vertices);
-    if (i!=order) {
-      labels.push_back(b+(i-2)*num_vertices);
-    }
+    labels.push_back(b+(i-2)*num_vertices);
   }
   
+  // remove duplicates
+  std::sort( labels.begin(), labels.end() );
+  labels.erase( std::unique( labels.begin(), labels.end() ), labels.end() );
+  
+  // pair all labels
   for (UInt i=0;i<labels.size();i++) {
     UInt j = 0;
     while (j<i) {
@@ -153,13 +157,11 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
       pair.push_back(labels[i]);
       pair.push_back(labels[j]);
       std::sort (pair.begin(), pair.end());
-            
       edges.push_back( SpinInteractionEdge(
           pair[0],pair[1],intrabath_edge.get_interaction()) );
       j+=1;
     }
   }
-  
   
   return edges;
   
@@ -208,9 +210,7 @@ SpinInteractionGraph SpinBath::reduced_problem_graph(
     graph.join_in_place(single_system_graph);
   }
   
-  
   graph.add_edges(make_intrabath_edges(order));
-
   
   return graph;
   

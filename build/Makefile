@@ -27,7 +27,7 @@ LAPACK_FLAGS=-llapack
 ifeq ($(DEBUG),1)
 COMPILER_FLAGS=-O0 -Wall -g
 else
-COMPILER_FLAGS=-O3 -Wall
+COMPILER_FLAGS=-O3 -Wall -pg
 endif
 
 # Other variables
