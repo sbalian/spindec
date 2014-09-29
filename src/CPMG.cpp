@@ -1,5 +1,5 @@
 // See CPMG.h for description.
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Sep 29, 2014
 
 #include "SpinDec/CPMG.h"
 #include "SpinDec/Errors.h"

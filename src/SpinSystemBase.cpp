@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -191,9 +191,11 @@ void SpinSystemBase::update_positions(const UIntArray& vertex_labels,
   }
   
   hamiltonian_.update_positions(vertex_labels,positions);
-  
+ 
   is_solved_ = false;
   solve_once(); // ie solve again ...
+  
+ 
   
   return;
 

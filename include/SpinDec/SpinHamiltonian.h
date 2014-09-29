@@ -10,7 +10,7 @@
 //
 // TODO explain changes for "update position" method
 //
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include <string>
 

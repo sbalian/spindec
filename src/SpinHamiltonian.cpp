@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -189,31 +189,39 @@ void SpinHamiltonian::update_positions(const UIntArray& vertex_labels,
     graph_.set_position(vertex_labels[l],positions[l]);
   }
   
-  for (UInt i=0;i<graph_.num_edges();i++) {
-    
-    bool to_change = false;
-    for (UInt j=0;j<vertex_labels.size();j++) {
-      if (graph_.get_edge(i).get_label1() == vertex_labels[j]) {
-        to_change = true;
-        break;
-      }
-      if (graph_.get_edge(i).get_label2() == vertex_labels[j]) {
-        to_change = true;
-        break;
-      }
-    }
-    
-    if (to_change == true) {
-      fill_interaction(i);
-    }
-    
+  // TODO filling unchanged interactions as well ...
+  interaction_hamiltonian_.setZero();
+  for (UInt i=0;i<interaction_terms_.size();i++) {
+    interaction_terms_[i].setZero();
   }
+  fill_interactions();
+  
+// TODO buggy
+//  for (UInt i=0;i<graph_.num_edges();i++) {
+//    
+//    bool to_change = false;
+//    for (UInt j=0;j<vertex_labels.size();j++) {
+//      if (graph_.get_edge(i).get_label1() == vertex_labels[j]) {
+//        to_change = true;
+//        break;
+//      }
+//      if (graph_.get_edge(i).get_label2() == vertex_labels[j]) {
+//        to_change = true;
+//        break;
+//      }
+//    }
+//    
+//    if (to_change == true) {
+//      fill_interaction(i);
+//    }
+//    
+//  }
   
   // resum
   sum_interaction_terms();
   // reset matrix
   matrix_ = zeeman_hamiltonian_ + interaction_hamiltonian_;
-
+  
   return;
   
 }

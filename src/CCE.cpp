@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include "SpinDec/CCE.h"
 
@@ -34,7 +34,7 @@ TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
   // otherwise, calculate
   TimeEvolution evolution =
       pulse_experiment_->time_evolution(cluster.get_labels());
-
+  
   // store result in database
   cluster_database_.set_time_evolution(cluster,evolution);
   return evolution;
@@ -48,7 +48,6 @@ TimeEvolution CCE::true_correlation(const Cluster& cluster)
   if (current_order == 1) {
     return reducible_correlation(cluster);
   }
-  
   
   // get the next orders down
   vector< Cluster > current_subclusters = cluster.proper_subsets();
@@ -83,9 +82,11 @@ TimeEvolution CCE::calculate()
       pulse_experiment_->get_time_array());
   result.set_evolution_ones();
   
+  
   for (UInt i=1; i<=truncation_order_;i++) {
-
+    
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
+      
       
       result = result*true_correlation(cluster_database_.get_cluster(i,j));
       

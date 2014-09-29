@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Sep 29, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -42,7 +42,7 @@ int main ()
   Hyperfine interaction_J(hyperfine_parameters);
 
   // Crystal structure
-  DiamondCubic diamond_cubic(5.43,150.0,0.0467);
+  DiamondCubic diamond_cubic(5.43,162.9,0.0467);
   
   // Spin bath
   
@@ -68,7 +68,7 @@ int main ()
   
   // Pair correlations
   CCE cce(2,cpmg_dephasing.clone(),4.51);
-    
+  
   TimeEvolution time_evolution = cce.calculate();
   
   cout << "# Time taken: " <<
