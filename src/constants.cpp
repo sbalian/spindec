@@ -1,4 +1,4 @@
-// See constants.h for description.
+// See Constants.h for description.
 // Seto Balian, Aug 22, 2014
 
 #include "SpinDec/constants.h"

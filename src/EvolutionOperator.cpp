@@ -4,6 +4,8 @@
 #include "SpinDec/EvolutionOperator.h"
 #include "SpinDec/BoostEigen.h"
 
+#include <cmath>
+
 namespace SpinDec
 {
 
@@ -32,10 +34,12 @@ double EvolutionOperator::get_time() const
 
 void EvolutionOperator::set_matrix()
 {
+  
   SpinOperator::set_matrix(
       BoostEigen::unitarySpectralDecomposition(eigenvectors_,
       BoostEigen::exp( eigenvalues_.cast< CDouble >() * 
                        std::complex<double>(0.0,-time_) ) ));
+  
   return;
 }
 

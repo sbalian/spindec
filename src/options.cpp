@@ -1,5 +1,5 @@
 // See options.h for description.
-// Seto Balian, Sep 11, 2014
+// Seto Balian, Oct 20, 2014
 
 #include "SpinDec/options.h"
 

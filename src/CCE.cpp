@@ -1,19 +1,21 @@
 // See CCE.h for description.
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Oct 22, 2014
 
 #include "SpinDec/CCE.h"
 
 namespace SpinDec
 {
 
-CCE::CCE() : truncation_order_(0)
+CCE::CCE() : truncation_order_(0),include_one_clusters_(true)
 {
 }
 
 CCE::CCE(const UInt truncation_order,
     const auto_ptr<PulseExperiment>& pulse_experiment,
-    const double pairing_cutoff) :
+    const double pairing_cutoff,
+    const bool include_one_clusters) :
     truncation_order_(truncation_order),
+    include_one_clusters_(include_one_clusters),
     pulse_experiment_(pulse_experiment->clone())
 {
 
@@ -25,6 +27,11 @@ CCE::CCE(const UInt truncation_order,
 TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
 {
   
+  if ( (include_one_clusters_ == false) && (cluster.num_spins() == 1) ) {
+    TimeEvolution no_decay(pulse_experiment_->get_time_array());
+    no_decay.set_evolution_ones();
+    return no_decay;
+  }
   
   // if already calculated, return the calculated evolution
   if ( cluster_database_.is_solved(cluster) ) {
@@ -32,6 +39,7 @@ TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
   }
 
   // otherwise, calculate
+  
   TimeEvolution evolution =
       pulse_experiment_->time_evolution(cluster.get_labels());
   
@@ -81,12 +89,14 @@ TimeEvolution CCE::calculate()
   TimeEvolution result(
       pulse_experiment_->get_time_array());
   result.set_evolution_ones();
-  
-  
+    
   for (UInt i=1; i<=truncation_order_;i++) {
     
+    if (include_one_clusters_ == false) {
+      if (i==1) {continue;}
+    }
+    
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
-      
       
       result = result*true_correlation(cluster_database_.get_cluster(i,j));
       
