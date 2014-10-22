@@ -1,4 +1,10 @@
-Seto Balian, Sep 29, 2014
+Seto Balian, Oct 22, 2014
+
+TO OPTIMIZE
+- SpinOperator default copy constructor
+
+EXTENSIVE TESTING AND COMPARISON TO ALL CODE ESSENTIAL
+
 
 1-cluster tests!!!
 eg

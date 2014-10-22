@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Oct 22, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -13,8 +13,7 @@ using namespace SpinDec;
 int main ()
 {
   
-  std::time_t time_start = std::time(0);
- 
+  std::time_t time_start = std::time(0); 
   
   // Set up magnetic field (T)
   UniformMagneticField field(0.480,ThreeVector(0.0,1.0,1.0));
@@ -61,13 +60,13 @@ int main ()
 
   // Hahn spin echo decay
   TimeArray time_array(0.0,1.0e3,10);
-    
+  
   CPMGDephasing cpmg_dephasing(
       csd_problem,time_array,1,invsqrt2,lower_donor_level,invsqrt2,
       upper_donor_level);
   
   // Pair correlations
-  CCE cce(2,cpmg_dephasing.clone(),4.51);
+  CCE cce(3,cpmg_dephasing.clone(),4.51,false);
   
   TimeEvolution time_evolution = cce.calculate();
   

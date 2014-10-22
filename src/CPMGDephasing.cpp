@@ -1,5 +1,5 @@
 // See CPMGDephasing.h for description.
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Oct 22, 2014
 
 #include "SpinDec/CPMGDephasing.h"
 #include "SpinDec/Errors.h"
@@ -88,16 +88,20 @@ TimeEvolution CPMGDephasing::time_evolution(
 
   CDouble norm = CDouble(1.0,0.0);
   
-
-  for (UInt i=0;i<time_array_.get_dimension();i++) {      
+  SpinSystem reduced_problem = csd_problem_.get_reduced_problem(bath_indices);
+  SpinState initial_state = reduced_problem.get_state();
     
-
-    CPMG cpmg = CPMG(cpmg_order_,pi_pulse,
-        csd_problem_.get_reduced_problem(bath_indices)
-        .evolution_operator(time_array_.get_time(i)));
-
-    SpinState final_state = cpmg.final_state(
-        csd_problem_.get_reduced_problem(bath_indices).get_state());
+  for (UInt i=0;i<time_array_.get_dimension();i++) {
+    
+    EvolutionOperator evolution_operator =
+        reduced_problem
+                .evolution_operator(time_array_.get_time(i));
+    
+    evolution_operator.set_time( time_array_.get_time(i) );
+    
+    CPMG cpmg = CPMG(cpmg_order_,pi_pulse,evolution_operator);
+    
+    SpinState final_state = cpmg.final_state(initial_state);
 
     DensityOperator density_operator(final_state,
         state0,

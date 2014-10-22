@@ -1,14 +1,14 @@
 # SpinDec Makefile
-# Seto Balian, Sep 29, 2014
+# Seto Balian, Oct 21, 2014
 
 #####################
 # Basic user input
 #####################
 
 # Compiler
-COMPILER=g++
+COMPILER=icpc
 # Set to 1 for debug mode
-DEBUG=0
+DEBUG=1
 
 # Source path
 SOURCE_PATH=../src/
@@ -25,9 +25,10 @@ LAPACK_FLAGS=-llapack
 
 # Debug mode
 ifeq ($(DEBUG),1)
-COMPILER_FLAGS=-O0 -Wall -g
+COMPILER_FLAGS=-O3 -Wall -profile-functions -profile-loops=all -profile-loops-report=2
+#COMPILER_FLAGS=-O0 -Wall -pg
 else
-COMPILER_FLAGS=-O3 -Wall -pg
+COMPILER_FLAGS=-O3 -Wall
 endif
 
 # Other variables

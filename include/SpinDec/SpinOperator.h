@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Oct 22, 2014
 
 #include <complex>
 #include <iostream>
@@ -29,6 +29,7 @@ protected:
 
 public:
   SpinOperator();
+    
   SpinOperator(const ComplexMatrix & matrix, const SpinBasis & basis);
   explicit SpinOperator(const SpinBasis & basis); // zero matrix
 

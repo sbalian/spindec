@@ -23,7 +23,7 @@ void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
   
   for (UInt i=0;i<crystal_structure.num_site_vectors();i++) {
     UInt random_number = 
-        RandomNumberGenerator::uniform_c_rand(0,dimension-1);
+        RandomNumberGenerator::uniform_c_rand(0,1);
     
     SpinState to_add(
         spin_system_base_->get_eigenvector_matrix().col(random_number),

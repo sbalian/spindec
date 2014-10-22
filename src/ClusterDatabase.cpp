@@ -68,7 +68,8 @@ bool ClusterDatabase::cluster_exists(const Cluster& cluster) const
     return false;
   }
   
-  // TODO repeat code
+  // TODO repeat code  
+  
   for (UInt i=0;i<database_.find(order)->second.size();i++) {
     
     if (database_.find(order)->second[i].get_cluster() == cluster) {

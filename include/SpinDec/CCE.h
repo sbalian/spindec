@@ -16,7 +16,7 @@
 // TODO Comment more
 // TODO have experiment instead of pulse experiment?
 //
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Oct 22, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/ClusterDatabase.h"
@@ -33,6 +33,7 @@ private:
   TimeEvolution time_evolution_;
   
   UInt truncation_order_;
+  bool include_one_clusters_;
 
   auto_ptr<PulseExperiment> pulse_experiment_;
   
@@ -46,7 +47,8 @@ public:
   CCE();
   CCE(const UInt truncation_order,
       const auto_ptr<PulseExperiment>& pulse_experiment,
-      const double pairing_cutoff);
+      const double pairing_cutoff,
+      const bool include_one_clusters);
   
   UInt get_truncation_order() const;
   
