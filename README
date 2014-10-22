@@ -1,84 +1,83 @@
-================================================================================
+======================================================================
                                 SpinDec
-================================================================================
+======================================================================
 (X) Introduction
 (X) Installation
-(X) Run
+(X) Usage
 (X) Getting help
 (X) Acknowledgements
 (X) License
 (X) Contact
 
-================================================================================
+======================================================================
 (X) Introduction
-================================================================================
+======================================================================
 
-Solves for decoherence of a central spin in a spin bath.
+Solves for decoherence of a central spin system in a quantum spin
+bath.
 
 Implements:
 - Cluster correlation expansion
 - Special methods for donor qubits
 
 Notes:
-- Most code in C++
-- Based on old code "cce" -> "SpinDec" developed in 2011-2013
-- This version started 19/05/2013
-- Some methods were originally written in Fortran by Tania Monteiro
+- Most code in C++ developed starting 2011.
+- Some methods were originally written in Fortran by Tania Monteiro.
+- This version was started on 19/05/2013 using code developed
+  for a limited set of central spin systems and spin baths.
 
-================================================================================
+======================================================================
 (X) Installation
-================================================================================
+======================================================================
 
 System requirements:
-- Unix-like OS with c++ compiler (g++ 4.4.7 or above recommended).
-
-Included:
+- Unix-like OS with c++ compiler (g++ 4.4.7 or above recommended)
+- Lapack
 - Eigen: Open-source linear algebra package
   http://eigen.tuxfamily.org
-- Boost
-  http://www.boost.org
+
+Included:
 - argvparser: Open-source command line option parser by Michael Hanke
   http://mih.voxindeserto.de/argvparser.html
 
-Optional:
-- Lapack (TODO make it optional)
+======================================================================
+(X) Usage
+======================================================================
 
-================================================================================
-(X) Run
-================================================================================
-
-================================================================================
+======================================================================
 (X) Getting help
-================================================================================
+======================================================================
 
 - Help is given in header files (.h extension)
-- Source files (.cpp extension) may contain more information, usually geared
-  more towards implementation
-- "Main" source files (in /src/ with lower-case names) also contain help
-- See the Makefile for available binaries
+- Source files (.cpp extension) may contain more information, usually
+  geared more towards implementation
+- main source files also contain help
+- See the Makefile in build/ for available binaries
 
-================================================================================
+======================================================================
 (X) Acknowledgements
-================================================================================
+======================================================================
 
 - Tania Monteiro
 - Wayne Witzel
 - Martin Uhrin
 - Leonardo Banchi
 
-================================================================================
+======================================================================
 (X) License
-================================================================================
+======================================================================
 
-================================================================================
+See LICENSE.
+
+======================================================================
 (X) Contact
-================================================================================
+======================================================================
 
 Seto Balian <seto.balian@gmail.com>
 
-================================================================================
+======================================================================
 
-Last modified: Mar 06, 2014
+Last modified: Oct 22, 2014
 
-================================================================================
+======================================================================
 
