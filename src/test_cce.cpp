@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Oct 22, 2014
+// Seto Balian, Oct 23, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -59,7 +59,7 @@ int main ()
       SpinInteractionEdge(0,2,interaction_J.clone()),field);
 
   // Hahn spin echo decay
-  TimeArray time_array(0.0,1.0e3,10);
+  TimeArray time_array(0.0,1.0e3,100);
   
   CPMGDephasing cpmg_dephasing(
       csd_problem,time_array,1,invsqrt2,lower_donor_level,invsqrt2,

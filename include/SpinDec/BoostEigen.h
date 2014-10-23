@@ -7,7 +7,7 @@
 // Note that the naming convention complies with that of Eigen, and is different
 // from the rest of SpinDec.
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/typedefs.h"
 

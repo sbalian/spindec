@@ -5,7 +5,7 @@
 //
 // CPMG pulse sequence.
 //
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseExperiment.h"

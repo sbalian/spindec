@@ -4,7 +4,7 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, Sep 09, 2014
+// Seto Balian, Oct 23, 2014
 
 #include <Eigen/Dense>
 
@@ -16,6 +16,7 @@
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Cluster.h"
 #include "SpinDec/ClusterDatabase.h"
+#include "SpinDec/ClusterDatabaseEntry.h"
 #include "SpinDec/CrystalBasis.h"
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/DensityOperator.h"
@@ -42,6 +43,7 @@
 #include "SpinDec/PulseSequence.h"
 #include "SpinDec/PulseSequenceBase.h"
 #include "SpinDec/RandomNumberGenerator.h"
+#include "SpinDec/ReducedProblem.h"
 #include "SpinDec/Sign.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"
 #include "SpinDec/SpinBasis.h"

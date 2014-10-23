@@ -1,11 +1,11 @@
 // See options.h for description.
-// Seto Balian, Oct 20, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/options.h"
 
 namespace SpinDec
 {
 
-const bool kUseLapackForHermitianDiagonalization = true;
+//const bool kUseLapackForHermitianDiagonalization = false;
 
 } // namespace SpinDec

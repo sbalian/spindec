@@ -12,7 +12,7 @@
 //   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
 //   > evolve, t/2n >pi-pulse, evolve, t/2n
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequenceBase.h"
@@ -27,6 +27,7 @@ class CPMG : public PulseSequenceBase
 private:
   
   UInt order_;
+  EvolutionOperator evolution_operator_;
   
 public:
   
@@ -34,8 +35,10 @@ public:
 
   // TODO make this into a PiPulse, and put basis for identity?
   CPMG(const UInt order,
-      const Pulse& pi_pulse,
-      const EvolutionOperator& evolution_operator);
+      const EvolutionOperator& evolution_operator,
+      const Pulse& pi_pulse);
+  
+  void set_time(const double time_value);
   
   virtual auto_ptr<PulseSequenceBase> clone() const;
   

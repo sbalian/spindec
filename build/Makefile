@@ -1,35 +1,37 @@
 # SpinDec Makefile
-# Seto Balian, Oct 21, 2014
+# Seto Balian, Oct 23, 2014
 
 #####################
 # Basic user input
 #####################
 
+# Don't forget to
+# export LD_LIBRARY_PATH=/home/sbalian/spindec/build:$LD_LIBRARY_PATH
+
 # Compiler
 COMPILER=icpc
-# Set to 1 for debug mode
-DEBUG=1
+# Set to 1 for debug mode, if 0, RELEASE_FLAGS used
+DEBUG=0
+
+DEBUG_FLAGS=-O0 -Wall -pg
+RELEASE_FLAGS=-O3 -Wall
+# -ansi-alias caused ~ 55 - 50 sec speed increase
+# but may be dangerous ...
+
+# Set to 1 to profile (overrides DEBUG)
+PROFILE=1
+PROFILE_FLAGS=-O3 -Wall -profile-functions\
+ -profile-loops=all -profile-loops-report=2
+
+# Lapack flags
+LAPACK_FLAGS=-I$(MKLROOT)/include -L$(MKLROOT)/lib/intel64\
+ -lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lpthread -lm
 
 # Source path
 SOURCE_PATH=../src/
 
 # Download and extract Eigen from http://eigen.tuxfamily.org
 EIGEN_PATH=/home/sbalian/eigen/
-
-# Lapack flag (TODO make lapack optional)
-LAPACK_FLAGS=-llapack
-
-#####################
-# Initialise
-#####################
-
-# Debug mode
-ifeq ($(DEBUG),1)
-COMPILER_FLAGS=-O3 -Wall -profile-functions -profile-loops=all -profile-loops-report=2
-#COMPILER_FLAGS=-O0 -Wall -pg
-else
-COMPILER_FLAGS=-O3 -Wall
-endif
 
 # Other variables
 
@@ -39,181 +41,50 @@ HEADER_PATH=../include/
 # For this makefile
 HEADER_DIR=$(HEADER_PATH)SpinDec/
 
-# List of executables
-EXECUTABLES=
+#####################
+# Initialise
+#####################
 
-# List of test executables
-TEST_EXCUTABLES=\
-test_boosteigen\
-test_spinparameters\
-test_spinbasis\
-test_misc\
-test_evolution\
-test_crystalstructure\
-test_spindonor\
-test_evolution2\
-test_cce
+# Debug mode
+ifeq ($(DEBUG),1)
+COMPILER_FLAGS=$(DEBUG_FLAGS)
+else
+COMPILER_FLAGS=$(RELEASE_FLAGS)
+endif
+
+ifeq ($(PROFILE),1)
+COMPILER_FLAGS=$(PROFILE_FLAGS)
+endif
+
+EXECUTABLES=test_cce
+
+#TEST_EXECUTABLES=\
+#test_boosteigen.o\
+#test_cce.o\
+#test_crystalstructure.o\
+#test_evolution2.o\
+#test_misc.o\
+#test_spinbasis.o\
+#test_spinparameters.o
 
 #####################
 # Targets
 #####################
 
 # All
-all: $(EXECUTABLES)
+all: $(EXECUTABLES) $(TEST_EXECUTABLES)
 
 # Individual source files
 %.o: $(SOURCE_PATH)%.cpp $(HEADER_DIR)%.h
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c $<
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH)\
+ -fPIC -c $< $(LAPACK_FLAGS)
 
-# Individual main source files
 %.o: $(SOURCE_PATH)%.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c $<
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH)\
+ -fPIC -c $< $(LAPACK_FLAGS)
 
-# All tests
-tests: $(TEST_EXCUTABLES)
-
-# test_boosteigen
-test_boosteigen_OBJECTS=test_boosteigen.o\
-BoostEigen.o
-
-test_boosteigen: $(test_boosteigen_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
-$(test_boosteigen_OBJECTS) -o $@
-
-# test_spinparameters
-test_spinparameters_OBJECTS=test_spinparameters.o\
-ElectronSpinParameters.o\
-SpinParameters.o\
-SpinParametersVector.o\
-constants.o\
-Errors.o
-
-test_spinparameters: $(test_spinparameters_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
-$(test_spinparameters_OBJECTS) -o $@
-
-# test_spinbasis
-test_spinbasis_OBJECTS=test_spinbasis.o\
-SpinBasis.o\
-SpinParameters.o\
-ElectronSpinParameters.o\
-SpinParametersVector.o\
-constants.o\
-Errors.o
-
-test_spinbasis: $(test_spinbasis_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
-$(test_spinbasis_OBJECTS) -o $@
-
-# test_misc
-test_misc_OBJECTS=test_misc.o\
-constants.o
-
-test_misc: $(test_misc_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
-$(test_misc_OBJECTS) -o $@
-
-# test_evolution
-test_evolution_OBJECTS=test_evolution.o\
-UniformMagneticField.o\
-ElectronSpinParameters.o\
-SpinParameters.o\
-MatrixRepresentation.o\
-SpinOperator.o\
-SpinInteraction.o\
-Dipolar.o\
-Hyperfine.o\
-constants.o\
-HyperfineParameters.o\
-Eigenspectrum.o\
-HermitianEigenspectrum.o\
-Errors.o\
-SpinHamiltonian.o\
-SpinInteractionEdge.o\
-SpinInteractionVertex.o\
-SpinInteractionGraph.o\
-SpinParametersVector.o\
-SpinBasis.o\
-BoostEigen.o\
-IsingHyperfine.o\
-SpinSystem.o\
-SpinState.o\
-StringOptions.o\
-SpinSystemBase.o\
-options.o\
-EvolutionOperator.o\
-TwoStateSuperposition.o\
-Pulse.o\
-PiPulse.o
-
-test_evolution: $(test_evolution_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
-$(test_evolution_OBJECTS) -o $@
-
-# test_crystalstructure
-test_crystalstructure_OBJECTS=test_crystalstructure.o\
-DiamondCubic.o\
-CrystalStructure.o\
-LatticeVectors.o\
-CrystalBasis.o\
-BoostEigen.o\
-FileProperties.o\
-Errors.o\
-RandomNumberGenerator.o\
-SimpleCubicLatticeVectors.o
-
-test_crystalstructure: $(test_crystalstructure_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) \
-$(test_crystalstructure_OBJECTS) -o $@
-
-# test_spindonor
-test_spindonor_OBJECTS=test_spindonor.o\
-UniformMagneticField.o\
-ElectronSpinParameters.o\
-NuclearSpinParameters.o\
-SpinParameters.o\
-SpinInteraction.o\
-Hyperfine.o\
-constants.o\
-Errors.o\
-SpinInteractionEdge.o\
-SpinInteractionVertex.o\
-SpinInteractionGraph.o\
-SpinBasis.o\
-BoostEigen.o\
-SpinParametersVector.o\
-HyperfineParameters.o\
-Dipolar.o\
-SpinDonor.o\
-Sign.o\
-AdiabaticLabel.o\
-MatrixRepresentation.o\
-SpinSystemBase.o\
-SpinHamiltonian.o\
-SpinOperator.o\
-SpinState.o\
-SpinSystem.o\
-Eigenspectrum.o\
-HermitianEigenspectrum.o\
-options.o\
-EvolutionOperator.o\
-TwoStateSuperposition.o\
-PiPulse.o\
-Pulse.o
-
-test_spindonor: $(test_spindonor_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
-$(test_spindonor_OBJECTS) -o $@
-
-# test_evolution2
-test_evolution2_OBJECTS=test_evolution2.o
-
-test_evolution2: $(test_evolution2_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
-$(test_evolution2_OBJECTS) -o $@
-
-# test_cce
-test_cce_OBJECTS=test_cce.o\
+# objects
+OBJECTS=\
 AdiabaticLabel.o\
 BoostEigen.o\
 CCE.o\
@@ -222,6 +93,7 @@ CPMGDephasing.o\
 CSDProblem.o\
 Cluster.o\
 ClusterDatabase.o\
+ClusterDatabaseEntry.o\
 CrystalBasis.o\
 CrystalStructure.o\
 DensityOperator.o\
@@ -248,6 +120,7 @@ PulseExperiment.o\
 PulseSequence.o\
 PulseSequenceBase.o\
 RandomNumberGenerator.o\
+ReducedProblem.o\
 Sign.o\
 SimpleCubicLatticeVectors.o\
 SpinBasis.o\
@@ -275,31 +148,61 @@ TimeEvolution.o\
 TwoStateSuperposition.o\
 UniformMagneticField.o\
 constants.o\
-options.o\
-ClusterDatabaseEntry.o
+options.o
 
-test_cce: $(test_cce_OBJECTS)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) $(LAPACK_FLAGS) \
-$(test_cce_OBJECTS) -o $@
+# shared library
+spindec.so: $(OBJECTS)
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+$(OBJECTS) -shared -o $@  $(LAPACK_FLAGS)
+
+# test executables
+
+#test_boosteigen: spindec.so test_boosteigen.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_boosteigen.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+test_cce: spindec.so test_cce.o
+	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+$(SOURCE_PATH)test_cce.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+#test_crystalstructure: spindec.so test_crystalstructure.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_crystalstructure.cpp spindec.so -o $@ \
+# $(LAPACK_FLAGS)
+
+#test_evolution: spindec.so test_evolution.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_evolution.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+#test_evolution2: spindec.so test_evolution2.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_evolution2.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+#test_misc: spindec.so test_misc.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_misc.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+#test_spinbasis: spindec.so test_spinbasis.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_spinbasis.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+#test_spindonor: spindec.so test_spindonor.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_spindonor.cpp spindec.so -o $@  $(LAPACK_FLAGS)
+
+#test_spinparameters: spindec.so test_spinparameters.o
+#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) \
+#$(SOURCE_PATH)test_spinparameters.cpp spindec.so -o $@ \
+# $(LAPACK_FLAGS)
+
 
 #####################
 # Clean up
 #####################
 
 clean: tidy
-	rm -f $(EXECUTABLES) && rm -f test_*
+	rm -f spindec.so && rm -f test_*
 
 tidy:
 	rm -f *.o
-
-#####################
-# Graveyard
-#####################
-
-#ALL_SOURCE=$(wildcard $(SOURCE_PATH)*.cpp)
-#ALL_HEADER=$(wildcard $(HEADER_DIR)*.h)
-#try: $(ALL_SOURCE) $(ALL_HEADER)
-#	$(COMPILER) $(COMPILER_FLAGS) -I$(HEADER_PATH) -I$(EIGEN_PATH) -c \
-#$(ALL_SOURCE)
-
 
