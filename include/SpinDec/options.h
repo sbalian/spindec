@@ -5,12 +5,12 @@
 //
 // Global options for SpinDec.
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Oct 23, 2014
 
 namespace SpinDec
 {
 
-extern const bool kUseLapackForHermitianDiagonalization;
+//extern const bool kUseLapackForHermitianDiagonalization;
 
 } // namespace SpinDec
 

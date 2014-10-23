@@ -8,7 +8,7 @@
 //
 // TODO comment more
 //
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/typedefs.h"
 

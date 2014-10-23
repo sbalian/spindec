@@ -7,7 +7,7 @@
 // Also includes some usings ...
 // All in the SpinDec namespace.
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Oct 23, 2014
 
 #include <Eigen/Dense>
 

@@ -5,7 +5,7 @@
 //
 // Global constants for SpinDec.
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Oct 23, 2014
 
 namespace SpinDec
 {

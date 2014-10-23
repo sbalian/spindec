@@ -10,7 +10,7 @@
 // Optional Lapack diagonalizer:
 // set options::kUseLapackForHermitianDiagonalization to true
 //
-// Seto Balian, Sep 12, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"
@@ -24,7 +24,7 @@ private:
   
   // Diagonalizers
   void diagonalize_eigen (const ComplexMatrix & matrix);
-  void diagonalize_lapack(const ComplexMatrix & matrix);
+  //void diagonalize_lapack(const ComplexMatrix & matrix);
   
   virtual void diagonalize(const ComplexMatrix & matrix);
 

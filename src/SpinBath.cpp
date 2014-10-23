@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Oct 23, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"

@@ -5,7 +5,7 @@
 //
 // Quantum spin operator in the Zeeman basis.
 //
-// Seto Balian, Oct 22, 2014
+// Seto Balian, Oct 23, 2014
 
 #include <complex>
 #include <iostream>
