@@ -4,10 +4,12 @@ SpinDec - Spin Decoherence Simulator
 C++ library for modelling decoherence of a central spin system in a quantum spin bath.
 
 Implements:
+
 - Cluster correlation expansion
 - Special methods for donor qubits
 
 Notes:
+
 - Most code in C++ developed starting 2011.
 - Some methods were originally written in Fortran by Tania Monteiro.
 - This version was started on 19/05/2013 using code developed for a limited set of central spin systems and spin baths.
@@ -16,6 +18,7 @@ Installation
 ------------
 
 Requirements:
+
 - Eigen: Open-source linear algebra package
   http://eigen.tuxfamily.org
 
@@ -36,6 +39,7 @@ This will build the library and some tests.
 
 Usage
 -----
+
 Add #include <SpinDec/base.h> in your source and link with libspindec.
 
 Getting help
