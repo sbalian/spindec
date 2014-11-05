@@ -10,7 +10,7 @@
 //
 // TODO explain changes for "update position" method
 //
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Nov 5, 2014
 
 #include <string>
 
@@ -20,7 +20,6 @@
 
 #include "SpinDec/UniformMagneticField.h"
 
-#include <Eigen/Dense>
 
 namespace SpinDec
 {

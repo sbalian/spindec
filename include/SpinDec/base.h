@@ -3,10 +3,7 @@
 
 // SpinDec includes
 
-// Generated automatically using update-base.sh
-// Seto Balian, Oct 23, 2014
-
-#include <Eigen/Dense>
+// Seto Balian, Nov 5, 2014
 
 #include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
@@ -71,7 +68,6 @@
 #include "SpinDec/TwoStateSuperposition.h"
 #include "SpinDec/UniformMagneticField.h"
 #include "SpinDec/constants.h"
-#include "SpinDec/options.h"
 #include "SpinDec/typedefs.h"
 
 #endif // BASE_H_

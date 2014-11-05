@@ -14,9 +14,8 @@
 //                 -0.5  0.5
 //                 -0.5 -0.5
 //
-// Seto Balian, Jul 29, 2014
+// Seto Balian, Nov 5, 2014
 
-#include <Eigen/Dense>
 #include <iostream>
 
 #include "SpinDec/typedefs.h"

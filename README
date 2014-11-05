@@ -1,20 +1,7 @@
-======================================================================
-                                SpinDec
-======================================================================
-(X) Introduction
-(X) Installation
-(X) Usage
-(X) Getting help
-(X) Acknowledgements
-(X) License
-(X) Contact
+SpinDec - Spin Decoherence Simulator
+====================================
 
-======================================================================
-(X) Introduction
-======================================================================
-
-Solves for decoherence of a central spin system in a quantum spin
-bath.
+C++ library for modelling decoherence of a central spin system in a quantum spin bath.
 
 Implements:
 - Cluster correlation expansion
@@ -23,61 +10,59 @@ Implements:
 Notes:
 - Most code in C++ developed starting 2011.
 - Some methods were originally written in Fortran by Tania Monteiro.
-- This version was started on 19/05/2013 using code developed
-  for a limited set of central spin systems and spin baths.
+- This version was started on 19/05/2013 using code developed for a limited set of central spin systems and spin baths.
 
-======================================================================
-(X) Installation
-======================================================================
+Installation
+------------
 
-System requirements:
-- Unix-like OS with c++ compiler (g++ 4.4.7 or above recommended)
-- Lapack
+Requirements:
 - Eigen: Open-source linear algebra package
   http://eigen.tuxfamily.org
 
-Included:
-- argvparser: Open-source command line option parser by Michael Hanke
-  http://mih.voxindeserto.de/argvparser.html
+```sh
+mkdir spindec
+cd spindec
+hg clone http://www.bitbucket.org/sbalian/spindec .
+cd build
+cmake ..
+make
+```
 
-======================================================================
-(X) Usage
-======================================================================
+This will build the library and some tests.
 
-======================================================================
-(X) Getting help
-======================================================================
+- Modify spindec/CMakeLists.txt to customize.
+- Make sure you optimize when building.
+- Eigen can take advantage of MKL.
 
-- Help is given in header files (.h extension)
-- Source files (.cpp extension) may contain more information, usually
-  geared more towards implementation
-- main source files also contain help
-- See the Makefile in build/ for available binaries
+Usage
+-----
+Add #include <SpinDec/base.h> in your source and link with libspindec.
 
-======================================================================
-(X) Acknowledgements
-======================================================================
+Getting help
+------------
+
+- Help is given in header files (.h extension).
+- Source files (.cpp extension) may contain more information, usually geared more towards implementation.
+- Main source files also contain helpful comments.
+
+License
+-------
+
+See LICENSE file.
+
+**Free Software, Hell Yeah!**
+
+Acknowledgements
+----------------
 
 - Tania Monteiro
 - Wayne Witzel
 - Martin Uhrin
 - Leonardo Banchi
 
-======================================================================
-(X) License
-======================================================================
+Contact
+-------
 
-See LICENSE.
+Seto Balian - <seto.balian@gmail.com>
 
-======================================================================
-(X) Contact
-======================================================================
-
-Seto Balian <seto.balian@gmail.com>
-
-======================================================================
-
-Last modified: Oct 22, 2014
-
-======================================================================
-
+Last modified: Nov 5, 2014.

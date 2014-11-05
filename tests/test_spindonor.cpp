@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, May 30, 2014
+// Seto Balian, Nov 5, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -17,7 +17,7 @@ int main ()
   SpinDonor donor(0.480,4.5,1.75e5,-44.0,1450.0,lower_level-1,upper_level-1,
                   ThreeVector(0.0,0.0,0.0),ThreeVector(0.0,0.0,0.0),true);
   
-  cout << donor.get_graph().get_basis() << endl;
+  cout << donor.get_hamiltonian().get_graph().get_basis() << endl;
 
   return 0;
 
