@@ -1,2 +1,0 @@
-/Users/sbalian/Development/spindec/build/CMakeFiles/spindec.dir
-/Users/sbalian/Development/spindec/build/CMakeFiles/test_cce.dir

@@ -34,7 +34,6 @@ make
 This will build the library and some tests.
 
 - Modify spindec/CMakeLists.txt to customize.
-- Make sure you optimize when building.
 - Eigen can take advantage of MKL.
 
 Usage
