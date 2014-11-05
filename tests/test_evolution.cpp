@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Sep 9, 2014
+// Seto Balian, Nov 5, 2014
 
 #include <iostream>
 #include <iomanip>
@@ -59,7 +59,7 @@ int main ()
   Dipolar interaction_C12;
   twocluster_graph.add_edge(2,3,interaction_C12.clone());
   
-  SpinSystem spin_system(twocluster_graph,field);
+  SpinSystem spin_system(SpinHamiltonian(twocluster_graph,field));
   // Print eigenvalues
   spin_system.print('e');
   

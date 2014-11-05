@@ -1,5 +1,5 @@
 // See SpinSystemBase.h for description.
-// Seto Balian, Sep 29, 2014
+// Seto Balian, Nov 5, 2014
 
 #include "SpinDec/SpinSystemBase.h"
 #include "SpinDec/Errors.h"
@@ -38,6 +38,9 @@ EvolutionOperator SpinSystemBase::evolution_operator(const double time)
 void SpinSystemBase::print(const char option)
 {
   
+  solve_once();
+
+
   std::ios::fmtflags f( cout.flags() );
   
   cout << std::setprecision(10) << std::left << std::scientific;

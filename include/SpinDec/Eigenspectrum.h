@@ -8,9 +8,8 @@
 //
 // General complex diagonalizer: ComplexEigenSolver in Eigen
 //
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Nov 5, 2014
 
-#include <Eigen/Dense>
 #include <complex>
 
 #include "SpinDec/typedefs.h"

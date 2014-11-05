@@ -7,9 +7,9 @@
 // Also includes some usings ...
 // All in the SpinDec namespace.
 //
-// Seto Balian, Oct 23, 2014
+// Seto Balian, Nov 5, 2014
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 #include <complex>
 #include <vector>

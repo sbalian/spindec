@@ -4,7 +4,7 @@
 # Has to be in path SpinDec:src/include/SpinDec/
 # Does not work on Mac
 #
-# Seto Balian 23/10/2014
+# Seto Balian 05/11/2014
 
 # Write part 1 of base.h
 echo "#ifndef BASE_H_" >> temp1
@@ -14,8 +14,6 @@ echo "// SpinDec includes" >> temp1
 echo "" >> temp1
 echo "// Generated automatically using update-base.sh" >> temp1
 date +"// Seto Balian, %b %d, %Y" >> temp1
-echo "" >> temp1
-echo "#include <Eigen/Dense>" >> temp1
 echo "" >> temp1
 # Write part 2 of base.h
 # Include headers(.h files) (excluding base.h and types.h)
