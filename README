@@ -69,6 +69,7 @@ History
 
 SpinDec is based on bits and pieces of old code for certain spin baths and central spin systems. These were written by Seto Balian starting in 2011. Methods used to efficiently fill Hamiltonian matrix elements were originally written in Fortran by Tania Monteiro. This version was started on 19/05/2013.
 
+
 Contact
 -------
 
