@@ -1,12 +1,11 @@
 SpinDec - C++ library for spin decoherence
 ==========================================
 
-Calculates the many-body dynamics of a central spin system coupled to an interacting quantum spin bath.
+Solves for the many-body dynamics of a central spin system coupled to an interacting quantum spin bath.
 
-Implements:
-
-- Cluster correlation expansion
-- Special methods for donor qubits
+- Implements the cluster correlation expansion
+- Includes special methods for donor qubits in silicon
+- [Eigen] is used for linear algebra
 
 Installation
 ------------
@@ -25,7 +24,7 @@ cmake ..
 make
 ```
 
-This will build the library and some tests. Tested on Linux and Mac OS X.
+This will build the library and some tests. Move the library and headers to your favourite location and make sure your compiler knows about them. SpinDec has been tested on Linux and Mac OS X.
 
 - Modify spindec/CMakeLists.txt to customize.
 - Eigen can take advantage of Intel MKL.
@@ -67,8 +66,7 @@ Acknowledgements
 History
 -------
 
-SpinDec is based on bits and pieces of old code for certain spin baths and central spin systems. These were written by Seto Balian starting in 2011. Methods used to efficiently fill Hamiltonian matrix elements were originally written in Fortran by Tania Monteiro. This version was started on 19/05/2013.
-
+SpinDec is based on bits and pieces of old code for certain spin baths and central spin systems. These were written by Seto Balian starting in 2011. Methods used to efficiently fill Hamiltonian matrix elements were originally written in Fortran by Tania Monteiro. This version was started on May 19, 2013.
 
 Contact
 -------
