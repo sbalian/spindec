@@ -38,7 +38,7 @@ Include the SpinDec/base.h header in your source and link with libspindec.
 Version
 -------
 
-0.9 (late-stage beta - debugged, tested, profield, optimized)
+0.9 (late-stage beta - debugged, tested, profiled, optimized)
 
 Getting help
 ------------
