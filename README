@@ -1,7 +1,7 @@
 SpinDec - C++ library for spin decoherence
 ==========================================
 
-Solves for the many-body dynamics of a central spin system coupled to an interacting quantum spin bath.
+Solves for the many-body dynamics of a central spin system coupled to an interacting spin bath.
 
 - Implements the cluster correlation expansion.
 - Includes special methods for donor qubits in silicon.
