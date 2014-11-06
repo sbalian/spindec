@@ -12,12 +12,13 @@ Installation
 Requirements:
 
 - [Eigen]: Open-source linear algebra package.
-- Optional: Blas and Lapack.
+- Optional: Intel MKL optimization for Eigen.
 
 ```sh
 mkdir spindec
 cd spindec
 hg clone http://www.bitbucket.org/sbalian/spindec .
+mkdir build
 cd build
 cmake ..
 make
@@ -44,7 +45,7 @@ Getting help
 - Help is given in header files (.h extension).
 - Source files (.cpp extension) may contain more information, usually geared more towards implementation.
 - Main source files also contain helpful comments.
-- see tests/test_cce for a good example.
+- see tests/test_cce.cpp for a good example.
 
 License
 -------

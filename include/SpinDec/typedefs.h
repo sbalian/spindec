@@ -9,6 +9,7 @@
 //
 // Seto Balian, Nov 6, 2014
 
+#include "SpinDec/config.h"
 #include <eigen3/Eigen/Dense>
 
 #include <complex>

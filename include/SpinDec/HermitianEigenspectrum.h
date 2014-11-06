@@ -29,7 +29,7 @@ public:
   HermitianEigenspectrum();
   explicit HermitianEigenspectrum(const ComplexMatrix & matrix);
 
-  void diagonalize_lapack(const ComplexMatrix & matrix);
+  //void diagonalize_lapack(const ComplexMatrix & matrix);
 
     
   // since eigenvectors orthonormal, V-1 = V^+,
