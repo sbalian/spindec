@@ -8,7 +8,7 @@
 // |+/-,m>, where m = S + I is an integer, S and I are the electron and nuclear
 // spin quantum numbers.
 //
-// Seto Balian, Oct 23, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 

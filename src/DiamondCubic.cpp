@@ -1,5 +1,5 @@
 // See DiamondCubic.h for description.
-// Seto Balian, Oct 22, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/DiamondCubic.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"

@@ -5,7 +5,7 @@
 //
 // Sign: Plus (+) or Minus (-).
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Nov 6, 2014
 
 #include <iostream>
 

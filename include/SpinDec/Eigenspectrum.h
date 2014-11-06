@@ -8,7 +8,7 @@
 //
 // General complex diagonalizer: ComplexEigenSolver in Eigen
 //
-// Seto Balian, Nov 5, 2014
+// Seto Balian, Nov 6, 2014
 
 #include <complex>
 

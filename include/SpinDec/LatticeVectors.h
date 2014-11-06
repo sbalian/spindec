@@ -7,7 +7,7 @@
 // In Cartesian coordinates.
 // Vectors must be linearly independent.
 //
-// Seto Balian, Apr 3, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include <vector>

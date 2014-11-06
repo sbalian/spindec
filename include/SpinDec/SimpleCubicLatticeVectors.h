@@ -7,7 +7,7 @@
 // orthogonal ( || to x,y,z respectively in Cartesian coordinates).
 // SOURCE: http://en.wikipedia.org/wiki/Cubic_crystal_system
 //
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/LatticeVectors.h"

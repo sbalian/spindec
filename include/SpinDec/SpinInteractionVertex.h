@@ -6,7 +6,7 @@
 // Vertex for a spin interaction graph. Contains a label, spin parameters, a
 // spin basis and a position in real space.
 //
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/typedefs.h"

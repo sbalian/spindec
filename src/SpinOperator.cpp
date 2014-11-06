@@ -1,5 +1,5 @@
 // See SpinOperator.h for description.
-// Seto Balian, Oct 23, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinOperator.h"
 #include "SpinDec/BoostEigen.h"

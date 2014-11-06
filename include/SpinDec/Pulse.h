@@ -6,7 +6,7 @@
 // Pulses in a pulse sequence.
 // Includes the no-pulse free evolution.
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"

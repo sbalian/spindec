@@ -4,7 +4,7 @@
 # Has to be in path SpinDec:src/include/SpinDec/
 # Does not work on Mac
 #
-# Seto Balian 05/11/2014
+# Seto Balian, Nov 6, 2014
 
 # Write part 1 of base.h
 echo "#ifndef BASE_H_" >> temp1

@@ -5,7 +5,7 @@
 //
 // Time array in microseconds.
 //
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 

@@ -1,5 +1,5 @@
 // See Errors.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/Errors.h"
 #include <cstdlib>

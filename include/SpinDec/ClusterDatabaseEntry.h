@@ -5,7 +5,7 @@
 //
 // Entry for ClusterDatabase.
 //
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Cluster.h"

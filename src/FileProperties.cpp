@@ -1,5 +1,5 @@
 // See FileProperties.h for description.
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/FileProperties.h"
 #include "SpinDec/Errors.h"

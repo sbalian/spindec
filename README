@@ -28,7 +28,7 @@ make
 This will build the library and some tests. Tested on Linux and Mac OS X.
 
 - Modify spindec/CMakeLists.txt to customize.
-- Eigen can take advantage of MKL.
+- Eigen can take advantage of Intel MKL.
 
 Usage
 -----
@@ -38,7 +38,7 @@ Include the SpinDec/base.h header in your source and link with libspindec.
 Version
 -------
 
-0.9 (beta)
+0.9 (late-stage beta - debugged, tested, profield, optimized)
 
 Getting help
 ------------
@@ -75,7 +75,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <seto.balian@gmail.com>
 
-**Last updated: Nov 5, 2014**
+**Last updated: Nov 6, 2014**
 
 
 [Eigen]:http://eigen.tuxfamily.org

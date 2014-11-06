@@ -5,7 +5,7 @@
 //
 // Spin-1/2 spin parameters.
 //
-// Seto Balian, Sep 25, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinParameters.h"

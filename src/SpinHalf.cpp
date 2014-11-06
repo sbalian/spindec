@@ -1,5 +1,5 @@
 // See SpinHalf.h for description.
-// Seto Balian, Sep 24, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinHalf.h"
 #include "SpinDec/SpinHalfStates.h"

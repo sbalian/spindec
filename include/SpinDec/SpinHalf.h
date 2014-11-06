@@ -5,7 +5,7 @@
 //
 // A spin-1/2 spin system.
 //
-// Seto Balian, Sep 24, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"

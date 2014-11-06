@@ -1,5 +1,5 @@
 // See UniformMagneticField.h for description.
-// Seto Balian, Mar 6, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/UniformMagneticField.h"
 

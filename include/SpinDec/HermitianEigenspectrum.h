@@ -7,7 +7,7 @@
 // Eigenvectors are orthonormal, eigenvalues are always real.
 // TODO ensure these conditions?
 //
-// Seto Balian, Nov 5, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/typedefs.h"

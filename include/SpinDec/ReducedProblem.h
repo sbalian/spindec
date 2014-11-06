@@ -5,7 +5,7 @@
 //
 // SpinSystemBase and an order.
 //
-// Seto Balian, Sep 26, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"

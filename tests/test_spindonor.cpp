@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Nov 5, 2014
+// Seto Balian, Nov 6, 2014
 
 #include <iostream>
 #include <iomanip>

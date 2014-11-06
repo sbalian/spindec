@@ -1,5 +1,5 @@
 // See SpinInteractionEdge.h for description.
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinInteractionEdge.h"
 

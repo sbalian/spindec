@@ -1,5 +1,5 @@
 // See Eigenspectrum.h for description.
-// Seto Balian, Aug 22, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/Eigenspectrum.h"
 #include "SpinDec/BoostEigen.h"

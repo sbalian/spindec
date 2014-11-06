@@ -1,5 +1,5 @@
 // See HyperfineParameters.h for description.
-// Seto Balian, Mar 24, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/HyperfineParameters.h"
 #include "SpinDec/Errors.h"

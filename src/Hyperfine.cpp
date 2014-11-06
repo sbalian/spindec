@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, May 16, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>

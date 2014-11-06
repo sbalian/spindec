@@ -1,5 +1,5 @@
 // See TimeArray.h for description.
-// Seto Balian, Aug 1, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/TimeArray.h"
 #include "SpinDec/Errors.h"

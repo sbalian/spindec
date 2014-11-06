@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/base.h"
 

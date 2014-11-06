@@ -1,5 +1,5 @@
 // See SpinUp.h for description.
-// Seto Balian, May 22, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinUp.h"
 

@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Oct 23, 2014
+// Seto Balian, Nov 6, 2014
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...

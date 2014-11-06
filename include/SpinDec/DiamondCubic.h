@@ -7,7 +7,7 @@
 // This is implemented as a simple cubic lattice with 8 basis vectors.
 // SOURCE: http://en.wikipedia.org/wiki/Diamond_cubic
 //
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
