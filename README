@@ -5,7 +5,6 @@ Solves for the many-body dynamics of a central spin system coupled to an interac
 
 - Implements the cluster correlation expansion
 - Includes special methods for donor qubits in silicon
-- [Eigen] is used for linear algebra
 
 Installation
 ------------
