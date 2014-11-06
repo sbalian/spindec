@@ -1,5 +1,5 @@
 #!/bin/bash
-# Seto Balian 06/03/2014
+# Seto Balian 06/11/2014
 
 hg addremove
 hg commit

@@ -1,5 +1,5 @@
 // See IsingHyperfine.h for description.
-// Seto Balian, Mar 25, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/IsingHyperfine.h"
 

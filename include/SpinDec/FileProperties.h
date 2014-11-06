@@ -5,7 +5,7 @@
 //
 // Static methods for ASCII file properties.
 //
-// Seto Balian, Apr 2, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 

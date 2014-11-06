@@ -1,4 +1,4 @@
-# Seto Balian 5/11/2014 (Template from Martin Uhrin's STools)
+# Seto Balian 06/11/2014 (Template from Martin Uhrin's STools)
 
 cmake_minimum_required(VERSION 2.6)
 

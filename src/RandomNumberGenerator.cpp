@@ -1,5 +1,5 @@
 // See RandomNumberGenerator.h for description.
-// Seto Balian, Apr 6, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/RandomNumberGenerator.h"
 

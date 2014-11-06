@@ -6,7 +6,7 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Nov 5, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinParametersVector.h"
 #include "SpinDec/SpinBasis.h"

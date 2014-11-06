@@ -6,7 +6,7 @@
 // Edge for a spin interaction graph. Contains a pair of vertex labels and
 // a spin interaction.
 //
-// Seto Balian, Aug 27, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinInteraction.h"
 

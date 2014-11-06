@@ -1,5 +1,5 @@
 // See CSDProblem.h for description.
-// Seto Balian, Oct 20, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"

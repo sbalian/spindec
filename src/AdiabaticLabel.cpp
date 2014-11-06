@@ -1,5 +1,5 @@
 // See AdiabaticLabel.h for description.
-// Seto Balian, May 21, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/AdiabaticLabel.h"
 

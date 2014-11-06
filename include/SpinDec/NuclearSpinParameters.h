@@ -5,7 +5,7 @@
 //
 // Spin parameters for a nuclear spin.
 //
-// Seto Balian, May 15, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 

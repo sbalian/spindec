@@ -1,5 +1,5 @@
 // See DensityOperator.h for description.
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/DensityOperator.h"
 #include "SpinDec/BoostEigen.h"

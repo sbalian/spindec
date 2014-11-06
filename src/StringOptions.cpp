@@ -1,5 +1,5 @@
 // See StringOptions.h for description.
-// Seto Balian, May 21, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/StringOptions.h"
 

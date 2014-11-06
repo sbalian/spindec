@@ -1,5 +1,5 @@
 // See SpinParameters.h for description.
-// Seto Balian, Sep 25, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinParameters.h"
 #include <iomanip>

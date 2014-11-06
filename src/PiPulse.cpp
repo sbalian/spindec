@@ -1,5 +1,5 @@
 // See PiPulse.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/PiPulse.h"
 #include "SpinDec/Errors.h"

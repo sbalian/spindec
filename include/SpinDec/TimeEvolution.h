@@ -6,7 +6,7 @@
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Oct 20, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"

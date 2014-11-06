@@ -1,5 +1,5 @@
 // See SimpleCubicLatticeVectors.h for description.
-// Seto Balian, Apr 7, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SimpleCubicLatticeVectors.h"
 

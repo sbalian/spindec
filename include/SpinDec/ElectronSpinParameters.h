@@ -6,7 +6,7 @@
 // Parameters for an electron spin. Gyromagnetic ratio of the free electron
 // by default.
 //
-// Seto Balian, Sep 25, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinHalfParameters.h"

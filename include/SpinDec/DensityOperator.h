@@ -7,7 +7,7 @@
 // P_qubit X(tensor) P_other
 // Qubit states |0> and |1>.
 //
-// Seto Balian, Jul 30, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinOperator.h"

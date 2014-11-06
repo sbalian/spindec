@@ -1,5 +1,5 @@
 // See ClusterDatabaseEntry.h for description.
-// Seto Balian, Sep 10, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/ClusterDatabaseEntry.h"
 #include "SpinDec/Errors.h"

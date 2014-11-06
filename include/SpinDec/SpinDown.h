@@ -7,7 +7,7 @@
 // (and positive spin quantum number) this is (0,1) in the (0.5,-0.5) basis.
 // See also SpinUp.
 //
-// Seto Balian, May 22, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinHalfStates.h"

@@ -5,7 +5,7 @@
 //
 // Quantum spin state in the Zeeman basis.
 //
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"

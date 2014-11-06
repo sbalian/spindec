@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Sep 24, 2014
+// Seto Balian, Nov 6, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement

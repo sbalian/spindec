@@ -1,5 +1,5 @@
 // See IdentityPulse.h for description.
-// Seto Balian, Sep 8, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/IdentityPulse.h"
 #include "SpinDec/IdentityOperator.h"

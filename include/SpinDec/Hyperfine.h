@@ -47,7 +47,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Mar 28, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/SpinInteraction.h"
 

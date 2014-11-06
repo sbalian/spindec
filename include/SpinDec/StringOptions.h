@@ -5,7 +5,7 @@
 //
 // String flags composed of A-Z, a-z, each character representing a flag.
 //
-// Seto Balian, May 21, 2014
+// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 
