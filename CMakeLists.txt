@@ -12,15 +12,31 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 message(STATUS "Path: ${CMAKE_MODULE_PATH}")
 
 # Eigen
-#find_package(LAPACK REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-include_directories(
-  #${LAPACK_INCLUDE_DIRS}
-  #/Users/sbalian/Development/eigen/
-  ${Eigen3_INCLUDE_DIRS}
-  ${PROJECT_SOURCE_DIR}/include/
+# Optional MKL
+option(SPINDEC_USE_MKL "Use Intel MKL with Eigen" OFF)
+
+if(SPINDEC_USE_MKL)
+  find_package(MKL REQUIRED)
+endif()
+
+configure_file(
+"${PROJECT_SOURCE_DIR}/include/SpinDec/config.h.in"
+"${PROJECT_BINARY_DIR}/include/SpinDec/config.h"
 )
+
+include_directories(
+  ${EIGEN3_INCLUDE_DIR}
+  ${PROJECT_SOURCE_DIR}/include/
+  ${PROJECT_BINARY_DIR}/include # So that we find cmake configured headers
+)
+
+if(SPINDEC_USE_MKL)
+  include_directories(
+    ${MKL_INCLUDE_DIRS}
+  )
+endif()
 
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
@@ -30,6 +46,7 @@ add_library(spindec ${SpinDec_SOURCE})
 
 add_executable(test_cce "tests/test_cce.cpp")
 target_link_libraries(test_cce spindec)
+
 
 ##################################
 
@@ -43,6 +60,7 @@ target_link_libraries(test_cce spindec)
 
 #cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_CXX_COMPILER=icpc .. -DBLA_VENDOR=Intel10_64lp -DEigen3_INCLUDE_DIRS=/Users/sbalian/Development/eigen/
 
+#cmake .. -DSPINDEC_USE_MKL=ON -DCMAKE_CXX_COMPILER=icpc -DBUILD_SHARED_LIBS=ON -DBLA_VENDOR=Intel10_64lp
 
 ## Version control ####################################
 

@@ -6,4 +6,5 @@ boost
 *.o
 Tests
 .settings
+build
 
