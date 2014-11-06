@@ -14,7 +14,7 @@ Installation
 Requirements:
 
 - [Eigen]: Open-source linear algebra package
-- Optional: Lapack
+- Optional: Blas and Lapack
 
 ```sh
 mkdir spindec
