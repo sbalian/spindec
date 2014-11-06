@@ -3,5 +3,5 @@
 
 hg addremove
 hg commit
-hg push -f http://www.bitbucket.org/sbalian/spindec/
+hg push http://www.bitbucket.org/sbalian/spindec/
 
