@@ -33,7 +33,12 @@ This will build the library and some tests. Tested on Linux and Mac OS X.
 Usage
 -----
 
-Add #include <SpinDec/base.h> in your source and link with libspindec.
+Include the SpinDec/base.h header in your source and link with libspindec.
+
+Version
+-------
+
+0.9 (beta)
 
 Getting help
 ------------
@@ -46,9 +51,10 @@ Getting help
 License
 -------
 
+**Free software! (GNU General Public License)**
+
 See LICENSE file.
 
-**Free Software, Hell Yeah!**
 
 Acknowledgements
 ----------------
@@ -61,14 +67,17 @@ Acknowledgements
 History
 -------
 
-SpinDec is based on bits and pieces of old code for certain spin baths and central spin systems. These were written by Seto Balian starting in 2011. Methods used to fill Hamiltonian matrix elements efficiently were originally written in Fortran by Tania Monteiro. This version was started on 19/05/2013.
+SpinDec is based on bits and pieces of old code for certain spin baths and central spin systems. These were written by Seto Balian starting in 2011. Methods used to efficiently fill Hamiltonian matrix elements were originally written in Fortran by Tania Monteiro. This version was started on 19/05/2013.
 
 Contact
 -------
 
-Seto Balian (sbalian) - <seto.balian@gmail.com>
+[Seto Balian] ([sbalian]) - <seto.balian@gmail.com>
 
 **Last updated: Nov 5, 2014**
 
+
 [Eigen]:http://eigen.tuxfamily.org
+[Seto Balian]:http://www.ucl.ac.uk/~zcapc07
+[sbalian]:http://www.bitbucket.org/sbalian
 
