@@ -1,7 +1,8 @@
 SpinDec - C++ library for spin decoherence
 ==========================================
 
-Solves for the many-body dynamics of a central spin system coupled to an interacting spin bath.
+Solves for the many-body dynamics of a central spin system coupled to an
+interacting spin bath.
 
 - Implements the cluster correlation expansion.
 - Includes special methods for donor qubits in silicon.
@@ -14,38 +15,64 @@ Requirements:
 - [Eigen]: Open-source linear algebra package.
 - Optional: Intel MKL optimization for Eigen.
 
+The following instructions are for a unix-like environment.
+You don't need root privileges. In a terminal,
+
 ```sh
 mkdir spindec
 cd spindec
 hg clone http://www.bitbucket.org/sbalian/spindec .
+```
+
+This gets the code. Now let's build it.
+
+```sh
 mkdir build
 cd build
 cmake ..
-make
+make -j4 all
 ```
 
-This will build the library and some tests. Move the library and headers to your favourite location and make sure your compiler knows about them. SpinDec has been tested on Linux and Mac OS X.
+The last command parallelizes the build process using 4 cores.
+Make sure this number does not exceed the number of cores for your machine.
+
+If all went well, you should now have the built library (static) and some tests.
+Copy the library and headers to your favourite location and make sure your
+compiler knows about them.
 
 - Modify spindec/CMakeLists.txt to customize.
 - Eigen can take advantage of Intel MKL.
+- SpinDec has been tested on Linux and Mac OS X.
+
 
 Usage
 -----
 
 Include the SpinDec/base.h header in your source and link with libspindec.
 
-Version
+Example
 -------
 
-0.9 (late-stage beta - debugged, tested, profiled, optimized)
+Follow the instructions under "Installation" (you don't need to have installed
+the library to follow through this example).
+
+Open spindec/tests/spindec-test-cce.cpp to see the source with comments on the
+example problem. Using the cluster correlation expansion up to 3rd order,
+it calculates T2(Hahn) for a central donor spin in silicon for
+a nuclear spin bath (spin-1/2 29Si with a natural abundance of 4.7%).
+
+To see the decay, execute spindec-test-cce in the build directory.
 
 Getting help
 ------------
 
 - Help is given in header files (.h extension).
-- Source files (.cpp extension) may contain more information, usually geared more towards implementation.
+- Source files (.cpp extension) may contain more information, usually geared
+more towards implementation.
 - Main source files also contain helpful comments.
 - see tests/test_cce.cpp for a good example.
+
+
 
 License and how to cite
 -----------------------
@@ -56,7 +83,8 @@ See LICENSE file.
 
 If you use SpinDec in a publication, please cite it as follows:
 
-S. J. Balian, Spindec: C++ library for spin decoherence, http://www.bitbucket.org/sbalian/spindec (2011-2014).
+S. J. Balian, Spindec: C++ library for spin decoherence,
+http://www.bitbucket.org/sbalian/spindec (2011-2014).
 
 Here is the BibTeX entry:
 
@@ -69,6 +97,19 @@ Here is the BibTeX entry:
 }
 ```
 
+Version
+-------
+
+0.9 (late-stage beta - debugged, tested, profiled, optimized)
+
+History
+-------
+
+SpinDec is based on bits and pieces of old code for certain spin baths and
+central spin systems. These were written by Seto Balian starting in 2011.
+Methods used to efficiently fill Hamiltonian matrix elements were originally
+written in Fortran by Tania Monteiro. This version was started on May 19, 2013.
+
 Acknowledgements
 ----------------
 
@@ -77,11 +118,6 @@ Acknowledgements
 - Wayne Witzel
 - Gavin Morley
 - Leonardo Banchi
-
-History
--------
-
-SpinDec is based on bits and pieces of old code for certain spin baths and central spin systems. These were written by Seto Balian starting in 2011. Methods used to efficiently fill Hamiltonian matrix elements were originally written in Fortran by Tania Monteiro. This version was started on May 19, 2013.
 
 Contact
 -------

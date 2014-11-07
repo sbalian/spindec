@@ -1,9 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Nov 6, 2014
-
-#include <iostream>
-#include <iomanip>
-#include <memory>
+// Seto Balian, Nov 7, 2014
 
 #include "SpinDec/base.h"
 

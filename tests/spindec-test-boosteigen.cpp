@@ -1,7 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Nov 6, 2014
-
-#include <iostream>
+// Seto Balian, Nov 7, 2014
 
 #include "SpinDec/base.h"
 
@@ -87,7 +85,6 @@ std::cout << real_vector << std::endl;
 std::cout << "Cast as complex" << std::endl;
 Eigen::VectorXcd real_vector_complex_cast = real_vector.cast< CDouble >();
 std::cout << real_vector_complex_cast << std::endl;
-
 
 return 0;
 
