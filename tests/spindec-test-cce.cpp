@@ -10,7 +10,7 @@ using namespace SpinDec;
 int main ()
 {
   
-  // This example calculates T2(Hahn) for a central donor spin in silicon in a
+  // This example calculates Hahn spin echo decay for a central donor spin in silicon in a
   // nuclear spin bath (spin-1/2 29Si with a natural abundance of 4.7%).
   // It uses the cluster correlation expansion (CCE) up to 3rd order.
   

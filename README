@@ -58,7 +58,7 @@ the library to follow through this example).
 
 Open spindec/tests/spindec-test-cce.cpp to see the source with comments on the
 example problem. Using the cluster correlation expansion up to 3rd order,
-it calculates T2(Hahn) for a central donor spin in silicon for
+it calculates the Hahn spin echo decay for a central donor spin in silicon for
 a nuclear spin bath (spin-1/2 29Si with a natural abundance of 4.7%).
 
 To see the decay, execute spindec-test-cce in the build directory.
