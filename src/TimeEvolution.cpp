@@ -1,10 +1,11 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 10, 2014
 
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/Errors.h"
 
 #include <iomanip>
+#include <fstream>
 
 namespace SpinDec
 {
@@ -178,6 +179,70 @@ void TimeEvolution::print_abs() const
   return;
 }
 
+void TimeEvolution::print(const string& file_name, const char option) const
+{
+  
+  std::ofstream output_file(file_name.c_str());
+  
+  output_file << std::scientific;
+  output_file << std::left;
+
+  output_file << "# Time evolution (time units: ms)" << std::endl;
+  for (UInt i=0;i<dimension();i++) {
+    output_file << std::setprecision(4); //         convert us -> ms here
+    output_file << std::setw(15) << get_time_array().get_time(i)/1000.0;
+    output_file << std::setprecision(10);
+    
+    if (option == 'r') {
+      output_file << std::setw(30) << std::real(evolution(i)) << std::endl;
+      continue;
+    }
+    if (option == 'i') {
+      output_file << std::setw(30) << std::imag(evolution(i)) << std::endl;
+      continue;
+    }
+    if (option == 'a') {
+      output_file << std::setw(30) << std::abs(evolution(i)) << std::endl;
+      continue;
+    } // else ...
+    output_file << std::setw(30) << evolution(i) << std::endl;
+  }
+  output_file << endl;
+  
+  output_file.close();
+  
+  return;
+}
+
+void TimeEvolution::print(const string& file_name) const
+{
+  print(file_name,'c');
+  return;
+}
+
+void TimeEvolution::print_real(const string& file_name) const
+{
+  print(file_name,'r');
+  return;
+}
+
+void TimeEvolution::print_imag(const string& file_name) const
+{
+  print(file_name,'i');
+  return;
+}
+
+void TimeEvolution::print_abs(const string& file_name) const
+{
+  print(file_name,'a');
+  return;
+}
+
+void TimeEvolution::scale_time(const double scalar)
+{
+  time_array_.scale_time(scalar);
+  return;
+}
 
 } // namespace SpinDec
 

@@ -1,5 +1,5 @@
 // See TimeArray.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 10, 2014
 
 #include "SpinDec/TimeArray.h"
 #include "SpinDec/Errors.h"
@@ -127,6 +127,15 @@ std::ostream& operator<<(std::ostream& os, TimeArray const & time_array)
   
   return os;
 }
+
+void TimeArray::scale_time(const double scalar)
+{
+  for (UInt i=0;i<get_dimension();i++) {
+    time_vector_[i]*=scalar;
+  }
+  return;
+}
+
 
 
 } // namespace SpinDec

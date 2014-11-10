@@ -5,7 +5,7 @@
 //
 // Time array in microseconds.
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 10, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -49,6 +49,8 @@ public:
   
   UInt num_steps() const; // dimension - 1
   UInt get_dimension() const;
+  
+  void scale_time(const double scalar);
   
   // Print with cout
   friend std::ostream& operator<<(std::ostream& os,
