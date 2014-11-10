@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Nov 7, 2014
+// Seto Balian, Nov 10, 2014
 
 #include <ctime>
 
@@ -10,9 +10,9 @@ using namespace SpinDec;
 int main ()
 {
   
-  // This example calculates Hahn spin echo decay for a central donor spin in silicon in a
-  // nuclear spin bath (spin-1/2 29Si with a natural abundance of 4.7%).
-  // It uses the cluster correlation expansion (CCE) up to 3rd order.
+  // This example calculates Hahn spin echo decay for a central donor spin in
+  // silicon in a nuclear spin bath (spin-1/2 29Si with a natural abundance of
+  // 4.7%). It uses the cluster correlation expansion (CCE) up to 3rd order.
   
   std::time_t time_start = std::time(0); 
   
@@ -70,7 +70,7 @@ int main ()
       SpinInteractionEdge(0,2,interaction_J.clone()),field);
 
   // Hahn spin echo decay experiment
-  TimeArray time_array(0.0,1.0e3,100);
+  TimeArray time_array(0.0,0.5e3,50);
   CPMGDephasing cpmg_dephasing( // CPMG order 1 = Hahn spin echo
       csd_problem,time_array,1,invsqrt2,lower_donor_level,invsqrt2,
       upper_donor_level);
@@ -87,7 +87,8 @@ int main ()
   cout << " seconds." << endl;
   
   // print to screen
-  time_evolution.print_abs();
+  time_evolution.scale_time(2.0);
+  time_evolution.print_abs("test.dat");
   
   return 0;
   

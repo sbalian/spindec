@@ -6,7 +6,7 @@
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 10, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"
@@ -21,6 +21,8 @@ private:
   CDoubleArray evolution_;
   
   void print(const char option) const;
+  void print(const string& file_name, const char option) const;
+
   
 public:
   TimeEvolution();
@@ -50,6 +52,13 @@ public:
   void print_real() const;
   void print_imag() const;
   void print_abs() const;
+  
+  void print(const string& file_name) const;
+  void print_real(const string& file_name) const;
+  void print_imag(const string& file_name) const;
+  void print_abs(const string& file_name) const;
+
+  void scale_time(const double scalar);
   
 };
 
