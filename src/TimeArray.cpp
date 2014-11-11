@@ -1,5 +1,5 @@
 // See TimeArray.h for description.
-// Seto Balian, Nov 10, 2014
+// Seto Balian, Nov 11, 2014
 
 #include "SpinDec/TimeArray.h"
 #include "SpinDec/Errors.h"
@@ -48,7 +48,11 @@ bool TimeArray::operator==(const TimeArray& time_array) const
 void TimeArray::initialize(const double initial_time,
     const double final_time, const UInt num_steps)
 {
-  clear();
+  
+  if (final_time < initial_time) {
+    Errors::quit("Can't have final time < initial time.");
+  }
+  
   dimension_ = num_steps + 1;
   
   const double time_step = (final_time - initial_time) /
@@ -61,26 +65,6 @@ void TimeArray::initialize(const double initial_time,
     time_vector_.push_back(time_var);
   }
     
-  return;
-}
-
-void TimeArray::initialize_logarithmic(const double initial_exponent,
-    const double final_exponent, const UInt num_steps)
-{
-  clear();
-  dimension_ = num_steps + 1;
-  
-  const double exponent_step = (final_exponent - initial_exponent) /
-                      static_cast<double>(num_steps);
-  
-  double exponent = initial_exponent;
-  time_vector_.push_back(std::pow(10.0,exponent));
-  
-  for (UInt i=0;i<num_steps;i++) {
-    exponent += exponent_step;
-    time_vector_.push_back(std::pow(10.0,exponent));
-  }
-  
   return;
 }
 
@@ -105,6 +89,40 @@ UInt TimeArray::num_steps() const
 UInt TimeArray::get_dimension() const
 {
   return dimension_;
+}
+
+void TimeArray::logarithmic_time()
+{
+  
+  // save the old dimension, initial and final times and num of time steps
+  const UInt old_dimension = get_dimension();
+  const double initial_time = get_time(0);
+  const UInt nsteps = num_steps();
+  const double final_time = get_time(nsteps);
+  
+  // clear the current time array
+  clear();
+  
+  if (initial_time == 0.0) {
+    Errors::quit("Can't have time = 0 when constructing log time scale.");
+  }
+  
+  const double new_step = ( std::log10(final_time) -
+                            std::log10(initial_time))
+                               / static_cast<double>(nsteps);
+  
+  double exponent = std::log10(initial_time);
+  
+  time_vector_.push_back(std::pow(10.0,exponent));
+  for (UInt i=0;i<nsteps;i++) {
+    exponent += new_step;
+    time_vector_.push_back(std::pow(10.0,exponent));
+  }
+  
+  dimension_ = old_dimension;
+  
+  return;
+  
 }
 
 std::ostream& operator<<(std::ostream& os, TimeArray const & time_array)
