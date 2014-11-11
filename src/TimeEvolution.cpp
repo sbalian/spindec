@@ -1,5 +1,5 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Nov 10, 2014
+// Seto Balian, Nov 11, 2014
 
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/Errors.h"
@@ -124,10 +124,9 @@ void TimeEvolution::print(const char option)  const
   cout << std::scientific;
   cout << std::left;
 
-  cout << "# Time evolution (time units: ms)" << std::endl;
   for (UInt i=0;i<dimension();i++) {
-    cout << std::setprecision(4); //         convert us -> ms here
-    cout << std::setw(15) << get_time_array().get_time(i)/1000.0;
+    cout << std::setprecision(4);
+    cout << std::setw(15) << get_time_array().get_time(i);
     cout << std::setprecision(10);
     
     if (option == 'r') {
@@ -187,10 +186,9 @@ void TimeEvolution::print(const string& file_name, const char option) const
   output_file << std::scientific;
   output_file << std::left;
 
-  output_file << "# Time evolution (time units: ms)" << std::endl;
   for (UInt i=0;i<dimension();i++) {
-    output_file << std::setprecision(4); //         convert us -> ms here
-    output_file << std::setw(15) << get_time_array().get_time(i)/1000.0;
+    output_file << std::setprecision(4);
+    output_file << std::setw(15) << get_time_array().get_time(i);
     output_file << std::setprecision(10);
     
     if (option == 'r') {

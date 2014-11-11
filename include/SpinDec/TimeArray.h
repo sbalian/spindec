@@ -5,7 +5,7 @@
 //
 // Time array in microseconds.
 //
-// Seto Balian, Nov 10, 2014
+// Seto Balian, Nov 11, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -20,6 +20,11 @@ private:
                            // (number of time steps + 1)
   
   void clear(); // std::clear time_vector_ and set dimension to zero
+  
+  // clears existing time sets new time to zeros
+  void initialize(const double initial_time,
+                  const double final_time,
+                  const UInt num_steps);
     
 public:
   TimeArray();
@@ -33,16 +38,9 @@ public:
                                           // is time_vector == time_vector_ ?
                                           // element by element
 
-  // clears existing time sets new time to zeros
-  void initialize(const double initial_time,
-                  const double final_time,
-                  const UInt num_steps);
-  
-  // same as above but with logarithmic time scale (base 10)
-  // time_vector_ = 10^initial_exponent ... 10^final_exponent in num_steps steps
-  void initialize_logarithmic(const double initial_exponent,
-                              const double final_exponent,
-                              const UInt num_steps);
+  // convert to initial_time ... final_time with logarithmic steps (base 10)
+  //                                                              = num_steps
+  void logarithmic_time();
   
   double get_time(const UInt index) const;
   const DoubleArray& get_time_vector() const;

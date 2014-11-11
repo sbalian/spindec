@@ -6,6 +6,8 @@ an interacting spin bath.
 
 - Implements the cluster correlation expansion.
 - Includes special methods for donor qubits in silicon.
+- Includes executable for CPMG dephasing (T2) of donors in silicon
+interacting with 29Si nuclear impurities (nuclear spin diffusion).
 
 Installation
 ------------
@@ -14,6 +16,7 @@ Requirements:
 
 - [Eigen] (free): For linear algebra.
 - [CMake] (free): For building and installing.
+- [boost] (free): For program options.
 - Optional: Intel MKL optimization for Eigen.
 
 The following instructions are for a Unix-like environment
@@ -46,7 +49,7 @@ Make sure this number does not exceed the number of cores for your
 machine.
 
 If all went well, you should now have the static library and
-a test executable. The library, headers and test binary should be
+a test executable. The library, headers and executables should be
 located in ~/lib, ~/include and ~/bin respectively.
 
 Note: If you're installing in unusual paths, make sure your compiler
@@ -65,6 +68,8 @@ Usage
 Include the SpinDec/base.h header in your source and link with
 libspindec.
 
+The executable spindec-dsnsd has a --help option.
+
 Example
 -------
 
@@ -78,13 +83,17 @@ a central donor spin in silicon for a nuclear spin bath
 
 To see the decay, run spindec-test-cce.
 
+The sourse for spindec-dsnsd (src/spindec-dsnsd.cpp) should also serve
+as a good example.
+
 Getting help
 ------------
 
 - Help is given in header files (.h extension in include/SpinDec).
 - Source files (.cpp extension) may contain more information,
 usually geared more towards implementation.
-- See tests/spindec-test-cce.cpp for a good example.
+- See src/spindec-dsnsd.cpp and tests/spindec-test-cce.cpp for
+examples.
 
 License and how to cite
 -----------------------
@@ -137,10 +146,12 @@ Contact
 
 [Seto Balian] ([sbalian]) - <s.balian@ucl.ac.uk>
 
-**Last updated: Nov 10, 2014**
+**Last updated: Nov 11, 2014**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07
 [sbalian]:http://www.bitbucket.org/sbalian
 [CMake]: http://www.cmake.org/
+[boost]: http://www.boost.org/
+
 

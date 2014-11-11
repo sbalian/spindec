@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 10/11/2014
+# Seto Balian 11/11/2014
 
 # Some -D's
 # -DCMAKE_INSTALL_PREFIX
@@ -54,6 +54,8 @@ if(SPINDEC_USE_MKL)
     ${MKL_INCLUDE_DIRS}
   )
 endif()
+
+message(STATUS "${EIGEN3_INCLUDE_DIR}")
 
 ################################################
 
@@ -207,9 +209,16 @@ install(FILES ${HEADERS} DESTINATION include/SpinDec)
 
 ## executables
 
-# tests
+# test
 
 add_executable(spindec-test-cce
 "tests/spindec-test-cce.cpp")
 target_link_libraries(spindec-test-cce spindec)
 install(TARGETS spindec-test-cce DESTINATION bin)
+
+
+add_executable(spindec-dsnsd
+"src/spindec-dsnsd.cpp")
+target_link_libraries(spindec-dsnsd spindec boost_program_options)
+install(TARGETS spindec-dsnsd DESTINATION bin)
+
