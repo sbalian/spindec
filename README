@@ -49,16 +49,16 @@ Make sure this number does not exceed the number of cores for your
 machine.
 
 If all went well, you should now have the static library and
-a test executable. The library, headers and executables should be
+executables. The library, headers and executables should be
 located in ~/lib, ~/include and ~/bin respectively.
 
 Note: If you're installing in unusual paths, make sure your compiler
 knows about them.
 
 Optionally, to enable MKL optimization in Eigen,
-pass -DSPINDEC_USE_MKL=ON to cmake. Obviously, you will need the MKL
-libraries for this step. For further customization, see
-spindec/CMakeLists.txt.
+pass -DSPINDEC_USE_MKL=ON to cmake. Obviously, you will need the
+(expensive) MKL libraries for this step. For further customization,
+see CMakeLists.txt.
 
 ***SpinDec has been tested on Linux and Mac OS X.***
 
@@ -82,6 +82,8 @@ a central donor spin in silicon for a nuclear spin bath
 (spin-1/2 29Si with a natural abundance of 4.7%).
 
 To see the decay, run spindec-test-cce.
+The test executable is not installed, so run it in the build
+directory.
 
 The sourse for spindec-dsnsd (src/spindec-dsnsd.cpp) should also serve
 as a good example.
@@ -90,7 +92,7 @@ Getting help
 ------------
 
 - Help is given in header files (.h extension in include/SpinDec).
-- Source files (.cpp extension) may contain more information,
+- Source files (.cpp extension in src/) may contain more information,
 usually geared more towards implementation.
 - See src/spindec-dsnsd.cpp and tests/spindec-test-cce.cpp for
 examples.
@@ -146,7 +148,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <s.balian@ucl.ac.uk>
 
-**Last updated: Nov 11, 2014**
+**Last updated: Nov 12, 2014**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07

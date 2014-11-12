@@ -1,14 +1,7 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 11/11/2014
+# Seto Balian 12/11/2014
 
-# Some -D's
-# -DCMAKE_INSTALL_PREFIX
-# -DSPINDEC_USE_MKL
-# -DCMAKE_CXX_COMPILER
-# -DBLA_VENDOR=Intel10_64lp
-# -DBUILD_SHARED_LIBS=ON
-
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.2)
 
 #### Initialize ################################
 
@@ -19,19 +12,20 @@ set_property(TARGET PROPERTY PROJECT_LABEL ${PROJECT_NAME})
 # Build type
 set(CMAKE_BUILD_TYPE Release)
 
+# Intel MKL (optional - default OFF)
+option(SPINDEC_USE_MKL "Use Intel MKL with Eigen" OFF)
+
 # Add spindec/cmake to module path
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-message(STATUS "Path: ${CMAKE_MODULE_PATH}")
+message(STATUS "Cmake module path: ${CMAKE_MODULE_PATH}")
 
 #### Packages ##################################
 
 # Eigen
 find_package(Eigen3 REQUIRED)
 
-# Intel MKL (optional - default OFF)
-option(SPINDEC_USE_MKL "Use Intel MKL with Eigen" OFF)
-
 if(SPINDEC_USE_MKL)
+  set(MKL_USE_STATIC_LIBS ON)
   find_package(MKL REQUIRED)
 endif()
 
@@ -52,6 +46,9 @@ include_directories(
 if(SPINDEC_USE_MKL)
   include_directories(
     ${MKL_INCLUDE_DIRS}
+  )
+  link_directories(
+    ${MKL_LIBRARY_DIRS}
   )
 endif()
 
@@ -209,16 +206,20 @@ install(FILES ${HEADERS} DESTINATION include/SpinDec)
 
 ## executables
 
-# test
+# test (do not install)
+add_executable(spindec-test-cce "tests/spindec-test-cce.cpp")
+if(SPINDEC_USE_MKL)
+  target_link_libraries(spindec-test-cce spindec ${MKL_LIBRARIES})
+else()
+  target_link_libraries(spindec-test-cce spindec)
+endif()
 
-add_executable(spindec-test-cce
-"tests/spindec-test-cce.cpp")
-target_link_libraries(spindec-test-cce spindec)
-install(TARGETS spindec-test-cce DESTINATION bin)
-
-
-add_executable(spindec-dsnsd
-"src/spindec-dsnsd.cpp")
-target_link_libraries(spindec-dsnsd spindec boost_program_options)
+# spindec-dsnsd
+add_executable(spindec-dsnsd "src/spindec-dsnsd.cpp")
+if(SPINDEC_USE_MKL)
+  target_link_libraries(spindec-dsnsd spindec ${MKL_LIBRARIES}
+                        boost_program_options)
+else()
+  target_link_libraries(spindec-dsnsd spindec boost_program_options)
+endif()
 install(TARGETS spindec-dsnsd DESTINATION bin)
-

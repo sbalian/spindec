@@ -1,5 +1,5 @@
 // See EvolutionOperator.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 12, 2014
 
 #include "SpinDec/EvolutionOperator.h"
 #include "SpinDec/BoostEigen.h"
@@ -40,6 +40,7 @@ void EvolutionOperator::set_matrix()
       BoostEigen::exp( eigenvalues_.cast< CDouble >() * 
                        std::complex<double>(0.0,-time_) ) ));
   
+    
   return;
 }
 
