@@ -5,7 +5,7 @@
 //
 // Free evolution operator.
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 12, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinOperator.h"
@@ -24,7 +24,7 @@ private:
   // Hamiltonian
   ComplexMatrix eigenvectors_;
   RealVector eigenvalues_;
-  
+    
   void set_matrix();
   
 public:
