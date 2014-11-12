@@ -17,7 +17,7 @@ Requirements:
 - [Eigen] (free): For linear algebra.
 - [CMake] (free): For building and installing.
 - [boost] (free): For program options.
-- Optional: Intel MKL optimization for Eigen.
+- Optional: [Intel MKL] optimization for Eigen.
 
 The following instructions are for a Unix-like environment
 without root privileges.
@@ -57,7 +57,7 @@ knows about them.
 
 Optionally, to enable MKL optimization in Eigen,
 pass -DSPINDEC_USE_MKL=ON to cmake. Obviously, you will need the
-(expensive) MKL libraries for this step. For further customization,
+proprietary MKL libraries for this step. For further customization,
 see CMakeLists.txt.
 
 ***SpinDec has been tested on Linux and Mac OS X.***
@@ -155,5 +155,5 @@ Contact
 [sbalian]:http://www.bitbucket.org/sbalian
 [CMake]: http://www.cmake.org/
 [boost]: http://www.boost.org/
-
+[Intel MKL]: https://software.intel.com/en-us/intel-mkl
 

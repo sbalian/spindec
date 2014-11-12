@@ -1,3 +1,6 @@
+# sbalian: found this file here:
+# http://www.mail-archive.com/cmake@cmake.org/msg41869/FindMKL.cmake
+
 # CMake script to detect Intel(R) Math Kernel Library (MKL)
 #
 # This will try to find Intel MKL libraries, and include path by automatic
