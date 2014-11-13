@@ -1,5 +1,5 @@
 // See CPMGDephasing.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/CPMGDephasing.h"
 #include "SpinDec/Errors.h"
@@ -41,7 +41,7 @@ CPMGDephasing::CPMGDephasing(const CSDProblem& csd_problem,
 
 }
 
-// TODO May be very slow!!!
+// TODO May be very slow
 TimeEvolution CPMGDephasing::time_evolution(
     const UIntArray bath_indices)
 {

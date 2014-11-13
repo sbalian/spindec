@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -124,7 +124,7 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
   vector<SpinInteractionEdge> edges;
   
   // order = 1, return an empty edge vector
-  // TODO is this chaotic with 1-clusters?!
+  // TODO is this a problem with 1-clusters?
   if (order == 1) {
     return edges;
   }
@@ -146,7 +146,7 @@ vector<SpinInteractionEdge> SpinBath::make_intrabath_edges(
   }
   
   // remove duplicates
-  // TODO check if this is working OK! Understand this piece of code
+  // TODO check if this is working OK
   std::sort( labels.begin(), labels.end() );
   labels.erase( std::unique( labels.begin(), labels.end() ), labels.end() );
   

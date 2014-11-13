@@ -12,7 +12,7 @@
 //   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
 //   > evolve, t/2n >pi-pulse, evolve, t/2n
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequenceBase.h"
@@ -28,6 +28,7 @@ private:
   
   UInt order_;
   EvolutionOperator evolution_operator_;
+  vector<bool> is_unitary_;
   
 public:
   

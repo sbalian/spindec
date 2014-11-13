@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -91,7 +91,7 @@ double Hyperfine::scaled_probability_density(
          envelope_function(1,separation)*std::cos(k0*sep_x)  +
        + envelope_function(3,separation)*std::cos(k0*sep_y)
        + envelope_function(5,separation)*std::cos(k0*sep_z) ,2.0)*1.0e+30;
-       // TODO Beware of such multipliers!!!
+       // TODO Beware of such multipliers
        // 1.0e+30 to convert from Angstroms to metres
 }
 

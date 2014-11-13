@@ -1,5 +1,5 @@
 // See RandomNumberGenerator.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/RandomNumberGenerator.h"
 
@@ -26,7 +26,7 @@ void RandomNumberGenerator::seed_uniform_c_rand(const int seed)
 
 void RandomNumberGenerator::clock_seed_uniform_c_rand()
 {
-  // TODO what does time return? make sure it's never negative here!!!
+  // TODO what does time return? make sure it's never negative here
   seed_uniform_c_rand(std::time(NULL));
   return;
 }

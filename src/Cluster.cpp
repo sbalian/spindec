@@ -1,5 +1,5 @@
 // See Cluster.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/Cluster.h"
 #include <algorithm>
@@ -39,7 +39,7 @@ vector<UIntArray> Cluster::subsets(const UIntArray& v) const
 
 Cluster::Cluster(const UIntArray& labels)
 {
-  // TODO make sure there are no sorting inefficiencies throughout SpinDec
+  // TODO make sure there are no sorting inefficiencies
   labels_ = labels;
   // sort
   std::sort (labels_.begin(), labels_.end());

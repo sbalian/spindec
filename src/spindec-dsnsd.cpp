@@ -7,10 +7,11 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Nov 12, 2014
+// Seto Balian, Nov 13, 2014
 
 #include <ctime>
 #include <fstream>
+#include <sstream>
 
 #include "SpinDec/base.h"
 using namespace SpinDec;
@@ -28,7 +29,7 @@ int main (int argc, char **argv)
   
   // Arguments
   
-  UInt cce_order, cpmg_order;
+  UInt max_cce_order, cpmg_order;
   bool include_one_cluster = false;
   double field_strength, field_x, field_y, field_z, gamma_e, electron_ie;
   double gamma_n, nuclear_spin, hyperfine;
@@ -40,35 +41,46 @@ int main (int argc, char **argv)
   int seed_value;
   bool kill_nonising = false;
   string input_file;
-  string output_file;
+  string prefix;
   
   // Help
   string help_page =
-      "SpinDec: dsnsd\n\n"
+      "==============\n"
+      "SpinDec: dsnsd\n"
+      "==============\n\n"
       "Calculates T2 (CPMG-N) for a donor in silicon interacting with a\n"
       "spin bath of 29Si nuclear impurities. Initially, the donor is\n"
       "prepared in a coherent superposition of the specified upper\n"
-      "and lower eigenstates. The output is the absolute of the\n"
+      "and lower eigenstates. The outputs are the absolute of the\n"
       "off-diagonal of the reduced donor density matrix after evolution\n"
-      "under the CPMG sequence. The time column is 2t/N, where t is the\n"
-      "specified evolution time in ms (until the first pulse).N=0 corresponds\n"
-      "to the FID case (without pulses) with total evolution time t.\n"
-      "The donor interacts with the nuclear bath via its electron-29Si\n"
-      "hyperfine interaction.\n\n"
-      "Usage: spindec-dsnsd ... INPUT ... OUTPUT ... ARGUMENTS ..."
-      "       INPUT and OUTPUT files (positional arguments) may be omitted"
-      "       ARGUMENTS override those in INPUT"
-      "       if OUTPUT is not provided, results are printed to screen"
-      "       INPUT format is key=value, without - or -- prefixes"
-      "       for flags, just add a line with the flag's name to enable"
-      "\n\nARGUMENTS";
-    
+      "under the CPMG sequence. They are named prefix_XC.dat where X\n"
+      "is the CCE truncation order (up to a specified maximum order),\n"
+      "and prefix must be specified by the user. The time columns are\n"
+      "2t/N, where t is the specified evolution time in ms (until the\n"
+      "first pulse). N=0 corresponds to the FID case (without pulses)\n"
+      "with total evolution time t. The donor interacts with the nuclear\n"
+      "bath via its electron-29Si hyperfine interaction.\n\n"
+      "Usage: spindec-dsnsd ... PREFIX ... [INPUT] ... [ARGUMENTS] ...\n"
+      "- PREFIX for output files (positional) is required\n"
+      "- ARGUMENTS override those in INPUT\n"
+      "- INPUT file name (positional) may be omitted\n"
+      "- INPUT format is key=value, without - or -- prefixes\n"
+      "- for flags, add a line with the flag's name followed by == to enable.\n"
+      "=================\n"
+      "\nARGUMENTS";
+  
+  string version = "v0.9, Copyright (C) Seto Balian, Nov 12 2014.\n"
+      "Free software, no warranty.";
+  
   // Declare a group of options that will be 
   // allowed only on command line
   po::options_description cmd_only_options;
   cmd_only_options.add_options()
       ("help,h", "print this help page")
+      ("version,v", "display version")
       ("sample_config", "print sample config file")
+      ("prefix,w", po::value< string >(&prefix),
+          "prefix for output files")
       ;
   
   // Declare a group of options that will be 
@@ -76,8 +88,9 @@ int main (int argc, char **argv)
   // config file
   po::options_description options;
   options.add_options()
-      ("cce_order,O",po::value<UInt>(&cce_order)->default_value(2,"2"),
-       "maximum CCE order (minimum is 1)")
+      ("max_cce_order,O",po::value<UInt>(&max_cce_order)->default_value(2,"2"),
+       "maximum CCE truncation order\n"
+       "(minimum is 1)")
 
       ("cpmg_order,o",po::value<UInt>(&cpmg_order)->default_value(1,"1"),
        "CPMG order, 1 is Hahn spin echo,\n0 is FID")
@@ -157,11 +170,8 @@ int main (int argc, char **argv)
       ("seed_value,r", po::value<int>(&seed_value)->default_value(15,
        "15"),
        "random number generator seed")
-       
-      ("output_file,w", po::value< string >(&output_file),
-          "print to output file instead of screen")
-          
-      ("quiet,q", "don't print to screen (except for results)")
+            
+      ("verbose,V", "verbose mode")
       
     ;
   
@@ -178,15 +188,37 @@ int main (int argc, char **argv)
   visible.add(cmd_only_options).add(options);
   
   po::positional_options_description pod;
+  pod.add("prefix",1);
   pod.add("input_file",1);
-  pod.add("output_file",1);
   
   po::variables_map vm;
   
   store(po::command_line_parser(argc, argv).
         options(cmd).positional(pod).run(), vm);
   notify(vm);
-
+  
+  if ((vm.count("help")) || (argc == 1)) {
+      cout << visible << endl;
+      cout << version << endl;
+      return 0;
+  }
+  
+  if (vm.count("version")) {
+    cout << "spindec-dsnsd " << version << endl;
+    return 0;
+  }
+  
+  if (vm.count("sample_config")) {
+    cout << sample_config() << endl;
+    return 0;
+  }
+  
+  if (vm.count("prefix") == 0) {
+    cout << "run spindec-dsnsd --help" << endl;
+    Errors::quit("prefix argument required.");
+    return 0;
+  }
+  
   
   if (vm.count("input_file")) {
         
@@ -206,27 +238,11 @@ int main (int argc, char **argv)
         options(cmd).positional(pod).run(), vm);
   notify(vm);
   
-  
-  string version = "v0.9, Seto Balian, Nov 12 2014";
-
-//  if ((vm.count("help")) || (argc == 1)) {
-  if (vm.count("help")) {
-    cout << visible << endl;
-    cout << version << endl;
-    return 0;
-  }
-  
-  if (vm.count("sample_config")) {
-    cout << sample_config() << endl;
-    return 0;
-  }
-
-  
   if (vm.count("one_clusters")) {
     include_one_cluster = true;
   }
   
-  if ((cce_order == 1) && (include_one_cluster == false)) {
+  if ((max_cce_order == 1) && (include_one_cluster == false)) {
     Errors::quit("Can't do CCE1 without including one clusters!");
   }
   
@@ -241,9 +257,9 @@ int main (int argc, char **argv)
   
   // Initialise
   
-  if (!vm.count("quiet")) {
+  if (vm.count("verbose")) {
   
-  cout << "CCE order: " << cce_order << endl;
+  cout << "max CCE order: " << max_cce_order << endl;
   cout << "CPMG order: " << cpmg_order << endl;
   cout << "Include 1-clusters: " << include_one_cluster << endl;
   cout << "B = " << field_strength << " T." << endl;
@@ -270,16 +286,14 @@ int main (int argc, char **argv)
       cout << "input file: none, defaults or input from command line" << endl;
   }
 
-  if (vm.count("output_file")) {
-    cout << "output file: " << output_file << endl;
-  } else {
-      cout << "output file: none, will print to screen" << endl;
-  }
+  cout << "output file prefix: " << prefix << endl;
   
   cout << "CALCULATING ..." << endl;
   
   }
 
+  
+  RandomNumberGenerator::seed_uniform_c_rand(seed_value);
   
   // Set up magnetic field (T)
   UniformMagneticField field(field_strength,
@@ -355,8 +369,8 @@ int main (int argc, char **argv)
   final_time *= 1000.0;
   
   if (cpmg_order != 0) { // cpmg_order = 0 is FID
-    initial_time*=(static_cast<double>(cpmg_order));
-    final_time*=(static_cast<double>(cpmg_order));
+    initial_time/=(static_cast<double>(cpmg_order));
+    final_time/=(static_cast<double>(cpmg_order));
   }
   
   TimeArray time_array(initial_time,final_time,num_steps);
@@ -371,15 +385,45 @@ int main (int argc, char **argv)
       upper_level);
   
   // CCE
-  CCE cce(cce_order,cpmg_dephasing.clone(),sep_cutoff,include_one_cluster);
+  CCE cce(max_cce_order,cpmg_dephasing.clone(),sep_cutoff,include_one_cluster);
   
   // Calculate
   
-  TimeEvolution time_evolution = cce.calculate();
+  cce.calculate();
   
-  // Print results
   
-  if (!vm.count("quiet")) {
+  // Print to files scaling times appropriately
+  
+  for (UInt i=1;i<=max_cce_order;i++) {
+    
+    if (include_one_cluster == false) {
+      if (i==1) {continue;}
+    }
+    
+    // file name
+    string str;
+    std::ostringstream oss;
+    oss<<"_";
+    oss<<i;
+    oss<<"C.dat";
+    str=oss.str();
+    string output_file_name = prefix + str;
+    
+    // convert to show ms like input
+    TimeEvolution scaled_time_evolution = cce.evolution(i);
+    
+    if (cpmg_order == 0) {
+      scaled_time_evolution.scale_time(1.0/1000.0);
+    } else {
+        scaled_time_evolution.scale_time(
+            2.0*static_cast<double>(cpmg_order)/1000.0);
+    }
+
+    scaled_time_evolution.print_abs( output_file_name );
+    
+  }
+  
+  if (vm.count("verbose")) {
 
   cout << "... DONE!" << endl;
   cout << "time taken: " <<
@@ -387,22 +431,7 @@ int main (int argc, char **argv)
   cout << " seconds." << endl;
   
   }
-  
-  // convert to show ms like input
-  if (cpmg_order == 0) {
-    time_evolution.scale_time(1.0/1000.0);
-  } else {
-      time_evolution.scale_time(2.0/1000.0);
-  }
-  
-  // print to screen
-  //cout << "# COL1: time (ms), COL2: evolution" << std::endl;
-  if (vm.count("output_file")) {
-    time_evolution.print_abs(output_file);
-  } else {
-      time_evolution.print_abs();
-  }
-  
+
   return 0;
   
 }
@@ -412,10 +441,10 @@ string sample_config() {
   
   string config =
       "# SpinDec input file\n"
-      "# Seto Balian, Nov 12 2014\n"
+      "# Seto Balian, Nov 13 2014\n"
       "\n"
-      "# Maximum CCE order (minimum is 1)\n"
-      "cce_order = 2\n"
+      "# Maximum CCE truncation order (minimum is 1)\n"
+      "max_cce_order = 2\n"
       "# CPMG order, 1 is Hahn spin echo, 0 is FID\n"
       "cpmg_order = 1\n"
       "# include 1 clusters (comment out to turn off)\n"
@@ -470,9 +499,9 @@ string sample_config() {
       "# random number generator seed\n"
       "seed_value = 15\n"
       "\n"
-      "# don't print to screen (except for results)\n"
+      "# verbose mode\n"
       "# (comment out to turn off)\n"
-      "#quiet==\n"
+      "#verbose==\n"
       ;
 
   return config;

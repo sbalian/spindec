@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -92,7 +92,6 @@ void SpinHamiltonian::fill_interaction(const UInt edge_index)
       
       interaction_ptr -> calculate(
           
-          // TODO problem here with 2 clusters ...
           
           graph_.get_vertex1(edge_index).get_spin_parameters(),
           graph_.get_vertex2(edge_index).get_spin_parameters(),

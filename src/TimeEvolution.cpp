@@ -1,5 +1,5 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Nov 11, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/Errors.h"

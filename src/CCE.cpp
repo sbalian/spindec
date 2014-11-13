@@ -1,7 +1,8 @@
 // See CCE.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/CCE.h"
+#include "SpinDec/Errors.h"
 
 namespace SpinDec
 {
@@ -83,14 +84,15 @@ UInt CCE::get_truncation_order() const
   return truncation_order_;
 }
 
-TimeEvolution CCE::calculate()
+void CCE::calculate()
 {
 
   TimeEvolution result(
       pulse_experiment_->get_time_array());
-  result.set_evolution_ones();
     
   for (UInt i=1; i<=truncation_order_;i++) {
+    
+    result.set_evolution_ones();
     
     if (include_one_clusters_ == false) {
       if (i==1) {continue;}
@@ -102,9 +104,48 @@ TimeEvolution CCE::calculate()
       
     }
     
+    product_true_correlations_by_order_.push_back(result);
+    
   }
+    
+  return;
+  
+}
 
+TimeEvolution CCE::evolution(const UInt order) const
+{
+  
+  if (product_true_correlations_by_order_.empty()) {
+    Errors::quit("CCE not calculated");
+  }
+  
+  if (order < 1) {
+    Errors::quit("CCE input order < 1");
+  }
+  
+  if (order>truncation_order_) {
+    Errors::quit("CCE input order > truncation order");
+  }
+  
+  TimeEvolution result = product_true_correlations_by_order_[0];
+  result.set_evolution_ones();
+  
+  if (include_one_clusters_ == true) {
+    for (UInt i=1;i<=order;i++) {
+      result = result*product_true_correlations_by_order_[i-1];
+    }
+  } else {
+    
+      for (UInt i=2;i<=order;i++) {
+        result = result*product_true_correlations_by_order_[i-2];
+        
+      }
+      
+  }
+  
+  
   return result;
+  
 }
 
 } // namespace SpinDec

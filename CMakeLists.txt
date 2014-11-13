@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 12/11/2014
+# Seto Balian 13/11/2014
 
 cmake_minimum_required(VERSION 2.8.2)
 
@@ -13,6 +13,9 @@ set_property(TARGET PROPERTY PROJECT_LABEL ${PROJECT_NAME})
 set(CMAKE_BUILD_TYPE Release)
 
 # Intel MKL (optional - default OFF)
+# If turned on, the Intel's C and C++ compilers are used
+# Also, profiling with Intel's compiler becomses available
+# (turn on SPINDEC_PROFILE)
 option(SPINDEC_USE_MKL "Use Intel MKL with Eigen" OFF)
 
 # Add spindec/cmake to module path
@@ -24,9 +27,16 @@ message(STATUS "Cmake module path: ${CMAKE_MODULE_PATH}")
 # Eigen
 find_package(Eigen3 REQUIRED)
 
+# Intel MKL and profiling
 if(SPINDEC_USE_MKL)
-  set(MKL_USE_STATIC_LIBS ON)
   find_package(MKL REQUIRED)
+  set(MKL_USE_STATIC_LIBS ON)
+  set(CMAKE_CXX_COMPILER icpc)
+  set(CMAKE_C_COMPILER icc)
+  if (SPINDEC_PROFILE)
+    set(CMAKE_CXX_FLAGS
+    "-profile-functions -profile-loops=all -profile-loops-report=2")
+  endif()
 endif()
 
 # configured headers to tell Eigen whether or not to use MKL
