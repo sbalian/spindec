@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Nov 10, 2014
+// Seto Balian, Nov 13, 2014
 
 #include <ctime>
 
@@ -78,7 +78,9 @@ int main ()
   // CCE to 3rd order
   CCE cce(3,cpmg_dephasing.clone(),4.51,false);
   
-  TimeEvolution time_evolution = cce.calculate();
+  cce.calculate();
+  
+  TimeEvolution time_evolution = cce.evolution(3);
   
   // print results
   

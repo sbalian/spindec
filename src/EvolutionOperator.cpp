@@ -1,5 +1,5 @@
 // See EvolutionOperator.h for description.
-// Seto Balian, Nov 12, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/EvolutionOperator.h"
 #include "SpinDec/BoostEigen.h"
@@ -35,11 +35,10 @@ double EvolutionOperator::get_time() const
 void EvolutionOperator::set_matrix()
 {
   
-  SpinOperator::set_matrix(
+  matrix_ =
       BoostEigen::unitarySpectralDecomposition(eigenvectors_,
       BoostEigen::exp( eigenvalues_.cast< CDouble >() * 
-                       std::complex<double>(0.0,-time_) ) ));
-  
+                       std::complex<double>(0.0,-time_) ) );
     
   return;
 }

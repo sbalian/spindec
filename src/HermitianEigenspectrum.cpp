@@ -1,5 +1,5 @@
 // See HermitianEigenspectrum.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/HermitianEigenspectrum.h"
 #include "SpinDec/BoostEigen.h"
@@ -14,6 +14,10 @@ void HermitianEigenspectrum::diagonalize_eigen(
 {
   Eigen::SelfAdjointEigenSolver<ComplexMatrix> eigensolver(matrix.rows());
   eigensolver.compute(matrix);
+  
+  if (eigensolver.info()!=0) {
+    Errors::warning("SelfAdjointEigenSolver failed");
+  }
 
   eigenvectors_ = eigensolver.eigenvectors();
   eigenvalues_  = (eigensolver.eigenvalues()).cast< CDouble > ();

@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -494,7 +494,7 @@ const NuclearSpinParameters& SpinDonor::get_nuclear_parameters() const
   return nuclear_parameters_;
 }
 
-// TODO Check if this is OK!!!
+// TODO Check if this is OK
 const Hyperfine& SpinDonor::get_hyperfine() const
 {
   return hyperfine_;

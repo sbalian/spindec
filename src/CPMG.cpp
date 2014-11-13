@@ -1,5 +1,5 @@
 // See CPMG.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/CPMG.h"
 #include "SpinDec/Errors.h"
@@ -33,17 +33,20 @@ CPMG::CPMG(const UInt order,
   //FID
   if (order_ == 0) {
     pulses_.push_back(unitary_evolution);
+    is_unitary_.push_back(true);
     duration_ += unitary_evolution.get_duration();
   } else {
     // Hahn (CPMG-1), CPMG-2, CPMG-3, ...
-    
     for (UInt i=0;i<order_;i++) {
 
       pulses_.push_back(unitary_evolution);
+      is_unitary_.push_back(true);
       duration_ += unitary_evolution.get_duration();
       pulses_.push_back(pi_pulse);
       duration_ += pi_pulse.get_duration();
+      is_unitary_.push_back(false);
       pulses_.push_back(unitary_evolution);
+      is_unitary_.push_back(true);
       duration_ += unitary_evolution.get_duration();
       
     }
@@ -53,7 +56,6 @@ CPMG::CPMG(const UInt order,
 
 void CPMG::set_time(const double time_value)
 {
-  //FID
   
   duration_ = 0.0;
   
@@ -61,25 +63,17 @@ void CPMG::set_time(const double time_value)
   
   FreeEvolution unitary_evolution(evolution_operator_);
   
-  if (order_ == 0) {
-    pulses_[0] = unitary_evolution;
-    duration_ += unitary_evolution.get_duration();
-  } else {
-    // Hahn (CPMG-1), CPMG-2, CPMG-3, ...
-    
-    for (UInt i=0;i<order_;i++) {
-      
+  for (UInt i=0;i<is_unitary_.size();i++) {
+    if (is_unitary_[i]) {
       pulses_[i] = unitary_evolution;
       duration_ += unitary_evolution.get_duration();
-      
-      duration_ += pulses_[i+1].get_duration();
-      
-      pulses_[i+2] = unitary_evolution;
-      duration_ += unitary_evolution.get_duration();
-      
+    } else {
+        duration_ += pulses_[i].get_duration();
     }
   }
-
+  
+  return;
+  
 }
 
 

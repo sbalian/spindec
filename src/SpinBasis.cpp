@@ -1,5 +1,5 @@
 // See SpinBasis.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Nov 13, 2014
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/Errors.h"
@@ -49,12 +49,10 @@ Eigen::ArrayXXd SpinBasis::build(
   // Loop over spins
   for (j=0;j<n;j++) {
     M_j = spin_parameters_vector[j].get_multiplicity();
-    if (M_j == 0.0) {continue;} // ! TODO STUPID - FIXME PLEASE!
+    if (M_j == 0.0) {continue;} //TODO  FIXME
                                // This happens if a spin quantum number is zero.
                               // The default constructor for SpinParameters
                               // sets the quantum number to zero.
-                              // Make sure all default constructors lead to well
-                              // defined behavior!!!
 
     M_0_to_j = M_0_to_j*M_j;
     
