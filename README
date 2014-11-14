@@ -44,16 +44,13 @@ The argument to cmake defines the installation location.
 If you invoke cmake without specifying the location, it will
 install to your default system prefix (requires root).
 
-The last command parallelizes the build process using 4 cores.
+The -j4 option to make parallelizes the build process using 4 cores.
 Make sure this number does not exceed the number of cores for your
 machine.
 
 If all went well, you should now have the static library and
 executables. The library, headers and executables should be
 located in ~/lib, ~/include and ~/bin respectively.
-
-Note: If you're installing in unusual paths, make sure your compiler
-knows about them.
 
 Optionally, to enable MKL optimization in Eigen,
 pass -DSPINDEC_USE_MKL=ON to cmake. Obviously, you will need the
@@ -148,7 +145,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <s.balian@ucl.ac.uk>
 
-**Last updated: Nov 12, 2014**
+**Last updated: Nov 14, 2014**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07
