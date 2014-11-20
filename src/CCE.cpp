@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Nov 19, 2014
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -93,7 +93,7 @@ void CCE::calculate()
   for (UInt i=1; i<=truncation_order_;i++) {
     
     result.set_evolution_ones();
-    
+        
     if (include_one_clusters_ == false) {
       if (i==1) {continue;}
     }

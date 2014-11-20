@@ -138,14 +138,21 @@ Acknowledgements
 - Martin Uhrin
 - Wayne Witzel
 - Gavin Morley
+- Roland Guichard
 - Leonardo Banchi
+
+See also
+--------
+
+For pseudospins and more:
+http://github.com/UCLGuichard/CCPQ
 
 Contact
 -------
 
 [Seto Balian] ([sbalian]) - <s.balian@ucl.ac.uk>
 
-**Last updated: Nov 14, 2014**
+**Last updated: Nov 20, 2014**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07
