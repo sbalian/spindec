@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/Dipolar.h"
 #include "SpinDec/constants.h"
@@ -35,6 +35,7 @@ void Dipolar::calculate(const SpinParameters & spin_parameters1,
                                                   field_direction),2.0) );
   
   strength_ = non_spatial_dependence*radial_dependence*angular_dependence;
+    
   return;
 }
 

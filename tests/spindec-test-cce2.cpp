@@ -11,7 +11,7 @@ int main ()
 {
   
   // Set up magnetic field (T)
-  UniformMagneticField field(0.5,ThreeVector(0.0,1.0,1.0));
+  UniformMagneticField field(0.5,ThreeVector(1.0,1.0,1.0));
   
   SpinHalf electron(1.7591e5,field.get_magnitude(),ThreeVector::Zero());
   
@@ -29,13 +29,17 @@ int main ()
   // Crystal structure
   
   vector<ThreeVector> site_vectors;
-  site_vectors.push_back(ThreeVector(1.0,0.0,0.0)*5.43);
-  site_vectors.push_back(ThreeVector(0.0,2.0,0.0)*5.43);
+  site_vectors.push_back(ThreeVector(1.0,0.0,0.0)*1.5);
+  site_vectors.push_back(ThreeVector(0.0,1.0,0.0)*1.5);
    
   CrystalStructure structure(site_vectors);
   
   SpinBath spin_bath(structure,si29.clone(),
       SpinInteractionEdge(0,1,interaction_C12.clone()));
+  
+  spin_bath.set_bath_state(0,1);
+  spin_bath.set_bath_state(1,0);
+
   
   CDouble invsqrt2(1.0/std::sqrt(2.0));
   electron.set_state(invsqrt2,0,invsqrt2,1);
@@ -44,15 +48,13 @@ int main ()
   CSDProblem csd_problem(electron.clone(),spin_bath,
       SpinInteractionEdge(0,1,interaction_J.clone()),field);
 
-  // Hahn spin echo decay experiment
-  TimeArray time_array(0.0,1.0e6,100);
+  TimeArray time_array(0.0,1000.0,1000);
   CPMGDephasing cpmg_dephasing( // CPMG order 1 = Hahn spin echo
       csd_problem,time_array,0,invsqrt2,0,invsqrt2,
       1);
   
-  // CCE to 3rd order
   CCE cce(2,cpmg_dephasing.clone(),50000.0,false);
-  
+
   cce.calculate();
   
   TimeEvolution time_evolution = cce.evolution(2);
