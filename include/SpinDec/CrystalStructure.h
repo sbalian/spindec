@@ -10,7 +10,7 @@
 //
 // The length units are Angstroms. Using Cartesian coordinates.
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -71,6 +71,8 @@ public:
   
   explicit CrystalStructure(const string & file_name); // reads from file
                                                        // 3 columns: x, y, z
+  
+  explicit CrystalStructure(const vector<ThreeVector> & site_vectors);
   
   const std::vector<ThreeVector>& get_site_vectors() const;
   const ThreeVector& get_site_vector(const UInt index) const;

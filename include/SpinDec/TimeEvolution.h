@@ -6,7 +6,7 @@
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Dec 10, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"
@@ -59,6 +59,9 @@ public:
   void print_abs(const string& file_name) const;
 
   void scale_time(const double scalar);
+  
+  // if evolution <= 1e-15, set to 1e-15
+  void finite_zeros();
   
 };
 

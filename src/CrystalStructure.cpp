@@ -1,5 +1,5 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"
@@ -304,6 +304,13 @@ std::ostream& operator<<(std::ostream& os,
   
   return os;
 }
+
+CrystalStructure::CrystalStructure(
+    const vector<ThreeVector>& site_vectors)
+{
+  site_vectors_ = site_vectors;
+}
+
 
 } // namespace SpinDec
 

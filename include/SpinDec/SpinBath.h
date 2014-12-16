@@ -7,7 +7,7 @@
 // problem in a crystal. Infinite temperature, so that all states are equally
 // likely.
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/typedefs.h"
 
@@ -82,6 +82,8 @@ public:
   
   ThreeVector get_position(const UInt vertex_label,
       const UInt bath_index) const;
+  
+  void set_bath_state(const UInt index, const UInt level);
   
 };
 

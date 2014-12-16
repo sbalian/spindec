@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 13/11/2014
+# Seto Balian 16/12/2014
 
 cmake_minimum_required(VERSION 2.8.2)
 
@@ -96,7 +96,6 @@ src/Hyperfine.cpp
 src/HyperfineParameters.cpp
 src/IdentityOperator.cpp
 src/IdentityPulse.cpp
-src/IsingHyperfine.cpp
 src/LatticeVectors.cpp
 src/MatrixRepresentation.cpp
 src/NuclearSpinParameters.cpp
@@ -162,7 +161,6 @@ include/SpinDec/Hyperfine.h
 include/SpinDec/HyperfineParameters.h
 include/SpinDec/IdentityOperator.h
 include/SpinDec/IdentityPulse.h
-include/SpinDec/IsingHyperfine.h
 include/SpinDec/LatticeVectors.h
 include/SpinDec/MatrixRepresentation.h
 include/SpinDec/NuclearSpinParameters.h
@@ -224,6 +222,14 @@ else()
   target_link_libraries(spindec-test-cce spindec)
 endif()
 
+# test (do not install)
+add_executable(spindec-test-cce2 "tests/spindec-test-cce2.cpp")
+if(SPINDEC_USE_MKL)
+  target_link_libraries(spindec-test-cce2 spindec ${MKL_LIBRARIES})
+else()
+  target_link_libraries(spindec-test-cce2 spindec)
+endif()
+
 # spindec-dsnsd
 add_executable(spindec-dsnsd "src/spindec-dsnsd.cpp")
 if(SPINDEC_USE_MKL)
@@ -233,3 +239,4 @@ else()
   target_link_libraries(spindec-dsnsd spindec boost_program_options)
 endif()
 install(TARGETS spindec-dsnsd DESTINATION bin)
+

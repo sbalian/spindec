@@ -3,7 +3,7 @@
 
 // SpinDec includes
 
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Dec 8, 2014
 
 #include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
@@ -30,7 +30,6 @@
 #include "SpinDec/HyperfineParameters.h"
 #include "SpinDec/IdentityOperator.h"
 #include "SpinDec/IdentityPulse.h"
-#include "SpinDec/IsingHyperfine.h"
 #include "SpinDec/LatticeVectors.h"
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/NuclearSpinParameters.h"
