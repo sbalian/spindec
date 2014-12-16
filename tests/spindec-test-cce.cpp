@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Dec 16, 2014
 
 #include <ctime>
 
@@ -49,7 +49,7 @@ int main ()
   
   // Central system - bath interaction
   HyperfineParameters hyperfine_parameters(
-      5.43,25.09,14.43,0.069,186.0,"Isotropic");
+      5.43,25.09,14.43,0.069,186.0,false,"Isotropic");
   Hyperfine interaction_J(hyperfine_parameters);
 
   // Crystal structure
