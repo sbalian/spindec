@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Dec 8, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -147,6 +147,7 @@ void Hyperfine::calculate(const SpinParameters & electron_parameters,
           - electron_position);
   
   if (parameters_.get_form() == "Isotropic") {
+
       strength_ = isotropic_part;
       return;
   }

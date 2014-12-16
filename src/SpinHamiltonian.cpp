@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -88,7 +88,6 @@ void SpinHamiltonian::fill_interaction(const UInt edge_index)
         graph_.get_interaction(edge_index);
     if (!interaction_ptr->strength_preset()) { // calculate only if strength
                                                // NOT preset
-      
       
       interaction_ptr -> calculate(
           
