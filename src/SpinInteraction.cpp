@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Dec 8, 2014
 
 #include "SpinDec/SpinInteraction.h"
 #include "SpinDec/Errors.h"
@@ -69,7 +69,10 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
     (*hamiltonian)(i,i) += CDouble(get_strength()*m1_i*m2_i,0.0);
     
     // Only fill diagonals for Ising only
-    if (ising_only) {continue;}
+    if (ising_only)
+    {
+      continue;
+    }
     
     // Calculate flip-flop part: D F (S_1^+ S_2^- + S_1^- S_2^+)
     // sieving out zeros

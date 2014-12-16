@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Nov 19, 2014
+// Seto Balian, Dec 10, 2014
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -22,6 +22,7 @@ CCE::CCE(const UInt truncation_order,
 
   cluster_database_ = ClusterDatabase(pulse_experiment->
       get_csd_problem().get_spin_bath(),truncation_order_,pairing_cutoff);
+  
 
 }
 
@@ -74,6 +75,13 @@ TimeEvolution CCE::true_correlation(const Cluster& cluster)
   for (UInt i=1;i<divisors.size();i++) {
     denominator = denominator*divisors[i];
   }
+  
+//  TimeEvolution numerator = reducible_correlation(cluster);
+//  numerator.finite_zeros();
+//  denominator.finite_zeros();
+//  TimeEvolution result = numerator/denominator;
+//  result.finite_zeros();
+//  return result;
   
   return reducible_correlation(cluster)/denominator;
   

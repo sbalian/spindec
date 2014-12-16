@@ -1,5 +1,5 @@
 // See SpinBath.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Dec 16, 2014
 
 #include "SpinDec/SpinBath.h"
 #include "SpinDec/RandomNumberGenerator.h"
@@ -20,10 +20,11 @@ void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
   
   // Prepare bath states
   UInt dimension = spin_system_base_->dimension();
-  
+
   for (UInt i=0;i<crystal_structure.num_site_vectors();i++) {
+   
     UInt random_number = 
-        RandomNumberGenerator::uniform_c_rand(0,1);
+        RandomNumberGenerator::uniform_c_rand(0,dimension-1);
     
     SpinState to_add(
         spin_system_base_->get_eigenvector_matrix().col(random_number),
@@ -233,6 +234,19 @@ SpinBath& SpinBath::operator =(const SpinBath& spin_bath)
   return *this;
 
 }
+
+void SpinBath::set_bath_state(const UInt index, const UInt level)
+{
+  
+  SpinState to_add(
+      spin_system_base_->get_eigenvector_matrix().col(level),
+      spin_system_base_->get_hamiltonian().get_basis());
+  
+  bath_states_[index] = to_add;
+
+  return;
+}
+
 
 
 } // namespace SpinDec

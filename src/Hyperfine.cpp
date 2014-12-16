@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Dec 8, 2014
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -180,7 +180,7 @@ void Hyperfine::fill(ComplexMatrix * hamiltonian,
     const UInt spin_label2) const
 {
   SpinInteraction::fill_ising_flipflop(hamiltonian,spin_parameters_vector,basis,
-      spin_label1,spin_label2,false,CDouble(0.5,0.0));
+      spin_label1,spin_label2,parameters_.is_ising_only(),CDouble(0.5,0.0));
   return;
 }
 

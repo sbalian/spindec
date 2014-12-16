@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Dec 16, 2014
 
 #include <ctime>
 #include <fstream>
@@ -69,7 +69,7 @@ int main (int argc, char **argv)
       "=================\n"
       "\nARGUMENTS";
   
-  string version = "v0.9, Copyright (C) Seto Balian, Nov 12 2014.\n"
+  string version = "v0.9, Copyright (C) Seto Balian, Dec 8 2014.\n"
       "Free software, no warranty.";
   
   // Declare a group of options that will be 
@@ -81,6 +81,9 @@ int main (int argc, char **argv)
       ("sample_config", "print sample config file")
       ("prefix,w", po::value< string >(&prefix),
           "prefix for output files")
+          ("print_hyperfine", "print the hyperfine couplings to\n"
+                              "the bath in M rad s-1 and exit")
+
       ;
   
   // Declare a group of options that will be 
@@ -97,6 +100,8 @@ int main (int argc, char **argv)
        
       ("one_clusters,1", "include 1 clusters")
       
+      ("complex,Z", "print complex output (not abs of echo)")
+            
       ("field,B", po::value<double>(&field_strength)->default_value(0.480,
        "0.480"),
        "magnetic field in Tesla")
@@ -304,6 +309,7 @@ int main (int argc, char **argv)
   lower_level-=1;
   upper_level-=1;
   
+  
   SpinDonor donor(field.get_magnitude(),
       // Nuclear spin quantum number
       nuclear_spin,
@@ -332,21 +338,31 @@ int main (int argc, char **argv)
   
   if (include_one_cluster == true) {
     hyperfine_parameters = HyperfineParameters(
-        5.43,25.09,14.43,electron_ie,186.0,"Full");
+        5.43,25.09,14.43,electron_ie,186.0,kill_nonising,"Full");
   } else {
       hyperfine_parameters = HyperfineParameters(
-          5.43,25.09,14.43,electron_ie,186.0,"Isotropic");
+          5.43,25.09,14.43,electron_ie,186.0,kill_nonising,"Isotropic");
   }
   
-  Hyperfine interaction_J;
-  if (kill_nonising == false) {
-    interaction_J = Hyperfine(hyperfine_parameters);
-  } else {
-      interaction_J = IsingHyperfine(hyperfine_parameters);
-  }
+  Hyperfine interaction_J(hyperfine_parameters);
   
   // Crystal structure
   DiamondCubic diamond_cubic(5.43,lattice_size, perc_29si/100.0);
+  
+  if (vm.count("print_hyperfine")) {
+    for (UInt i=0;i<diamond_cubic.num_site_vectors();i++) {
+      
+      interaction_J.calculate(
+          donor.get_electron_parameters(),
+          SpinHalfParameters(53.1903),
+          ThreeVector::Zero(),
+          diamond_cubic.get_site_vector(i),field);
+      
+      cout << interaction_J.get_strength() << endl;
+      
+    }
+    return 0;
+  }
   
   // spin bath
   SpinBath spin_bath(diamond_cubic,si29.clone(),
@@ -392,6 +408,7 @@ int main (int argc, char **argv)
   cce.calculate();
   
   
+  
   // Print to files scaling times appropriately
   
   for (UInt i=1;i<=max_cce_order;i++) {
@@ -419,8 +436,11 @@ int main (int argc, char **argv)
             2.0*static_cast<double>(cpmg_order)/1000.0);
     }
 
-    scaled_time_evolution.print_abs( output_file_name );
-    
+    if (vm.count("complex")) {
+      scaled_time_evolution.print( output_file_name );
+    } else {
+        scaled_time_evolution.print_abs( output_file_name );
+    }
   }
   
   if (vm.count("verbose")) {
@@ -441,14 +461,17 @@ string sample_config() {
   
   string config =
       "# SpinDec input file\n"
+      "# for flags (==), comment out to turn off\n"
       "# Seto Balian, Nov 13 2014\n"
       "\n"
       "# Maximum CCE truncation order (minimum is 1)\n"
       "max_cce_order = 2\n"
       "# CPMG order, 1 is Hahn spin echo, 0 is FID\n"
       "cpmg_order = 1\n"
-      "# include 1 clusters (comment out to turn off)\n"
+      "# include 1 clusters\n"
       "#one_clusters==\n"
+      "# print complex output\n"
+      "#complex==\n"
       "\n"
       "# magnetic field in Tesla\n"
       "field = 0.480\n"
@@ -489,18 +512,16 @@ string sample_config() {
       "final_time = 0.5\n"
       "# number of time steps\n"
       "num_steps = 100\n"
-      "# logarithmic time divisions (comment out to turn off)\n"
+      "# logarithmic time divisions\n"
       "#log_time==\n"
       "\n"
       "# kill the non-Ising part of the donor-bath interaction\n"
-      "# (comment out to turn off)\n"
       "#kill_nonising==\n"
       "\n"
       "# random number generator seed\n"
       "seed_value = 15\n"
       "\n"
       "# verbose mode\n"
-      "# (comment out to turn off)\n"
       "#verbose==\n"
       ;
 

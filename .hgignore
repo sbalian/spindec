@@ -4,7 +4,6 @@ boost
 .project
 .cproject
 *.o
-Tests
 .settings
 build
 
