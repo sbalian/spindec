@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Jan 8, 2015
 
 #include <ctime>
 #include <fstream>
@@ -29,7 +29,7 @@ int main (int argc, char **argv)
   
   // Arguments
   
-  UInt max_cce_order, cpmg_order;
+  UInt build_order, cpmg_order, cce_order;
   bool include_one_cluster = false;
   double field_strength, field_x, field_y, field_z, gamma_e, electron_ie;
   double gamma_n, nuclear_spin, hyperfine;
@@ -69,7 +69,7 @@ int main (int argc, char **argv)
       "=================\n"
       "\nARGUMENTS";
   
-  string version = "v0.9, Copyright (C) Seto Balian, Dec 8 2014.\n"
+  string version = "v0.9, Copyright (C) Seto Balian, Jan 8 2014.\n"
       "Free software, no warranty.";
   
   // Declare a group of options that will be 
@@ -91,9 +91,14 @@ int main (int argc, char **argv)
   // config file
   po::options_description options;
   options.add_options()
-      ("max_cce_order,O",po::value<UInt>(&max_cce_order)->default_value(2,"2"),
-       "maximum CCE truncation order\n"
+      ("build_order,O",po::value<UInt>(&build_order)->default_value(2,"2"),
+       "maximum order of clusters to build\n"
        "(minimum is 1)")
+       
+     ("cce_order,c",po::value<UInt>(&cce_order)->default_value(
+                                                   build_order,"build_order"),
+        "maximum CCE truncation order to calculate\n"
+        "(minimum is 1)")
 
       ("cpmg_order,o",po::value<UInt>(&cpmg_order)->default_value(1,"1"),
        "CPMG order, 1 is Hahn spin echo,\n0 is FID")
@@ -247,8 +252,13 @@ int main (int argc, char **argv)
     include_one_cluster = true;
   }
   
-  if ((max_cce_order == 1) && (include_one_cluster == false)) {
-    Errors::quit("Can't do CCE1 without including one clusters!");
+  if ( ( (build_order == 1) || (cce_order == 1) )
+      && (include_one_cluster == false)) {
+    Errors::quit("Can't do CCE1 without one clusters!");
+  }
+  
+  if (build_order < cce_order) {
+    Errors::quit("Can't have CCE build order < max CCE calculation order");
   }
   
   if (vm.count("log_time")) {
@@ -264,7 +274,8 @@ int main (int argc, char **argv)
   
   if (vm.count("verbose")) {
   
-  cout << "max CCE order: " << max_cce_order << endl;
+  cout << "CCE build order: " << build_order << endl;
+  cout << "max CCE order: " << cce_order << endl;
   cout << "CPMG order: " << cpmg_order << endl;
   cout << "Include 1-clusters: " << include_one_cluster << endl;
   cout << "B = " << field_strength << " T." << endl;
@@ -401,17 +412,15 @@ int main (int argc, char **argv)
       upper_level);
   
   // CCE
-  CCE cce(max_cce_order,cpmg_dephasing.clone(),sep_cutoff,include_one_cluster);
+  CCE cce(build_order,cpmg_dephasing.clone(),sep_cutoff,include_one_cluster);
   
   // Calculate
   
-  cce.calculate();
-  
-  
-  
+  cce.calculate(cce_order);
+    
   // Print to files scaling times appropriately
   
-  for (UInt i=1;i<=max_cce_order;i++) {
+  for (UInt i=1;i<=cce_order;i++) {
     
     if (include_one_cluster == false) {
       if (i==1) {continue;}
@@ -464,8 +473,10 @@ string sample_config() {
       "# for flags (==), comment out to turn off\n"
       "# Seto Balian, Nov 13 2014\n"
       "\n"
-      "# Maximum CCE truncation order (minimum is 1)\n"
-      "max_cce_order = 2\n"
+      "# Maximum order of clusters to build (minimum is 1)\n"
+      "build_order = 2\n"
+      "# Maximum CCE order to calculate (minimum is 1)\n"
+      "cce_order = 2\n"
       "# CPMG order, 1 is Hahn spin echo, 0 is FID\n"
       "cpmg_order = 1\n"
       "# include 1 clusters\n"
