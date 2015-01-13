@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Jan 8, 2015
+// Seto Balian, Jan 13, 2015
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -44,7 +44,7 @@ TimeEvolution CCE::reducible_correlation(const Cluster& cluster)
   
   TimeEvolution evolution =
       pulse_experiment_->time_evolution(cluster.get_labels());
-  
+    
   // store result in database
   cluster_database_.set_time_evolution(cluster,evolution);
   return evolution;
@@ -100,7 +100,7 @@ void CCE::calculate()
   
 }
 
-void CCE::calculate(const UInt order)
+void CCE::calculate(const UInt order, const bool no_divisions)
 {
     
   if (order < 1) {
@@ -125,11 +125,17 @@ void CCE::calculate(const UInt order)
     
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
       
-      result = result*true_correlation(cluster_database_.get_cluster(i,j));
+      if (no_divisions == true) {
+        result = result*
+            reducible_correlation(cluster_database_.get_cluster(i,j));
+      } else {
+        result = result*
+            true_correlation(cluster_database_.get_cluster(i,j));
+      }
       
     }
     
-    product_true_correlations_by_order_.push_back(result);
+    product_correlations_by_order_.push_back(result);
     
   }
     
@@ -137,10 +143,17 @@ void CCE::calculate(const UInt order)
   
 }
 
+void CCE::calculate(const UInt order)
+{
+  calculate(order,false);
+  return;
+}
+
+
 TimeEvolution CCE::evolution(const UInt order) const
 {
   
-  if (product_true_correlations_by_order_.empty()) {
+  if (product_correlations_by_order_.empty()) {
     Errors::quit("CCE not calculated");
   }
   
@@ -152,17 +165,17 @@ TimeEvolution CCE::evolution(const UInt order) const
     Errors::quit("CCE input order > truncation order");
   }
   
-  TimeEvolution result = product_true_correlations_by_order_[0];
+  TimeEvolution result = product_correlations_by_order_[0];
   result.set_evolution_ones();
   
   if (include_one_clusters_ == true) {
     for (UInt i=1;i<=order;i++) {
-      result = result*product_true_correlations_by_order_[i-1];
+      result = result*product_correlations_by_order_[i-1];
     }
   } else {
     
       for (UInt i=2;i<=order;i++) {
-        result = result*product_true_correlations_by_order_[i-2];
+        result = result*product_correlations_by_order_[i-2];
         
       }
       
@@ -171,6 +184,12 @@ TimeEvolution CCE::evolution(const UInt order) const
   return result;
   
 }
+
+const ClusterDatabase& SpinDec::CCE::get_database() const
+{
+  return cluster_database_;
+}
+
 
 } // namespace SpinDec
 

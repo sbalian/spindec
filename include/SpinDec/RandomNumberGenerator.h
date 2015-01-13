@@ -5,9 +5,10 @@
 //
 // Static methods for generating random numbers.
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jan 13, 2015
 
 #include "SpinDec/typedefs.h"
+#include "SpinDec/constants.h"
 
 namespace SpinDec
 {
@@ -23,6 +24,8 @@ public:
   static void seed_uniform_c_rand(const int seed);
   
   static void clock_seed_uniform_c_rand(); // seed with current time
+  
+  static double normal_c_rand(const double mean, const double stdev);
   
 };
 

@@ -7,7 +7,7 @@
 // This is implemented as a simple cubic lattice with 8 basis vectors.
 // SOURCE: http://en.wikipedia.org/wiki/Diamond_cubic
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jan 13, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
@@ -46,6 +46,9 @@ public:
   DiamondCubic(const double lattice_constant,
                const double side_length,
                const double fractional_abundance);
+  
+  void make_sphere(const double radius);
+    
 
 };
 

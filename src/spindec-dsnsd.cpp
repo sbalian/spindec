@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Jan 8, 2015
+// Seto Balian, Jan 13, 2015
 
 #include <ctime>
 #include <fstream>
@@ -83,7 +83,8 @@ int main (int argc, char **argv)
           "prefix for output files")
           ("print_hyperfine", "print the hyperfine couplings to\n"
                               "the bath in M rad s-1 and exit")
-
+      ("sphere", "spherical superlattice")
+      ("no_divisions","no CCE divisions")
       ;
   
   // Declare a group of options that will be 
@@ -96,7 +97,7 @@ int main (int argc, char **argv)
        "(minimum is 1)")
        
      ("cce_order,c",po::value<UInt>(&cce_order)->default_value(
-                                                   build_order,"build_order"),
+                                                   -1,"build_order"),
         "maximum CCE truncation order to calculate\n"
         "(minimum is 1)")
 
@@ -252,6 +253,10 @@ int main (int argc, char **argv)
     include_one_cluster = true;
   }
   
+  if (cce_order == -1) {
+    cce_order = build_order;
+  }
+  
   if ( ( (build_order == 1) || (cce_order == 1) )
       && (include_one_cluster == false)) {
     Errors::quit("Can't do CCE1 without one clusters!");
@@ -268,7 +273,6 @@ int main (int argc, char **argv)
   if (vm.count("kill_nonising")) {
     kill_nonising = true;
   }
-
   
   // Initialise
   
@@ -360,6 +364,10 @@ int main (int argc, char **argv)
   // Crystal structure
   DiamondCubic diamond_cubic(5.43,lattice_size, perc_29si/100.0);
   
+  if (vm.count("sphere")) {
+    diamond_cubic.make_sphere(lattice_size/2.0);
+  }
+  
   if (vm.count("print_hyperfine")) {
     for (UInt i=0;i<diamond_cubic.num_site_vectors();i++) {
       
@@ -412,12 +420,19 @@ int main (int argc, char **argv)
       upper_level);
   
   // CCE
+  
   CCE cce(build_order,cpmg_dephasing.clone(),sep_cutoff,include_one_cluster);
+    
+  ClusterDatabase clusters = cce.get_database();
   
   // Calculate
   
-  cce.calculate(cce_order);
-    
+    if (vm.count("no_divisions")) {
+      cce.calculate(cce_order,true);
+    } else {
+        cce.calculate(cce_order);
+    }
+  
   // Print to files scaling times appropriately
   
   for (UInt i=1;i<=cce_order;i++) {

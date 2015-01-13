@@ -3,7 +3,7 @@
 
 // SpinDec includes
 
-// Seto Balian, Dec 8, 2014
+// Seto Balian, Jan 13, 2015
 
 #include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
