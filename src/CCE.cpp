@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Dec 10, 2014
+// Seto Balian, Jan 8, 2015
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -7,21 +7,21 @@
 namespace SpinDec
 {
 
-CCE::CCE() : truncation_order_(0),include_one_clusters_(true)
+CCE::CCE() : build_order_(0),include_one_clusters_(true)
 {
 }
 
-CCE::CCE(const UInt truncation_order,
+CCE::CCE(const UInt build_order,
     const auto_ptr<PulseExperiment>& pulse_experiment,
     const double pairing_cutoff,
     const bool include_one_clusters) :
-    truncation_order_(truncation_order),
+    build_order_(build_order),
     include_one_clusters_(include_one_clusters),
     pulse_experiment_(pulse_experiment->clone())
 {
 
   cluster_database_ = ClusterDatabase(pulse_experiment->
-      get_csd_problem().get_spin_bath(),truncation_order_,pairing_cutoff);
+      get_csd_problem().get_spin_bath(),build_order_,pairing_cutoff);
   
 
 }
@@ -87,18 +87,35 @@ TimeEvolution CCE::true_correlation(const Cluster& cluster)
   
 }
 
-UInt CCE::get_truncation_order() const
+UInt CCE::get_build_order() const
 {
-  return truncation_order_;
+  return build_order_;
 }
 
 void CCE::calculate()
 {
 
+  calculate(build_order_);
+  return;
+  
+}
+
+void CCE::calculate(const UInt order)
+{
+    
+  if (order < 1) {
+    Errors::quit("CCE input order < 1");
+  }
+  
+  if (order>build_order_) {
+    Errors::quit("CCE input order > truncation order");
+  }
+  
+  
   TimeEvolution result(
       pulse_experiment_->get_time_array());
     
-  for (UInt i=1; i<=truncation_order_;i++) {
+  for (UInt i=1; i<=order;i++) {
     
     result.set_evolution_ones();
         
@@ -131,7 +148,7 @@ TimeEvolution CCE::evolution(const UInt order) const
     Errors::quit("CCE input order < 1");
   }
   
-  if (order>truncation_order_) {
+  if (order>build_order_) {
     Errors::quit("CCE input order > truncation order");
   }
   
@@ -150,7 +167,6 @@ TimeEvolution CCE::evolution(const UInt order) const
       }
       
   }
-  
   
   return result;
   

@@ -16,7 +16,7 @@
 // TODO Comment more
 // TODO have experiment instead of pulse experiment?
 //
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Jan 8, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/ClusterDatabase.h"
@@ -32,7 +32,8 @@ private:
   
   vector<TimeEvolution> product_true_correlations_by_order_;
   
-  UInt truncation_order_;
+  // CCE truncation order for which to build clusters
+  UInt build_order_;
   bool include_one_clusters_;
 
   auto_ptr<PulseExperiment> pulse_experiment_;
@@ -42,19 +43,26 @@ private:
   TimeEvolution reducible_correlation(const Cluster& cluster);
   TimeEvolution true_correlation(const Cluster& cluster);
   
-  void print(const string& file_name, const char option) const;
+  //void print(const string& file_name, const char option) const;
   
 public:
   
   CCE();
-  CCE(const UInt truncation_order,
+  CCE(const UInt build_order,
       const auto_ptr<PulseExperiment>& pulse_experiment,
       const double pairing_cutoff,
       const bool include_one_clusters);
   
-  UInt get_truncation_order() const;
+  UInt get_build_order() const;
   
+  
+  // Input CCE truncation order to calculate, cannot be greater than
+  // build_order_
+  void calculate(const UInt order);
+  // calls calculate(build_order_)
   void calculate();
+
+  // get the time evolution (has to be calculated with above method first)
   TimeEvolution evolution(const UInt order) const;
   
 };
