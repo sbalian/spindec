@@ -1,5 +1,5 @@
 // See RandomNumberGenerator.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Jan 13, 2015
 
 #include "SpinDec/RandomNumberGenerator.h"
 
@@ -31,9 +31,20 @@ void RandomNumberGenerator::clock_seed_uniform_c_rand()
   return;
 }
 
+// http://people.sc.fsu.edu/~jburkardt/cpp_src/ziggurat/ziggurat.html
+double RandomNumberGenerator::normal_c_rand(
+    const double mean, const double stdev)
+{
+  double r1 = static_cast<double>(rand())/static_cast<double>(RAND_MAX);
+  double r2 = static_cast<double>(rand())/static_cast<double>(RAND_MAX);
+  double x = std::sqrt ( - 2.0 * std::log ( r1 ) )*std::cos ( 2.0 * kPi * r2 );
+
+  return mean + stdev*x;
+
+}
+
 
 } // namespace SpinDec
-
 
 // TEST
 //g++ -I ../src/include/ -I/home/sbalian/eigen ../src/RandomNumberGenerator.cpp

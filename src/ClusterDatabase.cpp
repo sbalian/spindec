@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Jan 13, 2015
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -166,6 +166,8 @@ void ClusterDatabase::build()
     // current order to add
     //vector<Cluster> n_clusters;
     
+    bool found_at_least_one_cluster = false;
+    
     UInt prev_order = i - 1;
     UInt num_prev_clusters = num_clusters(prev_order);
     
@@ -239,6 +241,7 @@ void ClusterDatabase::build()
             // TODO Warning, maybe sorting inefficiency here ...
             Cluster new_cluster(new_spin_labels);
             add_unsolved_entry(new_cluster);
+            found_at_least_one_cluster = true;
             
             // now get the subsets of this current cluster
             
@@ -264,6 +267,10 @@ void ClusterDatabase::build()
         }
         
       }
+    
+    if (found_at_least_one_cluster == false) {
+      Errors::quit("Could not find any clusters for maximum CCE order.");
+    }
     
     }
 
@@ -330,9 +337,9 @@ void ClusterDatabase::print() const
 {
   
   database_map::const_iterator it;
-  
   for (it=database_.begin();it!=database_.end();it++) {
     const UInt order = it->first;
+    
     cout << "Clusters of order " << order << ":\n";
     
     for (UInt i=0;i<num_clusters(order);i++) {

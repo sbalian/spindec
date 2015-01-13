@@ -1,5 +1,5 @@
 // See DiamondCubic.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jan 13, 2015
 
 #include "SpinDec/DiamondCubic.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"
@@ -119,6 +119,22 @@ DiamondCubic::DiamondCubic(const double lattice_constant,
   
 }
 
+void DiamondCubic::make_sphere(const double radius)
+{
+  
+  vector<ThreeVector> new_sites;
+  
+  for (UInt i=0;i<num_site_vectors();i++) {
+    if (get_site_vector(i).norm() <= radius) {
+      new_sites.push_back(get_site_vector(i));
+    }
+  }
+  
+  site_vectors_ = new_sites;
+  
+  return;
+  
+}
 
 } // namespace SpinDec
 
