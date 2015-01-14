@@ -6,7 +6,7 @@
 // Parameters to cacluate the hyperfine interaction between and electron
 // and a nucleus in a lattice.
 //
-// Seto Balian, Dec 8, 2014
+// Seto Balian, Jan 14, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -23,12 +23,9 @@ private:
    double electron_ionization_energy_; 
                         // Donor electron ionization energy in eV
    double charge_density_; // charge density (dimensionless)
+   
    bool ising_only_; // Ignore flip-flop part of interaction
-   
-   string form_; // "Isotropic" (only), "Anisotropic" (only)
-                           // "Full" (both of the above) (default)
-   
-  void check_form();
+   bool fermi_contact_only_; // ignore dipolar part of hyperfine interaction
   
 public:
   HyperfineParameters();
@@ -37,15 +34,8 @@ public:
       const double lattice_parameter_b,
       const double electron_ionization_energy,
       const double charge_density,
-      const bool ising_only);
-  
-  HyperfineParameters(const double lattice_constant,
-      const double lattice_parameter_a,
-      const double lattice_parameter_b,
-      const double electron_ionization_energy,
-      const double charge_density,
       const bool ising_only,
-      const string & form);
+      bool fermi_contact_only_);
   
   double get_lattice_constant() const;
   double get_lattice_parameter_a() const;
@@ -53,7 +43,7 @@ public:
   double get_electron_ionization_energy() const;
   double get_charge_density() const;
   bool is_ising_only() const;
-  const string& get_form() const;
+  bool is_fermi_contact_only() const;
   
 };
 

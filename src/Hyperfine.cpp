@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Jan 14, 2015
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -146,11 +146,10 @@ void Hyperfine::calculate(const SpinParameters & electron_parameters,
       scaled_probability_density(nuclear_position
           - electron_position);
   
-  if (parameters_.get_form() == "Isotropic") {
-
+  if (parameters_.is_fermi_contact_only()) {
       strength_ = isotropic_part;
       return;
-  }
+  } // otherwise
 
   Dipolar dipolar_interaction;
   dipolar_interaction.calculate(electron_parameters,
@@ -164,12 +163,6 @@ void Hyperfine::calculate(const SpinParameters & electron_parameters,
     anisotropic_part = -dipolar_interaction.get_strength();
   }
   
-  if (parameters_.get_form() == "Anisotropic") {
-      strength_ = anisotropic_part;
-      return;
-  }
-  
-  // form = "Full"
   strength_ = isotropic_part + anisotropic_part;
   return;
 

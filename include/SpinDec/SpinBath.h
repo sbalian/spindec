@@ -7,7 +7,7 @@
 // problem in a crystal. Infinite temperature, so that all states are equally
 // likely.
 //
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Jan 14, 2015
 
 #include "SpinDec/typedefs.h"
 
