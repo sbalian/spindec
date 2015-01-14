@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Jan 13, 2015
+// Seto Balian, Jan 14, 2015
 
 #include <ctime>
 #include <fstream>
@@ -40,14 +40,18 @@ int main (int argc, char **argv)
   UInt num_steps;
   int seed_value;
   bool kill_nonising = false;
+  bool dipolar_hyperfine = false;
   string input_file;
   string prefix;
   
   // Help
-  string help_page =
+  string title =       
       "==============\n"
       "SpinDec: dsnsd\n"
       "==============\n\n"
+      "Nuclear spin diffusion for donors in silicon\n\n";
+
+  string help_page = title +
       "Calculates T2 (CPMG-N) for a donor in silicon interacting with a\n"
       "spin bath of 29Si nuclear impurities. Initially, the donor is\n"
       "prepared in a coherent superposition of the specified upper\n"
@@ -66,10 +70,9 @@ int main (int argc, char **argv)
       "- INPUT file name (positional) may be omitted\n"
       "- INPUT format is key=value, without - or -- prefixes\n"
       "- for flags, add a line with the flag's name followed by == to enable.\n"
-      "=================\n"
       "\nARGUMENTS";
   
-  string version = "v0.9, Copyright (C) Seto Balian, Jan 8 2014.\n"
+  string version = "v0.9, Copyright (C) Seto Balian, Jan 14 2015.\n"
       "Free software, no warranty.";
   
   // Declare a group of options that will be 
@@ -78,13 +81,14 @@ int main (int argc, char **argv)
   cmd_only_options.add_options()
       ("help,h", "print this help page")
       ("version,v", "display version")
-      ("sample_config", "print sample config file")
+      ("sample-config", "print sample config file")
       ("prefix,w", po::value< string >(&prefix),
           "prefix for output files")
-          ("print_hyperfine", "print the hyperfine couplings to\n"
+          ("print-hyperfine", "print the hyperfine couplings to\n"
                               "the bath in M rad s-1 and exit")
       ("sphere", "spherical superlattice")
-      ("no_divisions","no CCE divisions")
+      ("no-divisions","no CCE divisions")
+      ("verbose,V", "verbose mode")
       ;
   
   // Declare a group of options that will be 
@@ -92,19 +96,19 @@ int main (int argc, char **argv)
   // config file
   po::options_description options;
   options.add_options()
-      ("build_order,O",po::value<UInt>(&build_order)->default_value(2,"2"),
+      ("build-order,O",po::value<UInt>(&build_order)->default_value(2,"2"),
        "maximum order of clusters to build\n"
        "(minimum is 1)")
        
-     ("cce_order,c",po::value<UInt>(&cce_order)->default_value(
-                                                   -1,"build_order"),
+     ("cce-order,c",po::value<UInt>(&cce_order)->default_value(
+                                                   -1,"build-order"),
         "maximum CCE truncation order to calculate\n"
         "(minimum is 1)")
 
-      ("cpmg_order,o",po::value<UInt>(&cpmg_order)->default_value(1,"1"),
+      ("cpmg-order,o",po::value<UInt>(&cpmg_order)->default_value(1,"1"),
        "CPMG order, 1 is Hahn spin echo,\n0 is FID")
        
-      ("one_clusters,1", "include 1 clusters")
+      ("one-clusters,1", "include 1 clusters")
       
       ("complex,Z", "print complex output (not abs of echo)")
             
@@ -112,28 +116,28 @@ int main (int argc, char **argv)
        "0.480"),
        "magnetic field in Tesla")
        
-      ("field_x,x", po::value<double>(&field_x)->default_value(0.0,"0"),
+      ("field-x,x", po::value<double>(&field_x)->default_value(0.0,"0"),
       "x-component of vector parallel\nto magnetic field")
         
-      ("field_y,y", po::value<double>(&field_y)->default_value(1.0,"1"),
+      ("field-y,y", po::value<double>(&field_y)->default_value(1.0,"1"),
        "y-component of vector parallel\nto magnetic field")
 
-      ("field_z,z", po::value<double>(&field_z)->default_value(1.0,"1"),
+      ("field-z,z", po::value<double>(&field_z)->default_value(1.0,"1"),
        "z-component of vector parallel\nto magnetic field")
        
-      ("gamma_e,e", po::value<double>(&gamma_e)->default_value(1.7591e5,
+      ("gamma-e,e", po::value<double>(&gamma_e)->default_value(1.7591e5,
        "1.7591e5"),
        "donor electron gyromagnetic ratio\nin M rad s-1 T-1")
        
-      ("electron_ie,i", po::value<double>(&electron_ie)->default_value(0.069,
+      ("electron-ie,i", po::value<double>(&electron_ie)->default_value(0.069,
        "0.069"),
        "donor electron ionization energy in eV")
 
-      ("gamma_n,n", po::value<double>(&gamma_n)->default_value(-43.775,
+      ("gamma-n,n", po::value<double>(&gamma_n)->default_value(-43.775,
        "-43.775"),
        "donor nucleus gyromagnetic ratio\nin M rad s-1 T-1")
 
-      ("nuclear_spin,I", po::value<double>(&nuclear_spin)->default_value(4.5,
+      ("nuclear-spin,I", po::value<double>(&nuclear_spin)->default_value(4.5,
        "4.5"),
        "donor nucleus quantum number")
 
@@ -141,55 +145,56 @@ int main (int argc, char **argv)
        "9.2702e3"),
        "donor hyperfine in M rad s-1")
 
-      ("lower_level,l", po::value<UInt>(&lower_level)->default_value(9,
+      ("lower-level,l", po::value<UInt>(&lower_level)->default_value(9,
        "9"),
        "donor lower transition level\n(counting from 1 in increasing energy)")
 
-      ("upper_level,u", po::value<UInt>(&upper_level)->default_value(12,
+      ("upper-level,u", po::value<UInt>(&upper_level)->default_value(12,
        "12"),
        "donor upper transition level\n(counting from 1 in increasing energy)")
 
-      ("perc_29Si,p", po::value<double>(&perc_29si)->default_value(4.67,
+      ("perc-29Si,p", po::value<double>(&perc_29si)->default_value(4.67,
        "4.67"),
        "29Si percentage abundance")
 
-      ("sep_cutoff,s", po::value<double>(&sep_cutoff)->default_value(4.51,
+      ("sep-cutoff,s", po::value<double>(&sep_cutoff)->default_value(4.51,
        "4.51"),
        "pair separation cutoff in Angstroms")
 
-      ("lattice_size,S", po::value<double>(&lattice_size)->default_value(162.9,
+      ("lattice-size,S", po::value<double>(&lattice_size)->default_value(162.9,
        "162.9"),
        "side length of cubic superlattice\nin Angstroms")
        
-      ("initial_time,a", po::value<double>(&initial_time)->default_value(0.0,
+      ("initial-time,a", po::value<double>(&initial_time)->default_value(0.0,
        "0"),
        "initial evolution time in ms")
 
-      ("final_time,b", po::value<double>(&final_time)->default_value(0.5,
+      ("final-time,b", po::value<double>(&final_time)->default_value(0.5,
        "0.5"),
        "final evolution time in ms")
 
-      ("num_steps,N", po::value<UInt>(&num_steps)->default_value(100,
+      ("num-steps,N", po::value<UInt>(&num_steps)->default_value(100,
        "100"),
        "number of time steps")
 
-      ("log_time,L", "logarithmic time divisions")
+      ("log-time,L", "logarithmic time divisions")
       
-      ("kill_nonising,k", "kill the non-Ising part of\n"
+      ("kill-nonising,k", "kill the non-Ising part of\n"
                            "the donor-bath interaction")
+                           
+      ("dipolar-hyperfine,k", "include the dipolar part of\n"
+       "the donor-bath interaction")
 
-      ("seed_value,r", po::value<int>(&seed_value)->default_value(15,
+      ("seed-value,r", po::value<int>(&seed_value)->default_value(15,
        "15"),
        "random number generator seed")
-            
-      ("verbose,V", "verbose mode")
       
     ;
   
   // Hidden positional options on command line
   po::options_description positional_options;
   positional_options.add_options()
-      ("input_file", po::value< string >(&input_file), "input file")
+      ("input-file", po::value< string >(&input_file), "input file")
       ;
   
   po::options_description cmd;
@@ -200,7 +205,7 @@ int main (int argc, char **argv)
   
   po::positional_options_description pod;
   pod.add("prefix",1);
-  pod.add("input_file",1);
+  pod.add("input-file",1);
   
   po::variables_map vm;
   
@@ -219,7 +224,7 @@ int main (int argc, char **argv)
     return 0;
   }
   
-  if (vm.count("sample_config")) {
+  if (vm.count("sample-config")) {
     cout << sample_config() << endl;
     return 0;
   }
@@ -231,7 +236,7 @@ int main (int argc, char **argv)
   }
   
   
-  if (vm.count("input_file")) {
+  if (vm.count("input-file")) {
         
     std::ifstream ifs(input_file.c_str());
     
@@ -249,7 +254,7 @@ int main (int argc, char **argv)
         options(cmd).positional(pod).run(), vm);
   notify(vm);
   
-  if (vm.count("one_clusters")) {
+  if (vm.count("one-clusters")) {
     include_one_cluster = true;
   }
   
@@ -266,52 +271,93 @@ int main (int argc, char **argv)
     Errors::quit("Can't have CCE build order < max CCE calculation order");
   }
   
-  if (vm.count("log_time")) {
+  if (vm.count("log-time")) {
     log_time = true;
   }
   
-  if (vm.count("kill_nonising")) {
+  if (vm.count("kill-nonising")) {
     kill_nonising = true;
   }
+  
+  if (vm.count("dipolar-hyperfine")) {
+    dipolar_hyperfine = true;
+  }
+
   
   // Initialise
   
   if (vm.count("verbose")) {
-  
-  cout << "CCE build order: " << build_order << endl;
-  cout << "max CCE order: " << cce_order << endl;
-  cout << "CPMG order: " << cpmg_order << endl;
-  cout << "Include 1-clusters: " << include_one_cluster << endl;
-  cout << "B = " << field_strength << " T." << endl;
-  cout << "B || [" << field_x << "," << field_y << "," << field_z << "]" <<endl;
-  cout << "gamma_e = " << gamma_e << " M rad s-1 T-1" << endl;
-  cout << "electron_IE = " << electron_ie << " eV" << endl;
-  cout << "gamma_n = " << gamma_n << " M rad s-1 T-1" << endl;
-  cout << "I = " << nuclear_spin << endl;
-  cout << "A = " << hyperfine << " M rad s-1" << endl;
-  cout << "Transition |" << upper_level << "> --> |" << lower_level << ">\n";
-  cout << perc_29si << "% 29Si abundance" << endl;
-  cout << "separation cutoff: " << sep_cutoff << " Angstroms" << endl;
-  cout << "superlattice size: " << lattice_size << " Angstroms" << endl;
-  cout << "log time: " << log_time << endl;
-  cout << "initial time = " << initial_time << " ms" << endl;
-  cout << "final time = " << final_time << " ms" << endl;
-  cout << "num time steps: " << num_steps << endl;
-  cout << "seed value: " << seed_value << endl;
-  cout << "kill non-Ising: " << kill_nonising << endl;
-  
-  if (vm.count("input_file")) {
-    cout << "input file: " << input_file << endl;
+    
+  cout << title;
+  struct tm * now = localtime( & time_start );
+  cout << "Start date: ";
+  cout << now->tm_mday << "/" << (now->tm_mon + 1)<<"/"<< (now->tm_year + 1900);
+  cout << endl;
+  cout << "Start time: ";
+  cout << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << endl;
+  cout << endl;
+  if (vm.count("input-file")) {
+    cout << "Input file: " << input_file << endl;
   } else {
-      cout << "input file: none, defaults or input from command line" << endl;
+      cout << "Input file: none, defaults or input from command line" << endl;
   }
-
-  cout << "output file prefix: " << prefix << endl;
-  
-  cout << "CALCULATING ..." << endl;
+  cout << "Output file prefix: " << prefix << endl;
+  cout << endl;
+  cout << "Parameters" << endl;
+  cout << "----------" << endl;
+  cout << "Will build clusters up to order " << build_order << endl;
+  cout << "Will calculate the CCE up to order " << cce_order << endl;
+  cout << "CPMG order: " << cpmg_order << endl;
+  cout << "Include 1-clusters? ";
+  if (include_one_cluster) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
+  cout << endl;
+  cout << "Magnetic field = " << field_strength << " Tesla" << endl;
+  cout << "Magnetic field parallel to [";
+  cout << field_x << "," << field_y << "," << field_z << "]" <<endl;
+  cout << "Donor electron gyromagnetic ratio = ";
+  cout << gamma_e << " M rad s-1 T-1" << endl;
+  cout << "Donor ionization energy = " << electron_ie << " eV" << endl;
+  cout << "Host nucleus gyromagnetic ratio  = ";
+  cout << gamma_n << " M rad s-1 T-1" << endl;
+  cout << "Host nuclear spin = " << nuclear_spin << endl;
+  cout << "Donor hyperfine = " << hyperfine << " M rad s-1" << endl;
+  cout << "Transition: |" << upper_level << "> --> |" << lower_level << ">\n";
+  cout << perc_29si << "% 29Si abundance" << endl;
+  cout << "Separation cutoff: " << sep_cutoff << " Angstroms" << endl;
+  cout << "Superlattice size: " << lattice_size << " Angstroms" << endl;
+  cout << "Logarithmic time scale? ";
+  if (log_time) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
+  cout << endl;
+  cout << "Initial time = " << initial_time << " ms" << endl;
+  cout << "Final time = " << final_time << " ms" << endl;
+  cout << "Number of time steps: " << num_steps << endl;
+  cout << "Seed value: " << seed_value << endl;
+  cout << "Kill non-Ising part of donor-bath interaction? ";
+  if (kill_nonising) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
+  cout << endl;
+  cout << "Include dipolar part of donor-bath interaction? ";
+  if (dipolar_hyperfine) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
+  cout << endl;
+  cout << endl;
+  cout << "Calculating (this may take a long time!) ..." << endl;
   
   }
-
   
   RandomNumberGenerator::seed_uniform_c_rand(seed_value);
   
@@ -349,16 +395,9 @@ int main (int argc, char **argv)
   Dipolar interaction_C12;
   
   // Central system - bath interaction
-  HyperfineParameters hyperfine_parameters;
-  
-  if (include_one_cluster == true) {
-    hyperfine_parameters = HyperfineParameters(
-        5.43,25.09,14.43,electron_ie,186.0,kill_nonising,"Full");
-  } else {
-      hyperfine_parameters = HyperfineParameters(
-          5.43,25.09,14.43,electron_ie,186.0,kill_nonising,"Isotropic");
-  }
-  
+  HyperfineParameters hyperfine_parameters
+  (5.43,25.09,14.43,electron_ie,186.0,kill_nonising,dipolar_hyperfine);
+    
   Hyperfine interaction_J(hyperfine_parameters);
   
   // Crystal structure
@@ -368,7 +407,7 @@ int main (int argc, char **argv)
     diamond_cubic.make_sphere(lattice_size/2.0);
   }
   
-  if (vm.count("print_hyperfine")) {
+  if (vm.count("print-hyperfine")) {
     for (UInt i=0;i<diamond_cubic.num_site_vectors();i++) {
       
       interaction_J.calculate(
@@ -427,7 +466,7 @@ int main (int argc, char **argv)
   
   // Calculate
   
-    if (vm.count("no_divisions")) {
+    if (vm.count("no-divisions")) {
       cce.calculate(cce_order,true);
     } else {
         cce.calculate(cce_order);
@@ -469,10 +508,10 @@ int main (int argc, char **argv)
   
   if (vm.count("verbose")) {
 
-  cout << "... DONE!" << endl;
+  cout << "Done! (";
   cout << "time taken: " <<
       static_cast<UInt>(std::difftime(std::time(0), time_start));
-  cout << " seconds." << endl;
+  cout << " seconds)" << endl;
   
   }
 
@@ -480,76 +519,138 @@ int main (int argc, char **argv)
   
 }
 
+string add_to_config(const string description,const string value)
+{
+  string desc_line  = "# " + description + "\n";
+  string value_line = "  " + value + "\n";
+  return desc_line + value_line;
+}
 
 string sample_config() {
   
   string config =
       "# SpinDec input file\n"
       "# for flags (==), comment out to turn off\n"
-      "# Seto Balian, Nov 13 2014\n"
-      "\n"
-      "# Maximum order of clusters to build (minimum is 1)\n"
-      "build_order = 2\n"
-      "# Maximum CCE order to calculate (minimum is 1)\n"
-      "cce_order = 2\n"
-      "# CPMG order, 1 is Hahn spin echo, 0 is FID\n"
-      "cpmg_order = 1\n"
-      "# include 1 clusters\n"
-      "#one_clusters==\n"
-      "# print complex output\n"
-      "#complex==\n"
-      "\n"
-      "# magnetic field in Tesla\n"
-      "field = 0.480\n"
-      "# x-component of vector parallel to magnetic field\n"
-      "field_x = 0\n"
-      "# y-component of vector parallel to magnetic field\n"
-      "field_y = 1\n"
-      "# z-component of vector parallel to magnetic field\n"
-      "field_z = 1\n"
-      "\n"
-      "# donor electron gyromagnetic ratio in M rad s-1 T-1\n"
-      "gamma_e = 1.7591e5\n"
-      "# donor electron ionization energy in eV\n"
-      "electron_ie = 0.069\n"
-      "\n"
-      "# donor nucleus gyromagnetic ratio in M rad s-1 T-1\n"
-      "gamma_n = -43.775\n"
-      "# donor nucleus quantum number\n"
-      "nuclear_spin = 4.5\n"
-      "\n"
-      "# donor hyperfine in M rad s-1\n"
-      "hyperfine = 9.2702e3\n"
-      "# donor lower transition level (counting from 1 in increasing energy)\n"
-      "lower_level = 9\n"
-      "# upper lower transition level (counting from 1 in increasing energy)\n"
-      "upper_level = 12\n"
-      "\n"
-      "# 29Si percentage abundance\n"
-      "perc_29Si = 4.67\n"
-      "# pair separation cutoff in Angstroms\n"
-      "sep_cutoff = 4.51\n"
-      "# side length of cubic superlattice in Angstroms\n"
-      "lattice_size = 162.9\n"
-      "\n"
-      "# initial evolution time in ms\n"
-      "initial_time = 0\n"
-      "# final evolution time in ms\n"
-      "final_time = 0.5\n"
-      "# number of time steps\n"
-      "num_steps = 100\n"
-      "# logarithmic time divisions\n"
-      "#log_time==\n"
-      "\n"
-      "# kill the non-Ising part of the donor-bath interaction\n"
-      "#kill_nonising==\n"
-      "\n"
-      "# random number generator seed\n"
-      "seed_value = 15\n"
-      "\n"
-      "# verbose mode\n"
-      "#verbose==\n"
-      ;
+      "# Seto Balian, Jan 14 2015\n"
+      "\n";
+  
+  config += add_to_config
+      ("Maximum order of clusters to build (minimum is 1)",
+       "build-order = 2");
+  
+  config += add_to_config
+      ("Maximum CCE order to calculate (minimum is 1)",
+       "cce-order = 2");
+
+  config += add_to_config
+      ("CPMG order, 1 is Hahn spin echo, 0 is FID",
+       "cpmg-order = 1");
+
+  config += add_to_config
+      ("include 1 clusters",
+       "#one-clusters==");
+  
+  config += add_to_config
+      ("print complex output",
+       "#complex==");
+  
+  config += "\n";
+  
+  config += add_to_config
+      ("magnetic field in Tesla",
+       "field = 0.480");
+
+  config += add_to_config
+      ("x-component of vector parallel to magnetic field",
+       "field-x = 0");
+
+  config += add_to_config
+      ("y-component of vector parallel to magnetic field",
+       "field-y = 1");
+
+  config += add_to_config
+      ("z-component of vector parallel to magnetic field",
+       "field-z = 1");
+
+  config += "\n";
+
+  config += add_to_config
+      ("donor electron gyromagnetic ratio in M rad s-1 T-1",
+       "gamma-e = 1.7591e5");
+
+  config += add_to_config
+      ("donor electron ionization energy in eV",
+       "electron-ie = 0.069");
+
+  config += "\n";
+
+  config += add_to_config
+      ("donor nucleus gyromagnetic ratio in M rad s-1 T-1",
+       "gamma-n = -43.775");
+
+  config += add_to_config
+      ("donor nucleus quantum number",
+       "nuclear-spin = 4.5");
+  
+  config += add_to_config
+      ("donor hyperfine in M rad s-1",
+       "hyperfine = 9.2702e3");
+
+  config += add_to_config
+      ("donor lower transition level (counting from 1 in increasing energy)",
+       "lower-level = 9");
+
+  config += add_to_config
+      ("donor upper transition level (counting from 1 in increasing energy)",
+       "upper-level = 12");
+
+  config += "\n";
+
+  config += add_to_config
+      ("29Si percentage abundance",
+       "perc-29Si = 4.67");
+  
+  config += add_to_config
+      ("pair separation cutoff in Angstroms",
+       "sep-cutoff = 4.51");
+
+  config += add_to_config
+      ("side length of cubic superlattice in Angstroms",
+       "lattice-size = 162.9");
+
+  config += "\n";
+  
+  config += add_to_config
+      ("kill the non-Ising part of the donor-bath interaction",
+       "#kill-nonising==");
+
+  config += add_to_config
+      ("include the dipolar part of the donor-bath interaction",
+       "#dipolar-hyperfine==");
+
+  config += "\n";
+  
+  config += add_to_config
+      ("initial evolution time in ms",
+       "initial-time = 0");
+
+  config += add_to_config
+      ("final evolution time in ms",
+       "final-time = 0.5");
+  
+  config += add_to_config
+      ("number of time steps",
+       "num-steps = 100");
+
+  config += add_to_config
+      ("logarithmic time divisions",
+       "#log-time==");
+  
+  config += "\n";
+  
+  config += add_to_config
+      ("random number generator seed",
+       "seed-value = 15");
 
   return config;
   
