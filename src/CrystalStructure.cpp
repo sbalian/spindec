@@ -1,5 +1,5 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Jan 20, 2015
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"
@@ -132,6 +132,27 @@ void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
       }
     }
   }
+  
+//  vector<ThreeVector> actual_sites;
+//  
+//  cout << "total " << num_site_vectors() << endl;
+//  
+//  for (UInt i=0;i<num_site_vectors();i++) {
+//    
+//    if ( static_cast<unsigned int>(
+//        RandomNumberGenerator::uniform_c_rand(1,1000000))
+//                                <= abundance_ppm) {
+//      // move on
+//    } else {
+//        continue; // don't add site vector
+//    }
+//    
+//    actual_sites.push_back(site_vectors_[i]);
+//    
+//  }
+  
+  //site_vectors_ = actual_sites;
+  //cout << "selected " << num_site_vectors() << endl;
   
   return;
 }

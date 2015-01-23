@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Jan 13, 2015
+// Seto Balian, Jan 20, 2015
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -114,6 +114,73 @@ void ClusterDatabase::build()
   if (max_order_ == 1) {
     return;
   }
+  
+  /*
+  for (UInt i=0;i<num_sites;i++) {
+    
+    ThreeVector a = spin_bath_.get_crystal_structure().get_site_vector(i);
+    
+    vector<UInt> L;
+    L.push_back(i);
+    
+    Cluster to_add;
+    
+    for (UInt j=0;j<num_sites;j++) {
+      
+      ThreeVector b = spin_bath_.get_crystal_structure().get_site_vector(j);
+      
+      ThreeVector separation = a-b;
+      
+      if (separation.norm() <= 1e-12) {continue;}
+      
+      if (!( BoostEigen::isWithinDistance(separation,
+          pairing_cutoff_))) {
+       continue;
+      }
+      
+      bool dont_add = false;
+      for (UInt k=0;k<L.size();k++) {
+        if (L[k] == j) {
+          dont_add = true;
+        }
+      }
+            
+      if (dont_add == false) {
+        L.push_back(j);
+      } else {
+        continue;
+      }
+            
+      to_add = Cluster(L);
+      
+    }
+    
+    if ( (!cluster_exists(to_add)) && (to_add.num_spins() <= max_order_) ) {
+      add_unsolved_entry(to_add);
+      
+      vector<Cluster> sub_clusters = to_add.subsets();
+      
+      const UInt sub_clusters_size  =sub_clusters.size();
+      for (UInt l =0;l<sub_clusters_size;l++) {
+        const UInt sub_order = sub_clusters[l].num_spins();
+        if (sub_order == to_add.num_spins()) {
+          continue;
+        }
+        Cluster sub_cluster = sub_clusters[l];
+        if(!cluster_exists(sub_cluster)) {
+          add_unsolved_entry(sub_cluster);
+        }
+
+      }
+      
+      
+    }
+    
+    
+  }
+  
+  */
+
   
   // make 2-clusters
   
@@ -273,6 +340,8 @@ void ClusterDatabase::build()
     }
     
     }
+  
+  return;
 
 }
 
