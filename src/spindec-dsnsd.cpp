@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Jan 14, 2015
+// Seto Balian, Jan 20, 2015
 
 #include <ctime>
 #include <fstream>
@@ -402,6 +402,7 @@ int main (int argc, char **argv)
   
   // Crystal structure
   DiamondCubic diamond_cubic(5.43,lattice_size, perc_29si/100.0);
+  //diamond_cubic.write_site_vectors("lattice2.dat");
   
   if (vm.count("sphere")) {
     diamond_cubic.make_sphere(lattice_size/2.0);
