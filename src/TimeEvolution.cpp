@@ -1,5 +1,5 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Dec 10, 2014
+// Seto Balian, Feb 6, 2015
 
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/Errors.h"
@@ -245,8 +245,8 @@ void TimeEvolution::scale_time(const double scalar)
 void TimeEvolution::finite_zeros()
 {
   for (UInt i=0;i<evolution_.size();i++) {
-    if ( std::abs(evolution_[i]) <= 0.1 ) {
-      evolution_[i] = std::polar(0.1,0.0);
+    if ( std::abs(evolution_[i]) < 1.0e-4 ) {
+      evolution_[i] = std::polar(1.0e-4,0.0);
     }
   }
   return;
