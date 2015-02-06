@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Jan 20, 2015
+// Seto Balian, Feb 6, 2015
 
 #include <ctime>
 #include <fstream>
@@ -19,7 +19,7 @@ using namespace SpinDec;
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
-string sample_config();
+string sample_config(const string & version);
 
 int main (int argc, char **argv)
 {
@@ -29,16 +29,16 @@ int main (int argc, char **argv)
   
   // Arguments
   
-  UInt build_order, cpmg_order, cce_order;
+  UInt cpmg_order, cce_order;
   bool include_one_cluster = false;
   double field_strength, field_x, field_y, field_z, gamma_e, electron_ie;
   double gamma_n, nuclear_spin, hyperfine;
   UInt lower_level, upper_level;
-  double perc_29si, sep_cutoff, lattice_size;
+  double perc_29si, max_cluster_radius, lattice_size;
   bool log_time = false;
   double initial_time, final_time;
   UInt num_steps;
-  int seed_value;
+  int position_seed, state_seed;
   bool kill_nonising = false;
   bool dipolar_hyperfine = false;
   string input_file;
@@ -72,7 +72,7 @@ int main (int argc, char **argv)
       "- for flags, add a line with the flag's name followed by == to enable.\n"
       "\nARGUMENTS";
   
-  string version = "v0.9, Copyright (C) Seto Balian, Jan 14 2015.\n"
+  string version = "v0.9, Copyright (C) Seto Balian, Feb 6 2015. "
       "Free software, no warranty.";
   
   // Declare a group of options that will be 
@@ -86,8 +86,6 @@ int main (int argc, char **argv)
           "prefix for output files")
           ("print-hyperfine", "print the hyperfine couplings to\n"
                               "the bath in M rad s-1 and exit")
-      ("sphere", "spherical superlattice")
-      ("no-divisions","no CCE divisions")
       ("verbose,V", "verbose mode")
       ;
   
@@ -96,12 +94,8 @@ int main (int argc, char **argv)
   // config file
   po::options_description options;
   options.add_options()
-      ("build-order,O",po::value<UInt>(&build_order)->default_value(2,"2"),
-       "maximum order of clusters to build\n"
-       "(minimum is 1)")
        
-     ("cce-order,c",po::value<UInt>(&cce_order)->default_value(
-                                                   -1,"build-order"),
+     ("cce-order,c",po::value<UInt>(&cce_order)->default_value(2,"2"),
         "maximum CCE truncation order to calculate\n"
         "(minimum is 1)")
 
@@ -157,9 +151,10 @@ int main (int argc, char **argv)
        "4.67"),
        "29Si percentage abundance")
 
-      ("sep-cutoff,s", po::value<double>(&sep_cutoff)->default_value(4.51,
+      ("max-cluster-radius,s", po::value<double>
+        (&max_cluster_radius)->default_value(4.51,
        "4.51"),
-       "pair separation cutoff in Angstroms")
+       "maximum cluster radius in Angstroms")
 
       ("lattice-size,S", po::value<double>(&lattice_size)->default_value(162.9,
        "162.9"),
@@ -182,12 +177,22 @@ int main (int argc, char **argv)
       ("kill-nonising,k", "kill the non-Ising part of\n"
                            "the donor-bath interaction")
                            
-      ("dipolar-hyperfine,k", "include the dipolar part of\n"
+      ("dipolar-hyperfine", "include the dipolar part of\n"
        "the donor-bath interaction")
 
-      ("seed-value,r", po::value<int>(&seed_value)->default_value(15,
+      ("position-seed", po::value<int>(&position_seed)->default_value(15,
        "15"),
-       "random number generator seed")
+       "random number generator seed\n"
+       "for bath spin positions")
+       
+       ("state-seed", po::value<int>(&state_seed)->default_value(25,
+        "25"),
+        "random number generator seed\n"
+        "for bath spin states\n(won't seed if 0)")
+        
+        ("sphere", "spherical superlattice")
+        
+        ("no-divisions","no CCE divisions")
       
     ;
   
@@ -225,7 +230,7 @@ int main (int argc, char **argv)
   }
   
   if (vm.count("sample-config")) {
-    cout << sample_config() << endl;
+    cout << sample_config(version) << endl;
     return 0;
   }
   
@@ -234,7 +239,6 @@ int main (int argc, char **argv)
     Errors::quit("prefix argument required.");
     return 0;
   }
-  
   
   if (vm.count("input-file")) {
         
@@ -257,20 +261,11 @@ int main (int argc, char **argv)
   if (vm.count("one-clusters")) {
     include_one_cluster = true;
   }
-  
-  if (cce_order == -1) {
-    cce_order = build_order;
-  }
-  
-  if ( ( (build_order == 1) || (cce_order == 1) )
-      && (include_one_cluster == false)) {
+    
+  if ( (cce_order == 1) && (include_one_cluster == false)) {
     Errors::quit("Can't do CCE1 without one clusters!");
   }
-  
-  if (build_order < cce_order) {
-    Errors::quit("Can't have CCE build order < max CCE calculation order");
-  }
-  
+    
   if (vm.count("log-time")) {
     log_time = true;
   }
@@ -305,7 +300,6 @@ int main (int argc, char **argv)
   cout << endl;
   cout << "Parameters" << endl;
   cout << "----------" << endl;
-  cout << "Will build clusters up to order " << build_order << endl;
   cout << "Will calculate the CCE up to order " << cce_order << endl;
   cout << "CPMG order: " << cpmg_order << endl;
   cout << "Include 1-clusters? ";
@@ -327,7 +321,8 @@ int main (int argc, char **argv)
   cout << "Donor hyperfine = " << hyperfine << " M rad s-1" << endl;
   cout << "Transition: |" << upper_level << "> --> |" << lower_level << ">\n";
   cout << perc_29si << "% 29Si abundance" << endl;
-  cout << "Separation cutoff: " << sep_cutoff << " Angstroms" << endl;
+  cout << "Maximum cluster radius: " << max_cluster_radius << " Angstroms";
+  cout << endl;
   cout << "Superlattice size: " << lattice_size << " Angstroms" << endl;
   cout << "Logarithmic time scale? ";
   if (log_time) {
@@ -339,7 +334,8 @@ int main (int argc, char **argv)
   cout << "Initial time = " << initial_time << " ms" << endl;
   cout << "Final time = " << final_time << " ms" << endl;
   cout << "Number of time steps: " << num_steps << endl;
-  cout << "Seed value: " << seed_value << endl;
+  cout << "Position seed: " << position_seed << endl;
+  cout << "State seed: " << state_seed << endl;
   cout << "Kill non-Ising part of donor-bath interaction? ";
   if (kill_nonising) {
     cout << "Yes";
@@ -359,7 +355,6 @@ int main (int argc, char **argv)
   
   }
   
-  RandomNumberGenerator::seed_uniform_c_rand(seed_value);
   
   // Set up magnetic field (T)
   UniformMagneticField field(field_strength,
@@ -401,12 +396,13 @@ int main (int argc, char **argv)
   Hyperfine interaction_J(hyperfine_parameters);
   
   // Crystal structure
+  RandomNumberGenerator::seed_uniform_c_rand(position_seed);
   DiamondCubic diamond_cubic(5.43,lattice_size, perc_29si/100.0);
-  //diamond_cubic.write_site_vectors("lattice2.dat");
   
   if (vm.count("sphere")) {
     diamond_cubic.make_sphere(lattice_size/2.0);
   }
+  //diamond_cubic.write_site_vectors("lattice_seto.dat");
   
   if (vm.count("print-hyperfine")) {
     for (UInt i=0;i<diamond_cubic.num_site_vectors();i++) {
@@ -424,6 +420,9 @@ int main (int argc, char **argv)
   }
   
   // spin bath
+  if (state_seed!=0) {
+    RandomNumberGenerator::seed_uniform_c_rand(state_seed);
+  }
   SpinBath spin_bath(diamond_cubic,si29.clone(),
       SpinInteractionEdge(0,1,interaction_C12.clone()));
   
@@ -461,17 +460,18 @@ int main (int argc, char **argv)
   
   // CCE
   
-  CCE cce(build_order,cpmg_dephasing.clone(),sep_cutoff,include_one_cluster);
+  CCE cce(cce_order,cpmg_dephasing.clone(),
+      max_cluster_radius,include_one_cluster);
     
   ClusterDatabase clusters = cce.get_database();
   
   // Calculate
   
-    if (vm.count("no-divisions")) {
-      cce.calculate(cce_order,true);
-    } else {
-        cce.calculate(cce_order);
-    }
+  if (vm.count("no-divisions")) {
+    cce.calculate(cce_order,true);
+  } else {
+      cce.calculate(cce_order);
+  }
   
   // Print to files scaling times appropriately
   
@@ -527,18 +527,13 @@ string add_to_config(const string description,const string value)
   return desc_line + value_line;
 }
 
-string sample_config() {
+string sample_config(const string& version) {
   
   string config =
       "# SpinDec input file\n"
-      "# for flags (==), comment out to turn off\n"
-      "# Seto Balian, Jan 14 2015\n"
-      "\n";
-  
-  config += add_to_config
-      ("Maximum order of clusters to build (minimum is 1)",
-       "build-order = 2");
-  
+      "# for flags (==), comment out to turn off\n# "
+      + version + "\n\n";
+
   config += add_to_config
       ("Maximum CCE order to calculate (minimum is 1)",
        "cce-order = 2");
@@ -612,8 +607,8 @@ string sample_config() {
        "perc-29Si = 4.67");
   
   config += add_to_config
-      ("pair separation cutoff in Angstroms",
-       "sep-cutoff = 4.51");
+      ("maximum cluster radius in Angstroms",
+       "max-cluster-radius = 4.51");
 
   config += add_to_config
       ("side length of cubic superlattice in Angstroms",
@@ -650,8 +645,18 @@ string sample_config() {
   config += "\n";
   
   config += add_to_config
-      ("random number generator seed",
-       "seed-value = 15");
+      ("random number generator seed for bath positions",
+       "position-seed = 15");
+  
+  config += add_to_config
+      ("random number generator seed for bath spin states (won't seed if 0)",
+       "state-seed = 25");
+  
+  config += add_to_config
+  ("spherical superlattice","#sphere==");
+  
+  config += add_to_config
+  ("no CCE divisions","#no-divisions==");
 
   return config;
   

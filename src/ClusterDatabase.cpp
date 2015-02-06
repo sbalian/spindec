@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Jan 20, 2015
+// Seto Balian, Feb 6, 2015
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -73,6 +73,7 @@ bool ClusterDatabase::cluster_exists(const Cluster& cluster) const
   for (UInt i=0;i<database_.find(order)->second.size();i++) {
     
     if (database_.find(order)->second[i].get_cluster() == cluster) {
+      
       return true;
     }
     
@@ -82,14 +83,14 @@ bool ClusterDatabase::cluster_exists(const Cluster& cluster) const
   
 }
 
-ClusterDatabase::ClusterDatabase() : max_order_(0), pairing_cutoff_(0.0)
+ClusterDatabase::ClusterDatabase() : max_order_(0), max_cluster_radius_(0.0)
 {
 }
 
 ClusterDatabase::ClusterDatabase(const SpinBath& spin_bath,
-    const UInt max_order,const double pairing_cutoff) :
+    const UInt max_order,const double max_cluster_radius) :
         max_order_(max_order),spin_bath_(spin_bath),
-        pairing_cutoff_(pairing_cutoff)
+        max_cluster_radius_(max_cluster_radius)
 {
   build();
 }
@@ -102,7 +103,7 @@ void ClusterDatabase::build()
   
   const UInt num_sites = spin_bath_.num_bath_states();
   
-  // make 1-clusters (clusters of order 1, ie 1 bath spin system)
+  // first make 1-clusters (clusters of order 1, ie 1 bath spin system)
   vector<ClusterDatabaseEntry> one_clusters;
   
   for (UInt i=0;i<num_sites;i++) {
@@ -111,78 +112,12 @@ void ClusterDatabase::build()
     add_unsolved_entry(cluster);
   }
   
+  // if the maximum order is 1 clusters, then exit
   if (max_order_ == 1) {
     return;
   }
   
-  /*
-  for (UInt i=0;i<num_sites;i++) {
-    
-    ThreeVector a = spin_bath_.get_crystal_structure().get_site_vector(i);
-    
-    vector<UInt> L;
-    L.push_back(i);
-    
-    Cluster to_add;
-    
-    for (UInt j=0;j<num_sites;j++) {
-      
-      ThreeVector b = spin_bath_.get_crystal_structure().get_site_vector(j);
-      
-      ThreeVector separation = a-b;
-      
-      if (separation.norm() <= 1e-12) {continue;}
-      
-      if (!( BoostEigen::isWithinDistance(separation,
-          pairing_cutoff_))) {
-       continue;
-      }
-      
-      bool dont_add = false;
-      for (UInt k=0;k<L.size();k++) {
-        if (L[k] == j) {
-          dont_add = true;
-        }
-      }
-            
-      if (dont_add == false) {
-        L.push_back(j);
-      } else {
-        continue;
-      }
-            
-      to_add = Cluster(L);
-      
-    }
-    
-    if ( (!cluster_exists(to_add)) && (to_add.num_spins() <= max_order_) ) {
-      add_unsolved_entry(to_add);
-      
-      vector<Cluster> sub_clusters = to_add.subsets();
-      
-      const UInt sub_clusters_size  =sub_clusters.size();
-      for (UInt l =0;l<sub_clusters_size;l++) {
-        const UInt sub_order = sub_clusters[l].num_spins();
-        if (sub_order == to_add.num_spins()) {
-          continue;
-        }
-        Cluster sub_cluster = sub_clusters[l];
-        if(!cluster_exists(sub_cluster)) {
-          add_unsolved_entry(sub_cluster);
-        }
-
-      }
-      
-      
-    }
-    
-    
-  }
-  
-  */
-
-  
-  // make 2-clusters
+  // now make 2-clusters
   
   //vector<Cluster> two_clusters;
   vector < std::pair<UInt,UInt> > pair_labels;
@@ -197,7 +132,7 @@ void ClusterDatabase::build()
           spin_bath_.get_crystal_structure().get_site_vector(j);
       
       if (!( BoostEigen::isWithinDistance(separation,
-          pairing_cutoff_))) {
+          max_cluster_radius_))) {
        j+=1;
        continue;
       }
@@ -225,13 +160,11 @@ void ClusterDatabase::build()
   // Make the larger clusters
   
   // For each cce order, loop over cce orders next level down,
-  // check all spin separations if at least one distance below threshold,
+  // check all spin separations; if ALL separations below threshold,
   // then include the cluster
   
   // loop over cce orders (exclude 2-clusters - already added)
   for (UInt i=3;i<=max_order_;i++) {
-    // current order to add
-    //vector<Cluster> n_clusters;
     
     bool found_at_least_one_cluster = false;
     
@@ -271,9 +204,9 @@ void ClusterDatabase::build()
           continue;
         }
         
-        // if at least one distance from the check site is smaller than
+        // if ALL distances from the check site are smaller than
         // the separation cutoff, add
-        bool distance_check = false;
+        vector<bool> distance_check;
         
         for (UInt l=0;l<prev_order;l++) {
           
@@ -281,17 +214,18 @@ void ClusterDatabase::build()
           ThreeVector to_check =
               spin_bath_.get_crystal_structure().get_site_vector(spin_label);
                     
-          // found one distance smaller than threshold,
-          // leave loop and add cluster
-          distance_check = BoostEigen::isWithinDistance(to_check-site_to_add,
-              pairing_cutoff_);
-          if (distance_check == true) {
-            break;
-          }
+          distance_check.push_back(
+              BoostEigen::isWithinDistance(to_check-site_to_add,
+              max_cluster_radius_));
           
         }
         
-        if (distance_check == true) {
+        bool ready_to_add = distance_check[0];
+        for (UInt l=1;l<prev_order;l++) {
+          ready_to_add*=distance_check[l];
+        }
+        
+        if (ready_to_add == true) {
           vector<UInt> new_spin_labels = prev_spin_labels;
           new_spin_labels.push_back(k);
           
@@ -299,6 +233,8 @@ void ClusterDatabase::build()
           // if it does not then add
           Cluster to_add(new_spin_labels);
           //cout << n_clusters.exists(to_add) << endl;
+          
+          
           if (!cluster_exists(to_add)) {
 //            for (unsigned int r=0;r<new_spin_labels.size();r++) {
 //              cout << new_spin_labels[r] << "\t";
@@ -310,22 +246,24 @@ void ClusterDatabase::build()
             add_unsolved_entry(new_cluster);
             found_at_least_one_cluster = true;
             
+            // Should not need this ...
             // now get the subsets of this current cluster
             
-            vector<Cluster> sub_clusters = new_cluster.subsets();
+//            vector<Cluster> sub_clusters = new_cluster.subsets();
+//            
+//            const UInt sub_clusters_size  =sub_clusters.size();
+//            for (UInt l =0;l<sub_clusters_size;l++) {
+//              const UInt sub_order = sub_clusters[l].num_spins();
+//              if (sub_order == i) {
+//                continue;
+//              }
+//              Cluster sub_cluster = sub_clusters[l];
+//
+//              if  (!cluster_exists(sub_cluster)) {
+//                add_unsolved_entry(sub_cluster);
+//              }
+//            }
             
-            const UInt sub_clusters_size  =sub_clusters.size();
-            for (UInt l =0;l<sub_clusters_size;l++) {
-              const UInt sub_order = sub_clusters[l].num_spins();
-              if (sub_order == i) {
-                continue;
-              }
-              Cluster sub_cluster = sub_clusters[l];
-
-              if  (!cluster_exists(sub_cluster)) {
-                add_unsolved_entry(sub_cluster);
-              }
-            }
           }
             
             
@@ -340,6 +278,7 @@ void ClusterDatabase::build()
     }
     
     }
+  
   
   return;
 

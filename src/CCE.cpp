@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Jan 13, 2015
+// Seto Balian, Feb 6, 2015
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -7,21 +7,22 @@
 namespace SpinDec
 {
 
-CCE::CCE() : build_order_(0),include_one_clusters_(true)
+CCE::CCE() : max_truncation_order_(0),include_one_clusters_(true)
 {
 }
 
-CCE::CCE(const UInt build_order,
+CCE::CCE(const UInt max_truncation_order,
     const auto_ptr<PulseExperiment>& pulse_experiment,
-    const double pairing_cutoff,
+    const double max_cluster_radius,
     const bool include_one_clusters) :
-    build_order_(build_order),
+    max_truncation_order_(max_truncation_order),
     include_one_clusters_(include_one_clusters),
     pulse_experiment_(pulse_experiment->clone())
 {
 
   cluster_database_ = ClusterDatabase(pulse_experiment->
-      get_csd_problem().get_spin_bath(),build_order_,pairing_cutoff);
+      get_csd_problem().get_spin_bath(),max_truncation_order,
+      max_cluster_radius);
   
 
 }
@@ -62,40 +63,27 @@ TimeEvolution CCE::true_correlation(const Cluster& cluster)
   // get the next orders down
   vector< Cluster > current_subclusters = cluster.proper_subsets();
   
-  vector< TimeEvolution > divisors;
-  for (UInt i=0;i<current_subclusters.size();i++) {
-    divisors.push_back(
-        true_correlation(current_subclusters[i]) );
-  }
-
-  //cout << divisors.size() << endl;
-
-
-  TimeEvolution denominator = divisors[0];
-  for (UInt i=1;i<divisors.size();i++) {
-    denominator = denominator*divisors[i];
-  }
+  TimeEvolution denominator
+      (pulse_experiment_->get_time_array());
+  denominator.set_evolution_ones();
   
-//  TimeEvolution numerator = reducible_correlation(cluster);
-//  numerator.finite_zeros();
-//  denominator.finite_zeros();
-//  TimeEvolution result = numerator/denominator;
-//  result.finite_zeros();
-//  return result;
+  for (UInt i=0;i<current_subclusters.size();i++) {
+    denominator = denominator * true_correlation(current_subclusters[i]);
+  }
   
   return reducible_correlation(cluster)/denominator;
   
 }
 
-UInt CCE::get_build_order() const
+UInt CCE::get_max_truncation_order() const
 {
-  return build_order_;
+  return max_truncation_order_;
 }
 
 void CCE::calculate()
 {
 
-  calculate(build_order_);
+  calculate(max_truncation_order_);
   return;
   
 }
@@ -103,14 +91,7 @@ void CCE::calculate()
 void CCE::calculate(const UInt order, const bool no_divisions)
 {
     
-  if (order < 1) {
-    Errors::quit("CCE input order < 1");
-  }
-  
-  if (order>build_order_) {
-    Errors::quit("CCE input order > truncation order");
-  }
-  
+  check_order(order);
   
   TimeEvolution result(
       pulse_experiment_->get_time_array());
@@ -119,18 +100,18 @@ void CCE::calculate(const UInt order, const bool no_divisions)
     
     result.set_evolution_ones();
         
-    if (include_one_clusters_ == false) {
-      if (i==1) {continue;}
-    }
     
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
       
       if (no_divisions == true) {
         result = result*
             reducible_correlation(cluster_database_.get_cluster(i,j));
+        
       } else {
-        result = result*
-            true_correlation(cluster_database_.get_cluster(i,j));
+        
+        result =
+            result*true_correlation(cluster_database_.get_cluster(i,j));
+        
       }
       
     }
@@ -149,6 +130,19 @@ void CCE::calculate(const UInt order)
   return;
 }
 
+void CCE::check_order(const UInt order) const
+{
+  if (order < 1) {
+    Errors::quit("CCE input order < 1");
+  }
+  
+  if (order>max_truncation_order_) {
+    Errors::quit("CCE input order > truncation order");
+  }
+  
+  return;
+
+}
 
 TimeEvolution CCE::evolution(const UInt order) const
 {
@@ -157,28 +151,14 @@ TimeEvolution CCE::evolution(const UInt order) const
     Errors::quit("CCE not calculated");
   }
   
-  if (order < 1) {
-    Errors::quit("CCE input order < 1");
-  }
+  check_order(order);
   
-  if (order>build_order_) {
-    Errors::quit("CCE input order > truncation order");
-  }
   
   TimeEvolution result = product_correlations_by_order_[0];
   result.set_evolution_ones();
   
-  if (include_one_clusters_ == true) {
-    for (UInt i=1;i<=order;i++) {
-      result = result*product_correlations_by_order_[i-1];
-    }
-  } else {
-    
-      for (UInt i=2;i<=order;i++) {
-        result = result*product_correlations_by_order_[i-2];
-        
-      }
-      
+  for (UInt i=1;i<=order;i++) {
+    result = result*product_correlations_by_order_[i-1];
   }
   
   return result;

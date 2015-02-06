@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Feb 4, 2015
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -255,9 +255,9 @@ double SpinDonor::b(const int quantum_number) const
 double SpinDonor::polarization(const AdiabaticLabel& adiabatic_level_label)
 const
 {
-  return 0.5*static_cast<double>(adiabatic_level_label.get_sign().as_int())*
+  return 0.5*static_cast<double>(adiabatic_level_label.get_sign().as_int())*(
       std::pow(a(adiabatic_level_label.get_quantum_number()),2.0)
-    - std::pow(b(adiabatic_level_label.get_quantum_number()),2.0);
+    - std::pow(b(adiabatic_level_label.get_quantum_number()),2.0));
 }
 
 SpinBasis SpinDonor::build_basis(const AdiabaticLabel& level) const

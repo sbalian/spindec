@@ -11,7 +11,7 @@
 //
 // TODO confusing names ...
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Feb 4, 2015
 
 #include "SpinDec/SpinSystem.h"
 
