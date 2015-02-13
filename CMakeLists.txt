@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 16/12/2014
+# Seto Balian 11/02/2015
 
 cmake_minimum_required(VERSION 2.8.2)
 

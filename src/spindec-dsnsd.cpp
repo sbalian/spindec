@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Feb 6, 2015
+// Seto Balian, Feb 11, 2015
 
 #include <ctime>
 #include <fstream>
@@ -475,7 +475,7 @@ int main (int argc, char **argv)
   
   // Print to files scaling times appropriately
   
-  for (UInt i=1;i<=cce_order;i++) {
+  for (UInt i=1;i<=(cce_order);i++) {
     
     if (include_one_cluster == false) {
       if (i==1) {continue;}
