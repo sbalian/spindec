@@ -1,5 +1,5 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Jan 20, 2015
+// Seto Balian, Feb 20, 2015
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"

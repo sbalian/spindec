@@ -6,3 +6,5 @@ boost
 *.o
 .settings
 build
+spindec-sync.cpp
+
