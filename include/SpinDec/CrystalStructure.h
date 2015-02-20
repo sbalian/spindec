@@ -10,7 +10,7 @@
 //
 // The length units are Angstroms. Using Cartesian coordinates.
 //
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Feb 20, 2015
 
 #include "SpinDec/typedefs.h"
 
