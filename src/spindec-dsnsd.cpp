@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Feb 11, 2015
+// Seto Balian, Feb 24, 2015
 
 #include <ctime>
 #include <fstream>
@@ -30,11 +30,13 @@ int main (int argc, char **argv)
   // Arguments
   
   UInt cpmg_order, cce_order;
+  UInt build_order;
+  string build_method;
   bool include_one_cluster = false;
   double field_strength, field_x, field_y, field_z, gamma_e, electron_ie;
   double gamma_n, nuclear_spin, hyperfine;
   UInt lower_level, upper_level;
-  double perc_29si, max_cluster_radius, lattice_size;
+  double perc_29si, cluster_cutoff, lattice_size;
   bool log_time = false;
   double initial_time, final_time;
   UInt num_steps;
@@ -72,19 +74,19 @@ int main (int argc, char **argv)
       "- for flags, add a line with the flag's name followed by == to enable.\n"
       "\nARGUMENTS";
   
-  string version = "v0.9, Copyright (C) Seto Balian, Feb 6 2015. "
+  string version = "v0.9, Copyright (C) Seto Balian, Feb 24 2015. "
       "Free software, no warranty.";
   
   // Declare a group of options that will be 
   // allowed only on command line
-  po::options_description cmd_only_options;
+  po::options_description cmd_only_options("Allowed only on command line");
   cmd_only_options.add_options()
       ("help,h", "print this help page")
       ("version,v", "display version")
-      ("sample-config", "print sample config file")
-      ("prefix,w", po::value< string >(&prefix),
+      ("sample-config,C", "print sample config file")
+      ("prefix,o", po::value< string >(&prefix),
           "prefix for output files")
-          ("print-hyperfine", "print the hyperfine couplings to\n"
+          ("print-hyperfine,H", "print the hyperfine couplings to\n"
                               "the bath in M rad s-1 and exit")
       ("verbose,V", "verbose mode")
       ;
@@ -92,14 +94,23 @@ int main (int argc, char **argv)
   // Declare a group of options that will be 
   // allowed both on command line and in
   // config file
-  po::options_description options;
+  po::options_description options("Allowed on command line and config file");
   options.add_options()
        
      ("cce-order,c",po::value<UInt>(&cce_order)->default_value(2,"2"),
         "maximum CCE truncation order to calculate\n"
         "(minimum is 1)")
+     
+     ("build-method,m",po::value<string>(&build_method)->
+         default_value("local","local"),
+           "cluster build method: \"local\" or \"global\"")
+        
+      ("build-order,b",po::value<UInt>(&build_order)->
+          default_value(0,"cce-order"),
+           "cluster build order\n"
+           "(minimum is 1)")
 
-      ("cpmg-order,o",po::value<UInt>(&cpmg_order)->default_value(1,"1"),
+      ("cpmg-order,N",po::value<UInt>(&cpmg_order)->default_value(1,"1"),
        "CPMG order, 1 is Hahn spin echo,\n0 is FID")
        
       ("one-clusters,1", "include 1 clusters")
@@ -119,15 +130,15 @@ int main (int argc, char **argv)
       ("field-z,z", po::value<double>(&field_z)->default_value(1.0,"1"),
        "z-component of vector parallel\nto magnetic field")
        
-      ("gamma-e,e", po::value<double>(&gamma_e)->default_value(1.7591e5,
+      ("gamma-e,G", po::value<double>(&gamma_e)->default_value(1.7591e5,
        "1.7591e5"),
        "donor electron gyromagnetic ratio\nin M rad s-1 T-1")
        
-      ("electron-ie,i", po::value<double>(&electron_ie)->default_value(0.069,
+      ("electron-ie,e", po::value<double>(&electron_ie)->default_value(0.069,
        "0.069"),
        "donor electron ionization energy in eV")
 
-      ("gamma-n,n", po::value<double>(&gamma_n)->default_value(-43.775,
+      ("gamma-n,g", po::value<double>(&gamma_n)->default_value(-43.775,
        "-43.775"),
        "donor nucleus gyromagnetic ratio\nin M rad s-1 T-1")
 
@@ -151,24 +162,24 @@ int main (int argc, char **argv)
        "4.67"),
        "29Si percentage abundance")
 
-      ("max-cluster-radius,s", po::value<double>
-        (&max_cluster_radius)->default_value(4.51,
+      ("cluster-cutoff,s", po::value<double>
+        (&cluster_cutoff)->default_value(4.51,
        "4.51"),
-       "maximum cluster radius in Angstroms")
+       "cluster size cutoff in Angstroms")
 
       ("lattice-size,S", po::value<double>(&lattice_size)->default_value(162.9,
        "162.9"),
        "side length of cubic superlattice\nin Angstroms")
        
-      ("initial-time,a", po::value<double>(&initial_time)->default_value(0.0,
+      ("initial-time,t", po::value<double>(&initial_time)->default_value(0.0,
        "0"),
        "initial evolution time in ms")
 
-      ("final-time,b", po::value<double>(&final_time)->default_value(0.5,
+      ("final-time,T", po::value<double>(&final_time)->default_value(0.5,
        "0.5"),
        "final evolution time in ms")
 
-      ("num-steps,N", po::value<UInt>(&num_steps)->default_value(100,
+      ("num-steps,n", po::value<UInt>(&num_steps)->default_value(100,
        "100"),
        "number of time steps")
 
@@ -177,29 +188,29 @@ int main (int argc, char **argv)
       ("kill-nonising,k", "kill the non-Ising part of\n"
                            "the donor-bath interaction")
                            
-      ("dipolar-hyperfine", "include the dipolar part of\n"
+      ("dipolar-hyperfine,D", "include the dipolar part of\n"
        "the donor-bath interaction")
 
-      ("position-seed", po::value<int>(&position_seed)->default_value(15,
+      ("position-seed,P", po::value<int>(&position_seed)->default_value(15,
        "15"),
        "random number generator seed\n"
        "for bath spin positions")
        
-       ("state-seed", po::value<int>(&state_seed)->default_value(25,
+       ("state-seed,J", po::value<int>(&state_seed)->default_value(25,
         "25"),
         "random number generator seed\n"
         "for bath spin states\n(won't seed if 0)")
         
-        ("sphere", "spherical superlattice")
+        ("sphere,Q", "spherical superlattice")
         
-        ("no-divisions","no CCE divisions")
+        ("no-divisions,x","no CCE divisions")
       
     ;
   
   // Hidden positional options on command line
   po::options_description positional_options;
   positional_options.add_options()
-      ("input-file", po::value< string >(&input_file), "input file")
+      ("input-file,i", po::value< string >(&input_file), "input file")
       ;
   
   po::options_description cmd;
@@ -277,7 +288,14 @@ int main (int argc, char **argv)
   if (vm.count("dipolar-hyperfine")) {
     dipolar_hyperfine = true;
   }
-
+  
+  if (build_order == 0) {
+    build_order = cce_order;
+  }
+  
+  if (build_order < cce_order) {
+    Errors::quit("Can't have build order < CCE order ...");
+  }
   
   // Initialise
   
@@ -301,6 +319,7 @@ int main (int argc, char **argv)
   cout << "Parameters" << endl;
   cout << "----------" << endl;
   cout << "Will calculate the CCE up to order " << cce_order << endl;
+  cout << "Built clusters up to order " << build_order << endl;
   cout << "CPMG order: " << cpmg_order << endl;
   cout << "Include 1-clusters? ";
   if (include_one_cluster) {
@@ -321,8 +340,9 @@ int main (int argc, char **argv)
   cout << "Donor hyperfine = " << hyperfine << " M rad s-1" << endl;
   cout << "Transition: |" << upper_level << "> --> |" << lower_level << ">\n";
   cout << perc_29si << "% 29Si abundance" << endl;
-  cout << "Maximum cluster radius: " << max_cluster_radius << " Angstroms";
+  cout << "Cluster size cutoff: " << cluster_cutoff << " Angstroms";
   cout << endl;
+  cout << "Build method" << build_method << endl;
   cout << "Superlattice size: " << lattice_size << " Angstroms" << endl;
   cout << "Logarithmic time scale? ";
   if (log_time) {
@@ -458,12 +478,29 @@ int main (int argc, char **argv)
       csd_problem,time_array,cpmg_order,invsqrt2,lower_level,invsqrt2,
       upper_level);
   
-  // CCE
+  // TODO make sure the same spin bath goes into cpmg_dephasing and
+  // CCE database ...
   
-  CCE cce(cce_order,cpmg_dephasing.clone(),
-      max_cluster_radius,include_one_cluster);
-    
-  ClusterDatabase clusters = cce.get_database();
+  // Cluster database
+  ClusterDatabase database(spin_bath,build_order,cluster_cutoff,build_method);
+  
+  /*vector<double> seps;
+  for (UInt i=0;i<database.num_clusters(2);i++) {
+    seps.push_back(
+    (spin_bath.get_crystal_structure()
+        .get_site_vector( database.get_cluster(2,i).get_label(0) ) -
+        spin_bath.get_crystal_structure()
+          .get_site_vector( database.get_cluster(2,i).get_label(1) ) ).norm());
+  }
+  cout << "max pair sep " << *std::max_element(seps.begin(),seps.end()) << endl;
+  cout << database.num_clusters(2) << endl;
+  cout << database.num_clusters(3) << endl;
+  cout << database.num_clusters(4) << endl;
+  cout << database.num_clusters(5) << endl;
+  exit(1);*/
+  
+  // CCE
+  CCE cce(cce_order,cpmg_dephasing.clone(),database,include_one_cluster);
   
   // Calculate
   
@@ -535,8 +572,16 @@ string sample_config(const string& version) {
       + version + "\n\n";
 
   config += add_to_config
-      ("Maximum CCE order to calculate (minimum is 1)",
+      ("Maximum CCE truncation order to calculate (minimum is 1)",
        "cce-order = 2");
+  
+  config += add_to_config
+      ("Cluster build method: \"local\" or \"global\"",
+       "build-method = local");
+  
+  config += add_to_config
+      ("Cluster build order (minimum is 1)",
+       "build-order = 2");
 
   config += add_to_config
       ("CPMG order, 1 is Hahn spin echo, 0 is FID",
@@ -607,8 +652,8 @@ string sample_config(const string& version) {
        "perc-29Si = 4.67");
   
   config += add_to_config
-      ("maximum cluster radius in Angstroms",
-       "max-cluster-radius = 4.51");
+      ("cluster cutoff in Angstroms",
+       "cluster-cutoff = 4.51");
 
   config += add_to_config
       ("side length of cubic superlattice in Angstroms",

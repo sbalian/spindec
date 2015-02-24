@@ -16,7 +16,7 @@
 // TODO Comment more
 // TODO have experiment instead of pulse experiment?
 //
-// Seto Balian, Feb 6, 2015
+// Seto Balian, Feb 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/ClusterDatabase.h"
@@ -52,11 +52,10 @@ public:
   CCE();
   CCE(const UInt max_truncation_order,
       const auto_ptr<PulseExperiment>& pulse_experiment,
-      const double max_cluster_radius,
+      const ClusterDatabase& cluster_database,
       const bool include_one_clusters);
-  
+    
   UInt get_max_truncation_order() const;
-  
   
   // Input CCE truncation order to calculate, cannot be greater than
   // max_truncation_order_
@@ -65,10 +64,10 @@ public:
   // calls calculate(max_truncation_order_,false)
   void calculate();
   
-  const ClusterDatabase& get_database() const;
-
   // get the time evolution (has to be calculated with above method first)
   TimeEvolution evolution(const UInt order) const;
+  
+  const ClusterDatabase& get_database() const;
   
 };
 
