@@ -7,4 +7,5 @@ boost
 .settings
 build
 spindec-sync.cpp
+hgpush_bitbucket.sh
 
