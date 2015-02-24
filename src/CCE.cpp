@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Feb 6, 2015
+// Seto Balian, Feb 24, 2015
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -13,17 +13,14 @@ CCE::CCE() : max_truncation_order_(0),include_one_clusters_(true)
 
 CCE::CCE(const UInt max_truncation_order,
     const auto_ptr<PulseExperiment>& pulse_experiment,
-    const double max_cluster_radius,
+    const ClusterDatabase& cluster_database,
     const bool include_one_clusters) :
     max_truncation_order_(max_truncation_order),
     include_one_clusters_(include_one_clusters),
-    pulse_experiment_(pulse_experiment->clone())
+    pulse_experiment_(pulse_experiment->clone()),
+    cluster_database_(cluster_database)
 {
 
-  cluster_database_ = ClusterDatabase(pulse_experiment->
-      get_csd_problem().get_spin_bath(),max_truncation_order,
-      max_cluster_radius);
-  
 
 }
 
@@ -144,6 +141,7 @@ void CCE::check_order(const UInt order) const
 
 }
 
+
 TimeEvolution CCE::evolution(const UInt order) const
 {
   
@@ -165,7 +163,7 @@ TimeEvolution CCE::evolution(const UInt order) const
   
 }
 
-const ClusterDatabase& SpinDec::CCE::get_database() const
+const ClusterDatabase& CCE::get_database() const
 {
   return cluster_database_;
 }

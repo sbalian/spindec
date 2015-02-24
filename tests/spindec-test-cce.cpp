@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Feb 24, 2015
 
 #include <ctime>
 
@@ -76,7 +76,11 @@ int main ()
       upper_donor_level);
   
   // CCE to 3rd order
-  CCE cce(3,cpmg_dephasing.clone(),4.51,false);
+  
+  // Cluster database
+  ClusterDatabase database(spin_bath,3,4.51,"local");
+  
+  CCE cce(3,cpmg_dephasing.clone(),database,false);
   
   cce.calculate();
   

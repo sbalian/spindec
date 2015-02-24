@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Feb 24, 2015
 
 #include <ctime>
 
@@ -53,7 +53,10 @@ int main ()
       csd_problem,time_array,0,invsqrt2,0,invsqrt2,
       1);
   
-  CCE cce(2,cpmg_dephasing.clone(),50000.0,false);
+  ClusterDatabase database(spin_bath,2,50000.0,"local");
+  
+  CCE cce(2,cpmg_dephasing.clone(),database,false);
+
 
   cce.calculate();
   

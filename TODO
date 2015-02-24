@@ -1,5 +1,7 @@
-Seto Balian, Nov 6, 2014
+Seto Balian, Jan 24, 2015
 
+- cce order, build order, max order etc
+  maybe make less confusing names?
 - multiprecision support
 - more diagonalizers
 - doxygen documentation
