@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Dec 8, 2014
+// Seto Balian, Feb 26, 2015
 
 #include "SpinDec/SpinInteraction.h"
 #include "SpinDec/Errors.h"
@@ -28,7 +28,7 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
     const UInt spin_label1, const UInt spin_label2,
     const bool ising_only, const CDouble & flipflop_form) const
 {
-
+  
   // Get spin quantum numbers
   const double S1 = spin_parameters_vector[spin_label1].get_quantum_number();
   const double S2 = spin_parameters_vector[spin_label2].get_quantum_number();
@@ -141,7 +141,7 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
       
       (*hamiltonian)(i,j) +=
       CDouble(get_strength()*
-                  std::sqrt(coeff_1*coeff_2),0.0)*
+          std::sqrt(coeff_1*coeff_2),0.0)*
                   flipflop_form;
         
     }
