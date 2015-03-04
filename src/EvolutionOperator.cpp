@@ -1,5 +1,5 @@
 // See EvolutionOperator.h for description.
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Feb 26, 2015
 
 #include "SpinDec/EvolutionOperator.h"
 #include "SpinDec/BoostEigen.h"
