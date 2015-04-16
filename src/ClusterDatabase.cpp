@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Feb 24, 2015
+// Seto Balian, Apr 15, 2015
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -543,4 +543,6 @@ const Cluster& ClusterDatabase::get_cluster(const UInt order,
 }
 
 
+
 } // namespace SpinDec
+

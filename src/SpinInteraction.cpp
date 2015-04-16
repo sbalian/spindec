@@ -1,5 +1,5 @@
 // See SpinInteraction.h for description.
-// Seto Balian, Feb 26, 2015
+// Seto Balian, Apr 16, 2015
 
 #include "SpinDec/SpinInteraction.h"
 #include "SpinDec/Errors.h"
@@ -148,6 +148,17 @@ void SpinInteraction::fill_ising_flipflop(ComplexMatrix * hamiltonian,
     
   
   }
+  
+  
+//  if (hamiltonian->cols() == 64) {
+//    cout << endl;
+//
+//    cout << get_type() << "\t" << get_strength() << endl;
+//    
+//    cout << endl;
+//
+//  }
+  
   return;
 
 }

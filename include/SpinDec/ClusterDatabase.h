@@ -12,7 +12,7 @@
 // separation, then adds spins which are at a maximum of cluster_cutoff from
 // ANY of the two spins to form 3-clusters, and so on for 4-clusters etc.
 //
-// Seto Balian, Feb 24, 2015
+// Seto Balian, Apr 15, 2015
 
 #include "SpinDec/typedefs.h"
 

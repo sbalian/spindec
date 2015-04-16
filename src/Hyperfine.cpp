@@ -1,5 +1,5 @@
 // See Hyperfine.h for description.
-// Seto Balian, Mar 4, 2015
+// Seto Balian, Apr 16, 2015
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
@@ -162,7 +162,6 @@ void Hyperfine::calculate(const SpinParameters & electron_parameters,
   if (cutoff >= 0.0) {
     anisotropic_part = dipolar_interaction.get_strength();
   }
-  
   strength_ = isotropic_part + anisotropic_part;
   return;
 
@@ -182,5 +181,11 @@ auto_ptr<SpinInteraction> Hyperfine::clone() const
 {
   return auto_ptr<SpinInteraction>( new Hyperfine(*this) );
 }
+
+string Hyperfine::get_type() const
+{
+  return "Hyperfine";
+}
+
 
 } // namespace SpinDec
