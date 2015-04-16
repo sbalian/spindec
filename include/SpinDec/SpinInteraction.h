@@ -6,7 +6,7 @@
 // Abstract base class for interaction between a pair of spins.
 // TODO calculate non spatial dependence once?
 //
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Apr 16, 2015
 
 #include "SpinDec/SpinParametersVector.h"
 #include "SpinDec/SpinBasis.h"
@@ -62,6 +62,8 @@ public:
                    const UInt spin_label2) const = 0;
   
   virtual auto_ptr<SpinInteraction> clone() const = 0;
+  
+  virtual string get_type() const = 0;
   
   virtual ~SpinInteraction();
 

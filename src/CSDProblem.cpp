@@ -1,8 +1,9 @@
 // See CSDProblem.h for description.
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Apr 16, 2015
 
 #include "SpinDec/CSDProblem.h"
 #include "SpinDec/Errors.h"
+#include "SpinDec/Dipolar.h"
 
 namespace SpinDec
 {

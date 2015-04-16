@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Feb 24, 2015
+// Seto Balian, Apr 16, 2015
 
 #include <ctime>
 #include <fstream>
@@ -411,18 +411,20 @@ int main (int argc, char **argv)
   
   // Central system - bath interaction
   HyperfineParameters hyperfine_parameters
-  (5.43,25.09,14.43,electron_ie,186.0,kill_nonising,dipolar_hyperfine);
+  (5.43,25.09,14.43,electron_ie,186.0,kill_nonising,!dipolar_hyperfine);
     
   Hyperfine interaction_J(hyperfine_parameters);
   
   // Crystal structure
   RandomNumberGenerator::seed_uniform_c_rand(position_seed);
+  
   DiamondCubic diamond_cubic(5.43,lattice_size, perc_29si/100.0);
   
   if (vm.count("sphere")) {
-    diamond_cubic.make_sphere(lattice_size/2.0);
+   diamond_cubic.make_sphere(lattice_size/2.0);
   }
-  //diamond_cubic.write_site_vectors("lattice_seto.dat");
+  
+  //diamond_cubic.make_shell(70.0,80.0);
   
   if (vm.count("print-hyperfine")) {
     for (UInt i=0;i<diamond_cubic.num_site_vectors();i++) {
@@ -443,6 +445,7 @@ int main (int argc, char **argv)
   if (state_seed!=0) {
     RandomNumberGenerator::seed_uniform_c_rand(state_seed);
   }
+  
   SpinBath spin_bath(diamond_cubic,si29.clone(),
       SpinInteractionEdge(0,1,interaction_C12.clone()));
   
@@ -468,7 +471,7 @@ int main (int argc, char **argv)
   }
   
   TimeArray time_array(initial_time,final_time,num_steps);
-    
+  
   if (log_time == true) {
     time_array.logarithmic_time();
   }
@@ -484,26 +487,10 @@ int main (int argc, char **argv)
   // Cluster database
   ClusterDatabase database(spin_bath,build_order,cluster_cutoff,build_method);
   
-  /*vector<double> seps;
-  for (UInt i=0;i<database.num_clusters(2);i++) {
-    seps.push_back(
-    (spin_bath.get_crystal_structure()
-        .get_site_vector( database.get_cluster(2,i).get_label(0) ) -
-        spin_bath.get_crystal_structure()
-          .get_site_vector( database.get_cluster(2,i).get_label(1) ) ).norm());
-  }
-  cout << "max pair sep " << *std::max_element(seps.begin(),seps.end()) << endl;
-  cout << database.num_clusters(2) << endl;
-  cout << database.num_clusters(3) << endl;
-  cout << database.num_clusters(4) << endl;
-  cout << database.num_clusters(5) << endl;
-  exit(1);*/
-  
   // CCE
   CCE cce(cce_order,cpmg_dephasing.clone(),database,include_one_cluster);
   
-  // Calculate
-  
+  // Calculate  
   if (vm.count("no-divisions")) {
     cce.calculate(cce_order,true);
   } else {
@@ -552,7 +539,6 @@ int main (int argc, char **argv)
   cout << " seconds)" << endl;
   
   }
-
   return 0;
   
 }

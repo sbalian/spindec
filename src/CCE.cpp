@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Feb 24, 2015
+// Seto Balian, Apr 15, 2015
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -96,14 +96,13 @@ void CCE::calculate(const UInt order, const bool no_divisions)
   for (UInt i=1; i<=order;i++) {
     
     result.set_evolution_ones();
-        
-    
+            
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
       
       if (no_divisions == true) {
         result = result*
             reducible_correlation(cluster_database_.get_cluster(i,j));
-        
+                
       } else {
         
         result =
@@ -111,12 +110,12 @@ void CCE::calculate(const UInt order, const bool no_divisions)
         
       }
       
+      
     }
-    
     product_correlations_by_order_.push_back(result);
     
   }
-    
+
   return;
   
 }
@@ -150,7 +149,6 @@ TimeEvolution CCE::evolution(const UInt order) const
   }
   
   check_order(order);
-  
   
   TimeEvolution result = product_correlations_by_order_[0];
   result.set_evolution_ones();

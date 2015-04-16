@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Apr 16, 2015
 
 #include "SpinDec/Dipolar.h"
 #include "SpinDec/constants.h"
@@ -63,4 +63,11 @@ auto_ptr<SpinInteraction> Dipolar::clone() const
   return auto_ptr<SpinInteraction>( new Dipolar(*this) );
 }
 
+string Dipolar::get_type() const
+{
+  return "Dipolar";
+}
+
+
 } // namespace SpinDec
+

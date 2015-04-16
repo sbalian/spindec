@@ -47,7 +47,7 @@
 //
 // From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
 //
-// Seto Balian, Jan 14, 2015
+// Seto Balian, Apr 16, 2015
 
 #include "SpinDec/SpinInteraction.h"
 
@@ -93,6 +93,8 @@ public:
                    const UInt spin_label2) const;
   
   virtual auto_ptr<SpinInteraction> clone() const;
+  
+  virtual string get_type() const;
 
 };
 
