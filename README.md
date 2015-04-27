@@ -20,7 +20,8 @@ Requirements:
 - Optional: [Intel MKL] optimization for Eigen.
 
 The following instructions are for a Unix-like environment
-without root privileges.
+without root privileges. It also assumes you have Mercurial (*hg*)
+installed.
 
 In a terminal,
 
@@ -35,27 +36,29 @@ This gets the code. Now let's build it.
 ```sh
 mkdir build
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=~
+cmake .. -DCMAKE_INSTALL_PREFIX=/home/myusrname
 make -j4 all
 make install
 ```
 
-The argument to cmake defines the installation location.
+The argument to cmake defines the installation location
+(here set to 'myusrname', which you should change to your user name).
 If you invoke cmake without specifying the location, it will
 install to your default system prefix (requires root).
 
-The -j4 option to make parallelizes the build process using 4 cores.
+The -j4 option to *make* parallelizes the build process using 4 cores.
 Make sure this number does not exceed the number of cores for your
 machine.
 
 If all went well, you should now have the static library and
 executables. The library, headers and executables should be
-located in ~/lib, ~/include and ~/bin respectively.
+located in /home/myusrname/lib, /home/myusrname/include and
+/home/myusrname/bin respectively.
 
 Optionally, to enable MKL optimization in Eigen,
 pass -DSPINDEC_USE_MKL=ON to cmake. Obviously, you will need the
 proprietary MKL libraries for this step. For further customization,
-see CMakeLists.txt.
+see CMakeLists.txt (you will need to understand [CMake]).
 
 ***SpinDec has been tested on Linux and Mac OS X.***
 
@@ -152,7 +155,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <s.balian@ucl.ac.uk>
 
-**Last updated: Feb 6, 2015**
+**Last updated: Apr 27, 2015**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07

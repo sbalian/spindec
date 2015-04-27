@@ -6,7 +6,7 @@
 // Time evolution of a complex variable.
 // Time in microseconds.
 //
-// Seto Balian, Feb 6, 2015
+// Seto Balian, Apr 17, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"
@@ -62,6 +62,9 @@ public:
   
   // if evolution <= 1e-4, set to 1e-4
   void finite_zeros();
+  
+  // true if at least one time step has abs(evolution) exceeding unity
+  bool has_greater_than_one() const;
   
 };
 

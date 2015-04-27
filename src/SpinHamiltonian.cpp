@@ -1,5 +1,5 @@
 // See SpinHamiltonian.h for description.
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Apr 17, 2015
 
 #include "SpinDec/SpinHamiltonian.h"
 #include "SpinDec/BoostEigen.h"
@@ -101,6 +101,7 @@ void SpinHamiltonian::fill_interaction(const UInt edge_index)
       
     }
     
+    //graph_.set_interaction(edge_index,interaction_ptr->clone());
     
     interaction_ptr->fill(&interaction_terms_[edge_index],
         graph_.spin_parameters_vector(),

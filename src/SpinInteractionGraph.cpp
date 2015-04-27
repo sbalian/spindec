@@ -1,5 +1,5 @@
 // See SpinInteractionGraph.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Apr 17, 2015
 
 #include "SpinDec/SpinInteractionGraph.h"
 #include "SpinDec/Errors.h"
@@ -173,6 +173,16 @@ auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
 {
   return get_edge(index).get_interaction()->clone();
 }
+
+void SpinInteractionGraph::set_interaction(const unsigned int index,
+    const auto_ptr<SpinInteraction>& interaction )
+{
+  edges_[index] =
+      SpinInteractionEdge(edges_[index].get_label1(),
+                          edges_[index].get_label2(),interaction->clone());
+  return;
+}
+
 
 SpinParametersVector SpinInteractionGraph::spin_parameters_vector() const
 {
