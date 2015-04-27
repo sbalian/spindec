@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Apr 16, 2015
+// Seto Balian, Apr 17, 2015
 
 #include <ctime>
 #include <fstream>
@@ -490,7 +490,7 @@ int main (int argc, char **argv)
   // CCE
   CCE cce(cce_order,cpmg_dephasing.clone(),database,include_one_cluster);
   
-  // Calculate  
+  // Calculate
   if (vm.count("no-divisions")) {
     cce.calculate(cce_order,true);
   } else {

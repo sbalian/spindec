@@ -1,5 +1,5 @@
 // See TimeEvolution.h for description.
-// Seto Balian, Feb 6, 2015
+// Seto Balian, Apr 17, 2015
 
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/Errors.h"
@@ -251,6 +251,18 @@ void TimeEvolution::finite_zeros()
   }
   return;
 }
+
+bool TimeEvolution::has_greater_than_one() const
+{
+  for (UInt i=0;i<evolution_.size();i++) {
+    if ( std::abs(evolution_[i]) > (1.0 + 1e-8) ) {
+      return true;
+    }
+  }
+  return false;
+
+}
+
 
 
 } // namespace SpinDec

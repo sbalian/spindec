@@ -5,7 +5,7 @@
 //
 // Spin interaction graph from which spin Hamiltonians are built.
 //
-// Seto Balian, Jan 14, 2015
+// Seto Balian, Apr 17, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -77,6 +77,8 @@ public:
   const ThreeVector& get_position(const unsigned int label) const;
 
   auto_ptr<SpinInteraction> get_interaction(const unsigned int index)const;
+  void set_interaction(const unsigned int index,
+      const auto_ptr<SpinInteraction>& interaction );
   
   SpinParametersVector spin_parameters_vector() const;
   

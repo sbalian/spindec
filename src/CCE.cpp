@@ -1,5 +1,5 @@
 // See CCE.h for description.
-// Seto Balian, Apr 15, 2015
+// Seto Balian, Apr 17, 2015
 
 #include "SpinDec/CCE.h"
 #include "SpinDec/Errors.h"
@@ -99,16 +99,51 @@ void CCE::calculate(const UInt order, const bool no_divisions)
             
     for (UInt j=0;j<cluster_database_.num_clusters(i);j++) {
       
+      TimeEvolution current_evolution;
+      
       if (no_divisions == true) {
-        result = result*
+        current_evolution = 
             reducible_correlation(cluster_database_.get_cluster(i,j));
-                
       } else {
-        
-        result =
-            result*true_correlation(cluster_database_.get_cluster(i,j));
-        
+        current_evolution =
+            true_correlation(cluster_database_.get_cluster(i,j));
       }
+      
+//      if (i==3) {
+//        if ( current_evolution.has_greater_than_one() ) {
+//          current_evolution.print_abs();
+//          cout << endl;
+//        }
+//        
+//      }
+      
+      /*if (i==2) {
+        CSDProblem csd_problem = pulse_experiment_->
+        get_csd_problem();
+        
+        UIntArray labels = cluster_database_.get_cluster(i,j).get_labels();
+        SpinSystem spin_system =
+            csd_problem.get_reduced_problem( labels );
+        
+        double J1 = spin_system.get_hamiltonian()
+            .get_graph().get_interaction(2)->get_strength();
+        double J2 = spin_system.get_hamiltonian()
+            .get_graph().get_interaction(3)->get_strength();
+        
+        double delta_J = std::abs(J1 - J2);
+        
+        double C12 = spin_system.get_hamiltonian()
+                .get_graph().get_interaction(1)->get_strength();
+        
+        if (std::abs( C12 / delta_J ) > 0.1) {
+          cout << C12 << "\t" << delta_J << endl;
+          current_evolution.set_evolution_ones();
+        }
+        
+      }*/
+      
+      
+      result = result*current_evolution;
       
       
     }
