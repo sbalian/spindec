@@ -112,11 +112,11 @@ http://www.bitbucket.org/sbalian/spindec (2011-2014).
 Here is the BibTeX entry:
 
 ```text
-@misc{SPINDEC,
+@misc{SpinDec,
   title = {SpinDec: C++ library for spin decoherence},
   author = {Balian, Setrak J.},
-  howpublished = {\url{http://www.bitbucket.org/sbalian/spindec}},
-  year = {2011--2014}
+  howpublished = {http://www.bitbucket.org/sbalian/spindec},
+  year = {2011--2015}
 }
 ```
 
