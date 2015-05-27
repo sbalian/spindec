@@ -9,6 +9,18 @@ an interacting spin bath.
 - Includes executable for CPMG dephasing (T2) of donors in silicon
 interacting with 29Si nuclear impurities (nuclear spin diffusion).
 
+***Coming soon:***
+
+I'm writing my thesis at the moment so haven't had much time
+for dev work.
+
+Planning to implement special methods for quantum dots and
+heteronuclear spin baths over the summer.
+
+As always, drop me an [email] if you'd like anything added or already
+have some modifications you'd like to share or add to
+this repository.
+
 Installation
 ------------
 
@@ -153,7 +165,7 @@ http://github.com/UCLGuichard/CCPQ
 Contact
 -------
 
-[Seto Balian] ([sbalian]) - <s.balian@ucl.ac.uk>
+[Seto Balian] ([sbalian]) - <seto.balian@gmail.com> or <s.balian@ucl.ac.uk>
 
 **Last updated: Apr 27, 2015**
 
@@ -163,4 +175,5 @@ Contact
 [CMake]: http://www.cmake.org/
 [boost]: http://www.boost.org/
 [Intel MKL]: https://software.intel.com/en-us/intel-mkl
+[email]: mailto:seto.balian@gmail.com
 
