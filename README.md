@@ -10,13 +10,8 @@ an interacting spin bath.
 interacting with 29Si nuclear impurities (nuclear spin diffusion).
 
 ***Coming soon:***
-I'm writing my thesis at the moment so haven't had much time
-for dev work.
-Planning to implement special methods for quantum dots and
-heteronuclear spin baths over the summer.
-As always, drop me an [email] if you'd like anything added or already
-have some modifications you'd like to share or add to
-this repository.
+Special methods for quantum dots;
+heteronuclear spin baths.
 
 Installation
 ------------
