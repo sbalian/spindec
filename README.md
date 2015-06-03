@@ -111,7 +111,7 @@ If you use any part of the code in a publication,
 please cite it as follows:
 
 S. J. Balian, Spindec: C++ library for spin decoherence,
-http://www.bitbucket.org/sbalian/spindec (2011-2014).
+http://www.bitbucket.org/sbalian/spindec (2011-2015).
 
 Here is the BibTeX entry:
 
