@@ -127,7 +127,7 @@ Here is the BibTeX entry:
 Version
 -------
 
-0.9 (late-stage beta - debugged, tested, profiled, optimized)
+0.9 (late-stage beta - debugged, tested, profiled, optimized). Also checked for memory leaks.
 
 History
 -------
@@ -159,7 +159,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <seto.balian@gmail.com> or <s.balian@ucl.ac.uk>
 
-**Last updated: Apr 27, 2015**
+**Last updated: Jun 3, 2015**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07
