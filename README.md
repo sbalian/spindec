@@ -72,7 +72,7 @@ Usage
 Include the SpinDec/base.h header in your source and link with
 libspindec.
 
-The executable spindec-dsnsd has a --help option.
+The executable spindec-dsnsd has a --help option. See also "Getting Help" below.
 
 Example
 -------
@@ -89,7 +89,7 @@ To see the decay, run spindec-test-cce.
 The test executable is not installed, so run it in the build
 directory.
 
-The sourse for spindec-dsnsd (src/spindec-dsnsd.cpp) should also serve
+The source for spindec-dsnsd (src/spindec-dsnsd.cpp) should also serve
 as a good example.
 
 Getting help
@@ -100,6 +100,7 @@ Getting help
 usually geared more towards implementation.
 - See src/spindec-dsnsd.cpp and tests/spindec-test-cce.cpp for
 examples.
+- A reference manual generated using doxygen is also available. This is under construction and will be completed very soon. The code structure is there, but I'm still in the process of converting comments into doxygen syntax so most classes have no description apart from basic input/output and inheritance.
 
 License and how to cite
 -----------------------
@@ -110,7 +111,7 @@ See LICENSE file for more details.
 If you use any part of the code in a publication,
 please cite it as follows:
 
-S. J. Balian, Spindec: C++ library for spin decoherence,
+S. J. Balian, SpinDec: C++ Library for Spin Decoherence,
 http://www.bitbucket.org/sbalian/spindec (2011-2015).
 
 Here is the BibTeX entry:
@@ -136,7 +137,7 @@ SpinDec is based on bits and pieces of old code for certain spin baths
 and central spin systems. These were written by Seto Balian starting
 in 2011. Methods used to efficiently fill Hamiltonian matrix elements
 were originally written in Fortran by Tania Monteiro.
-This version was started on May 19, 2013.
+Development for SpinDec as an open-source project started in May 2013.
 
 Acknowledgements
 ----------------
@@ -159,7 +160,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <seto.balian@gmail.com> or <s.balian@ucl.ac.uk>
 
-**Last updated: Jun 3, 2015**
+**Last updated: Jun 20, 2015**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07

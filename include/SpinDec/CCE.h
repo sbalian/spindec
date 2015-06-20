@@ -1,22 +1,10 @@
 #ifndef CCE_H_
 #define CCE_H_
 
-// SpinDec::CCE
-//
-// Solves for the central spin decoherence problem using the cluster correlation
-// expansion (CCE).
-//
-// CCE References:
-// - Phys. Rev. B 74, 035322 (2006)
-// - Phys. Rev. B 78, 085315 (2008)
-// - Phys. Rev. B 78, 129901(E) (2008)
-// - Phys. Rev. B 79, 115320 (2009)
-// - Phys. Rev. B 86, 035452 (2012)
-//
+// Seto Balian, Jun 20, 2015
+
 // TODO Comment more
 // TODO have experiment instead of pulse experiment?
-//
-// Seto Balian, Feb 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/ClusterDatabase.h"
@@ -26,6 +14,18 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Solves for a CSD problem using the CCE. 
+ * 
+ * The cluster correlation expansion (CCE) is used to solve for a central spin
+ * decoherence (CSD) problem. Relevant references are:
+ * - Phys. Rev. B 74, 035322 (2006)
+ * - Phys. Rev. B 78, 085315 (2008)
+ * - Phys. Rev. B 78, 129901(E) (2008)
+ * - Phys. Rev. B 79, 115320 (2009)
+ * - Phys. Rev. B 86, 035452 (2012)
+ * 
+ */
 class CCE
 {
 private:
@@ -34,7 +34,7 @@ private:
   
   vector<TimeEvolution> product_correlations_by_order_;
   
-  // maximum CCE truncation order
+  /// maximum CCE truncation order
   UInt max_truncation_order_;
   bool include_one_clusters_;
 
@@ -57,11 +57,16 @@ public:
     
   UInt get_max_truncation_order() const;
   
-  // Input CCE truncation order to calculate, cannot be greater than
-  // max_truncation_order_
+  /**
+   * \brief Calculate the CCE.
+   * 
+   * Input CCE truncation order to calculate. This input cannot exceed
+   * CCE::max_truncation_order_.
+   * 
+   */
   void calculate(const UInt order);
   void calculate(const UInt order, const bool no_divisions);
-  // calls calculate(max_truncation_order_,false)
+  /// Calls CCE::calculate(const SpinDec::UInt,const bool=true) with divisions.
   void calculate();
   
   // get the time evolution (has to be calculated with above method first)
