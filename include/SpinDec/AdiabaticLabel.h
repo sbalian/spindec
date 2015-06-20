@@ -1,14 +1,7 @@
 #ifndef ADIABATICLABEL_H_
 #define ADIABATICLABEL_H_
 
-// SpinDec::AdiabaticLabel
-//
-// For a spin donor, the adiabatic energy eigenstates are labeled as follows:
-//
-// |+/-,m>, where m = S + I is an integer, S and I are the electron and nuclear
-// spin quantum numbers.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 16, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -19,12 +12,26 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Adiabatic eigenstates of a spin donor.
+ *
+ * For a spin donor, the adiabatic energy eigenstates are labeled as follows:
+ *
+ * \f$\left|\pm,m\right\rangle\f$, where \f$m = S + I\f$ is an integer,
+ * \f$S\f$ and \f$I\f$ are the electron and nuclear spin quantum numbers.
+ */
 class AdiabaticLabel
 {
-private:
-  Sign sign_;
-  int quantum_number_;
 
+private:
+  
+  /// Plus or minus
+  Sign sign_;
+  
+  /// \f$m = S + I\f$
+  int quantum_number_;
+  
+  
 public:
 
   AdiabaticLabel(const Sign& sign, const int quantum_number);
@@ -32,6 +39,7 @@ public:
   const Sign& get_sign() const;
   int get_quantum_number() const;
 
+  /// Print
   friend std::ostream& operator<<(std::ostream & os,
       AdiabaticLabel const & label);
 

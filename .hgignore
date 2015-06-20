@@ -8,4 +8,5 @@ boost
 build
 spindec-sync.cpp
 hgpush_bitbucket.sh
+doc
 
