@@ -1,11 +1,7 @@
 #ifndef PULSEEXPERIMENT_H_
 #define PULSEEXPERIMENT_H_
 
-// SpinDec::PulseExperiment
-//
-// Abstract base class for a pulse sequence experiment.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/TimeArray.h"
@@ -15,6 +11,7 @@
 namespace SpinDec
 {
 
+/// Abstract base class for a pulse sequence experiment.
 class PulseExperiment
 {
 protected:

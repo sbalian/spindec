@@ -1,13 +1,7 @@
 #ifndef DENSITYOPERATOR_H_
 #define DENSITYOPERATOR_H_
 
-// SpinDec::DensityOperator
-//
-// In general, composite density operator for spins in the Zeeman basis.
-// P_qubit X(tensor) P_other
-// Qubit states |0> and |1>.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinOperator.h"
@@ -15,6 +9,11 @@
 namespace SpinDec
 {
 
+/**
+ * In general, composite density operator for spins in the Zeeman basis.
+ * \f$\rho_{\rm qubit} \otimes \rho_{\rm other}\f$, qubit states
+ * \f$ \left| 0 \right \rangle \f$ and \f$ \left| 1 \right \rangle \f$.
+ */
 class DensityOperator : public SpinOperator
 {
 private:
@@ -26,15 +25,15 @@ private:
   
 public:
   DensityOperator();
-  // state is the combined (tensor product) qubit-other system state
+  /// State is the combined (tensor product) qubit-other system state.
   DensityOperator(const SpinState& state,
                   const SpinState& state0,
                   const SpinState& state1);
   
-  // return the qubit reduced density matrix
+  /// Return the qubit reduced density matrix.
   DensityOperator reduced() const;
   
-  // off-diagonal of reduced density matrix
+  /// Off-diagonal of reduced density matrix.
   CDouble off_diagonal_reduced() const;
   
 };

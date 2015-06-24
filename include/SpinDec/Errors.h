@@ -1,17 +1,14 @@
 #ifndef ERRORS_H_
 #define ERRORS_H_
 
-// SpinDec::Errors
-//
-// Error and warning handling.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/// Error and warning handling.
 class Errors
 {
 

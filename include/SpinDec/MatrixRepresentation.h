@@ -1,12 +1,7 @@
 #ifndef MATRIXREPRESENTATION_H_
 #define MATRIXREPRESENTATION_H_
 
-// SpinDec::MatrixRepresentation
-//
-// Abstract base class for spin states and operators in the matrix
-// representation. Has a SpinBasis (Zeeman basis) and a dimension.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/SpinBasis.h"
 #include "SpinDec/typedefs.h"
@@ -14,12 +9,17 @@
 namespace SpinDec
 {
 
+/**
+ * Abstract base class for spin states and operators in the matrix
+ * representation. Has a SpinBasis (Zeeman basis) and a dimension.
+ */
 class MatrixRepresentation
 {
 
 protected:
   
-  UInt dimension_; // dimension of Hilbert space
+  /// Dimension of Hilbert space.
+  UInt dimension_; 
   SpinBasis basis_;
 
   MatrixRepresentation();
@@ -41,7 +41,8 @@ public:
   bool is_basis_equal(const auto_ptr<MatrixRepresentation>&
       to_check) const;
   
-  virtual void set_zero() = 0; // set all elements to zero
+  /// Set all elements to zero.
+  virtual void set_zero() = 0; 
   
   virtual ~MatrixRepresentation();
   

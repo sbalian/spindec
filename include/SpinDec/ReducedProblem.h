@@ -1,11 +1,7 @@
 #ifndef REDUCEDPROBLEM_H_
 #define REDUCEDPROBLEM_H_
 
-// SpinDec::ReducedProblem
-//
-// SpinSystemBase and an order.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -13,6 +9,7 @@
 namespace SpinDec
 {
 
+/// SpinSystemBase and an order.
 class ReducedProblem
 {
 private:

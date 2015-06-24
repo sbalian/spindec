@@ -1,14 +1,7 @@
 #ifndef EIGENSPECTRUM_H_
 #define EIGENSPECTRUM_H_
 
-// SpinDec::Eigenspectrum
-//
-// Holds the eigenvectors and eigenvalues of a matrix.
-// Note: eigenvectors stored columnwise.
-//
-// General complex diagonalizer: ComplexEigenSolver in Eigen
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include <complex>
 
@@ -17,6 +10,13 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Holds the eigenvectors and eigenvalues of a matrix.
+ * 
+ * Note: eigenvectors stored columnwise.
+ * General complex diagonalizer: ComplexEigenSolver in Eigen.
+ * 
+ */
 class Eigenspectrum
 {
 protected:
@@ -38,10 +38,10 @@ public:
   
   virtual ~Eigenspectrum();
   
-  // Note the Eigen naming convention here
+  /// Note the Eigen naming convention here.
   virtual ComplexMatrix spectralDecomposition() const;
   
-  // NOTE: use with care
+  /// NOTE: use with care.
   void set_spectrum(const ComplexMatrix & eigenvectors,
       const ComplexVector& eigenvalues);
   

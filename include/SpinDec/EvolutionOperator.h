@@ -1,11 +1,7 @@
 #ifndef EVOLUTIONOPERATOR_H_
 #define EVOLUTIONOPERATOR_H_
 
-// SpinDec::EvolutionOperator
-//
-// Free evolution operator.
-//
-// Seto Balian, Nov 12, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinOperator.h"
@@ -13,35 +9,49 @@
 namespace SpinDec
 {
 
+/// Free evolution operator.
 class EvolutionOperator : public SpinOperator
 {
 private:
   
   double time_;
   
-  // Not for the resulting opertor!
-  // These are used to construct the operator, for example from a
-  // Hamiltonian
+  /**
+   * Not for the resulting opertor! These are used to construct the operator,
+   * for example from a Hamiltonian.
+   */
   ComplexMatrix eigenvectors_;
+  /**
+   * Not for the resulting opertor! These are used to construct the operator,
+   * for example from a Hamiltonian.
+   */
   RealVector eigenvalues_;
     
   void set_matrix();
   
 public:
   EvolutionOperator();
-  // Unitary matrix
-  // U = \sum{n} ( |E_n> exp(- i E_n t) <E_n| )
-  // E_n: eigenvalues (real)
-  // |E_n>: eigenvectors
-  // t: time (real double) units: microseconds (energies in M rad s-1)
-  // (for time independent spin Hamiltonians ...)
   
+  /** Unitary operator
+   * \f[
+   * \hat{U} = \sum_n \left(
+   * \left|E_n\right\rangle \exp[- i E_n t] \left\langle E_n \right|
+   * \right)
+   * \f]
+   * - \f$ E_n \f$: eigenvalues (real).
+   * - \f$ \left| E_n \right\rangle \f$: eigenvectors.
+   * - \f$ t \f$: time (real double) in microseconds
+   * (energies in M rad s\f$^{-1}\f$).
+   *
+   * For time independent Hamiltonians.
+   * 
+   */ 
   EvolutionOperator(const SpinBasis& basis,
       const ComplexMatrix & eigenvectors,
       const RealVector & eigenvalues,
       const double time);
   
-  // updates matrix
+  /// Updates matrix.
   void set_time(const double time);
   double get_time() const;
   

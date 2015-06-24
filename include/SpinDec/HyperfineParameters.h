@@ -1,31 +1,36 @@
 #ifndef HYPERFINEPARAMETERS_H_
 #define HYPERFINEPARAMETERS_H_
 
-// SpinDec::HyperfineParameters
-//
-// Parameters to cacluate the hyperfine interaction between and electron
-// and a nucleus in a lattice.
-//
-// Seto Balian, Jan 14, 2015
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/**
+ * Parameters to cacluate the hyperfine interaction between an electron spin
+ * and a nuclear spin in a lattice.
+ */
 class HyperfineParameters
 {
 private:
   
-   double lattice_constant_;     // Lattice constant in Angstroms
-   double lattice_parameter_a_;  // Lattice parameter in Angstroms
-   double lattice_parameter_b_;  // Lattice parameter in Angstroms
+   /// Lattice constant in \f$\mbox{\AA}\f$.
+   double lattice_constant_;     
+   /// Lattice parameter in \f$\mbox{\AA}\f$.
+   double lattice_parameter_a_;
+   /// Lattice parameter in \f$\mbox{\AA}\f$.
+   double lattice_parameter_b_;
+   /// Donor electron ionization energy in eV.
    double electron_ionization_energy_; 
-                        // Donor electron ionization energy in eV
-   double charge_density_; // charge density (dimensionless)
+   /// Charge density (dimensionless).
+   double charge_density_; 
    
-   bool ising_only_; // Ignore flip-flop part of interaction
-   bool fermi_contact_only_; // ignore dipolar part of hyperfine interaction
+   /// Ignore flip-flop part of interaction.
+   bool ising_only_; 
+   /// ignore dipolar part of hyperfine interaction.
+   bool fermi_contact_only_; 
   
 public:
   HyperfineParameters();

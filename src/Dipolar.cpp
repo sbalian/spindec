@@ -1,8 +1,8 @@
 // See Dipolar.h for description.
-// Seto Balian, Apr 16, 2015
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/Dipolar.h"
-#include "SpinDec/constants.h"
+#include "SpinDec/Constants.h"
 #include "SpinDec/BoostEigen.h"
 
 #include <cmath>
@@ -21,7 +21,7 @@ void Dipolar::calculate(const SpinParameters & spin_parameters1,
   }
   
   // TODO Comment more, add units
-  const double prefactor = 1.0e29*kReducedPlanck;
+  const double prefactor = 1.0e29*Constants::kReducedPlanck;
   const double gamma_product = spin_parameters1.get_gyromagnetic_ratio()
                               *spin_parameters2.get_gyromagnetic_ratio();
   const double non_spatial_dependence =prefactor*gamma_product;

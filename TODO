@@ -1,4 +1,4 @@
-Seto Balian, Jan 24, 2015
+Seto Balian, Jun 24, 2015
 
 - cce order, build order, max order etc
   maybe make less confusing names?
@@ -11,7 +11,8 @@ Seto Balian, Jan 24, 2015
 - return "size_t" for vector sizes
 - improve default constructors and destructors
 - force matrix type (eg Hermitian for observables)
-
-
+- heteronuclear spin baths
+- special methods for NV centers in diamond and quantum dots
+- doc with doxygen
 
 

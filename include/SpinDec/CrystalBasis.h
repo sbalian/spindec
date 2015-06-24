@@ -1,18 +1,20 @@
 #ifndef CRYSTALBASIS_H_
 #define CRYSTALBASIS_H_
 
-// SpinDec::CrystalBasis
-//
-// Basis vectors for crystal structures in 3D. Length units are Angstroms.
-// They are in the basis of lattice vectors (a1,a2,a3) NOT (x,y,z)!
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/**
+ * \brief Basis vectors for crystal structures in 3D.
+ * 
+ * Length units are \f$\mbox{\AA}\f$. They are in the basis of lattice vectors
+ * \f$({\bf a}_1,{\bf a}_2,{\bf a}_3)\f$, NOT \f$(x,y,z)\f$!
+ * 
+ */
 class CrystalBasis
 {
 protected:

@@ -1,11 +1,7 @@
 #ifndef CLUSTERDATABASEENTRY_H_
 #define CLUSTERDATABASEENTRY_H_
 
-// SpinDec::ClusterDatabaseEntry
-//
-// Entry for ClusterDatabase.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Cluster.h"
@@ -14,6 +10,7 @@
 namespace SpinDec
 {
 
+/// Entry for ClusterDatabase.
 class ClusterDatabaseEntry
 {
 private:
@@ -24,7 +21,8 @@ private:
 public:
   
   ClusterDatabaseEntry();
-  explicit ClusterDatabaseEntry(const Cluster& cluster); // is_solved_ = false
+  /// is_solved_ = false.
+  explicit ClusterDatabaseEntry(const Cluster& cluster);
   
   const Cluster& get_cluster() const;
   

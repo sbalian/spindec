@@ -1,13 +1,7 @@
 #ifndef DIAMONDCUBIC_H_
 #define DIAMONDCUBIC_H_
 
-// SpinDec::DiamondCubic
-//
-// Diamond cubic crystal structure.
-// This is implemented as a simple cubic lattice with 8 basis vectors.
-// SOURCE: http://en.wikipedia.org/wiki/Diamond_cubic
-//
-// Seto Balian, Apr 16, 2015
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
@@ -17,29 +11,39 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Diamond cubic crystal structure.
+ * 
+ * This is implemented as a simple cubic lattice with 8 basis vectors.
+ * Source: http://en.wikipedia.org/wiki/Diamond_cubic.
+ * 
+ */
 class DiamondCubic : public CrystalStructure
 {
 
 private:
   
-  // set up and return the lattice vectors
+  /// Set up and return the lattice vectors.
   SimpleCubicLatticeVectors construct_lattice_vectors(
       const double lattice_constant) const;
   
-  // get up and return the basis vectors
+  /// Set up and return the basis vectors.
   CrystalBasis construct_basis_vectors() const;
   
-  // get integer range (for constructing crystal structure) in a centred cube
-  // given the side length
+  /**
+   *  Get integer range (for constructing crystal structure) in a centred cube
+   *  given the side length.
+   */
   int int_range_centred_cube(
       const double side_length, const double lattice_constant) const;
-  
   
 public:
   DiamondCubic();
   
-  // cubic lattice constant in Angstroms
-  // side length also in Angstroms
+  /**
+   * \brief Cubic lattice constant and side length of superlattice cube in
+   * \f$\mbox{\AA}\f$.
+   */
   DiamondCubic(const double lattice_constant, 
                const double side_length);
   

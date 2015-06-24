@@ -1,11 +1,7 @@
 #ifndef FREEEVOLUTION_H_
 #define FREEEVOLUTION_H_
 
-// SpinDec::FreeEvolution
-//
-// (Pulse)-free evolution.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Pulse.h"
@@ -14,14 +10,14 @@
 namespace SpinDec
 {
 
+/// (Pulse)-free evolution.
 class FreeEvolution : public Pulse
 {
   
 public:
   FreeEvolution();
-  // "pulse" duration taken from evolution operator
+  /// "Pulse" duration taken from evolution operator.
   FreeEvolution(const EvolutionOperator& evolution_operator);
-  
   
 };
 

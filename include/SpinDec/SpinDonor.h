@@ -11,13 +11,13 @@
 //
 // TODO confusing names ...
 //
-// Seto Balian, Feb 4, 2015
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/SpinSystem.h"
 
 #include "SpinDec/Hyperfine.h"
 #include "SpinDec/ElectronSpinParameters.h"
-#include "SpinDec/NuclearSpinParameters.h"
+#include "SpinDec/SpinParameters.h"
 #include "SpinDec/AdiabaticLabel.h"
 
 #include <vector>
@@ -49,7 +49,7 @@ private:
   
   // For the spin interaction graph
   ElectronSpinParameters electron_parameters_;
-  NuclearSpinParameters nuclear_parameters_;
+  SpinParameters nuclear_parameters_;
   Hyperfine hyperfine_;
   
   // Energy levels labeled 0,1,2,... (2S+1)*(2I+1) - 1
@@ -204,12 +204,12 @@ public:
             const double hyperfine_strength,        // M rad s-1
             const unsigned int lower_level_label,
             const unsigned int upper_level_label,
-            const ThreeVector& electron_position, // Angstroms
-            const ThreeVector& nuclear_position,  // Angstroms
+            const ThreeVector& electron_position, // \f$\mbox{\AA}\f$
+            const ThreeVector& nuclear_position,  // \f$\mbox{\AA}\f$
             const bool complete_basis);
   
   const ElectronSpinParameters& get_electron_parameters() const;
-  const NuclearSpinParameters& get_nuclear_parameters() const;
+  const SpinParameters& get_nuclear_parameters() const;
   const Hyperfine& get_hyperfine() const;
   
   int max_quantum_number() const;    // I + S, S = 1/2,

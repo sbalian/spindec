@@ -1,14 +1,10 @@
 #ifndef CSDPROBLEM_H_
 #define CSDPROBLEM_H_
 
-// SpinDec::CSDProblem
-//
-// Central spin decoherence problem.
-// Currently supports a single spin bath. TODO Generalize.
-//
+// Seto Balian, Jun 24, 2015
+
+// TODO Generalize for more than a single spin bath
 // TODO Comment more
-//
-// Seto Balian, Nov 6, 2014
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -20,6 +16,12 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Central spin decoherence problem.
+ * 
+ * Currently supports a single spin bath. 
+ * 
+ */
 class CSDProblem
 {
 private:
@@ -29,9 +31,11 @@ private:
   
   UniformMagneticField field_;
 
-  // Edges should comply as in the join methods for SpinInteractionGraph,
-  // with the first graph being the central spin graph and the second being
-  // the graph for a single bath system.
+  /**
+   * Edges should comply as in the join methods for SpinInteractionGraph,
+   * with the first graph being the central spin graph and the second being
+   * the graph for a single bath system.
+   */
   vector<SpinInteractionEdge> system_bath_edges_;
   
   void init(const auto_ptr<SpinSystemBase>& central_spin_system_base,

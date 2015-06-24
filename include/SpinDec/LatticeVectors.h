@@ -1,13 +1,9 @@
 #ifndef LATTICEVECTORS_H_
 #define LATTICEVECTORS_H_
 
-// SpinDec::LatticeVectors
-//
-// Lattice vectors for 3D crystal structures. Length units: Angstroms.
-// In Cartesian coordinates.
-// Vectors must be linearly independent.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
+
+// TODO vectors must be linearly independent ...
 
 #include "SpinDec/typedefs.h"
 #include <vector>
@@ -15,6 +11,13 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Lattice vectors for 3D crystal structures.
+ * 
+ * Length units: \f$\mbox{\AA}\f$. In Cartesian coordinates.
+ * Vectors must be linearly independent.
+ * 
+ */
 class LatticeVectors
 {
 protected:

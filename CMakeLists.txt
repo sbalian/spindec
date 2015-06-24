@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 16/04/2015
+# Seto Balian 23/06/2015
 
 cmake_minimum_required(VERSION 2.8.2)
 
@@ -98,7 +98,6 @@ src/IdentityOperator.cpp
 src/IdentityPulse.cpp
 src/LatticeVectors.cpp
 src/MatrixRepresentation.cpp
-src/NuclearSpinParameters.cpp
 src/PiPulse.cpp
 src/Pulse.cpp
 src/PulseExperiment.cpp
@@ -132,7 +131,7 @@ src/TimeArray.cpp
 src/TimeEvolution.cpp
 src/TwoStateSuperposition.cpp
 src/UniformMagneticField.cpp
-src/constants.cpp
+src/Constants.cpp
 )
 
 set(HEADERS
@@ -163,7 +162,6 @@ include/SpinDec/IdentityOperator.h
 include/SpinDec/IdentityPulse.h
 include/SpinDec/LatticeVectors.h
 include/SpinDec/MatrixRepresentation.h
-include/SpinDec/NuclearSpinParameters.h
 include/SpinDec/PiPulse.h
 include/SpinDec/Pulse.h
 include/SpinDec/PulseExperiment.h
@@ -198,7 +196,7 @@ include/SpinDec/TimeEvolution.h
 include/SpinDec/TwoStateSuperposition.h
 include/SpinDec/UniformMagneticField.h
 include/SpinDec/base.h
-include/SpinDec/constants.h
+include/SpinDec/Constants.h
 include/SpinDec/typedefs.h
 )
 

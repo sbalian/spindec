@@ -1,14 +1,14 @@
 // See ElectronSpinParameters.h for description.
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/ElectronSpinParameters.h"
-#include "SpinDec/constants.h"
+#include "SpinDec/Constants.h"
 
 namespace SpinDec
 {
 
 ElectronSpinParameters::ElectronSpinParameters() :
-    SpinHalfParameters(kElectronGyromagneticRatio)
+    SpinHalfParameters(Constants::kElectronGyromagneticRatio)
 {
 }
 

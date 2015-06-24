@@ -1,11 +1,7 @@
 #ifndef CPMGDEPHASING_H_
 #define CPMGDEPHASING_H_
 
-// SpinDec::CPMGDephasing
-//
-// CPMG pulse sequence.
-//
-// Seto Balian, Feb 4, 2015
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseExperiment.h"
@@ -14,6 +10,7 @@
 namespace SpinDec
 {
 
+/// CPMG pulse sequence.
 class CPMGDephasing : public PulseExperiment
 {
 
