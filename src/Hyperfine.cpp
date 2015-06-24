@@ -1,12 +1,12 @@
 // See Hyperfine.h for description.
-// Seto Balian, Apr 16, 2015
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/Hyperfine.h"
 #include <cmath>
 
 #include "SpinDec/Errors.h"
 #include "SpinDec/Dipolar.h"
-#include "SpinDec/constants.h"
+#include "SpinDec/Constants.h"
 
 namespace SpinDec
 {
@@ -53,7 +53,7 @@ double Hyperfine::envelope_function(const UInt index,
   
   // units Angstroms^(-3/2)
   return std::exp(-std::sqrt(nbfrac + nafrac))/
-    (std::sqrt(kPi*std::pow(n_times_a(),2.0)*n_times_b()));
+    (std::sqrt(Constants::kPi*std::pow(n_times_a(),2.0)*n_times_b()));
 
 }
 
@@ -79,7 +79,7 @@ double Hyperfine::n_times_b() const
 double Hyperfine::scaled_probability_density(
     const ThreeVector & separation) const
 {
-  const double k0 = 0.85*2.0*kPi/
+  const double k0 = 0.85*2.0*Constants::kPi/
                   parameters_.get_lattice_constant();
   
   const double sep_x = separation(0);
@@ -130,8 +130,8 @@ void Hyperfine::calculate(const SpinParameters & electron_parameters,
       electron_parameters.get_gyromagnetic_ratio();
   const double nuclear_gyromagnetic_ratio =
       nuclear_parameters.get_gyromagnetic_ratio();
-  const double hbar = kReducedPlanck;
-  const double pi = kPi;
+  const double hbar = Constants::kReducedPlanck;
+  const double pi = Constants::kPi;
   
   const double non_spatial_dependence =
   (16.0*pi/9.0)*1.0e-07*1.0e+06*hbar*

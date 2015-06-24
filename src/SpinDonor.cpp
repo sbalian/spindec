@@ -1,5 +1,5 @@
 // See SpinDonor.h for description.
-// Seto Balian, Feb 4, 2015
+// Seto Balian, Jun 23, 2015
 
 // TODO Be careful when comparing doubles ...
 // TODO Tested truncated bases, OK ... but may still need some improvement
@@ -436,7 +436,7 @@ void SpinDonor::init(const double field_strength,
   UniformMagneticField field(field_strength);
   
   electron_parameters_ = ElectronSpinParameters(electron_gyromagnetic_ratio);
-  nuclear_parameters_ = NuclearSpinParameters(nuclear_quantum_number,
+  nuclear_parameters_ = SpinParameters(nuclear_quantum_number,
                                               nuclear_gyromagnetic_ratio);
 
   calc_adiabatic_level_labels();
@@ -489,7 +489,7 @@ const ElectronSpinParameters& SpinDonor::get_electron_parameters() const
   return electron_parameters_;
 }
 
-const NuclearSpinParameters& SpinDonor::get_nuclear_parameters() const
+const SpinParameters& SpinDonor::get_nuclear_parameters() const
 {
   return nuclear_parameters_;
 }

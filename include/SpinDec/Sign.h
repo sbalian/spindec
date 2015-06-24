@@ -1,17 +1,14 @@
 #ifndef SIGN_H_
 #define SIGN_H_
 
-// SpinDec::Sign
-//
-// Sign: Plus (+) or Minus (-).
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include <iostream>
 
 namespace SpinDec
 {
 
+/// \f$\pm\f$.
 class Sign
 {
 public:
@@ -25,7 +22,7 @@ public:
   
   bool operator==(const Sign& rhs) const;
   
-  // Print with cout
+  /// Print with cout.
   friend std::ostream& operator<<(std::ostream& os, Sign const & sign);
   
 private:

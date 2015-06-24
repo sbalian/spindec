@@ -1,7 +1,7 @@
 #ifndef CCE_H_
 #define CCE_H_
 
-// Seto Balian, Jun 20, 2015
+// Seto Balian, Jun 24, 2015
 
 // TODO Comment more
 // TODO have experiment instead of pulse experiment?
@@ -19,11 +19,11 @@ namespace SpinDec
  * 
  * The cluster correlation expansion (CCE) is used to solve for a central spin
  * decoherence (CSD) problem. Relevant references are:
- * - Phys. Rev. B 74, 035322 (2006)
- * - Phys. Rev. B 78, 085315 (2008)
- * - Phys. Rev. B 78, 129901(E) (2008)
- * - Phys. Rev. B 79, 115320 (2009)
- * - Phys. Rev. B 86, 035452 (2012)
+ * - Phys. Rev. B 74, 035322 (2006),
+ * - Phys. Rev. B 78, 085315 (2008),
+ * - Phys. Rev. B 78, 129901(E) (2008),
+ * - Phys. Rev. B 79, 115320 (2009),
+ * - Phys. Rev. B 86, 035452 (2012).
  * 
  */
 class CCE
@@ -34,7 +34,7 @@ private:
   
   vector<TimeEvolution> product_correlations_by_order_;
   
-  /// maximum CCE truncation order
+  /// Maximum CCE truncation order.
   UInt max_truncation_order_;
   bool include_one_clusters_;
 
@@ -66,10 +66,10 @@ public:
    */
   void calculate(const UInt order);
   void calculate(const UInt order, const bool no_divisions);
-  /// Calls CCE::calculate(const SpinDec::UInt,const bool=true) with divisions.
+  /// Calls CCE::calculate(const UInt order,false).
   void calculate();
   
-  // get the time evolution (has to be calculated with above method first)
+  /// Get the time evolution (has to be calculated with above method first).
   TimeEvolution evolution(const UInt order) const;
   
   const ClusterDatabase& get_database() const;

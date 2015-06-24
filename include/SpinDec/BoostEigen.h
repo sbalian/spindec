@@ -1,7 +1,7 @@
 #ifndef BOOSTEIGEN_H_
 #define BOOSTEIGEN_H_
 
-// Seto Balian, Jun 16, 2015
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -75,7 +75,7 @@ public:
                                         const ComplexVector & b);
 
   /**
-   * \brief Partial trace for complex matrices
+   * \brief Partial trace for complex matrices.
    * 
    * Given \f$ {\bf C} = {\bf A} \otimes {\bf B} \f$, and the dimension
    * of \f$ {\bf B} \f$, this method outputs \f$ {\rm Tr}_{\bf B} {\bf A}\f$.

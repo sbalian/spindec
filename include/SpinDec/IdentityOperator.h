@@ -1,11 +1,7 @@
 #ifndef IDENTITYOPERATOR_H_
 #define IDENTITYOPERATOR_H_
 
-// SpinDec::IdentityOperator
-//
-// Identity.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinOperator.h"
@@ -13,6 +9,7 @@
 namespace SpinDec
 {
 
+/// Identity.
 class IdentityOperator : public SpinOperator
 {
 public:

@@ -1,13 +1,7 @@
 #ifndef TYPEDEFS_H_
 #define TYPEDEFS_H_
 
-// SpinDec::typedefs
-//
-// Custom STL and Eigen typedefs for SpinDec.
-// Also includes some usings ...
-// All in the SpinDec namespace.
-//
-// Seto Balian, Nov 11, 2014
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/config.h"
 #include <Eigen/Dense>
@@ -22,56 +16,66 @@
 #include <utility>
 #include <map>
 
+/** \file typedefs.h
+ * \brief typedefs and "usings"
+ * 
+ * Custom STL and Eigen typedefs for SpinDec. Also includes some usings,
+ * all in the SpinDec namespace.
+ */
 namespace SpinDec {
 
-// unsigned int
+/// Unsigned int
 typedef unsigned int UInt;
 
-// Real 3-vector
+/// Real 3-vector
 typedef Eigen::Vector3d ThreeVector;
 
-// Complex double
+/// Complex double
 typedef std::complex<double> CDouble;
 
-// Matrix of complex doubles
+/// Matrix of complex doubles
 typedef Eigen::MatrixXcd ComplexMatrix;
 
-// Vector of complex doubles
+/// Vector of complex doubles
 typedef Eigen::VectorXcd ComplexVector;
 
-// Vector of doubles
+/// Vector of doubles
 typedef Eigen::VectorXd RealVector;
 
-// std vector of doubles
+/// STL vector of doubles
 typedef std::vector<double> DoubleArray;
 
-// std vector of integers
+/// STL vector of integers
 typedef std::vector<int> IntArray;
 
-// std vector of unsigned integers
+/// STL vector of unsigned integers
 typedef std::vector<unsigned int> UIntArray;
 
-// std vector of complex doubles
+/// STL vector of complex doubles
 typedef std::vector< CDouble > CDoubleArray;
 
+
 // using ...
-// std string
+
+
+/// STL string
 using std::string;
 
-// std auto_ptr
+/// STL auto_ptr
 using std::auto_ptr;
 
-// std cout, endl
+/// STL cout
 using std::cout;
+/// STL endl
 using std::endl;
 
-// std pair
+/// STL pair
 using std::pair;
 
-// std vector
+/// STL vector
 using std::vector;
 
-// std map
+/// STL map
 using std::map;
 
 }

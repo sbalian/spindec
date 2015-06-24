@@ -1,23 +1,22 @@
 #ifndef FILEPROPERTIES_H_
 #define FILEPROPERTIES_H_
 
-// SpinDec::FileProperties
-//
-// Static methods for ASCII file properties.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/// Static methods for ASCII file properties.
 class FileProperties
 {
 public:
   
   static bool exists(const string file_name);
-  static UInt num_lines(const string file_name); // empty lines not counted ...
+  
+  /// NOTE: empty lines not counted.
+  static UInt num_lines(const string file_name);
   
 };
 

@@ -1,7 +1,8 @@
 // See RandomNumberGenerator.h for description.
-// Seto Balian, Jan 14, 2015
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/RandomNumberGenerator.h"
+#include "SpinDec/Constants.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -38,7 +39,8 @@ double RandomNumberGenerator::normal_c_rand(
 {
   double r1 = static_cast<double>(rand())/static_cast<double>(RAND_MAX);
   double r2 = static_cast<double>(rand())/static_cast<double>(RAND_MAX);
-  double x = std::sqrt ( - 2.0 * std::log ( r1 ) )*std::cos ( 2.0 * kPi * r2 );
+  double x = std::sqrt ( - 2.0 * std::log ( r1 ) )*
+      std::cos ( 2.0 * Constants::kPi * r2 );
 
   return mean + stdev*x;
 

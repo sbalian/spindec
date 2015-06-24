@@ -1,12 +1,7 @@
 #ifndef PULSE_H_
 #define PULSE_H_
 
-// SpinDec::Pulse
-//
-// Pulses in a pulse sequence.
-// Includes the no-pulse free evolution.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"
@@ -15,6 +10,11 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Pulses in a pulse sequence.
+ * 
+ * Includes the no-pulse free evolution.
+ */
 class Pulse
 {
 protected:

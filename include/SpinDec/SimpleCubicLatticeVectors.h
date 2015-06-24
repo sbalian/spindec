@@ -1,13 +1,7 @@
 #ifndef SIMPLECUBICLATTICEVECTORS_H_
 #define SIMPLECUBICLATTICEVECTORS_H_
 
-// SpinDec::SimpleCubicLatticeVectors
-//
-// Simple cubic lattice vectors: |a1| = |a2| = |a3| = a0 and a1,a2,a3 mutually
-// orthogonal ( || to x,y,z respectively in Cartesian coordinates).
-// SOURCE: http://en.wikipedia.org/wiki/Cubic_crystal_system
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/LatticeVectors.h"
@@ -15,12 +9,22 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Simple cubic lattice vectors.
+ * 
+ * \f$|{\bf a}_1| = |{\bf a}_2| = |{\bf a}_3| = a_0\f$ and
+ * \f$ {\bf a}_1,{\bf a}_2,{\bf a}_3\f$ mutually
+ * orthogonal (parallel to \f$x,y,z\f$ respectively in Cartesian coordinates).
+ * 
+ * Source: http://en.wikipedia.org/wiki/Cubic_crystal_system.
+ * 
+ */
 class SimpleCubicLatticeVectors : public LatticeVectors
 {
 public:
   SimpleCubicLatticeVectors();
   
-                                    // lattice constant a0 in Angstroms
+  /// Lattice constant \f$a_0\f$ in \f$\mbox{\AA}\f$.
   explicit SimpleCubicLatticeVectors(const double lattice_constant);
   
 };

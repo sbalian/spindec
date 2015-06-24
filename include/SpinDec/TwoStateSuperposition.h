@@ -1,11 +1,9 @@
 #ifndef TWOSTATESUPERPOSITION_H_
 #define TWOSTATESUPERPOSITION_H_
 
-// SpinDec::TwoStateSuperposition
-//
-// 2-level superposition state.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
+
+// TODO related to spin 1/2 ...
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinState.h"
@@ -13,6 +11,7 @@
 namespace SpinDec
 {
 
+/// 2-level superposition state.
 class TwoStateSuperposition : public SpinState
 {
 private:

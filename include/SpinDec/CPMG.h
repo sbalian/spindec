@@ -1,18 +1,7 @@
 #ifndef CPMG_H_
 #define CPMG_H_
 
-// SpinDec::CPMG
-//
-// Carr-Purcell-Meiboom-Gill (CPMG) pulse sequence.
-// - order 0 (FID)
-//   evolve, t (duration t)
-// - order 1 (Hahn)
-//   evolve, t/2 > pi-pulse > evolve, t/2
-// - order n >= 1
-//   evolve, t/2n > pi-pulse > evolve, t/2n, ... ,
-//   > evolve, t/2n >pi-pulse, evolve, t/2n
-//
-// Seto Balian, Nov 13, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequenceBase.h"
@@ -22,6 +11,16 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Carr-Purcell-Meiboom-Gill (CPMG) pulse sequence.
+ * 
+ * - Order \f$ N=0 \f$ (FID): evolve for duration \f$ t \f$.
+ * - \f$ N=1 \f$ (Hahn): evolve for \f$ t/2 \f$, \f$\pi\f$-pulse, evolve
+ * for \f$ t/2 \f$.
+ * - \f$ N > 1 \f$: [evolve for \f$t/(2N)\f$, \f$\pi\f$-pulse,
+ * evolve for \f$t/(2N)\f$]\f$ ^{N} \f$.
+ * 
+ */
 class CPMG : public PulseSequenceBase
 {
 private:

@@ -1,11 +1,7 @@
 #ifndef PULSESEQUENCEBASE_H_
 #define PULSESEQUENCEBASE_H_
 
-// SpinDec::PulseSequenceBase
-//
-// Abstract base class for pulse sequences.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Pulse.h"
@@ -14,6 +10,7 @@
 namespace SpinDec
 {
 
+/// Abstract base class for pulse sequences.
 class PulseSequenceBase
 {
 protected:

@@ -1,11 +1,7 @@
 #ifndef IDENTITYPULSE_H_
 #define IDENTITYPULSE_H_
 
-// SpinDec::IdentityPulse
-//
-// Identity pulse (no duration).
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/Pulse.h"
@@ -13,6 +9,7 @@
 namespace SpinDec
 {
 
+/// Identity pulse (no duration).
 class IdentityPulse : public Pulse
 {
 public:

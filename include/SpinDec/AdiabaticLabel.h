@@ -1,7 +1,7 @@
 #ifndef ADIABATICLABEL_H_
 #define ADIABATICLABEL_H_
 
-// Seto Balian, Jun 16, 2015
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -25,10 +25,10 @@ class AdiabaticLabel
 
 private:
   
-  /// Plus or minus
+  /// Plus or minus.
   Sign sign_;
   
-  /// \f$m = S + I\f$
+  /// \f$m = S + I\f$.
   int quantum_number_;
   
   
@@ -39,7 +39,7 @@ public:
   const Sign& get_sign() const;
   int get_quantum_number() const;
 
-  /// Print
+  /// Print.
   friend std::ostream& operator<<(std::ostream & os,
       AdiabaticLabel const & label);
 

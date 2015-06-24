@@ -1,53 +1,12 @@
 #ifndef HYPERFINE_H_
 #define HYPERFINE_H_
 
-// SpinDec::Hyperfine
-//
+// Seto Balian, Jun 24, 2015
+
 // TODO Force between electron and nucleus.
-//
-// Calculates the hyperfine interaction between an electron and a nucleus in
-// a lattice. Note that this is a magnetic dipole interaction, but is not
-// to be confused with the 1/r^3 dipole-dipole interaction in Dipolar.h.
-//
-// H_A = A Sz Iz + (1/2) A [S+I- + S-I+]
-//
-// This class calculates A for the above Hamiltonian, H_A, where S and I are the
-// electronic and nuclear spin operators. Also fills the Hamiltonian matrix
-// elements for H_A. Uses the Kohn-Luttinger electronic wavefunction.
-//
-// A = p * q - D(B,R)*theta(|R| - na )
-//
-// Units: M rad s-1
-//
-// The first term (p * q) is the isotropic Fermi contact part.
-//
-// p = (1.6 pi hbar / 9)*gamma_e*gamma_n*eta
-//
-// hbar: reduced Planck constant [J s]
-// gamma_e: electron gyromagnetic ratio [M rad s-1 T-1]
-// gamma_n: nuclear gyromagnetic ratio  [M rad s-1 T-1]
-// eta: charge density
-// 
-// q = (10^30) |F1(R)cos(k0*x) + F3(R)cos(k0*y) + F5(R)cos(k0*z) |^2
-//
-// R = vector between nucleus and electron (x,y,z: components) [Angstroms]
-// k0 = 0.85*2*pi*a0 [Angstroms^-1]
-//
-// F1,2(R)=exp[-sqrt(x^2/(nb)^2 + (y^2 + z^2)/(na)^2 )]/sqrt[pi (na)^2 nb]
-// F3,4(R): x y z -> y z x
-// F5,6(R): x y z -> z x y
-//
-// n = sqrt(0.029/Eie), Eie: electron ionization energy [eV]
-// a: lattice parameter a [Angstroms]
-// b: lattice parameter b [Angstroms]
-//
-// The second term (- D(B,R)*theta(|R| - na ) ) is the dipolar part.
-// B is the magnetic field [T], theta the Heaviside step function and
-// D [M rad s-1] the dipolar interaction (See Dipolar.h).
-//
-// From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003))
-//
-// Seto Balian, Apr 16, 2015
+// TODO check and see if residual dipolar is implemented correctly.
+// TODO check if all parts of the interaction are implemented and documented
+// TODO correctly
 
 #include "SpinDec/SpinInteraction.h"
 
@@ -59,6 +18,55 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Calculates the electron-nuclear hyperfine interaction in a lattice.
+ * 
+ * The Hamiltonian is
+ * \f[
+ * \hat{H}_A = A \hat{S}^z \hat{I}^z +
+ * \frac{A}{2}\left[\hat{S}^+\hat{I}^- + \hat{S}^-\hat{I}^+\right]
+ * \f]
+ * 
+ * This class calculates \f$A\f$ for the above Hamiltonian, \f$\hat{H}_A\f$,
+ * where \f$\hat{\bf S}\f$ and \f$\hat{\bf I}\f$ are the
+ * electronic and nuclear spin operators. Also fills the Hamiltonian matrix
+ * elements for \f$\hat{H}_A\f$. Uses the Kohn-Luttinger electronic
+ * wavefunction. Energy units are M rad s\f$^{-1}\f$.
+ * 
+ * \f[ A = pq - D(R)\theta(|R| - na) \f]
+ * 
+ * The first term \f$ pq \f$ is the isotropic Fermi contact part.
+ * \f[ p = \frac{16}{9} \pi \hbar \gamma_e\gamma_n\eta \f]
+ * where
+ * - \f$ \hbar \f$: reduced Planck constant [J s].
+ * - \f$ \gamma_e\f$: electron gyromagnetic ratio
+ * [M rad s\f$^{-1}\f$T\f$^{-1}\f$].
+ * - \f$ \gamma_n\f$: nuclear gyromagnetic ratio
+ * [M rad s\f$^{-1}\f$T\f$^{-1}\f$].
+ * - \f$\eta\f$: charge density.
+ * 
+ * \f[
+ * q = (10^{30}) |F_1(R)\cos(k_0x) + F_3(R)\cos(k_0y) + F_5(R)\cos(k_0z)|^2
+ * \f]
+ * where
+ * - \f$R\f$: vector between nucleus and electron (\f$(x,y,z)\f$) components)
+ * [\f$\mbox{\AA}\f$].
+ * - \f$k_0 = 0.85\times2\pi a_0\f$ [\f$\mbox{\AA}\f$\f$^{-1}\f$]
+ * - \f$ F_{1,2}(R)=\exp[-\sqrt{x^2/(nb)^2 + (y^2 + z^2)/(na)^2 }]/
+ * \sqrt{\pi (na)^2 nb}\f$
+ * - \f$ F_{3,4}(R):\f$ \f$xyz \rightarrow yzx\f$.
+ * - \f$ F_{5,6}(R):\f$ \f$xyz \rightarrow zxy\f$.
+ * - \f$ n = \sqrt{0.029/E_i}\f$, \f$E_i\f$: electron ionization energy [eV].
+ * - \f$ a \f$ and \f$ b \f$ are lattice parameters [\f$\mbox{\AA}\f$].
+ * 
+ * The second term \f$[- D(R)\theta(|R| - na ) ]\f$ is the dipolar part which
+ * requires the direction of the magnetic field and where \f$ \theta \f$ here
+ * is the Heaviside step function. See Dipolar.h for \f$D(R)\f$, the dipolar
+ * interaction (units M rad s\f$^{-1}\f$).
+ * 
+ * From: arXiv:cond-mat/0211567 (Phys. Rev. B 68, 115322 (2003)).
+ * 
+ */
 class Hyperfine : public SpinInteraction
 {
 private:
@@ -75,9 +83,9 @@ private:
 public:
   
   Hyperfine();
-  // If you wish to calculate
+  /// If you wish to calculate.
   explicit Hyperfine(const HyperfineParameters & parameters);
-  // If you don't wish to calculate
+  /// If you don't wish to calculate.
   Hyperfine(const double strength);
   
   virtual void calculate(const SpinParameters & electron_parameters,

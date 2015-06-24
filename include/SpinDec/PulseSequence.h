@@ -1,11 +1,7 @@
 #ifndef PULSESEQUENCE_H_
 #define PULSESEQUENCE_H_
 
-// SpinDec::PulseSequence
-//
-// Concrete general pulse sequence.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 24, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/PulseSequenceBase.h"
@@ -13,6 +9,7 @@
 namespace SpinDec
 {
 
+/// Concrete general pulse sequence.
 class PulseSequence : public PulseSequenceBase
 {
 

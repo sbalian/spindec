@@ -3,7 +3,8 @@
 
 // SpinDec includes
 
-// Seto Balian, Jan 13, 2015
+// Generated automatically using update-base.sh
+// Seto Balian, Jun 23, 2015
 
 #include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
@@ -14,6 +15,7 @@
 #include "SpinDec/Cluster.h"
 #include "SpinDec/ClusterDatabase.h"
 #include "SpinDec/ClusterDatabaseEntry.h"
+#include "SpinDec/Constants.h"
 #include "SpinDec/CrystalBasis.h"
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/DensityOperator.h"
@@ -32,7 +34,6 @@
 #include "SpinDec/IdentityPulse.h"
 #include "SpinDec/LatticeVectors.h"
 #include "SpinDec/MatrixRepresentation.h"
-#include "SpinDec/NuclearSpinParameters.h"
 #include "SpinDec/PiPulse.h"
 #include "SpinDec/Pulse.h"
 #include "SpinDec/PulseExperiment.h"
@@ -66,7 +67,6 @@
 #include "SpinDec/TimeEvolution.h"
 #include "SpinDec/TwoStateSuperposition.h"
 #include "SpinDec/UniformMagneticField.h"
-#include "SpinDec/constants.h"
 #include "SpinDec/typedefs.h"
 
 #endif // BASE_H_
