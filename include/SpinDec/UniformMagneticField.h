@@ -1,30 +1,31 @@
 #ifndef UNIFORMMAGNETICFIELD_H_
 #define UNIFORMMAGNETICFIELD_H_
 
-// SpinDec::UniformMagneticField
-//
-// Uniform magnetic field parallel to some direction in Cartesian coordinates.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/// Uniform magnetic field parallel to some direction in Cartesian coordinates.
 class UniformMagneticField
 {
 private:
   
-  double magnitude_; // Tesla
-  ThreeVector direction_; // normalized
+  /// Tesla.
+  double magnitude_;
+  /// Normalized.
+  ThreeVector direction_;
   
 public:
   
   UniformMagneticField();
+  
+  /// Null direction (0 0 0).
   explicit UniformMagneticField(const double magnitude);
-                                                // null direction (0 0 0)
-                                                // TODO is this safe?
+  // TODO is this safe?
+  
   UniformMagneticField(const double magnitude,
       const ThreeVector & direction);
   

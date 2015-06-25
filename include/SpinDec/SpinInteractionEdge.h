@@ -1,12 +1,7 @@
 #ifndef SPININTERACTIONEDGE_H_
 #define SPININTERACTIONEDGE_H_
 
-// SpinDec::SpinInteractionEdge
-//
-// Edge for a spin interaction graph. Contains a pair of vertex labels and
-// a spin interaction.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/SpinInteraction.h"
 
@@ -15,6 +10,12 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Edge for a spin interaction graph.
+ * 
+ * Contains a pair of vertex labels and a spin interaction.
+ * 
+ */
 class SpinInteractionEdge
 {
 private:

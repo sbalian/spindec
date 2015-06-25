@@ -1,11 +1,7 @@
 #ifndef SPINSTATE_H_
 #define SPINSTATE_H_
 
-// SpinDec::SpinState
-//
-// Quantum spin state in the Zeeman basis.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/MatrixRepresentation.h"
 #include "SpinDec/typedefs.h"
@@ -16,6 +12,7 @@ namespace SpinDec
 
 class SpinOperator;
 
+/// Quantum spin state in the Zeeman basis.
 class SpinState : public MatrixRepresentation
 {
 protected:
@@ -28,7 +25,9 @@ public:
   
   SpinState(const ComplexVector & state_vector,
       const SpinBasis & basis);
-  explicit SpinState(const SpinBasis & basis); // zero state vector
+  
+  /// Zero state vector.
+  explicit SpinState(const SpinBasis & basis);
 
   const ComplexVector& get_state_vector() const;
   virtual void set_state_vector(const ComplexVector & state_vector);
@@ -37,24 +36,31 @@ public:
   
   virtual void set_element(const UInt index,
       const CDouble& element);
-  virtual void set_element(const UInt index,
-        const double element); // stored as complex
   
-  // States: tensor product ^, Bases: combine ^ (like tensor product)
+  /// Stored as complex.
+  virtual void set_element(const UInt index,
+        const double element);
+  
+  /// States: tensor product ^, Bases: combine ^ (like tensor product).
   SpinState operator^(const SpinState & rhs) const;
+  
+  /// Inner product.
   CDouble operator*(const SpinState & rhs) const;
-  // outer product
+  
+  /// Outer product.
   SpinOperator operator%(const SpinState & rhs) const;
+  
   SpinState operator+(const SpinState & rhs) const;
   SpinState operator-(const SpinState & rhs) const;
   
   SpinState operator*(const CDouble & c) const;
 
   
-  // Multiplies state_vector_ with unitary_evolution_matrix
+  /// Multiplies state_vector_ with unitary_evolution_matrix.
   void time_evolve(const ComplexMatrix& unitary_evolution_matrix);
   
-  virtual void set_zero(); // set all elements to zero
+  /// Set all elements to zero.
+  virtual void set_zero();
   
   void normalize();
   SpinState normalized() const;

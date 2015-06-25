@@ -1,4 +1,4 @@
-SpinDec - C++ library for spin decoherence
+SpinDec - C++ Library for Spin Decoherence
 ==========================================
 
 Solves for the many-body dynamics of a central spin system coupled to
@@ -51,7 +51,7 @@ If you invoke cmake without specifying the location, it will
 install to your default system prefix (requires root).
 
 The -j4 option to *make* parallelizes the build process using 4 cores.
-Make sure this number does not exceed the number of cores for your
+This number should not exceed the number of cores for your
 machine.
 
 If all went well, you should now have the static library and
@@ -95,12 +95,16 @@ as a good example.
 Getting help
 ------------
 
-- Help is given in header files (.h extension in include/SpinDec).
+- A reference manual generated using doxygen is available (PDF).
+It has instructions on how to use the library and includes the code
+structure (with inheritance diagrams).
+- Alternatively, help can be directly viewed in in header files
+(.h extension in include/SpinDec).
 - Source files (.cpp extension in src/) may contain more information,
-usually geared more towards implementation.
+usually geared more towards implementation (these are not included
+in the reference manual).
 - See src/spindec-dsnsd.cpp and tests/spindec-test-cce.cpp for
 examples.
-- A reference manual generated using doxygen is also available. This is under construction and will be completed very soon. The code structure is there, but I'm still in the process of converting comments into doxygen syntax so most classes have no description apart from basic input/output and inheritance.
 
 License and how to cite
 -----------------------
@@ -160,7 +164,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <seto.balian@gmail.com> or <s.balian@ucl.ac.uk>
 
-**Last updated: Jun 20, 2015**
+**Last updated: Jun 25, 2015**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07

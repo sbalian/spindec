@@ -1,12 +1,7 @@
 #ifndef SPININTERACTIONVERTEX_H_
 #define SPININTERACTIONVERTEX_H_
 
-// SpinDec::SpinInteractionVertex
-//
-// Vertex for a spin interaction graph. Contains a label, spin parameters, a
-// spin basis and a position in real space.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/SpinParameters.h"
 #include "SpinDec/typedefs.h"
@@ -16,6 +11,12 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Vertex for a spin interaction graph.
+ * 
+ * Contains a label, spin parameters, a spin basis and a position in real space.
+ * 
+ */
 class SpinInteractionVertex
 {
 private:
@@ -28,10 +29,10 @@ private:
 public:
   SpinInteractionVertex();
   
+  /// Zeeman basis built from spin parameters.
   SpinInteractionVertex(const UInt label,
                         const SpinParameters& spin_parameters,
-                        const ThreeVector & position); // Zeeman basis built
-                                                       // from spin parameters
+                        const ThreeVector & position); 
   
   SpinInteractionVertex(const UInt label,
                         const SpinParameters& spin_parameters,
