@@ -1,16 +1,10 @@
 #ifndef SPINHAMILTONIAN_H_
 #define SPINHAMILTONIAN_H_
 
-// SpinDec::SpinHamiltonian
-//
-// Effective spin Hamiltonian built from a spin interaction graph.
-// Can diagonalize and get unitary time evolution matrix.
-// No time dependence in Hamiltonian. TODO generalize
-// Units: M rad s-1.
-//
+// Seto Balian, Jun 25, 2015
+
+// TODO generalize: include time dependence
 // TODO explain changes for "update position" method
-//
-// Seto Balian, Apr 16, 2015
 
 #include <string>
 
@@ -24,27 +18,42 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Effective spin Hamiltonian built from a spin interaction graph.
+ * 
+ * Can diagonalize and get unitary time evolution matrix.
+ * No time dependence in Hamiltonian.
+ * Units: M rad s\f$^{-1}\f$.
+ * 
+ */
 class SpinHamiltonian : public SpinOperator
 {
 private:
   UniformMagneticField field_;
   SpinInteractionGraph graph_;
   
-  // fill diagonal elements with gyromagnetic_ratio*magnetic_quantum_number*
-  // field_strength for all spins in the graph
+  /**
+   * \brief Fill diagonal elements with
+   *        \f$ \gamma B m \f$.
+   *        
+   *  \f$B\f$-field strength is for all spins in the graph.
+   *  
+   */
   void fill_zeeman();
   
-  // fill elements for all spin interaction
+  /// Fill elements for all spin interactions.
   void fill_interactions();
     
-  // For each vertex, there is a Zeeman Hamiltonian. Store these.
+  /// For each vertex, there is a Zeeman Hamiltonian. Store these.
   vector<ComplexMatrix> zeeman_terms_;
-  // For each edge, there is an interaction Hamiltonian. Store these.
+  /// For each edge, there is an interaction Hamiltonian. Store these.
   vector<ComplexMatrix> interaction_terms_;
-  void init_terms(); // sets to zero
+  /// Sets to zero.
+  void init_terms();
   
-  // summed zeeman and interaction Hamiltonians
+  /// Summed Zeeman Hamiltonian.
   ComplexMatrix zeeman_hamiltonian_;
+  /// Summed interaction Hamiltonian.
   ComplexMatrix interaction_hamiltonian_;
 
   void sum_zeeman_terms();
@@ -52,7 +61,6 @@ private:
   
   void fill_zeeman(const UInt vertex_label);
   void fill_interaction(const UInt edge_index);
-
   
 public:
 
@@ -65,7 +73,7 @@ public:
   
   void update_positions(const UIntArray& vertex_labels,
       const vector<ThreeVector>& positions);
-  
+
 };
 
 } // namespace SpinDec

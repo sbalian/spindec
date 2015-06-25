@@ -1,11 +1,7 @@
 #ifndef SPINHALF_H_
 #define SPINHALF_H_
 
-// SpinDec::SpinHalf
-//
-// A spin-1/2 spin system.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -13,6 +9,7 @@
 namespace SpinDec
 {
 
+/// A spin-1/2 spin system.
 class SpinHalf : public SpinSystemBase
 {
   

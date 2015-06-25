@@ -1,22 +1,24 @@
 #ifndef SPINPARAMETERS_H_
 #define SPINPARAMETERS_H_
 
-// SpinDec::SpinParameters
-//
-// Contains basic parameters associated with a spin.
-// - Quantum number S
-// - Gyromagnetic ratio [M rad s-1 T-1]
-// - Spin multiplicity = 2 S + 1.
-//
-// Gyromagnetic ratio = <Larmor frequency> [M rad s-1] / <magnetic field> [T]
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/**
+ * \brief Contains basic parameters associated with a spin.
+ * 
+ * - Quantum number \f$S\f$.
+ * - Gyromagnetic ratio \f$ \gamma \f$ [M rad s\f$^{-1}\f$ T\f$^{-1}\f$].
+ * - Spin multiplicity \f$ 2 S + 1 \f$.
+ * 
+ * \f$ \gamma = \omega / B\f$ where \f$ \omega \f$ is the Larmor frequency
+ * in M rad s\f$^{-1}\f$ and \f$ B \f$ is the magnetic field in Tesla (T).
+ * 
+ */
 class SpinParameters
 {
 protected:
@@ -42,7 +44,7 @@ public:
   double get_gyromagnetic_ratio() const;
   UInt get_multiplicity() const;
   
-  // Print with cout
+  /// Print with cout.
   friend std::ostream& operator<<(std::ostream& os,
       SpinParameters const & spin_parameters);
 

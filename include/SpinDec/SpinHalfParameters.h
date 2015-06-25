@@ -1,11 +1,7 @@
 #ifndef SPINHALFPARAMETERS_H_
 #define SPINHALFPARAMETERS_H_
 
-// SpinDec::SpinHalfParameters
-//
-// Spin-1/2 spin parameters.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinParameters.h"
@@ -13,6 +9,7 @@
 namespace SpinDec
 {
 
+/// Spin-1/2 spin parameters.
 class SpinHalfParameters : public SpinParameters
 {
 public:

@@ -1,11 +1,7 @@
 #ifndef SPININTERACTIONGRAPH_H_
 #define SPININTERACTIONGRAPH_H_
 
-// SpinDec::SpinInteractionGraph
-//
-// Spin interaction graph from which spin Hamiltonians are built.
-//
-// Seto Balian, Apr 17, 2015
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -19,14 +15,15 @@
 namespace SpinDec
 {
 
+/// Spin interaction graph from which spin Hamiltonians are built.
 class SpinInteractionGraph
 {
   
 private:
   
-  // Vertices
+  /// Vertices.
   vector<SpinInteractionVertex> vertices_;
-  // Edges
+  /// Edges.
   vector<SpinInteractionEdge> edges_;
   
   SpinBasis basis_;
@@ -44,19 +41,27 @@ public:
   
   void set_basis(const SpinBasis & basis);
   
-  // these vertex add methods combine the new basis to basis_
-  // (like tensor product)
+  /**
+   * This vertex add method combines the new basis to basis_
+   * (like tensor product).
+   * Basis built from spin parameters.
+   */
   void add_vertex(const SpinParameters& spin_parameters,
-                  const ThreeVector & position); // basis built from spin
-                                                 // parameters
+                  const ThreeVector & position); 
+  
+  /**
+   * This vertex add method combines the new basis to basis_
+   * (like tensor product).
+   */
   void add_vertex(const SpinParameters& spin_parameters,
                   const SpinBasis& basis,
                   const ThreeVector & position);
   
-  // these vertex add methods append the new basis to basis_
+  /// This vertex add method appends the new basis to basis_.
   void add_vertex_appending_basis(const SpinParameters& spin_parameters,
       const ThreeVector & position);
   
+  /// This vertex add method appends the new basis to basis_.
   void add_vertex_appending_basis(const SpinParameters& spin_parameters,
                   const SpinBasis& basis,
                   const ThreeVector & position);
@@ -85,19 +90,36 @@ public:
   const SpinInteractionVertex& get_vertex(const unsigned int label) const;
   const SpinInteractionEdge& get_edge(const unsigned int index) const;
   
-  // Adds input graph to current graph, preserving all vertices and edges.
-  // Vertex labels of given graph 0,1,2 ... become n, n+1, n+2
-  // where n is the number of vertices of the original graph.
-  // There are no edges connecting the two graphs.
-  // Uses the add_vertex method (combining bases).
+  /**
+   * Adds input graph to current graph, preserving all vertices and edges.
+   * Vertex labels of given graph \f$0,1,2,\dots\f$ become
+   * \f$n, n+1, n+2, \dots\f$,
+   * where \f$n\f$ is the number of vertices of the original graph.
+   * There are no edges connecting the two graphs.
+   * Uses the add_vertex method (combining bases).
+   */
   void join_in_place(const SpinInteractionGraph & to_join);
-  // Same as above, but with edges connecting the two graphs.
-  // Edges should be valid for the graph after joining!
+  
+  /**
+   * Same as join_in_place(const SpinInteractionGraph &),
+   * but with edges connecting the two graphs.
+   * Edges should be valid for the graph after joining!
+   */  
   void join_in_place(const SpinInteractionGraph & to_join,
             const std::vector<SpinInteractionEdge> & edges);
-  // Same as above but the original graph remains unchanged and output is a new
-  // graph
+  
+  /**
+   * Like  join_in_place(const SpinInteractionGraph &) but the original
+   * graph remains unchanged and output is a new graph.
+   */
   SpinInteractionGraph join(const SpinInteractionGraph & to_join) const;
+  
+  /**
+   * Like 
+   * join_in_place(const SpinInteractionGraph &,
+   * const std::vector<SpinInteractionEdge> &) but the original
+   * graph remains unchanged and output is a new graph.
+   */
   SpinInteractionGraph join(const SpinInteractionGraph & to_join,
             const std::vector<SpinInteractionEdge> & edges) const;
   

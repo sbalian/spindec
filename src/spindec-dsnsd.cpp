@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Apr 17, 2015
+// Seto Balian, Jun 25, 2015
 
 #include <ctime>
 #include <fstream>
@@ -342,7 +342,7 @@ int main (int argc, char **argv)
   cout << perc_29si << "% 29Si abundance" << endl;
   cout << "Cluster size cutoff: " << cluster_cutoff << " Angstroms";
   cout << endl;
-  cout << "Build method" << build_method << endl;
+  cout << "Build method: " << build_method << endl;
   cout << "Superlattice size: " << lattice_size << " Angstroms" << endl;
   cout << "Logarithmic time scale? ";
   if (log_time) {

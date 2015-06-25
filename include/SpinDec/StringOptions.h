@@ -1,17 +1,14 @@
 #ifndef STRINGOPTIONS_H_
 #define STRINGOPTIONS_H_
 
-// SpinDec::StringOptions
-//
-// String flags composed of A-Z, a-z, each character representing a flag.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 
 namespace SpinDec
 {
 
+/// String flags composed of A-Z, a-z, each character representing a flag.
 class StringOptions
 {
 private:

@@ -1,11 +1,7 @@
 #ifndef SPINSYSTEM_H_
 #define SPINSYSTEM_H_
 
-// SpinDec::SpinSystem
-//
-// Diagonalizable concrete spin system.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinSystemBase.h"
@@ -15,6 +11,7 @@
 namespace SpinDec
 {
 
+/// Diagonalizable concrete spin system.
 class SpinSystem : public SpinSystemBase
 {
 protected:

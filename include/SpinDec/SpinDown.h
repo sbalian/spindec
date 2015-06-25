@@ -1,13 +1,7 @@
 #ifndef SPINDOWN_H_
 #define SPINDOWN_H_
 
-// SpinDec::SpinUp
-//
-// Spin down state. For a positive (or zero) gyromagnetic ratio
-// (and positive spin quantum number) this is (0,1) in the (0.5,-0.5) basis.
-// See also SpinUp.
-//
-// Seto Balian, Nov 6, 2014
+// Seto Balian, Jun 25, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/SpinHalfStates.h"
@@ -15,10 +9,18 @@
 namespace SpinDec
 {
 
+/**
+ * \brief Spin down state.
+ * 
+ * For a positive (or zero) gyromagnetic ratio
+ * (and positive spin quantum number) this is (0,1) in the (0.5,-0.5) basis.
+ * See also SpinUp.
+ */
 class SpinDown : public SpinHalfStates
 {
 public:
-  SpinDown(); // default for positive gyromagnetic ratio
+  // Default for positive gyromagnetic ratio.
+  SpinDown(); 
   SpinDown(const SpinHalfParameters& spin_half_parameters);
   
 private:
