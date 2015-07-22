@@ -12,7 +12,7 @@ CCE::CCE() : max_truncation_order_(0),include_one_clusters_(true)
 }
 
 CCE::CCE(const UInt max_truncation_order,
-    const auto_ptr<PulseExperiment>& pulse_experiment,
+    const shared_ptr<PulseExperiment>& pulse_experiment,
     const ClusterDatabase& cluster_database,
     const bool include_one_clusters) :
     max_truncation_order_(max_truncation_order),

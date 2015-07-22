@@ -12,7 +12,7 @@ ReducedProblem::ReducedProblem() : order_(0)
 }
 
 ReducedProblem::ReducedProblem(const UInt order,
-    const auto_ptr<SpinSystemBase>& spin_system_base)
+    const shared_ptr<SpinSystemBase>& spin_system_base)
 :order_(order),
  spin_system_base_(spin_system_base->clone())
 {
@@ -38,7 +38,7 @@ UInt ReducedProblem::get_order() const
   return order_;
 }
 
-auto_ptr<SpinSystemBase> ReducedProblem::get_spin_system() const
+shared_ptr<SpinSystemBase> ReducedProblem::get_spin_system() const
 {
   return spin_system_base_->clone();
 }

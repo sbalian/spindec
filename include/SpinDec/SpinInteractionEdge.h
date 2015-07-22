@@ -20,18 +20,18 @@ class SpinInteractionEdge
 {
 private:
   pair<UInt,UInt> labels_;
-  auto_ptr<SpinInteraction> interaction_;
+  shared_ptr<SpinInteraction> interaction_;
 
 public:
   SpinInteractionEdge();
   SpinInteractionEdge(const SpinInteractionEdge& other);
   SpinInteractionEdge(const UInt label1,
                       const UInt label2,
-                      const auto_ptr<SpinInteraction>& interaction);
+                      const shared_ptr<SpinInteraction>& interaction);
   
   UInt get_label1() const;
   UInt get_label2() const;
-  auto_ptr<SpinInteraction> get_interaction() const;
+  shared_ptr<SpinInteraction> get_interaction() const;
   
   SpinInteractionEdge& operator=( const SpinInteractionEdge& other);
 

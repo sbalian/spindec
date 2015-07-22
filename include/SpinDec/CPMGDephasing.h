@@ -31,7 +31,7 @@ public:
 
   virtual TimeEvolution time_evolution(const UIntArray bath_indices);
 
-  virtual auto_ptr<PulseExperiment> clone() const;
+  virtual shared_ptr<PulseExperiment> clone() const;
 
 };
 

@@ -1,9 +1,13 @@
 // See SpinBath.h for description.
-// Seto Balian, Dec 16, 2014
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/SpinBath.h"
-#include "SpinDec/RandomNumberGenerator.h"
 #include "SpinDec/Errors.h"
+
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/uniform_real.hpp>
+#include <boost/random/variate_generator.hpp>
 
 #include <algorithm>
 
@@ -11,8 +15,8 @@ namespace SpinDec
 {
 
 void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
-    const auto_ptr<SpinSystemBase>& spin_system_base,
-    const vector<SpinInteractionEdge>& intrabath_edges)
+    const shared_ptr<SpinSystemBase>& spin_system_base,
+    const vector<SpinInteractionEdge>& intrabath_edges,const UInt seed)
 {
 
   // Save spin system base as a spin system
@@ -20,14 +24,19 @@ void SpinDec::SpinBath::init(const CrystalStructure& crystal_structure,
   
   // Prepare bath states
   UInt dimension = spin_system_base_->dimension();
+  
+  // prepare random number generator
+  boost::mt19937 generator(seed);
+  boost::uniform_int<> uni_dist(0,dimension-1);
+  boost::variate_generator<boost::mt19937&,
+  boost::uniform_int<> > uni(generator, uni_dist);
 
   for (UInt i=0;i<crystal_structure.num_site_vectors();i++) {
    
-    UInt random_number = 
-        RandomNumberGenerator::uniform_c_rand(0,dimension-1);
-    
+    UInt random_int = uni();
+        
     SpinState to_add(
-        spin_system_base_->get_eigenvector_matrix().col(random_number),
+        spin_system_base_->get_eigenvector_matrix().col(random_int),
         spin_system_base_->get_hamiltonian().get_basis());
     
     bath_states_.push_back(to_add);
@@ -50,19 +59,20 @@ SpinBath::SpinBath()
 }
 
 SpinBath::SpinBath(const CrystalStructure& crystal_structure,
-    const auto_ptr<SpinSystemBase>& spin_system_base,
-    const vector<SpinInteractionEdge>& intrabath_edges)
+    const shared_ptr<SpinSystemBase>& spin_system_base,
+    const vector<SpinInteractionEdge>& intrabath_edges,
+    const UInt seed)
 {
-  init(crystal_structure,spin_system_base,intrabath_edges);
+  init(crystal_structure,spin_system_base,intrabath_edges,seed);
 }
 
 SpinBath::SpinBath(const CrystalStructure& crystal_structure,
-    const auto_ptr<SpinSystemBase>& spin_system_base,
-    const SpinInteractionEdge& intrabath_edge)
+    const shared_ptr<SpinSystemBase>& spin_system_base,
+    const SpinInteractionEdge& intrabath_edge, const UInt seed)
 {
   vector<SpinInteractionEdge> intrabath_edges;
   intrabath_edges.push_back(intrabath_edge);
-  init(crystal_structure,spin_system_base,intrabath_edges);
+  init(crystal_structure,spin_system_base,intrabath_edges,seed);
 }
 
 const SpinState& SpinBath::get_bath_state(const UInt index) const
@@ -95,7 +105,7 @@ const vector<SpinInteractionEdge>& SpinBath::get_intrabath_edges() const
   return intrabath_edges_;
 }
 
-auto_ptr<SpinSystemBase> SpinBath::get_spin_system() const
+shared_ptr<SpinSystemBase> SpinBath::get_spin_system() const
 {
   return spin_system_base_->clone();
 }
@@ -230,7 +240,6 @@ SpinBath& SpinBath::operator =(const SpinBath& spin_bath)
   spin_system_base_ = spin_bath.spin_system_base_->clone();
   intrabath_edges_ = spin_bath.intrabath_edges_;
   crystal_structure_ = spin_bath.crystal_structure_;
-  
   return *this;
 
 }

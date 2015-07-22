@@ -20,7 +20,7 @@ public:
   void clear();
   void add_pulse(const Pulse& pulse);
   
-  virtual auto_ptr<PulseSequenceBase> clone() const;
+  virtual shared_ptr<PulseSequenceBase> clone() const;
   
 };
 

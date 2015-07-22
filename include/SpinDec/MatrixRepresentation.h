@@ -29,7 +29,7 @@ protected:
   // vectors/matrices ...
   virtual void quit_if_dimension_mismatch() const = 0;
   
-  void quit_if_basis_mismatch(const auto_ptr<MatrixRepresentation>&
+  void quit_if_basis_mismatch(const shared_ptr<MatrixRepresentation>&
       to_check) const;
     
 public:
@@ -38,7 +38,7 @@ public:
   
   const SpinBasis& get_basis() const;
   
-  bool is_basis_equal(const auto_ptr<MatrixRepresentation>&
+  bool is_basis_equal(const shared_ptr<MatrixRepresentation>&
       to_check) const;
   
   /// Set all elements to zero.
@@ -46,7 +46,7 @@ public:
   
   virtual ~MatrixRepresentation();
   
-  virtual auto_ptr<MatrixRepresentation> clone() const = 0;
+  virtual shared_ptr<MatrixRepresentation> clone() const = 0;
   
 };
 

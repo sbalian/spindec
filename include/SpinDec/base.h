@@ -4,7 +4,7 @@
 // SpinDec includes
 
 // Generated automatically using update-base.sh
-// Seto Balian, Jun 23, 2015
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/AdiabaticLabel.h"
 #include "SpinDec/BoostEigen.h"
@@ -39,7 +39,6 @@
 #include "SpinDec/PulseExperiment.h"
 #include "SpinDec/PulseSequence.h"
 #include "SpinDec/PulseSequenceBase.h"
-#include "SpinDec/RandomNumberGenerator.h"
 #include "SpinDec/ReducedProblem.h"
 #include "SpinDec/Sign.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"

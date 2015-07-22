@@ -20,7 +20,8 @@ Requirements:
 
 - [Eigen] (free): For linear algebra.
 - [CMake] (free): For building and installing.
-- [boost] (free): For program options.
+- [boost] (free): For program options, shared pointers and random
+number generators.
 - Optional: [Intel MKL] optimization for Eigen.
 
 The following instructions are for a Unix-like environment

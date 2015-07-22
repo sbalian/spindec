@@ -81,7 +81,7 @@ public:
    */
   void print(const char option);
   
-  virtual auto_ptr<SpinSystemBase> clone() const = 0;
+  virtual shared_ptr<SpinSystemBase> clone() const = 0;
   
     void update_positions(const UIntArray& vertex_labels,
         const vector<ThreeVector>& positions);

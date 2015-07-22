@@ -122,9 +122,9 @@ SpinOperator SpinOperator::operator -(const SpinOperator& rhs) const
   return SpinOperator(get_matrix()-rhs.get_matrix(),get_basis());
 }
 
-auto_ptr<MatrixRepresentation> SpinOperator::clone() const
+shared_ptr<MatrixRepresentation> SpinOperator::clone() const
 {
-  return auto_ptr<MatrixRepresentation>( new SpinOperator(*this) );
+  return shared_ptr<MatrixRepresentation>( new SpinOperator(*this) );
 }
 
 }// namespace SpinDec

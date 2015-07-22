@@ -1,7 +1,7 @@
 #ifndef DIAMONDCUBIC_H_
 #define DIAMONDCUBIC_H_
 
-// Seto Balian, Jun 24, 2015
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/typedefs.h"
 #include "SpinDec/CrystalStructure.h"
@@ -46,10 +46,6 @@ public:
    */
   DiamondCubic(const double lattice_constant, 
                const double side_length);
-  
-  DiamondCubic(const double lattice_constant,
-               const double side_length,
-               const double fractional_abundance);
   
   void make_sphere(const double radius);
   void make_shell(const double min_radius, const double max_radius);

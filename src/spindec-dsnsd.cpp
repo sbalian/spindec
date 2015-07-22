@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Jun 25, 2015
+// Seto Balian, Jul 22, 2015
 
 #include <ctime>
 #include <fstream>
@@ -40,7 +40,7 @@ int main (int argc, char **argv)
   bool log_time = false;
   double initial_time, final_time;
   UInt num_steps;
-  int position_seed, state_seed;
+  UInt position_seed, state_seed;
   bool kill_nonising = false;
   bool dipolar_hyperfine = false;
   string input_file;
@@ -191,15 +191,15 @@ int main (int argc, char **argv)
       ("dipolar-hyperfine,D", "include the dipolar part of\n"
        "the donor-bath interaction")
 
-      ("position-seed,P", po::value<int>(&position_seed)->default_value(15,
+      ("position-seed,P", po::value<UInt>(&position_seed)->default_value(15,
        "15"),
        "random number generator seed\n"
        "for bath spin positions")
        
-       ("state-seed,J", po::value<int>(&state_seed)->default_value(25,
+       ("state-seed,J", po::value<UInt>(&state_seed)->default_value(25,
         "25"),
         "random number generator seed\n"
-        "for bath spin states\n(won't seed if 0)")
+        "for bath spin states")
         
         ("sphere,Q", "spherical superlattice")
         
@@ -416,9 +416,8 @@ int main (int argc, char **argv)
   Hyperfine interaction_J(hyperfine_parameters);
   
   // Crystal structure
-  RandomNumberGenerator::seed_uniform_c_rand(position_seed);
-  
-  DiamondCubic diamond_cubic(5.43,lattice_size, perc_29si/100.0);
+  DiamondCubic diamond_cubic(5.43,lattice_size);
+  diamond_cubic.sparsify(perc_29si/100.0,position_seed);
   
   if (vm.count("sphere")) {
    diamond_cubic.make_sphere(lattice_size/2.0);
@@ -442,12 +441,8 @@ int main (int argc, char **argv)
   }
   
   // spin bath
-  if (state_seed!=0) {
-    RandomNumberGenerator::seed_uniform_c_rand(state_seed);
-  }
-  
   SpinBath spin_bath(diamond_cubic,si29.clone(),
-      SpinInteractionEdge(0,1,interaction_C12.clone()));
+      SpinInteractionEdge(0,1,interaction_C12.clone()),state_seed);
   
   // Initial donor state: coherent superposition of upper and lower states
 
@@ -680,7 +675,7 @@ string sample_config(const string& version) {
        "position-seed = 15");
   
   config += add_to_config
-      ("random number generator seed for bath spin states (won't seed if 0)",
+      ("random number generator seed for bath spin states",
        "state-seed = 25");
   
   config += add_to_config

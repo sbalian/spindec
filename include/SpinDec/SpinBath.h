@@ -1,7 +1,7 @@
 #ifndef SPINBATH_H_
 #define SPINBATH_H_
 
-// Seto Balian, Jun 25, 2015
+// Seto Balian, Jul 22, 2015
 
 // TODO gereneralize (1) heteronuclear (2) finite temperature
 
@@ -34,7 +34,7 @@ private:
    * structure. The positions of each of the spins in the spin systems are
    * added to the site vector.
    */
-  auto_ptr<SpinSystemBase> spin_system_base_;
+  shared_ptr<SpinSystemBase> spin_system_base_;
   
   /**
    * Take the graph of the spin system and consider joining the graph to itself.
@@ -46,8 +46,8 @@ private:
   vector<SpinInteractionEdge> intrabath_edges_;
   
   void init(const CrystalStructure& crystal_structure,
-      const auto_ptr<SpinSystemBase>& spin_system_base,
-      const vector<SpinInteractionEdge>& intrabath_edges);
+      const shared_ptr<SpinSystemBase>& spin_system_base,
+      const vector<SpinInteractionEdge>& intrabath_edges,const UInt seed);
   
   vector<SpinInteractionEdge> make_intrabath_edges(const UInt order,
       const SpinInteractionEdge& intrabath_edge) const;
@@ -58,12 +58,14 @@ public:
   SpinBath();
   
   SpinBath(const CrystalStructure& crystal_structure,
-      const auto_ptr<SpinSystemBase>& spin_system_base,
-      const vector<SpinInteractionEdge>& intrabath_edges);
+      const shared_ptr<SpinSystemBase>& spin_system_base,
+      const vector<SpinInteractionEdge>& intrabath_edges,
+      const UInt seed);
   
   SpinBath(const CrystalStructure& crystal_structure,
-      const auto_ptr<SpinSystemBase>& spin_system_base,
-      const SpinInteractionEdge& intrabath_edge);
+      const shared_ptr<SpinSystemBase>& spin_system_base,
+      const SpinInteractionEdge& intrabath_edge,
+      const UInt seed);
   
   SpinBath(const SpinBath& spin_bath);
 
@@ -86,7 +88,7 @@ public:
   
   const vector<SpinInteractionEdge>& get_intrabath_edges() const;
   
-  auto_ptr<SpinSystemBase> get_spin_system() const;
+  shared_ptr<SpinSystemBase> get_spin_system() const;
   
   SpinInteractionGraph reduced_problem_graph(const UInt order) const;
   

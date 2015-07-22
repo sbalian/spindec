@@ -1,5 +1,5 @@
 // See ClusterDatabase.h for description.
-// Seto Balian, Apr 15, 2015
+// Seto Balian, Jul 21, 2015
 
 // TODO errors and checks ...
 // TODO comments and modifiy legacy code comments ...
@@ -410,7 +410,7 @@ void ClusterDatabase::build_with_local_cutoff()
           for (UInt l=1;l<prev_order;l++) {
             ready_to_add*=distance_check[l];
           }
-                  
+          
         
         if (ready_to_add == true) {
           vector<UInt> new_spin_labels = prev_spin_labels;

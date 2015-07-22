@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian 23/06/2015
+# Seto Balian, Jul 22, 2015
 
 cmake_minimum_required(VERSION 2.8.2)
 
@@ -9,12 +9,17 @@ cmake_minimum_required(VERSION 2.8.2)
 project(SpinDec)
 set_property(TARGET PROPERTY PROJECT_LABEL ${PROJECT_NAME})
 
+## Install to home directory by default
+#if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+#set(CMAKE_INSTALL_PREFIX "~" CACHE PATH "default install path" FORCE )
+#endif()
+
 # Build type
 set(CMAKE_BUILD_TYPE Release)
 
 # Intel MKL (optional - default OFF)
 # If turned on, the Intel's C and C++ compilers are used
-# Also, profiling with Intel's compiler becomses available
+# Also, profiling with Intel's compiler becomes available
 # (turn on SPINDEC_PROFILE)
 option(SPINDEC_USE_MKL "Use Intel MKL with Eigen" OFF)
 
@@ -26,6 +31,9 @@ message(STATUS "Cmake module path: ${CMAKE_MODULE_PATH}")
 
 # Eigen
 find_package(Eigen3 REQUIRED)
+
+# Boost
+find_package(Boost REQUIRED)
 
 # Intel MKL and profiling
 if(SPINDEC_USE_MKL)
@@ -39,7 +47,7 @@ if(SPINDEC_USE_MKL)
   endif()
 endif()
 
-# configured headers to tell Eigen whether or not to use MKL
+# configured headers
 configure_file(
 "${PROJECT_SOURCE_DIR}/include/SpinDec/config.h.in"
 "${PROJECT_BINARY_DIR}/include/SpinDec/config.h"
@@ -103,7 +111,6 @@ src/Pulse.cpp
 src/PulseExperiment.cpp
 src/PulseSequence.cpp
 src/PulseSequenceBase.cpp
-src/RandomNumberGenerator.cpp
 src/ReducedProblem.cpp
 src/Sign.cpp
 src/SimpleCubicLatticeVectors.cpp
@@ -167,7 +174,6 @@ include/SpinDec/Pulse.h
 include/SpinDec/PulseExperiment.h
 include/SpinDec/PulseSequence.h
 include/SpinDec/PulseSequenceBase.h
-include/SpinDec/RandomNumberGenerator.h
 include/SpinDec/ReducedProblem.h
 include/SpinDec/Sign.h
 include/SpinDec/SimpleCubicLatticeVectors.h

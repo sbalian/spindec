@@ -1,5 +1,5 @@
 // See DiamondCubic.h for description.
-// Seto Balian, Apr 16, 2015
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/DiamondCubic.h"
 #include "SpinDec/SimpleCubicLatticeVectors.h"
@@ -85,6 +85,7 @@ DiamondCubic::DiamondCubic()
 DiamondCubic::DiamondCubic(const double lattice_constant,
     const double side_length)
 {
+    
   // get the int range
   const int int_range = int_range_centred_cube(side_length, lattice_constant);
     
@@ -96,28 +97,10 @@ DiamondCubic::DiamondCubic(const double lattice_constant,
       -int_range,int_range,
       -side_length/2.0,side_length/2.0,
       -side_length/2.0,side_length/2.0,
-      -side_length/2.0,side_length/2.0,1.0);
+      -side_length/2.0,side_length/2.0);
   
 }
 
-DiamondCubic::DiamondCubic(const double lattice_constant,
-    const double side_length, const double fractional_abundance)
-{
-  
-  // get the int range
-  const int int_range = int_range_centred_cube(side_length, lattice_constant);
-  
-  // add site vectors of the crystal structure with a given fractional abundance
-  fill_site_vectors(construct_lattice_vectors(lattice_constant),
-      construct_basis_vectors(),
-      -int_range,int_range,
-      -int_range,int_range,
-      -int_range,int_range,
-      -side_length/2.0,side_length/2.0,
-      -side_length/2.0,side_length/2.0,
-      -side_length/2.0,side_length/2.0,fractional_abundance);
-  
-}
 
 void DiamondCubic::make_sphere(const double radius)
 {

@@ -47,9 +47,9 @@ UInt SpinSystem::dimension() const
   return hamiltonian_.get_dimension();
 }
 
-auto_ptr<SpinSystemBase> SpinSystem::clone() const
+shared_ptr<SpinSystemBase> SpinSystem::clone() const
 {
-  return auto_ptr<SpinSystemBase> (new SpinSystem(*this));
+  return shared_ptr<SpinSystemBase> (new SpinSystem(*this));
 }
 
 

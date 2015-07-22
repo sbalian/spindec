@@ -29,7 +29,7 @@ public:
   
   virtual UInt dimension() const;
   
-  virtual auto_ptr<SpinSystemBase> clone() const;
+  virtual shared_ptr<SpinSystemBase> clone() const;
   
   
 };

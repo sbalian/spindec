@@ -28,7 +28,7 @@ const SpinBasis& MatrixRepresentation::get_basis() const
 }
 
 void MatrixRepresentation::quit_if_basis_mismatch(
-    const auto_ptr<MatrixRepresentation>& to_check) const
+    const shared_ptr<MatrixRepresentation>& to_check) const
 {
   if (!( get_basis().is_equal(to_check->get_basis()) )) {
     Errors::quit("Basis mismatch.");
@@ -37,7 +37,7 @@ void MatrixRepresentation::quit_if_basis_mismatch(
 }
 
 bool MatrixRepresentation::is_basis_equal(
-    const auto_ptr<MatrixRepresentation>&
+    const shared_ptr<MatrixRepresentation>&
     to_check) const
 {
   return get_basis().is_equal( to_check->get_basis() );

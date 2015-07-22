@@ -115,9 +115,9 @@ TimeEvolution CPMGDephasing::time_evolution(
 
 }
 
-auto_ptr<PulseExperiment> CPMGDephasing::clone() const
+shared_ptr<PulseExperiment> CPMGDephasing::clone() const
 {
-  return auto_ptr<PulseExperiment> (new CPMGDephasing(*this));
+  return shared_ptr<PulseExperiment> (new CPMGDephasing(*this));
 }
 
 } // namespace SpinDec

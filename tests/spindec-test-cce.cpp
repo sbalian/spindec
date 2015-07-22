@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Feb 24, 2015
+// Seto Balian, Jul 22, 2015
 
 #include <ctime>
 
@@ -53,11 +53,12 @@ int main ()
   Hyperfine interaction_J(hyperfine_parameters);
 
   // Crystal structure
-  DiamondCubic diamond_cubic(5.43,162.9,0.0467);
+  DiamondCubic diamond_cubic(5.43,162.9);
+  diamond_cubic.sparsify(0.0467,50);
   
   // spin bath
   SpinBath spin_bath(diamond_cubic,si29.clone(),
-      SpinInteractionEdge(0,1,interaction_C12.clone()));
+      SpinInteractionEdge(0,1,interaction_C12.clone()),50);
   
   // Initial donor state: coherent superposition of upper and lower states
 

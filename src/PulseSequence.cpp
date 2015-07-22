@@ -37,9 +37,9 @@ void PulseSequence::clear()
   duration_ = 0.0;
 }
 
-auto_ptr<PulseSequenceBase> PulseSequence::clone() const
+shared_ptr<PulseSequenceBase> PulseSequence::clone() const
 {
-  return auto_ptr<PulseSequenceBase>( new PulseSequence(*this));
+  return shared_ptr<PulseSequenceBase>( new PulseSequence(*this));
 }
 
 

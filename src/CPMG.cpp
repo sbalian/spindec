@@ -77,9 +77,9 @@ void CPMG::set_time(const double time_value)
 }
 
 
-auto_ptr<PulseSequenceBase> CPMG::clone() const
+shared_ptr<PulseSequenceBase> CPMG::clone() const
 {
-  return auto_ptr<PulseSequenceBase>(new CPMG(*this));
+  return shared_ptr<PulseSequenceBase>(new CPMG(*this));
 }
 
 } // namespace SpinDec

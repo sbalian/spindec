@@ -65,7 +65,7 @@ public:
   void normalize();
   SpinState normalized() const;
   
-  virtual auto_ptr<MatrixRepresentation> clone() const;
+  virtual shared_ptr<MatrixRepresentation> clone() const;
 
 };
 
