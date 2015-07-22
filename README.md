@@ -10,8 +10,9 @@ an interacting spin bath.
 interacting with 29Si nuclear impurities (nuclear spin diffusion).
 
 ***Coming soon:***
-Special methods for quantum dots;
-heteronuclear spin baths.
+
+- Special methods for quantum dots.
+- Heteronuclear spin baths.
 
 Installation
 ------------
@@ -133,7 +134,9 @@ Here is the BibTeX entry:
 Version
 -------
 
-0.9 (late-stage beta - debugged, tested, profiled, optimized). Also checked for memory leaks.
+**1.0**
+
+Debugged; tested; profiled; optimized; checked for memory leaks.
 
 History
 -------
@@ -165,7 +168,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <seto.balian@gmail.com> or <s.balian@ucl.ac.uk>
 
-**Last updated: Jun 25, 2015**
+**Last updated: Jul 22, 2015**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07
