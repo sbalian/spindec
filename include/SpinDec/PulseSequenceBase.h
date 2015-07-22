@@ -28,7 +28,7 @@ public:
   
   UInt num_pulses() const;
   
-  virtual auto_ptr<PulseSequenceBase> clone() const = 0;
+  virtual shared_ptr<PulseSequenceBase> clone() const = 0;
   
   virtual ~PulseSequenceBase();
   

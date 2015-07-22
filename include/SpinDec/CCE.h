@@ -38,7 +38,7 @@ private:
   UInt max_truncation_order_;
   bool include_one_clusters_;
 
-  auto_ptr<PulseExperiment> pulse_experiment_;
+  shared_ptr<PulseExperiment> pulse_experiment_;
   
   ClusterDatabase cluster_database_;
   
@@ -51,7 +51,7 @@ public:
   
   CCE();
   CCE(const UInt max_truncation_order,
-      const auto_ptr<PulseExperiment>& pulse_experiment,
+      const shared_ptr<PulseExperiment>& pulse_experiment,
       const ClusterDatabase& cluster_database,
       const bool include_one_clusters);
     

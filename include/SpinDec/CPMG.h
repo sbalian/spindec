@@ -40,7 +40,7 @@ public:
   
   void set_time(const double time_value);
   
-  virtual auto_ptr<PulseSequenceBase> clone() const;
+  virtual shared_ptr<PulseSequenceBase> clone() const;
   
 };
 

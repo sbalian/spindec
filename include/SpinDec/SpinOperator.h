@@ -64,7 +64,7 @@ public:
   // and also implement in SpinState
 
   
-  virtual auto_ptr<MatrixRepresentation> clone() const;
+  virtual shared_ptr<MatrixRepresentation> clone() const;
 
 };
 

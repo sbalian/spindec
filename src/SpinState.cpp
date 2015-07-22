@@ -120,9 +120,9 @@ SpinState SpinState::operator-(const SpinState& rhs) const
 }
 
 
-auto_ptr<MatrixRepresentation> SpinState::clone() const
+shared_ptr<MatrixRepresentation> SpinState::clone() const
 {
-  return auto_ptr<MatrixRepresentation>( new SpinState(*this) );
+  return shared_ptr<MatrixRepresentation>( new SpinState(*this) );
 }
 
 SpinState SpinState::operator *(const CDouble& c) const

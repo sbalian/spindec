@@ -1,11 +1,15 @@
 // See CrystalStructure.h for description.
-// Seto Balian, Feb 20, 2015
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/CrystalStructure.h"
 #include "SpinDec/FileProperties.h"
 #include "SpinDec/Errors.h"
 #include "SpinDec/BoostEigen.h"
-#include "SpinDec/RandomNumberGenerator.h"
+
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/uniform_real.hpp>
+#include <boost/random/variate_generator.hpp>
 
 #include <fstream>
 #include <iomanip>
@@ -63,8 +67,7 @@ void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
     const int min_k, const int max_k,
     const double min_x, const double max_x,
     const double min_y, const double max_y,
-    const double min_z, const double max_z,
-    const double fractional_abundance)
+    const double min_z, const double max_z)
 {
   
   // get the basis vectors in Cartesian coordinates because they are expressed
@@ -74,20 +77,6 @@ void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
 
   ThreeVector site_vector;
   ThreeVector a_i, a_j, a_k;
-
-  // check fractional abundance
-  if (fractional_abundance <= 0.0) {
-    Errors::quit("Fractional abundance must be positive and non-zero.");
-  }
-  
-  // convert fractional abundance to parts per million
-  const unsigned int abundance_ppm =
-      static_cast<unsigned int>(fractional_abundance*1000000);
-  
-  // warn if no site vectors
-  if (abundance_ppm == 0) {
-    Errors::warning("Abundance is 0. No lattice sites will be included.");
-  }
 
   // loop over integers i, j, k for the input ranges, adding site vectors
   // if all conditions are met
@@ -104,16 +93,6 @@ void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
         for (UInt l =0;l<basis_vectors.size();l++) {
           
           site_vector = a_i + a_j + a_k + basis_vectors[l];
-          
-          // add if random number drawn from a uniform distribution is 
-          // < abundance (for random numbers between 1 and 1 million)
-          if ( static_cast<unsigned int>(
-              RandomNumberGenerator::uniform_c_rand(1,1000000))
-                                      <= abundance_ppm) {
-            // move on
-          } else {
-              continue; // don't add site vector
-          }
           
           // now check if site vector fits in the (fine double) range defined
           // by the input (and hence shape the final crystal structure)
@@ -132,27 +111,6 @@ void CrystalStructure::fill_site_vectors(const LatticeVectors& lattice_vectors,
       }
     }
   }
-  
-//  vector<ThreeVector> actual_sites;
-//  
-//  cout << "total " << num_site_vectors() << endl;
-//  
-//  for (UInt i=0;i<num_site_vectors();i++) {
-//    
-//    if ( static_cast<unsigned int>(
-//        RandomNumberGenerator::uniform_c_rand(1,1000000))
-//                                <= abundance_ppm) {
-//      // move on
-//    } else {
-//        continue; // don't add site vector
-//    }
-//    
-//    actual_sites.push_back(site_vectors_[i]);
-//    
-//  }
-  
-  //site_vectors_ = actual_sites;
-  //cout << "selected " << num_site_vectors() << endl;
   
   return;
 }
@@ -199,8 +157,7 @@ CrystalStructure::CrystalStructure(
           const int min_k, const int max_k,
           const double min_x, const double max_x,
           const double min_y, const double max_y,
-          const double min_z, const double max_z,
-          const double fractional_abundance)
+          const double min_z, const double max_z)
 {
   
   fill_site_vectors(lattice_vectors, basis,
@@ -209,16 +166,15 @@ CrystalStructure::CrystalStructure(
              min_k,  max_k,
              min_x,  max_x,
              min_y,  max_y,
-             min_z,  max_z,
-             fractional_abundance);
+             min_z,  max_z);
   
 }
+
 
 CrystalStructure::CrystalStructure(const string & file_name)
 {
   read_site_vectors(file_name);
 }
-
 
 const std::vector<ThreeVector>& CrystalStructure::get_site_vectors() const
 {
@@ -302,6 +258,58 @@ void CrystalStructure::write_site_vectors(
   }
   out_file.close();
   return;
+}
+
+void CrystalStructure::sparsify(const double fractional_abundance,
+    const UInt seed)
+{
+  
+  // check fractional abundance
+  if (fractional_abundance <= 0.0) {
+    Errors::quit("Fractional abundance must be positive and non-zero.");
+  }
+  
+  // convert fractional abundance to parts per million
+  const unsigned int abundance_ppm =
+      static_cast<unsigned int>(fractional_abundance*1000000);
+  
+  // warn if no site vectors
+  if (abundance_ppm == 0) {
+    Errors::warning("Abundance is 0. No lattice sites will be included.");
+  }
+  
+  // prepare random number generator
+  boost::mt19937 generator(seed);
+  boost::uniform_int<> uni_dist(1,1000000);
+  boost::variate_generator<boost::mt19937&,
+  boost::uniform_int<> > uni(generator, uni_dist);
+  
+  
+  std::vector<ThreeVector> new_site_vectors;
+  
+  for (UInt i=0;i<num_site_vectors();i++) {
+    
+    // add if random number drawn from a uniform distribution is 
+    // < abundance (for random numbers between 1 and 1 million)
+    
+    // generate the random number
+    int random_int = uni();
+    
+    if ( static_cast<unsigned int>(random_int)
+                                <= abundance_ppm) {
+      new_site_vectors.push_back(site_vectors_[i]);
+    } else {
+        continue; // don't add site vector
+    }
+
+    
+  }
+  
+  site_vectors_ = new_site_vectors;
+
+  
+  return;
+  
 }
 
 std::ostream& operator<<(std::ostream& os,

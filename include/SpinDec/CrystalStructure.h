@@ -1,7 +1,7 @@
 #ifndef CRYSTALSTRUCTURE_H_
 #define CRYSTALSTRUCTURE_H_
 
-// Seto Balian, Jun 24, 2015
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/typedefs.h"
 
@@ -26,9 +26,11 @@ namespace SpinDec
 class CrystalStructure
 {
 private:
+  
   void read_site_vectors(const string & file_name);
   
 protected:
+  
   
   /**
    * \brief Fills site vectors.
@@ -36,10 +38,6 @@ protected:
    * Here, the integer arguments are the \f$i,j,k\f$.
    * The double arguments define the spatial ranges for all the \f$ x,y,z \f$
    * components for shaping the final crystal structure.
-   * The fractional abundance (converted to parts per million) is the
-   * fraction of site vectors added using a uniform distribution (using
-   * cstdlib rand(); see RandomNumberGenerator.h).
-   * If the fractional abundance is 1.0, then all site vectors are included.
    * 
    */
    void fill_site_vectors(const LatticeVectors& lattice_vectors,
@@ -49,8 +47,7 @@ protected:
       const int min_k, const int max_k,
       const double min_x, const double max_x,
       const double min_y, const double max_y,
-      const double min_z, const double max_z,
-      const double fractional_abundance);
+      const double min_z, const double max_z);
   
   std::vector<ThreeVector> site_vectors_;
 
@@ -72,13 +69,17 @@ public:
       const int min_k, const int max_k,
       const double min_x, const double max_x,
       const double min_y, const double max_y,
-      const double min_z, const double max_z,
-      const double fractional_abundance);
+      const double min_z, const double max_z);
   
   /// Reads from file. Three columns: \f$ x,y,z \f$.
   explicit CrystalStructure(const string & file_name);
-  
   explicit CrystalStructure(const vector<ThreeVector> & site_vectors);
+  
+  /**
+  * The fractional abundance (converted to parts per million) is the
+  * fraction of site vectors to remain. This method uses a uniform distribution.
+  */
+  void sparsify(const double fractional_abundance, const UInt seed);
   
   const std::vector<ThreeVector>& get_site_vectors() const;
   const ThreeVector& get_site_vector(const UInt index) const;
@@ -96,7 +97,7 @@ public:
   double average_site_vector_separation() const;
   
   void write_site_vectors(const string & file_name) const;
-  
+    
   /// Print with cout \f$(x, y, z)\f$.
   friend std::ostream& operator<<(std::ostream& os,
       CrystalStructure const & crystal_structure);

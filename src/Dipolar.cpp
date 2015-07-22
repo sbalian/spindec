@@ -58,9 +58,9 @@ void Dipolar::fill(ComplexMatrix * hamiltonian,
   return;
 }
 
-auto_ptr<SpinInteraction> Dipolar::clone() const
+shared_ptr<SpinInteraction> Dipolar::clone() const
 {
-  return auto_ptr<SpinInteraction>( new Dipolar(*this) );
+  return shared_ptr<SpinInteraction>( new Dipolar(*this) );
 }
 
 string Dipolar::get_type() const

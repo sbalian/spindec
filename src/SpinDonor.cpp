@@ -640,9 +640,9 @@ PiPulse SpinDonor::pi_pulse(const UInt level_label1,
   
 }
 
-auto_ptr<SpinSystemBase> SpinDonor::clone() const
+shared_ptr<SpinSystemBase> SpinDonor::clone() const
 {
-  return auto_ptr<SpinSystemBase> (new SpinDonor(*this));
+  return shared_ptr<SpinSystemBase> (new SpinDonor(*this));
 }
 
 } // namespace SpinDec

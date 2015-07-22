@@ -352,7 +352,7 @@ public:
   virtual PiPulse pi_pulse(const UInt level_label1,
       const UInt level_label2);
   
-  virtual auto_ptr<SpinSystemBase> clone() const;
+  virtual shared_ptr<SpinSystemBase> clone() const;
   
 };
 

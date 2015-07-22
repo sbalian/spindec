@@ -26,7 +26,7 @@ public:
   
   virtual TimeEvolution time_evolution(const UIntArray bath_indices) = 0;
   
-  virtual auto_ptr<PulseExperiment> clone() const = 0;
+  virtual shared_ptr<PulseExperiment> clone() const = 0;
   
   const TimeArray& get_time_array() const;
   const CSDProblem& get_csd_problem() const;

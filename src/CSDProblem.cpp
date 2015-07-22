@@ -9,7 +9,7 @@ namespace SpinDec
 {
 
 void CSDProblem::init(
-    const auto_ptr<SpinSystemBase>& central_spin_system_base,
+    const shared_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath,
     const vector<SpinInteractionEdge>& system_bath_edges,
     const UniformMagneticField& field)
@@ -89,7 +89,7 @@ CSDProblem::CSDProblem()
 }
 
 CSDProblem::CSDProblem(
-    const auto_ptr<SpinSystemBase>& central_spin_system_base,
+    const shared_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath,
     const vector<SpinInteractionEdge>& system_bath_edges,
     const UniformMagneticField& field)
@@ -102,7 +102,7 @@ CSDProblem::CSDProblem(
 }
 
 CSDProblem::CSDProblem(
-    const auto_ptr<SpinSystemBase>& central_spin_system_base,
+    const shared_ptr<SpinSystemBase>& central_spin_system_base,
     const SpinBath& spin_bath, const SpinInteractionEdge& system_bath_edge,
     const UniformMagneticField& field)
 {
@@ -165,7 +165,7 @@ void CSDProblem::set_central_spin_state(const SpinState& spin_state) const
   central_spin_system_->set_state(spin_state);
 }
 
-auto_ptr<SpinSystemBase> CSDProblem::get_central_spin_system() const
+shared_ptr<SpinSystemBase> CSDProblem::get_central_spin_system() const
 {
   return central_spin_system_->clone();
 }

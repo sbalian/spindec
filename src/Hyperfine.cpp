@@ -177,9 +177,9 @@ void Hyperfine::fill(ComplexMatrix * hamiltonian,
   return;
 }
 
-auto_ptr<SpinInteraction> Hyperfine::clone() const
+shared_ptr<SpinInteraction> Hyperfine::clone() const
 {
-  return auto_ptr<SpinInteraction>( new Hyperfine(*this) );
+  return shared_ptr<SpinInteraction>( new Hyperfine(*this) );
 }
 
 string Hyperfine::get_type() const

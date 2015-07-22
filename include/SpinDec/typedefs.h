@@ -1,7 +1,7 @@
 #ifndef TYPEDEFS_H_
 #define TYPEDEFS_H_
 
-// Seto Balian, Jun 23, 2015
+// Seto Balian, Jul 22, 2015
 
 #include "SpinDec/config.h"
 #include <Eigen/Dense>
@@ -15,6 +15,8 @@
 #include <memory>
 #include <utility>
 #include <map>
+
+#include <boost/shared_ptr.hpp>
 
 /** \file typedefs.h
  * \brief typedefs and "usings"
@@ -61,8 +63,8 @@ typedef std::vector< CDouble > CDoubleArray;
 /// STL string
 using std::string;
 
-/// STL auto_ptr
-using std::auto_ptr;
+/// Boost shared_ptr
+using boost::shared_ptr;
 
 /// STL cout
 using std::cout;

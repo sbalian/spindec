@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Feb 24, 2015
+// Seto Balian, Jul 22, 2015
 
 #include <ctime>
 
@@ -35,7 +35,7 @@ int main ()
   CrystalStructure structure(site_vectors);
   
   SpinBath spin_bath(structure,si29.clone(),
-      SpinInteractionEdge(0,1,interaction_C12.clone()));
+      SpinInteractionEdge(0,1,interaction_C12.clone()),50);
   
   spin_bath.set_bath_state(0,1);
   spin_bath.set_bath_state(1,0);

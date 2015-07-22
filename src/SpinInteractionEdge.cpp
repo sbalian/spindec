@@ -13,7 +13,7 @@ SpinInteractionEdge::SpinInteractionEdge() :
 
 SpinInteractionEdge::SpinInteractionEdge(
     const UInt label1, const UInt label2,
-    const auto_ptr<SpinInteraction>&  interaction) :
+    const shared_ptr<SpinInteraction>&  interaction) :
     labels_(pair<UInt,UInt>(
         label1,label2))
 {
@@ -30,7 +30,7 @@ UInt SpinInteractionEdge::get_label2() const
   return labels_.second;
 }
 
-auto_ptr<SpinInteraction> SpinInteractionEdge::get_interaction() const
+shared_ptr<SpinInteraction> SpinInteractionEdge::get_interaction() const
 {
   return interaction_->clone();
 }

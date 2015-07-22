@@ -15,19 +15,19 @@ class ReducedProblem
 private:
   
   UInt order_;
-  auto_ptr<SpinSystemBase> spin_system_base_;
+  shared_ptr<SpinSystemBase> spin_system_base_;
   
 public:
   
   ReducedProblem();
   ReducedProblem(const UInt order,
-      const auto_ptr<SpinSystemBase>& spin_system_base);
+      const shared_ptr<SpinSystemBase>& spin_system_base);
   
   ReducedProblem(const ReducedProblem& rhs);
   ReducedProblem& operator=(const ReducedProblem& rhs);
   
   UInt get_order() const;
-  auto_ptr<SpinSystemBase> get_spin_system() const;
+  shared_ptr<SpinSystemBase> get_spin_system() const;
 
   
 };

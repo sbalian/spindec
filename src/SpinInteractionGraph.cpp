@@ -115,7 +115,7 @@ void SpinInteractionGraph::add_vertex_appending_basis(
 }
 
 void  SpinInteractionGraph::add_edge(unsigned int label1,
-    unsigned int label2, const auto_ptr<SpinInteraction>& interaction)
+    unsigned int label2, const shared_ptr<SpinInteraction>& interaction)
 {
   
   // First make sure label1 != label2
@@ -168,14 +168,14 @@ const ThreeVector& SpinInteractionGraph::get_position(const UInt label) const
   return get_vertex(label).get_position();
 }
 
-auto_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
+shared_ptr<SpinInteraction> SpinInteractionGraph::get_interaction(
     const unsigned int index) const
 {
   return get_edge(index).get_interaction()->clone();
 }
 
 void SpinInteractionGraph::set_interaction(const unsigned int index,
-    const auto_ptr<SpinInteraction>& interaction )
+    const shared_ptr<SpinInteraction>& interaction )
 {
   edges_[index] =
       SpinInteractionEdge(edges_[index].get_label1(),

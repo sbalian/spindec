@@ -100,7 +100,7 @@ public:
                    const UInt spin_label1,
                    const UInt spin_label2) const;
   
-  virtual auto_ptr<SpinInteraction> clone() const;
+  virtual shared_ptr<SpinInteraction> clone() const;
   
   virtual string get_type() const;
 

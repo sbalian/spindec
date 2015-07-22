@@ -26,7 +26,7 @@ class CSDProblem
 {
 private:
 
-  auto_ptr<SpinSystemBase> central_spin_system_;
+  shared_ptr<SpinSystemBase> central_spin_system_;
   SpinBath spin_bath_;
   
   UniformMagneticField field_;
@@ -38,7 +38,7 @@ private:
    */
   vector<SpinInteractionEdge> system_bath_edges_;
   
-  void init(const auto_ptr<SpinSystemBase>& central_spin_system_base,
+  void init(const shared_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const vector<SpinInteractionEdge>& system_bath_edges,
       const UniformMagneticField& field);
@@ -60,11 +60,11 @@ public:
   CSDProblem(const CSDProblem& csd_problem);
   CSDProblem& operator=(const CSDProblem& csd_problem);
 
-  CSDProblem(const auto_ptr<SpinSystemBase>& central_spin_system_base,
+  CSDProblem(const shared_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const vector<SpinInteractionEdge>& system_bath_edges,
       const UniformMagneticField& field);
-  CSDProblem(const auto_ptr<SpinSystemBase>& central_spin_system_base,
+  CSDProblem(const shared_ptr<SpinSystemBase>& central_spin_system_base,
       const SpinBath& spin_bath,
       const SpinInteractionEdge& system_bath_edge,
       const UniformMagneticField& field);
@@ -74,7 +74,7 @@ public:
   SpinSystem get_reduced_problem(const UIntArray bath_indices);
 
   const SpinBath& get_spin_bath() const;
-  auto_ptr<SpinSystemBase> get_central_spin_system() const;
+  shared_ptr<SpinSystemBase> get_central_spin_system() const;
 
 };
 

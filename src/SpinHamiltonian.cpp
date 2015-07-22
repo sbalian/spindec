@@ -84,7 +84,7 @@ void SpinHamiltonian::fill_interaction(const UInt edge_index)
 //  }
 
   // Loop over edges
-    auto_ptr<SpinInteraction> interaction_ptr =
+    shared_ptr<SpinInteraction> interaction_ptr =
         graph_.get_interaction(edge_index);
     if (!interaction_ptr->strength_preset()) { // calculate only if strength
                                                // NOT preset
