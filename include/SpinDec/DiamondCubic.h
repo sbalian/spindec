@@ -45,7 +45,9 @@ public:
    * \f$\mbox{\AA}\f$.
    */
   DiamondCubic(const double lattice_constant, 
-               const double side_length);
+               const double side_length,
+               const double fractional_abundance,
+               const UInt seed);
   
   void make_sphere(const double radius);
   void make_shell(const double min_radius, const double max_radius);

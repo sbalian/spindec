@@ -38,6 +38,9 @@ protected:
    * Here, the integer arguments are the \f$i,j,k\f$.
    * The double arguments define the spatial ranges for all the \f$ x,y,z \f$
    * components for shaping the final crystal structure.
+   * The fractional abundance (converted to parts per million) is the
+   * fraction of site vectors added using a uniform distribution.
+   * If the fractional abundance is 1.0, then all site vectors are included.
    * 
    */
    void fill_site_vectors(const LatticeVectors& lattice_vectors,
@@ -47,7 +50,9 @@ protected:
       const int min_k, const int max_k,
       const double min_x, const double max_x,
       const double min_y, const double max_y,
-      const double min_z, const double max_z);
+      const double min_z, const double max_z,
+      const double fractional_abundance,
+      const UInt seed);
   
   std::vector<ThreeVector> site_vectors_;
 
@@ -69,18 +74,14 @@ public:
       const int min_k, const int max_k,
       const double min_x, const double max_x,
       const double min_y, const double max_y,
-      const double min_z, const double max_z);
+      const double min_z, const double max_z,
+      const double fractional_abundance,
+      const UInt seed);
   
   /// Reads from file. Three columns: \f$ x,y,z \f$.
   explicit CrystalStructure(const string & file_name);
   explicit CrystalStructure(const vector<ThreeVector> & site_vectors);
-  
-  /**
-  * The fractional abundance (converted to parts per million) is the
-  * fraction of site vectors to remain. This method uses a uniform distribution.
-  */
-  void sparsify(const double fractional_abundance, const UInt seed);
-  
+    
   const std::vector<ThreeVector>& get_site_vectors() const;
   const ThreeVector& get_site_vector(const UInt index) const;
 

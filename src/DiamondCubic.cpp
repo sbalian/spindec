@@ -83,7 +83,8 @@ DiamondCubic::DiamondCubic()
 }
 
 DiamondCubic::DiamondCubic(const double lattice_constant,
-    const double side_length)
+    const double side_length,
+    const double fractional_abundance, const UInt seed)
 {
     
   // get the int range
@@ -97,7 +98,8 @@ DiamondCubic::DiamondCubic(const double lattice_constant,
       -int_range,int_range,
       -side_length/2.0,side_length/2.0,
       -side_length/2.0,side_length/2.0,
-      -side_length/2.0,side_length/2.0);
+      -side_length/2.0,side_length/2.0,
+      fractional_abundance,seed);
   
 }
 
