@@ -11,7 +11,7 @@
 
 #include <ctime>
 #include <fstream>
-#include <sstream>
+#include <cstdlib>
 
 #include "SpinDec/base.h"
 using namespace SpinDec;
@@ -24,8 +24,11 @@ string sample_config(const string & version);
 int main (int argc, char **argv)
 {
   
+  string version_number = "1.0";
+  
   // start timer
-  std::time_t time_start = std::time(0);
+  std::time_t begin_time = std::time(0);
+  struct tm * time_now = localtime( & begin_time );
   
   // Arguments
   
@@ -36,7 +39,7 @@ int main (int argc, char **argv)
   double field_strength, field_x, field_y, field_z, gamma_e, electron_ie;
   double gamma_n, nuclear_spin, hyperfine;
   UInt lower_level, upper_level;
-  double perc_29si, cluster_cutoff, lattice_size;
+  double perc_29si, cluster_cutoff, superlattice_size;
   bool log_time = false;
   double initial_time, final_time;
   UInt num_steps;
@@ -51,19 +54,20 @@ int main (int argc, char **argv)
       "==============\n"
       "SpinDec: dsnsd\n"
       "==============\n\n"
-      "Nuclear spin diffusion for donors in silicon\n\n";
+      "Nuclear spin diffusion for donors in silicon.\n";
 
   string help_page = title +
-      "Calculates T2 (CPMG-N) for a donor in silicon interacting with a\n"
-      "spin bath of 29Si nuclear impurities. Initially, the donor is\n"
-      "prepared in a coherent superposition of the specified upper\n"
-      "and lower eigenstates. The outputs are the absolute of the\n"
-      "off-diagonal of the reduced donor density matrix after evolution\n"
-      "under the CPMG sequence. They are named prefix_XC.dat where X\n"
-      "is the CCE truncation order (up to a specified maximum order),\n"
-      "and prefix must be specified by the user. The time columns are\n"
-      "2t/N, where t is the specified evolution time in ms (until the\n"
-      "first pulse). N=0 corresponds to the FID case (without pulses)\n"
+      "\nCalculates coherence decay (second column of output) as a function\n"
+      "of time (first column of output in ms) for a donor in silicon\n"
+      "interacting with a spin bath of 29Si nuclear impurities and under\n"
+      "CPMG-N pulse control. Initially, the donor is prepared in a coherent\n"
+      "superposition of the specified upper and lower eigenstates. The\n"
+      "outputs are the absolute of the off-diagonal of the reduced donor\n"
+      "density matrix after evolution under the CPMG sequence. They are named\n"
+      "prefix_XC.dat where X is the CCE truncation order (up to a specified\n"
+      "maximum order), and prefix must be specified by the user. The time\n"
+      "columns are 2t/N, where t is the specified evolution time in ms \n"
+      "(until the first pulse). N=0 corresponds to the FID case (no pulses)\n"
       "with total evolution time t. The donor interacts with the nuclear\n"
       "bath via its electron-29Si hyperfine interaction.\n\n"
       "Usage: spindec-dsnsd ... PREFIX ... [INPUT] ... [ARGUMENTS] ...\n"
@@ -74,16 +78,22 @@ int main (int argc, char **argv)
       "- for flags, add a line with the flag's name followed by == to enable.\n"
       "\nARGUMENTS";
   
-  string version = "v0.9, Copyright (C) Seto Balian, Feb 24 2015. "
-      "Free software, no warranty.";
+  string version = "v" + version_number + ", ";
+  version += "Copyright (C) Seto Balian, ";
+  version += boost::lexical_cast<string>(time_now->tm_mday);
+  version += "/";
+  version += boost::lexical_cast<string>(time_now->tm_mon + 1);
+  version += "/";
+  version += boost::lexical_cast<string>(time_now->tm_year + 1900);
+  version += "\nFree software, no warranty. <seto.balian@gmail.com>";
   
   // Declare a group of options that will be 
   // allowed only on command line
   po::options_description cmd_only_options("Allowed only on command line");
   cmd_only_options.add_options()
       ("help,h", "print this help page")
-      ("version,v", "display version")
-      ("sample-config,C", "print sample config file")
+      ("version,v", "display version and exit")
+      ("sample-config,C", "print sample config file and exit")
       ("prefix,o", po::value< string >(&prefix),
           "prefix for output files")
           ("print-hyperfine,H", "print the hyperfine couplings to\n"
@@ -167,7 +177,8 @@ int main (int argc, char **argv)
        "4.51"),
        "cluster size cutoff in Angstroms")
 
-      ("lattice-size,S", po::value<double>(&lattice_size)->default_value(162.9,
+      ("superlattice-size,S", po::value<double>(&superlattice_size)
+          ->default_value(162.9,
        "162.9"),
        "side length of cubic superlattice\nin Angstroms")
        
@@ -247,7 +258,7 @@ int main (int argc, char **argv)
   
   if (vm.count("prefix") == 0) {
     cout << "run spindec-dsnsd --help" << endl;
-    Errors::quit("prefix argument required.");
+    Errors::quit("Argument \"prefix\" argument is required.");
     return 0;
   }
   
@@ -261,7 +272,6 @@ int main (int argc, char **argv)
     
     store(parse_config_file(ifs, options), vm);
     notify(vm);
-
     
   }
   
@@ -300,81 +310,109 @@ int main (int argc, char **argv)
   // Initialise
   
   if (vm.count("verbose")) {
-    
+  
   cout << title;
-  struct tm * now = localtime( & time_start );
-  cout << "Start date: ";
-  cout << now->tm_mday << "/" << (now->tm_mon + 1)<<"/"<< (now->tm_year + 1900);
+  cout << version << endl << endl;
+  cout << "Start: ";
+  cout << time_now->tm_mday;
+  cout << "/" << (time_now->tm_mon + 1);
+  cout << "/" << (time_now->tm_year + 1900);
+  cout << ", ";
+  cout << time_now->tm_hour;
+  cout << ":" << time_now->tm_min << ":" << time_now->tm_sec << endl;
   cout << endl;
-  cout << "Start time: ";
-  cout << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << endl;
-  cout << endl;
+  cout << "----------" << endl;
+  cout << "Parameters" << endl;
+  cout << "----------" << endl;
   if (vm.count("input-file")) {
     cout << "Input file: " << input_file << endl;
   } else {
       cout << "Input file: none, defaults or input from command line" << endl;
   }
   cout << "Output file prefix: " << prefix << endl;
-  cout << endl;
-  cout << "Parameters" << endl;
-  cout << "----------" << endl;
-  cout << "Will calculate the CCE up to order " << cce_order << endl;
-  cout << "Built clusters up to order " << build_order << endl;
+  cout << "CCE order: " << cce_order << endl;
+  cout << "Build method: " << build_method << endl;
+  cout << "Build order: " << build_order << endl;
   cout << "CPMG order: " << cpmg_order << endl;
-  cout << "Include 1-clusters? ";
+  cout << "Include 1-clusters: ";
   if (include_one_cluster) {
     cout << "Yes";
   } else {
       cout << "No";
   }
   cout << endl;
-  cout << "Magnetic field = " << field_strength << " Tesla" << endl;
-  cout << "Magnetic field parallel to [";
+  cout << "Complex output: ";
+  if (vm.count("complex")) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
+  cout << endl;
+  cout << "Magnetic field: " << field_strength << " Tesla" << endl;
+  cout << "Magnetic field orientation: [";
   cout << field_x << "," << field_y << "," << field_z << "]" <<endl;
-  cout << "Donor electron gyromagnetic ratio = ";
+  cout << "Donor electron gyromagnetic ratio: ";
   cout << gamma_e << " M rad s-1 T-1" << endl;
-  cout << "Donor ionization energy = " << electron_ie << " eV" << endl;
-  cout << "Host nucleus gyromagnetic ratio  = ";
+  cout << "Donor ionization energy: " << electron_ie << " eV" << endl;
+  cout << "Host nucleus gyromagnetic ratio: ";
   cout << gamma_n << " M rad s-1 T-1" << endl;
-  cout << "Host nuclear spin = " << nuclear_spin << endl;
-  cout << "Donor hyperfine = " << hyperfine << " M rad s-1" << endl;
+  cout << "Host nuclear spin: " << nuclear_spin << endl;
+  cout << "Donor hyperfine: " << hyperfine << " M rad s-1" << endl;
   cout << "Transition: |" << upper_level << "> --> |" << lower_level << ">\n";
-  cout << perc_29si << "% 29Si abundance" << endl;
+  cout << "29Si abundance: " << perc_29si << "%" << endl;
   cout << "Cluster size cutoff: " << cluster_cutoff << " Angstroms";
   cout << endl;
-  cout << "Build method: " << build_method << endl;
-  cout << "Superlattice size: " << lattice_size << " Angstroms" << endl;
-  cout << "Logarithmic time scale? ";
+  cout << "Superlattice size: " << superlattice_size << " Angstroms" << endl;
+  cout << "Logarithmic time scale: ";
   if (log_time) {
     cout << "Yes";
   } else {
       cout << "No";
   }
   cout << endl;
-  cout << "Initial time = " << initial_time << " ms" << endl;
-  cout << "Final time = " << final_time << " ms" << endl;
+  cout << "Initial time: " << initial_time << " ms" << endl;
+  cout << "Final time: " << final_time << " ms" << endl;
   cout << "Number of time steps: " << num_steps << endl;
   cout << "Position seed: " << position_seed << endl;
   cout << "State seed: " << state_seed << endl;
-  cout << "Kill non-Ising part of donor-bath interaction? ";
+  cout << "Kill non-Ising part of donor-bath interaction: ";
   if (kill_nonising) {
     cout << "Yes";
   } else {
       cout << "No";
   }
   cout << endl;
-  cout << "Include dipolar part of donor-bath interaction? ";
+  cout << "Include dipolar part of donor-bath interaction: ";
   if (dipolar_hyperfine) {
     cout << "Yes";
   } else {
       cout << "No";
   }
   cout << endl;
+  cout << "No CCE divisions: ";
+  if (vm.count("no-divisions")) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
   cout << endl;
-  cout << "Calculating (this may take a long time!) ..." << endl;
+  cout << "Spherical superlattice: ";
+  if (vm.count("sphere")) {
+    cout << "Yes";
+  } else {
+      cout << "No";
+  }
+  cout << endl;
+  cout << endl;
   
   }
   
+  if (vm.count("verbose")) {
+    cout << "--------" << endl;
+    cout << "Progress" << endl;
+    cout << "--------" << endl;
+    cout << "Setting up spins and spin interactions ..." << endl;
+  }
   
   // Set up magnetic field (T)
   UniformMagneticField field(field_strength,
@@ -415,12 +453,16 @@ int main (int argc, char **argv)
     
   Hyperfine interaction_J(hyperfine_parameters);
   
+  if (vm.count("verbose")) {
+    cout << "Generating crystal structure ..." << endl;
+  }
+
   // Crystal structure
-  DiamondCubic diamond_cubic(5.43,lattice_size);
-  diamond_cubic.sparsify(perc_29si/100.0,position_seed);
+  DiamondCubic diamond_cubic(5.43,superlattice_size,perc_29si/100.0,
+      position_seed);
   
   if (vm.count("sphere")) {
-   diamond_cubic.make_sphere(lattice_size/2.0);
+   diamond_cubic.make_sphere(superlattice_size/2.0);
   }
   
   //diamond_cubic.make_shell(70.0,80.0);
@@ -440,9 +482,19 @@ int main (int argc, char **argv)
     return 0;
   }
   
+  if (vm.count("verbose")) {
+    cout << "Setting up spin bath ..." << endl;
+  }
+
+  
   // spin bath
   SpinBath spin_bath(diamond_cubic,si29.clone(),
       SpinInteractionEdge(0,1,interaction_C12.clone()),state_seed);
+  
+  if (vm.count("verbose")) {
+    cout << "Preparing for the CCE ..." << endl;
+  }
+
   
   // Initial donor state: coherent superposition of upper and lower states
 
@@ -479,11 +531,21 @@ int main (int argc, char **argv)
   // TODO make sure the same spin bath goes into cpmg_dephasing and
   // CCE database ...
   
+  if (vm.count("verbose")) {
+    cout << "Building cluster database ..." << endl;
+  }
+
+  
   // Cluster database
   ClusterDatabase database(spin_bath,build_order,cluster_cutoff,build_method);
   
   // CCE
   CCE cce(cce_order,cpmg_dephasing.clone(),database,include_one_cluster);
+  
+  if (vm.count("verbose")) {
+    cout << "Calculating evolutions and CCE ..." << endl;
+  }
+
   
   // Calculate
   if (vm.count("no-divisions")) {
@@ -491,6 +553,11 @@ int main (int argc, char **argv)
   } else {
       cce.calculate(cce_order);
   }
+  
+  if (vm.count("verbose")) {
+    cout << "Finishing up ..." << endl;
+  }
+
   
   // Print to files scaling times appropriately
   
@@ -526,14 +593,20 @@ int main (int argc, char **argv)
     }
   }
   
+  std::time_t end_time = std::time(0);
+  
   if (vm.count("verbose")) {
-
-  cout << "Done! (";
-  cout << "time taken: " <<
-      static_cast<UInt>(std::difftime(std::time(0), time_start));
-  cout << " seconds)" << endl;
+    
+  cout << "Calculation successfully completed." << endl << endl;
+  cout << "Time taken: ";
+  cout << static_cast<UInt>(std::difftime(end_time, begin_time))/60;
+  cout << " mins and ";
+  cout << static_cast<UInt>(std::difftime(end_time, begin_time))%60;
+  cout << " seconds." << endl;
+  cout << "Wrote results to " << prefix << "_*C.dat." << endl;
   
   }
+  
   return 0;
   
 }
@@ -638,7 +711,7 @@ string sample_config(const string& version) {
 
   config += add_to_config
       ("side length of cubic superlattice in Angstroms",
-       "lattice-size = 162.9");
+       "superlattice-size = 162.9");
 
   config += "\n";
   

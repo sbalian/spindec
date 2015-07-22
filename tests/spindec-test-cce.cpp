@@ -53,8 +53,7 @@ int main ()
   Hyperfine interaction_J(hyperfine_parameters);
 
   // Crystal structure
-  DiamondCubic diamond_cubic(5.43,162.9);
-  diamond_cubic.sparsify(0.0467,50);
+  DiamondCubic diamond_cubic(5.43,162.9,0.0467,50);
   
   // spin bath
   SpinBath spin_bath(diamond_cubic,si29.clone(),
