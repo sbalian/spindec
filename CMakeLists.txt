@@ -1,5 +1,5 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian, Jul 22, 2015
+# Seto Balian, Jul 23, 2015
 
 cmake_minimum_required(VERSION 2.8.2)
 
@@ -243,5 +243,11 @@ else()
   target_link_libraries(spindec-dsnsd spindec boost_program_options)
 endif()
 install(TARGETS spindec-dsnsd DESTINATION bin)
+
+
+# spindec-ddc
+add_executable(spindec-ddc "src/spindec-ddc.cpp")
+target_link_libraries(spindec-ddc spindec boost_program_options)
+install(TARGETS spindec-ddc DESTINATION bin)
 
 
