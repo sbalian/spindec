@@ -1,14 +1,10 @@
 syntax: glob
-eigen
-boost
 .project
 .cproject
 *.o
 .settings
 build
-spindec-sync.cpp
 hgpush_bitbucket.sh
 doc
-MYTODO
 profile
 
