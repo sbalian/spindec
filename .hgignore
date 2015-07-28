@@ -4,7 +4,5 @@ syntax: glob
 *.o
 .settings
 build
-hgpush_bitbucket.sh
 doc
-profile
 

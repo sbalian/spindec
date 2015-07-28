@@ -1,5 +1,5 @@
 // For testing SpinDec
-// Seto Balian, Jul 22, 2015
+// Seto Balian, Jul 26, 2015
 
 #include <ctime>
 

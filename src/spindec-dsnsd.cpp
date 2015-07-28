@@ -7,7 +7,7 @@
 // silicon in a nuclear spin bath (spin-1/2 29Si nuclear impurities)
 // using the cluster correlation expansion.
 //
-// Seto Balian, Jul 22, 2015
+// Seto Balian, Jul 28, 2015
 
 #include <ctime>
 #include <fstream>

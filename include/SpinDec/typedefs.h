@@ -1,7 +1,7 @@
 #ifndef TYPEDEFS_H_
 #define TYPEDEFS_H_
 
-// Seto Balian, Jul 22, 2015
+// Seto Balian, Jul 28, 2015
 
 #include "SpinDec/config.h"
 #include <Eigen/Dense>
