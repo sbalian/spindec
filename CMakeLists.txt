@@ -1,18 +1,13 @@
 # CMakeLists.txt for SpinDec
-# Seto Balian, Jul 24, 2015
+# Seto Balian, Jul 28, 2015
 
-cmake_minimum_required(VERSION 2.8.2)
+cmake_minimum_required(VERSION 3.3.0)
 
 #### Initialize ################################
 
 # Project name
 project(SpinDec)
 set_property(TARGET PROPERTY PROJECT_LABEL ${PROJECT_NAME})
-
-## Install to home directory by default
-#if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-#set(CMAKE_INSTALL_PREFIX "~" CACHE PATH "default install path" FORCE )
-#endif()
 
 # Build type
 set(CMAKE_BUILD_TYPE Release)
@@ -25,7 +20,7 @@ option(SPINDEC_USE_MKL "Use Intel MKL with Eigen" OFF)
 
 # Add spindec/cmake to module path
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-message(STATUS "Cmake module path: ${CMAKE_MODULE_PATH}")
+#message(STATUS "Cmake module path: ${CMAKE_MODULE_PATH}")
 
 #### Packages ##################################
 
@@ -33,7 +28,7 @@ message(STATUS "Cmake module path: ${CMAKE_MODULE_PATH}")
 find_package(Eigen3 REQUIRED)
 
 # Boost
-find_package(Boost REQUIRED)
+find_package(Boost 1.58.0 COMPONENTS program_options REQUIRED)
 
 # Intel MKL and profiling
 if(SPINDEC_USE_MKL)
@@ -50,7 +45,7 @@ endif()
 # configured headers
 configure_file(
 "${PROJECT_SOURCE_DIR}/include/SpinDec/config.h.in"
-"${PROJECT_BINARY_DIR}/include/SpinDec/config.h"
+"${PROJECT_SOURCE_DIR}/include/SpinDec/config.h"
 )
 
 #### Include dirs ##############################
@@ -58,7 +53,7 @@ configure_file(
 include_directories(
   ${EIGEN3_INCLUDE_DIR}
   ${PROJECT_SOURCE_DIR}/include/
-  ${PROJECT_BINARY_DIR}/include # So that we find cmake configured headers
+  ${Boost_INCLUDE_DIRS}
 )
 
 if(SPINDEC_USE_MKL)
@@ -69,8 +64,6 @@ if(SPINDEC_USE_MKL)
     ${MKL_LIBRARY_DIRS}
   )
 endif()
-
-message(STATUS "${EIGEN3_INCLUDE_DIR}")
 
 ################################################
 
@@ -204,8 +197,8 @@ include/SpinDec/UniformMagneticField.h
 include/SpinDec/base.h
 include/SpinDec/Constants.h
 include/SpinDec/typedefs.h
+include/SpinDec/config.h
 )
-
 
 # libspindec
 add_library(spindec
@@ -219,11 +212,11 @@ install(FILES ${HEADERS} DESTINATION include/SpinDec)
 ## executables
 
 # test (do not install)
-add_executable(spindec-test-cce "tests/spindec-test-cce.cpp")
+add_executable(spindec-test-cce1 "tests/spindec-test-cce1.cpp")
 if(SPINDEC_USE_MKL)
-  target_link_libraries(spindec-test-cce spindec ${MKL_LIBRARIES})
+  target_link_libraries(spindec-test-cce1 spindec ${MKL_LIBRARIES})
 else()
-  target_link_libraries(spindec-test-cce spindec)
+  target_link_libraries(spindec-test-cce1 spindec)
 endif()
 
 # test (do not install)
@@ -238,11 +231,9 @@ endif()
 add_executable(spindec-dsnsd "src/spindec-dsnsd.cpp")
 if(SPINDEC_USE_MKL)
   target_link_libraries(spindec-dsnsd spindec ${MKL_LIBRARIES}
-                        boost_program_options)
+                        ${Boost_LIBRARIES})
 else()
-  target_link_libraries(spindec-dsnsd spindec boost_program_options)
+  target_link_libraries(spindec-dsnsd spindec ${Boost_LIBRARIES})
 endif()
 install(TARGETS spindec-dsnsd DESTINATION bin)
-
-
 

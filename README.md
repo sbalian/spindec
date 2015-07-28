@@ -81,13 +81,13 @@ Example
 
 Follow the instructions under "Installation".
 
-Open spindec/tests/spindec-test-cce.cpp to see the source with
+Open spindec/tests/spindec-test-cce1.cpp to see the source with
 comments on the example problem. Using the cluster correlation
 expansion up to 3rd order, it calculates the Hahn spin echo decay of
 a central donor spin in silicon for a nuclear spin bath
 (spin-1/2 29Si with a natural abundance of 4.7%).
 
-To see the decay, run spindec-test-cce.
+To see the decay, run spindec-test-cce1.
 The test executable is not installed, so run it in the build
 directory.
 
@@ -105,7 +105,7 @@ structure (with inheritance diagrams).
 - Source files (.cpp extension in src/) may contain more information,
 usually geared more towards implementation (these are not included
 in the reference manual).
-- See src/spindec-dsnsd.cpp and tests/spindec-test-cce.cpp for
+- See src/spindec-dsnsd.cpp and tests/spindec-test-cce1.cpp for
 examples.
 
 License and how to cite
@@ -168,7 +168,7 @@ Contact
 
 [Seto Balian] ([sbalian]) - <seto.balian@gmail.com> or <s.balian@ucl.ac.uk>
 
-**Last updated: Jul 22, 2015**
+**Last updated: Jul 26, 2015**
 
 [Eigen]:http://eigen.tuxfamily.org
 [Seto Balian]:http://www.ucl.ac.uk/~zcapc07

@@ -1,5 +1,5 @@
 // See Dipolar.h for description.
-// Seto Balian, Jun 23, 2015
+// Seto Balian, Jul 27, 2015
 
 #include "SpinDec/Dipolar.h"
 #include "SpinDec/Constants.h"
@@ -15,7 +15,6 @@ void Dipolar::calculate(const SpinParameters & spin_parameters1,
     const ThreeVector & position1, const ThreeVector & position2,
     const UniformMagneticField & field)
 {
-  
   if (strength_preset_ == true) {
     warn_if_preset_then_calculated();
   }
