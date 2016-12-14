@@ -26,20 +26,19 @@ number generators.
 - Optional: [Intel MKL] optimization for Eigen.
 
 The following instructions are for a Unix-like environment
-without root privileges. It also assumes you have Mercurial (*hg*)
+without root privileges. It also assumes you have git
 installed.
 
 In a terminal,
 
 ```sh
-mkdir spindec
-cd spindec
-hg clone http://www.bitbucket.org/sbalian/spindec .
+git clone http://github.com/sbalian/spindec.git
 ```
 
 This gets the code. Now let's build it.
 
 ```sh
+cd spindec
 mkdir build
 cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/home/myusrname
@@ -118,7 +117,7 @@ If you use any part of the code in a publication,
 please cite it as follows:
 
 S. J. Balian, SpinDec: C++ Library for Spin Decoherence,
-http://www.bitbucket.org/sbalian/spindec (2011-2015).
+http://github.com/sbalian/spindec (2011-2016).
 
 Here is the BibTeX entry:
 
@@ -126,8 +125,8 @@ Here is the BibTeX entry:
 @misc{SpinDec,
   title = {SpinDec: C++ library for spin decoherence},
   author = {Balian, Setrak J.},
-  howpublished = {http://www.bitbucket.org/sbalian/spindec},
-  year = {2011--2015}
+  howpublished = {http://github.com/sbalian/spindec},
+  year = {2011--2016}
 }
 ```
 
