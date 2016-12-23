@@ -1,4 +1,3 @@
-syntax: glob
 .project
 .cproject
 *.o
